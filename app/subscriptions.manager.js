@@ -766,6 +766,14 @@ window.SubscriptionsManager = (function () {
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <button id="arxiv-config-save-btn" class="arxiv-tool-btn" style="padding:2px 10px; background:#2e7d32; color:white;">保存</button>
+            <button
+              id="arxiv-admin-reset-content-btn"
+              class="arxiv-tool-btn"
+              type="button"
+              style="padding:2px 10px; background:#c62828; color:#fff; border-color:#b71c1c;"
+            >
+              删除所有
+            </button>
             <button id="arxiv-open-secret-setup-btn" class="arxiv-tool-btn" style="padding:2px 10px;">密钥配置</button>
             <button id="arxiv-search-close-btn" class="arxiv-tool-btn" style="padding:2px 6px;">关闭</button>
           </div>
@@ -804,18 +812,6 @@ window.SubscriptionsManager = (function () {
             <button id="arxiv-admin-quick-run-30d-btn" class="chat-quick-run-item" type="button">立即搜寻三十天内论文（全速览，约 0.76）</button>
             <button id="arxiv-admin-quick-run-30d-standard-btn" class="chat-quick-run-item" type="button">立即搜寻三十天内论文（全标准 / 精读，约 1.22）</button>
             <div id="arxiv-admin-quick-run-msg" class="chat-quick-run-msg"></div>
-
-            <div class="chat-quick-run-divider" aria-hidden="true"></div>
-            <div class="chat-quick-run-title">危险操作</div>
-            <button
-              id="arxiv-admin-reset-content-btn"
-              class="chat-quick-run-run-btn"
-              type="button"
-              style="background:#c62828; color:#fff; border-color:#b71c1c;"
-            >
-              删除所有
-            </button>
-            <div id="arxiv-admin-reset-content-msg" class="chat-quick-run-msg"></div>
           </div>
 
           <div
@@ -1062,7 +1058,7 @@ window.SubscriptionsManager = (function () {
     );
     quickRunMsgEl = document.getElementById('arxiv-admin-quick-run-msg');
     resetContentBtn = document.getElementById('arxiv-admin-reset-content-btn');
-    resetContentMsgEl = document.getElementById('arxiv-admin-reset-content-msg');
+    resetContentMsgEl = msgEl;
     if (quickRunConferenceBtn) {
       quickRunConferenceBtn.disabled = true;
       quickRunConferenceBtn.classList.add('chat-quick-run-item--disabled');
