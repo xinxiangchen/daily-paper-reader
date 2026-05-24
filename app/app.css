@@ -1156,7 +1156,7 @@ body.close #paper-chat-container .chat-questions-panel {
   width: min(var(--dpr-paper-content-max-width), calc(100% - var(--dpr-paper-content-gap-desktop)));
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   font-size: 12px;
   color: #666;
@@ -1182,7 +1182,7 @@ body.close .chat-footer {
 
 .chat-model-picker {
   position: relative;
-  margin-left: auto;
+  margin-left: 0;
   flex: 0 0 auto;
 }
 
