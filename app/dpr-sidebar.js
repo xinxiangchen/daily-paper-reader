@@ -1741,14 +1741,24 @@
     var totalCount = typeof opts.totalCount === 'number' ? opts.totalCount : countPapersInView(opts.view);
     var unreadCount = typeof opts.unreadCount === 'number' ? opts.unreadCount : 0;
     html.push('<section class="dpr-sidebar-group dpr-sidebar-panel ' + groupClass + expandedClass + resultClass + '" data-panel="' + safeAttr(opts.group) + '">');
-    html.push('  <button type="button" class="dpr-sidebar-panel-header" data-panel-toggle="' + safeAttr(opts.group) + '" aria-expanded="' + (opts.expanded ? 'true' : 'false') + '">');
-    html.push('    <span class="dpr-sidebar-day-arrow" aria-hidden="true">▸</span>');
-    html.push('    <span class="dpr-sidebar-panel-title">' + safeText(opts.icon + ' ' + opts.title) + '</span>');
-    html.push('    <span class="dpr-sidebar-day-counts"><span class="dpr-sidebar-day-unread">' + unreadCount + '</span>/<span class="dpr-sidebar-day-total">' + totalCount + '</span></span>');
-    html.push('  </button>');
+    if (isDailyNormal) {
+      html.push('  <div class="dpr-sidebar-panel-header dpr-sidebar-panel-header-daily">');
+      html.push('    <button type="button" class="dpr-sidebar-panel-toggle" data-panel-toggle="' + safeAttr(opts.group) + '" aria-expanded="' + (opts.expanded ? 'true' : 'false') + '">');
+      html.push('      <span class="dpr-sidebar-day-arrow" aria-hidden="true">▸</span>');
+      html.push('      <span class="dpr-sidebar-panel-title">' + safeText(opts.icon + ' ' + opts.title) + '</span>');
+      html.push('      <span class="dpr-sidebar-day-counts"><span class="dpr-sidebar-day-unread">' + unreadCount + '</span>/<span class="dpr-sidebar-day-total">' + totalCount + '</span></span>');
+      html.push('    </button>');
+      html.push('    <button type="button" class="dpr-sidebar-axis-toggle dpr-sidebar-daily-header-axis-toggle" data-axis-toggle="daily" title="' + safeAttr(opts.toggleLabel) + '">⇄</button>');
+      html.push('  </div>');
+    } else {
+      html.push('  <button type="button" class="dpr-sidebar-panel-header" data-panel-toggle="' + safeAttr(opts.group) + '" aria-expanded="' + (opts.expanded ? 'true' : 'false') + '">');
+      html.push('    <span class="dpr-sidebar-day-arrow" aria-hidden="true">▸</span>');
+      html.push('    <span class="dpr-sidebar-panel-title">' + safeText(opts.icon + ' ' + opts.title) + '</span>');
+      html.push('    <span class="dpr-sidebar-day-counts"><span class="dpr-sidebar-day-unread">' + unreadCount + '</span>/<span class="dpr-sidebar-day-total">' + totalCount + '</span></span>');
+      html.push('  </button>');
+    }
     html.push('  <div class="dpr-sidebar-panel-content">');
     if (isDailyNormal) {
-      html.push(renderDailyAxisControl(opts.toggleLabel));
       if (calendarPlacement === 'top') {
         html.push(renderDailyCalendar(opts.view && opts.view.calendar, calendarPlacement));
         html.push(renderAxisTabs('daily', 'tag', opts.view, opts.toggleLabel, { hideToggle: true, rowClass: 'dpr-sidebar-daily-tabs-row' }));
@@ -1763,15 +1773,6 @@
     html.push('  </div>');
     html.push('</section>');
     return html.join('');
-  }
-
-  function renderDailyAxisControl(toggleLabel) {
-    return [
-      '<div class="dpr-sidebar-axis-row dpr-sidebar-daily-control-row" data-axis-group="daily" data-axis-mode="layout">',
-      '  <button type="button" class="dpr-sidebar-axis-toggle" data-axis-toggle="daily" title="' + safeAttr(toggleLabel) + '">⇄</button>',
-      '  <div class="dpr-sidebar-daily-control-spacer" aria-hidden="true"></div>',
-      '</div>',
-    ].join('');
   }
 
   function renderAxisTabs(group, mode, view, toggleLabel, options) {
@@ -2189,15 +2190,6 @@
         openSettingsPanel();
         return;
       }
-      var panelHeader = e.target.closest('.dpr-sidebar-panel-header');
-      if (panelHeader) {
-        var panel = panelHeader.getAttribute('data-panel-toggle');
-        if (!state.expandedGroups) state.expandedGroups = defaultExpandedGroups();
-        state.expandedGroups[panel] = !state.expandedGroups[panel];
-        persistCollapse();
-        rerenderSidebarBody(rerenderOptionsForPanelToggle(panel));
-        return;
-      }
       var axisToggle = e.target.closest('.dpr-sidebar-axis-toggle');
       if (axisToggle) {
         var axisGroup = axisToggle.getAttribute('data-axis-toggle');
@@ -2210,6 +2202,15 @@
         collapseAxisSectionsForGroup(axisGroup);
         persistCollapse();
         rerenderSidebarBody(rerenderOptionsForAxisControlClick());
+        return;
+      }
+      var panelHeader = e.target.closest('[data-panel-toggle]');
+      if (panelHeader) {
+        var panel = panelHeader.getAttribute('data-panel-toggle');
+        if (!state.expandedGroups) state.expandedGroups = defaultExpandedGroups();
+        state.expandedGroups[panel] = !state.expandedGroups[panel];
+        persistCollapse();
+        rerenderSidebarBody(rerenderOptionsForPanelToggle(panel));
         return;
       }
       var calendarNav = e.target.closest('.dpr-sidebar-calendar-nav');

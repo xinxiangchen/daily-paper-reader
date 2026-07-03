@@ -392,6 +392,9 @@ function testDailyCalendarPlacementToggleKeepsControlRowFixedAboveLayers() {
   const bottomToggleIndex = bottomHtml.indexOf('data-axis-toggle="daily"');
   const bottomCalendarIndex = bottomHtml.indexOf('class="dpr-sidebar-calendar');
   const bottomTabsIndex = bottomHtml.indexOf('data-axis-tab="daily"');
+  const dailyHeaderStart = topHtml.indexOf('dpr-sidebar-panel-header-daily');
+  const dailyHeaderEnd = topHtml.indexOf('<div class="dpr-sidebar-panel-content">', dailyHeaderStart);
+  const dailyHeader = topHtml.slice(dailyHeaderStart, dailyHeaderEnd);
 
   assert.ok(topToggleIndex < topCalendarIndex);
   assert.ok(topToggleIndex < topTabsIndex);
@@ -403,6 +406,10 @@ function testDailyCalendarPlacementToggleKeepsControlRowFixedAboveLayers() {
   assert.ok(bottomHtml.includes('data-calendar-date="20260624"'));
   assert.ok(topHtml.includes('title="标签上置"'));
   assert.ok(bottomHtml.includes('title="日历上置"'));
+  assert.ok(dailyHeader.includes('data-panel-toggle="daily"'));
+  assert.ok(dailyHeader.includes('data-axis-toggle="daily"'));
+  assert.ok(!topHtml.includes('dpr-sidebar-daily-control-row'));
+  assert.ok(!bottomHtml.includes('dpr-sidebar-daily-control-row'));
 }
 
 function testDailyCalendarInPlaceRefreshUsesActiveDailyTag() {
@@ -906,6 +913,10 @@ function testSidebarStickyHierarchyCssContract() {
   const calendarRule = cssRule(css, '.dpr-sidebar-calendar');
   assert.ok(/background:\s*var\(--dpr-sidebar-surface\)/i.test(calendarRule));
   assert.ok(/border-radius:\s*8px/i.test(calendarRule));
+  assert.ok(/--dpr-sidebar-calendar-notch:\s*10px/i.test(calendarRule));
+  assert.ok(/clip-path:\s*polygon\(/i.test(calendarRule));
+  const calendarHeaderRule = cssRule(css, '.dpr-sidebar-calendar-header');
+  assert.ok(/padding:\s*0 8px/i.test(calendarHeaderRule));
   const calendarGridRule = cssRule(css, '.dpr-sidebar-calendar-grid');
   assert.ok(/display:\s*grid/i.test(calendarGridRule));
   assert.ok(/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/i.test(calendarGridRule));
@@ -990,11 +1001,14 @@ function testActivePaperCanForceOpenTopLevelPanel() {
 
 function testPanelHeaderClickOnlyChangesSidebarViewState() {
   const js = fs.readFileSync('app/dpr-sidebar.js', 'utf8');
-  const start = js.indexOf("var panelHeader = e.target.closest('.dpr-sidebar-panel-header');");
-  const end = js.indexOf("var axisToggle = e.target.closest('.dpr-sidebar-axis-toggle');", start);
+  const axisStart = js.indexOf("var axisToggle = e.target.closest('.dpr-sidebar-axis-toggle');");
+  const start = js.indexOf("var panelHeader = e.target.closest('[data-panel-toggle]');");
+  const end = js.indexOf("var calendarNav = e.target.closest('.dpr-sidebar-calendar-nav');", start);
   assert.ok(start > 0 && end > start, 'panel header click handler should be present');
+  assert.ok(axisStart > 0 && axisStart < start, 'axis toggle should be handled before panel header buttons');
   const block = js.slice(start, end);
 
+  assert.ok(block.includes("var panel = panelHeader.getAttribute('data-panel-toggle');"));
   assert.ok(block.includes('state.expandedGroups[panel] = !state.expandedGroups[panel];'));
   assert.ok(block.includes('rerenderSidebarBody(rerenderOptionsForPanelToggle(panel));'));
   assert.ok(!block.includes('state.expandedGroups.daily ='));
