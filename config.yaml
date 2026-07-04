@@ -25,3 +25,65 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: embodied-ai
+      description: 请每日推送关于具身智能（Embodied AI）的最新论文。重点关注以下方向，并按此分类整理：决策与规划、感知与理解、操控与导航、基础模型、仿真与迁移。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: embodied AI
+          keyword_cn: 具身智能
+          query: embodied AI research
+        - keyword: reinforcement learning
+          keyword_cn: 强化学习
+          query: reinforcement learning for robot control
+        - keyword: imitation learning
+          keyword_cn: 模仿学习
+          query: imitation learning robotic manipulation
+        - keyword: diffusion policy
+          keyword_cn: 扩散策略
+          query: diffusion policy robotics
+        - keyword: foundation model robot
+          keyword_cn: 基础模型机器人
+          query: foundation model for robot task planning
+        - keyword: vision language action model
+          keyword_cn: 视觉-语言-行动模型
+          query: vision language action model for robot
+      intent_queries:
+        - query: embodied AI robot learning papers
+          query_cn: 具身智能与机器人学习论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: reinforcement learning diffusion policy robot control
+          query_cn: 强化学习扩散策略机器人控制
+          enabled: true
+          source: manual
+          note: ''
+        - query: sim to real transfer domain randomization for robotics
+          query_cn: 仿真到真实迁移与域随机化
+          enabled: true
+          source: manual
+          note: ''
+        - query: foundation models for robot perception and manipulation
+          query_cn: 机器人感知与操作的基础模型
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-07-04T03:12:46.190Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
