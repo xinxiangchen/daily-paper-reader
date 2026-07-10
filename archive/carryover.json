@@ -1,57 +1,12 @@
 {
-  "generated_at": "2026-07-09T21:50:46.487094+00:00",
-  "updated_date": "20260709",
+  "generated_at": "2026-07-10T21:31:57.726839+00:00",
+  "updated_date": "20260710",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260709",
+      "updated_date": "20260710",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2606.28133v1",
-          "source": "arxiv",
-          "title": "Translation as a Bridging Action: Transferring Manipulation Skills from Humans to Robots",
-          "abstract": "We study whether we can learn novel manipulation skills from human actions to a bi-manual robot with parallel grippers. Human action data is cheap, abundant, and diverse, making it one of the most promising resources for scaling up robot learning. Yet transferring skills from humans to robots remains hard: most prior work treats humans as just another bi-manual 6DoF embodiment, where hand-pose estimates are noisy and the contact patterns of human fingers differ fundamentally from those of a parallel gripper. We argue that learning rotation-inclusive action signals from human data is therefore sub-optimal, and instead propose a bridging action representation: the relative wrist translation within the initial head-camera frame, an action space shared by humans and robots. To handle the potential absence of certain action components in different embodiments, we build a $π_0$-like vision-language-action model with interleaved action tokens and attention masking. On a suite of novel bi-manual manipulation tasks, our bridging action transfers human manipulation knowledge to robots far more effectively than noisy 6DoF human actions and scales with the amount of human data.",
-          "authors": [
-            "Sijin Chen",
-            "Kaixuan Jiang",
-            "Haixin Shi",
-            "Yanhui Wang",
-            "Weiheng Zhong",
-            "Haosheng Li",
-            "Bo Jiang",
-            "Yuxiao Liu",
-            "Xihui Liu"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV"
-          ],
-          "published": "2026-06-26T14:34:04+00:00",
-          "link": "https://arxiv.org/pdf/2606.28133v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Transferring manipulation skills from human demonstrations to robots via bridging action representation",
-          "llm_evidence_cn": "通过桥接动作表示从人类演示向机器人迁移操作技能",
-          "llm_evidence": "通过桥接动作表示从人类演示向机器人迁移操作技能",
-          "canonical_evidence": "通过桥接动作表示从人类演示向机器人迁移操作技能",
-          "llm_tldr_en": "Proposes a bridging action representation (relative wrist translation in head-camera frame) to transfer manipulation skills from human data to bi-manual robots, outperforming direct pose imitation.",
-          "llm_tldr_cn": "从人类数据迁移操作技能到机器人面临运动学差异问题。本文提出将相对手腕平移作为桥接动作表示，避免学习旋转信号，从而更有效地从人类操作视频迁移技能到双臂平行夹爪机器人，实验表明该方法优于直接姿态模仿。",
-          "llm_tldr": "从人类数据迁移操作技能到机器人面临运动学差异问题。本文提出将相对手腕平移作为桥接动作表示，避免学习旋转信号，从而更有效地从人类操作视频迁移技能到双臂平行夹爪机器人，实验表明该方法优于直接姿态模仿。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.28133v1",
-          "carry_days": 6
-        },
         {
           "id": "2606.31958v1",
           "source": "arxiv",
@@ -89,7 +44,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31958v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.29222v1",
@@ -131,127 +86,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.29222v1",
-          "carry_days": 4
-        },
-        {
-          "id": "2606.28196v1",
-          "source": "arxiv",
-          "title": "Learning Stable In-Grasp Manipulation in a Non-Dropping Action Space",
-          "abstract": "Traditionally, dexterous manipulation controllers are designed using analytic models constrained by strong assumptions about the hand and the objects being manipulated. Reinforcement learning (RL) has become another common approach in which skills are explored openly in an end-to-end manner but is inefficient because of unnoticeable instability and conflicts in learning objectives. This paper attempts to efficiently explore stable and accurate manipulation skills by decomposing dexterous skills into multiple simpler/analyzable components. Each skill component is subsequently learned with constraints and guidance from classical physics and control theory. Our work shows that for stable grasp, in-grasp reposition/reorientation with different objects, sensor/motor noise, latency, and frictional conditions, skill learning becomes efficient and stable with prior knowledge from theory.",
-          "authors": [
-            "Ha Thang Long Doan",
-            "Hikaru Arita",
-            "Kazuto Nakashima",
-            "Kenji Tahara"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-26T15:43:55+00:00",
-          "link": "https://arxiv.org/pdf/2606.28196v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "reinforcement learning for stable in-grasp dexterous manipulation",
-          "llm_evidence_cn": "强化学习用于稳定抓取内灵巧操作",
-          "llm_evidence": "强化学习用于稳定抓取内灵巧操作",
-          "canonical_evidence": "强化学习用于稳定抓取内灵巧操作",
-          "llm_tldr_en": "This paper decomposes dexterous manipulation skills into analyzable components and uses RL with physics-based constraints to learn stable in-grasp repositioning and reorientation.",
-          "llm_tldr_cn": "灵巧操作中，端到端强化学习因学习目标冲突和不稳定性而效率低下。该工作将灵巧技能分解为多个可分析的子组件，并利用经典物理和控制理论约束引导每个子组件的学习。实验表明，在稳定抓取、重定位和重定向任务中，该方法能高效探索出稳定且精确的操作策略。",
-          "llm_tldr": "灵巧操作中，端到端强化学习因学习目标冲突和不稳定性而效率低下。该工作将灵巧技能分解为多个可分析的子组件，并利用经典物理和控制理论约束引导每个子组件的学习。实验表明，在稳定抓取、重定位和重定向任务中，该方法能高效探索出稳定且精确的操作策略。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "reinforcement learning for robot control",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.28196v1",
-          "carry_days": 6
-        },
-        {
-          "id": "2606.28939v1",
-          "source": "arxiv",
-          "title": "ReGuide: From Test-Time Guidance to Self-Improving Diffusion Policies",
-          "abstract": "Behavior-cloned diffusion policies are expressive but remain vulnerable to covariate shift: small deviations from demonstrated states can compound into task failure. Existing methods address this either by expanding the training distribution through expert corrections or synthetic augmentation, or by steering a frozen policy at test time with guidance from a learned model. The former can be expensive or assumption-dependent, while the latter discards the corrected trajectories after execution. We introduce ReGuide, a self-improving framework that treats guided rollouts as reusable on-policy recovery data. ReGuide first uses Phase-Conditioned Guidance (PCG) to generate corrective rollouts: it constructs phase-specific latent targets, applies guidance only in the drifted-but-recoverable regime, and guides through the estimated clean action to match the dynamics model's training distribution. Successful guided rollouts are then absorbed back into the policy through ReGuide-FT, which fine-tunes the current checkpoint, or ReGuide-FS, which retrains from scratch on the augmented dataset; the two can also be composed and iterated. On Robomimic Can, Square, Transport, and Tool Hang, ReGuide improves base-policy success by $1.3$--$7.7\\times$, outperforms LPB in the test-time-only setting, and matched-data ablations show that the gains come from guided recovery data rather than additional rollouts alone.",
-          "authors": [
-            "Tzu-Hsiang Lin",
-            "Srinivas Shakkottai",
-            "Dileep Kalathil",
-            "P. R. Kumar"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.RO"
-          ],
-          "published": "2026-06-27T14:23:21+00:00",
-          "link": "https://arxiv.org/pdf/2606.28939v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "self-improving diffusion policies for robotics",
-          "llm_evidence_cn": "面向机器人的自改进扩散策略",
-          "llm_evidence": "面向机器人的自改进扩散策略",
-          "canonical_evidence": "面向机器人的自改进扩散策略",
-          "llm_tldr_en": "ReGuide treats guided rollouts as reusable on-policy data to improve behavior-cloned diffusion policies against covariate shift.",
-          "llm_tldr_cn": "针对行为克隆扩散策略受协变量偏移影响的问题，本文提出ReGuide自改进框架。通过相位条件引导（PCG）生成纠正性轨迹，并将其作为可复用的在策略恢复数据。该方法在机器人操作任务上有效降低了累积误差，提升了策略鲁棒性。",
-          "llm_tldr": "针对行为克隆扩散策略受协变量偏移影响的问题，本文提出ReGuide自改进框架。通过相位条件引导（PCG）生成纠正性轨迹，并将其作为可复用的在策略恢复数据。该方法在机器人操作任务上有效降低了累积误差，提升了策略鲁棒性。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "diffusion policy robotics",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.28939v1",
           "carry_days": 5
-        },
-        {
-          "id": "2606.28476v1",
-          "source": "arxiv",
-          "title": "FADA: Few-Shot Domain Adaptation via Dynamics Alignment for Humanoid Control",
-          "abstract": "High-precision humanoid control is limited by target-domain dynamics mismatch, where the same control objective can induce different realized motions under changes in terrain, payload, or actuator response. Existing methods either pursue zero-shot transfer through domain randomization or in-context adaptation without target-domain specialization, or require heavy adaptation pipelines that leverage target-domain data, such as model calibration, residual learning, or policy retraining. In this paper, we present FADA (Few-Shot Domain Adaptation via Dynamics Alignment), a three-stage Planner-Inverse Dynamics Model (Planner-IDM) framework for few-shot adaptation in humanoid control. FADA first trains an oracle policy with privileged information and then distills the oracle behavior into a deployable Planner-IDM student through DAgger. At deployment, FADA freezes the planner and finetunes only the IDM using approximately 2 minutes of target-domain rollouts with standard supervised learning. Rather than requiring optimal demonstrations or rewards, FADA uses the paired actions and observations that are observed during these rollouts as supervision, aligning the IDM's action generation with target-domain dynamics. Experiments show that FADA outperforms both in-context and end-to-end adaptation baselines, improving task performance under dynamics shifts and enabling real humanoid robots to execute diverse high-precision whole-body tasks. Implementation details and qualitative hardware rollout videos are available at https://lecar-lab.github.io/FADA-humanoid/.",
-          "authors": [
-            "Angchen Xie",
-            "Nikhil Sobanbabu",
-            "Ishayu Shikhare",
-            "Alan Wang",
-            "Max Simchowitz",
-            "Guanya Shi"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-26T16:05:10+00:00",
-          "link": "https://arxiv.org/pdf/2606.28476v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "few-shot domain adaptation for humanoid control with sim-to-real potential",
-          "llm_evidence_cn": "人形机器人控制的少样本域自适应，具有仿真到真实的潜力",
-          "llm_evidence": "人形机器人控制的少样本域自适应，具有仿真到真实的潜力",
-          "canonical_evidence": "人形机器人控制的少样本域自适应，具有仿真到真实的潜力",
-          "llm_tldr_en": "FADA proposes a three-stage planner-inverse dynamics model for few-shot adaptation to address dynamics mismatch in humanoid control.",
-          "llm_tldr_cn": "人形机器人控制面临动力学失配问题。现有方法要么使用域随机化进行零样本迁移，要么需要大量目标域数据。FADA提出三阶段规划器-逆动力学模型框架，利用少量目标域样本进行动力学对齐，实现少样本域自适应。实验验证了其在多种地形和负载变化下的有效性。该方法为机器人从仿真迁移到真实世界提供了高效方案。",
-          "llm_tldr": "人形机器人控制面临动力学失配问题。现有方法要么使用域随机化进行零样本迁移，要么需要大量目标域数据。FADA提出三阶段规划器-逆动力学模型框架，利用少量目标域样本进行动力学对齐，实现少样本域自适应。实验验证了其在多种地形和负载变化下的有效性。该方法为机器人从仿真迁移到真实世界提供了高效方案。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "sim to real transfer domain randomization for robotics",
-          "matched_requirement_id": "req-9",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.28476v1",
-          "carry_days": 6
         },
         {
           "id": "2607.01897v1",
@@ -276,19 +111,19 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "learning control policies from expert video without rewards",
-          "llm_evidence_cn": "从专家视频中学习控制策略，无需奖励",
-          "llm_evidence": "从专家视频中学习控制策略，无需奖励",
-          "canonical_evidence": "从专家视频中学习控制策略，无需奖励",
-          "llm_tldr_en": "Rank-Then-Act learns control from expert videos using a VLM trained as a progress scorer, then uses correlation-based rewards for RL.",
-          "llm_tldr_cn": "从专家演示中学习控制策略通常需要环境奖励。本文提出Rank-Then-Act，先训练VLM通过帧排序学习进度评分，再转化为相关性奖励用于强化学习，在多个操作任务上取得与有监督方法相当的性能，展示了无奖励模仿学习的新路径。",
-          "llm_tldr": "从专家演示中学习控制策略通常需要环境奖励。本文提出Rank-Then-Act，先训练VLM通过帧排序学习进度评分，再转化为相关性奖励用于强化学习，在多个操作任务上取得与有监督方法相当的性能，展示了无奖励模仿学习的新路径。",
+          "llm_evidence_en": "reward-free control using VLM-based progress scorer for RL",
+          "llm_evidence_cn": "基于VLM进度评分器的无奖励强化学习控制",
+          "llm_evidence": "基于VLM进度评分器的无奖励强化学习控制",
+          "canonical_evidence": "基于VLM进度评分器的无奖励强化学习控制",
+          "llm_tldr_en": "Rank-Then-Act uses a VLM ordinal scorer with GRPO to provide reward signals for RL from expert videos.",
+          "llm_tldr_cn": "针对机器人强化学习需大量环境奖励的问题，提出Rank-Then-Act框架，利用VLM离线训练进度排序评分器，通过GRPO从打乱帧序列中学习时间顺序。提出基于斯皮尔曼秩相关的奖励函数，将排序一致性转化为强化学习信号，实现从专家视频无监督学习策略。实验证明该方法在多种操控任务上有效。",
+          "llm_tldr": "针对机器人强化学习需大量环境奖励的问题，提出Rank-Then-Act框架，利用VLM离线训练进度排序评分器，通过GRPO从打乱帧序列中学习时间顺序。提出基于斯皮尔曼秩相关的奖励函数，将排序一致性转化为强化学习信号，实现从专家视频无监督学习策略。实验证明该方法在多种操控任务上有效。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
+          "matched_query_text": "vision language action model for robot",
+          "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2607.01897v1",
           "carry_days": 1
@@ -333,7 +168,7 @@
           "matched_requirement_id": "req-1",
           "selection_source": "carryover_cache",
           "paper_id": "2606.29850v1",
-          "carry_days": 3
+          "carry_days": 4
         },
         {
           "id": "2607.01067v1",
@@ -378,7 +213,7 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2607.01067v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.30192v1",
@@ -415,7 +250,7 @@
           "matched_requirement_id": "req-9",
           "selection_source": "carryover_cache",
           "paper_id": "2606.30192v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2607.00392v1",
@@ -455,7 +290,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2607.00392v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.29247v1",
@@ -497,7 +332,7 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2606.29247v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.31919v1",
@@ -544,7 +379,7 @@
           "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31919v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.31836v1",
@@ -587,7 +422,7 @@
           "matched_requirement_id": "req-3",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31836v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.31691v1",
@@ -629,7 +464,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31691v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.31682v1",
@@ -671,7 +506,7 @@
           "matched_requirement_id": "req-3",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31682v1",
-          "carry_days": 4
+          "carry_days": 5
         },
         {
           "id": "2606.31043v2",
@@ -709,7 +544,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.31043v2",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2607.02322v1",
@@ -750,46 +585,7 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2607.02322v1",
-          "carry_days": 4
-        },
-        {
-          "id": "2607.03146v1",
-          "source": "arxiv",
-          "title": "Exp2VLA: Enabling Vision-Language-Action for Drone Navigation from Expert Demonstrations",
-          "abstract": "Vision-language-action (VLA) models open a new path toward intuitive robot control by directly linking perception, language, and action in a single end-to-end framework. Yet for UAVs, practical adoption remains difficult because existing solutions are either computationally heavy or insufficiently capable in complex environments. In this work, we propose a practical expert-distillation pipeline (Exp2VLA) for language-conditioned drone navigation. The core idea is to distill expert behavior, obtained from reinforcement learning, teleoperation, or other controllers, into training data that can be used to fine-tune compact VLA models. This allows existing control strategies to be transferred into a unified language-guided navigation model, reducing manual system integration and lowering the barrier for deploying new robot behaviors. Experiments in both sim-to-sim and simulation-in-the-loop settings across multi-object scenes show that the fine-tuned models can handle varied semantic commands and generalize to unseen target compositions. The proposed framework demonstrates how expert-policy distillation can help mechatronic systems move from specialized control modules toward more flexible and reusable robot intelligence.",
-          "authors": [
-            "Van Huyen Dang",
-            "Kabilesh Rajendran",
-            "Erdi Sayar",
-            "Erdal Kayacan"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-03T09:37:48+00:00",
-          "link": "https://arxiv.org/pdf/2607.03146v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "VLA model for drone navigation from expert demonstrations",
-          "llm_evidence_cn": "从专家示范中学习无人机导航的视觉-语言-动作模型",
-          "llm_evidence": "从专家示范中学习无人机导航的视觉-语言-动作模型",
-          "canonical_evidence": "从专家示范中学习无人机导航的视觉-语言-动作模型",
-          "llm_tldr_en": "Proposes Exp2VLA, a pipeline to distill expert behavior from RL or teleoperation into compact VLA models for language-conditioned drone navigation.",
-          "llm_tldr_cn": "本文提出Exp2VLA，一种将专家行为（来自强化学习或遥操作）蒸馏为紧凑VLA模型的方法，用于语言引导的无人机导航。现有VLA模型在无人机上计算负担重或能力不足；Exp2VLA通过专家蒸馏实现高效迁移。在复杂环境中，该方法相比基线实现了更高的导航成功率和指令遵循度。该工作展示了VLA模型在无人机领域的潜力。",
-          "llm_tldr": "本文提出Exp2VLA，一种将专家行为（来自强化学习或遥操作）蒸馏为紧凑VLA模型的方法，用于语言引导的无人机导航。现有VLA模型在无人机上计算负担重或能力不足；Exp2VLA通过专家蒸馏实现高效迁移。在复杂环境中，该方法相比基线实现了更高的导航成功率和指令遵循度。该工作展示了VLA模型在无人机领域的潜力。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "vision language action model for robot",
-          "matched_requirement_id": "req-6",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.03146v1",
-          "carry_days": 3
+          "carry_days": 5
         },
         {
           "id": "2607.04265v1",
@@ -820,19 +616,19 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "online reinforcement learning for world-action models",
-          "llm_evidence_cn": "面向世界-动作模型的在线强化学习",
-          "llm_evidence": "面向世界-动作模型的在线强化学习",
-          "canonical_evidence": "面向世界-动作模型的在线强化学习",
-          "llm_tldr_en": "HALO-WA uses online RL with hybrid-attention to adapt world-action models to real-world precision errors.",
-          "llm_tldr_cn": "世界-动作模型在精密操作中因校准和接触动力学误差而失败。本文提出HALO-WA，利用混合注意力结构保持动作块时间一致性，并通过轻量actor-critic适配器从潜在特征和动作先验中在线适应。在装配任务中，该方法将成功率从不足50%提升至80%以上。",
-          "llm_tldr": "世界-动作模型在精密操作中因校准和接触动力学误差而失败。本文提出HALO-WA，利用混合注意力结构保持动作块时间一致性，并通过轻量actor-critic适配器从潜在特征和动作先验中在线适应。在装配任务中，该方法将成功率从不足50%提升至80%以上。",
+          "llm_evidence_en": "online RL for world-action models in robotic manipulation",
+          "llm_evidence_cn": "面向机器人操作世界动作模型的在线强化学习",
+          "llm_evidence": "面向机器人操作世界动作模型的在线强化学习",
+          "canonical_evidence": "面向机器人操作世界动作模型的在线强化学习",
+          "llm_tldr_en": "Proposes HALO-WA, a hybrid-attention latent-guided online RL framework that adapts world-action models to real-world precision errors via a lightweight actor-critic adapter.",
+          "llm_tldr_cn": "世界动作模型在精密操作中容易受校准和接触误差影响。本文提出HALO-WA，一种混合注意力潜在引导的在线强化学习框架，利用世界动作模型生成过程中的潜在特征和动作先验，通过轻量级演员-评论家适配器实现快速在线适应。该方法在保持动作块时间一致性的同时，提高了实际部署中的精度。实验证明其在多种精密操作任务中显著减少了最终阶段的误差。",
+          "llm_tldr": "世界动作模型在精密操作中容易受校准和接触误差影响。本文提出HALO-WA，一种混合注意力潜在引导的在线强化学习框架，利用世界动作模型生成过程中的潜在特征和动作先验，通过轻量级演员-评论家适配器实现快速在线适应。该方法在保持动作块时间一致性的同时，提高了实际部署中的精度。实验证明其在多种精密操作任务中显著减少了最终阶段的误差。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "reinforcement learning for robot control",
-          "matched_requirement_id": "req-2",
+          "matched_query_text": "reinforcement learning diffusion policy robot control",
+          "matched_requirement_id": "req-8",
           "selection_source": "carryover_cache",
           "paper_id": "2607.04265v1",
           "carry_days": 1
@@ -861,19 +657,19 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "generates personalized datasets for vision-language-action models",
-          "llm_evidence_cn": "为视觉-语言-动作模型生成个性化数据集",
-          "llm_evidence": "为视觉-语言-动作模型生成个性化数据集",
-          "canonical_evidence": "为视觉-语言-动作模型生成个性化数据集",
-          "llm_tldr_en": "PRISM generates personalized robotic datasets from a single image and language instruction to improve VLA model deployment.",
-          "llm_tldr_cn": "大规模VLA模型在用户特定环境中泛化不足，需要个性化数据集。本文提出PRISM，从单张图像和自然语言指令生成个性化机器人数据集，通过数字孪生场景和任务轨迹合成。实验表明使用PRISM数据微调的VLA模型在新环境中表现显著提升。",
-          "llm_tldr": "大规模VLA模型在用户特定环境中泛化不足，需要个性化数据集。本文提出PRISM，从单张图像和自然语言指令生成个性化机器人数据集，通过数字孪生场景和任务轨迹合成。实验表明使用PRISM数据微调的VLA模型在新环境中表现显著提升。",
+          "llm_evidence_en": "personalized robotic dataset generation for sim-to-real transfer",
+          "llm_evidence_cn": "面向仿真到真实迁移的个性化机器人数据集生成",
+          "llm_evidence": "面向仿真到真实迁移的个性化机器人数据集生成",
+          "canonical_evidence": "面向仿真到真实迁移的个性化机器人数据集生成",
+          "llm_tldr_en": "PRISM generates personalized robotic datasets from a single image and text instruction via digital cousin scenes.",
+          "llm_tldr_cn": "针对预训练策略在目标环境泛化差且遥操作采集成本高的问题，提出PRISM端到端管线，从单张图像和语言指令自动生成个性化机器人数据集。通过构建语义相似的数字孪生场景并合成运动轨迹，实现了低成本、高相似性的仿真数据生成，加速策略适应。",
+          "llm_tldr": "针对预训练策略在目标环境泛化差且遥操作采集成本高的问题，提出PRISM端到端管线，从单张图像和语言指令自动生成个性化机器人数据集。通过构建语义相似的数字孪生场景并合成运动轨迹，实现了低成本、高相似性的仿真数据生成，加速策略适应。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "vision language action model for robot",
-          "matched_requirement_id": "req-6",
+          "matched_query_text": "sim to real transfer domain randomization for robotics",
+          "matched_requirement_id": "req-9",
           "selection_source": "carryover_cache",
           "paper_id": "2607.04880v1",
           "carry_days": 1
@@ -920,7 +716,7 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2607.03461v1",
-          "carry_days": 3
+          "carry_days": 4
         },
         {
           "id": "2607.03903v1",
@@ -951,13 +747,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "conditional diffusion model for multi-task offline safe RL",
-          "llm_evidence_cn": "用于多任务离线安全强化学习的条件扩散模型",
-          "llm_evidence": "用于多任务离线安全强化学习的条件扩散模型",
-          "canonical_evidence": "用于多任务离线安全强化学习的条件扩散模型",
-          "llm_tldr_en": "Proposes CDCP, a conditional diffusion model with contextual prompts for multi-task offline safe RL, addressing safety and OOD actions.",
-          "llm_tldr_cn": "该论文提出CDCP，一个结合上下文提示的条件扩散模型，用于多任务离线安全强化学习。它通过条件扩散过程生成安全动作，同时处理多任务、安全约束和分布外动作挑战。实验表明该方法在安全性和回报之间取得较好平衡，推动了扩散模型在安全RL中的应用。",
-          "llm_tldr": "该论文提出CDCP，一个结合上下文提示的条件扩散模型，用于多任务离线安全强化学习。它通过条件扩散过程生成安全动作，同时处理多任务、安全约束和分布外动作挑战。实验表明该方法在安全性和回报之间取得较好平衡，推动了扩散模型在安全RL中的应用。",
+          "llm_evidence_en": "conditional diffusion model for multi-task offline safe reinforcement learning",
+          "llm_evidence_cn": "条件扩散模型用于多任务离线安全强化学习",
+          "llm_evidence": "条件扩散模型用于多任务离线安全强化学习",
+          "canonical_evidence": "条件扩散模型用于多任务离线安全强化学习",
+          "llm_tldr_en": "CDCP uses a conditional diffusion model with contextual prompts to tackle multi-task offline safe RL, handling safety constraints and out-of-distribution actions simultaneously.",
+          "llm_tldr_cn": "针对多任务离线安全强化学习中多任务、安全约束和分布外动作的三重挑战，本文提出条件扩散模型CDCP，通过上下文提示将任务和安全约束编码进扩散过程，生成既安全又高回报的策略。在多个连续控制任务上，该方法在满足安全约束的同时实现了奖励最大化，为机器人安全学习提供了新范式。",
+          "llm_tldr": "针对多任务离线安全强化学习中多任务、安全约束和分布外动作的三重挑战，本文提出条件扩散模型CDCP，通过上下文提示将任务和安全约束编码进扩散过程，生成既安全又高回报的策略。在多个连续控制任务上，该方法在满足安全约束的同时实现了奖励最大化，为机器人安全学习提供了新范式。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -1006,52 +802,7 @@
           "matched_requirement_id": "req-3",
           "selection_source": "carryover_cache",
           "paper_id": "2607.01051v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2607.05780v1",
-          "source": "arxiv",
-          "title": "FORGE: Towards Functional Tool-Use Generalization via Keypoint Trajectory Reasoning",
-          "abstract": "While humans readily repurpose a book, a stone, or a shoe to drive a nail, robots trained on specific tools fail to transfer the same function to novel ones -- a gap we formalize as functional generalization. Such tools share a common functional intent that is visually recognizable, yet this perceptual similarity does not carry over to action space, where each tool demands an entirely different motor pattern. To bridge this gap, we explore intermediate representations including affordance images, human video prompts, and 2D keypoint trajectories, finding that keypoint trajectories best balance functional expressiveness and action groundability. Building on this, we propose FunctiOnal Reasoning and Grounded Execution (FORGE), a two-stage policy that decouples functional reasoning from action execution: predicting generalizable keypoint trajectories from action-free data, then grounding them into robot actions with limited demonstrations. On a seven-tool hitting-function benchmark, FORGE consistently outperforms state-of-the-art methods on unseen tools in both simulation and the real world, achieving over 2X improvement in average success rate.",
-          "authors": [
-            "Chuhao Zhou",
-            "Liquan Wang",
-            "Shuxin Cao",
-            "Xiangyu Chen",
-            "Yuxuan Hu",
-            "Boyu Ma",
-            "Animesh Garg",
-            "Jianfei Yang"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.AI",
-            "cs.CV"
-          ],
-          "published": "2026-07-07T03:10:57+00:00",
-          "link": "https://arxiv.org/pdf/2607.05780v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Functional tool-use generalization via keypoint trajectory reasoning, related to imitation learning for manipulation",
-          "llm_evidence_cn": "通过关键点轨迹推理实现功能性工具使用泛化，与模仿学习操作相关",
-          "llm_evidence": "通过关键点轨迹推理实现功能性工具使用泛化，与模仿学习操作相关",
-          "canonical_evidence": "通过关键点轨迹推理实现功能性工具使用泛化，与模仿学习操作相关",
-          "llm_tldr_en": "Proposes FORGE, a two-stage framework for functional tool-use generalization using keypoint trajectory reasoning, enabling robots to transfer tool functions to novel tools.",
-          "llm_tldr_cn": "该论文提出FORGE框架，通过关键点轨迹作为中间表示，实现机器人的功能性工具使用泛化。首先进行功能推理选择关键点轨迹，然后接地执行生成机器人动作。解决了工具-动作映射的泛化难题，对模仿学习机器人操作具有重要价值。",
-          "llm_tldr": "该论文提出FORGE框架，通过关键点轨迹作为中间表示，实现机器人的功能性工具使用泛化。首先进行功能推理选择关键点轨迹，然后接地执行生成机器人动作。解决了工具-动作映射的泛化难题，对模仿学习机器人操作具有重要价值。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.05780v1",
-          "carry_days": 1
+          "carry_days": 3
         },
         {
           "id": "2607.04367v1",
@@ -1077,9 +828,9 @@
           "llm_evidence_cn": "强化学习用于自适应食物切割",
           "llm_evidence": "强化学习用于自适应食物切割",
           "canonical_evidence": "强化学习用于自适应食物切割",
-          "llm_tldr_en": "A perception-manipulation system for food cutting uses RL to balance speed and efficiency, with a knife selection module achieving 100% success.",
-          "llm_tldr_cn": "烹饪机器人切割不同食物需要适应性的策略。本文提出感知-操作框架，先通过试切力数据选择最佳刀具，再使用强化学习在线调节切割速度和力度。实验在未知食物上实现100%刀具选择成功率，且RL策略优于固定策略。",
-          "llm_tldr": "烹饪机器人切割不同食物需要适应性的策略。本文提出感知-操作框架，先通过试切力数据选择最佳刀具，再使用强化学习在线调节切割速度和力度。实验在未知食物上实现100%刀具选择成功率，且RL策略优于固定策略。",
+          "llm_tldr_en": "A perception-manipulation system uses RL to adapt cutting speed and energy efficiency, with a knife selection module that achieves 100% success on unseen foods.",
+          "llm_tldr_cn": "烹饪机器人中食物切割因食材多样性而困难。本文提出感知-操作框架，先通过预切试刀利用力数据选择合适刀具，然后采用强化学习自适应调整切割策略以平衡速度和能耗。实验显示刀具选择模块在未见食材上成功率100%，RL策略优于固定策略。",
+          "llm_tldr": "烹饪机器人中食物切割因食材多样性而困难。本文提出感知-操作框架，先通过预切试刀利用力数据选择合适刀具，然后采用强化学习自适应调整切割策略以平衡速度和能耗。实验显示刀具选择模块在未见食材上成功率100%，RL策略优于固定策略。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -1119,13 +870,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Benchmark and evaluation framework for VLMs in diverse robot applications",
-          "llm_evidence_cn": "面向多种机器人应用的视觉语言模型基准与评估框架",
-          "llm_evidence": "面向多种机器人应用的视觉语言模型基准与评估框架",
-          "canonical_evidence": "面向多种机器人应用的视觉语言模型基准与评估框架",
-          "llm_tldr_en": "Proposes RoboVista, a benchmark and RQA evaluation framework for VLMs in diverse robot applications, covering perception, planning, and reasoning.",
-          "llm_tldr_cn": "该论文提出RoboVista基准和机器人问答评估框架，用于评估视觉语言模型在多机器人体、多变环境下的感知、规划和推理能力。弥补了现有基准仅依赖遥操作端到端数据集的不足，提供了模块化评估，有助于推动基础模型在机器人感知与操作中的对齐。",
-          "llm_tldr": "该论文提出RoboVista基准和机器人问答评估框架，用于评估视觉语言模型在多机器人体、多变环境下的感知、规划和推理能力。弥补了现有基准仅依赖遥操作端到端数据集的不足，提供了模块化评估，有助于推动基础模型在机器人感知与操作中的对齐。",
+          "llm_evidence_en": "evaluating VLMs for diverse robot perception and planning applications",
+          "llm_evidence_cn": "评估视觉语言模型在多样化机器人感知与规划中的应用",
+          "llm_evidence": "评估视觉语言模型在多样化机器人感知与规划中的应用",
+          "canonical_evidence": "评估视觉语言模型在多样化机器人感知与规划中的应用",
+          "llm_tldr_en": "RoboVista and RQA framework for modular evaluation of VLMs across diverse robot applications, enabling finer-grained assessment.",
+          "llm_tldr_cn": "本文针对视觉语言模型在多样化机器人应用中缺乏模块化评估的问题，提出机器人问答评估框架RoboVista基准。该基准从真实机器人系统、研究论文和专家注释中整理数据，分解机器人决策组件进行细粒度评估。实验表明该框架能有效捕捉不同应用场景下VLM能力的差异，为通用机器人推理提供评估工具。",
+          "llm_tldr": "本文针对视觉语言模型在多样化机器人应用中缺乏模块化评估的问题，提出机器人问答评估框架RoboVista基准。该基准从真实机器人系统、研究论文和专家注释中整理数据，分解机器人决策组件进行细粒度评估。实验表明该框架能有效捕捉不同应用场景下VLM能力的差异，为通用机器人推理提供评估工具。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -1134,46 +885,6 @@
           "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2607.04610v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.03828v1",
-          "source": "arxiv",
-          "title": "ObjRetarget: An Object-Aware Motion Retargeting Framework with Anthropomorphic Arm Constraints and Polyhedral Hand Modeling",
-          "abstract": "Learning robot dexterous manipulation from human manipulation videos requires reliably retargeting human intent to executable robot actions while maintaining stable hand-object contact, which remains a key challenge in embodied intelligence. Existing retargeting methods often ignore explicit contact modeling or rely on reinforcement learning, resulting in limited accuracy and generalization. To address this, we propose ObjRetarget, a human-to-robot motion retargeting framework for learning robot dexterous manipulation from human videos, which integrates anthropomorphic arm trajectory constraints with structured hand-object geometric modeling. For arm motion, reference trajectories extracted from human videos are used for initialization, followed by anthropomorphic constraints and redundancy-aware optimization to generate natural and accurate movements. For hand manipulation, ObjRetarget represents multi-finger contacts using polytope clusters and preserves contact structure through geometric invariants to improve stability. Experiments on real robots show that ObjRetarget improves manipulation success rates and contact stability across multiple dexterous tasks, and generalizes well to different demonstrations, object poses, and task settings.",
-          "authors": [
-            "Yuanchuan Lai",
-            "Qing Gao",
-            "Ziyan Liang",
-            "Junjie Hu",
-            "Zhaojie Ju"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-04T11:31:23+00:00",
-          "link": "https://arxiv.org/pdf/2607.03828v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Motion retargeting from human video to robot for dexterous manipulation learning",
-          "llm_evidence_cn": "从人类视频到机器人的运动重定向用于灵巧操作学习",
-          "llm_evidence": "从人类视频到机器人的运动重定向用于灵巧操作学习",
-          "canonical_evidence": "从人类视频到机器人的运动重定向用于灵巧操作学习",
-          "llm_tldr_en": "Proposes ObjRetarget, a framework for human-to-robot motion retargeting with anthropomorphic arm constraints and polyhedral hand modeling for dexterous manipulation.",
-          "llm_tldr_cn": "该论文提出ObjRetarget，一个从人类操作视频到机器人的运动重定向框架。集成拟人化手臂轨迹约束和结构化手部几何建模，显式建模手-物体接触。解决了现有方法忽略接触或依赖强化学习导致精度不足的问题，为模仿学习机器人灵巧操作提供了高效的数据生成途径。",
-          "llm_tldr": "该论文提出ObjRetarget，一个从人类操作视频到机器人的运动重定向框架。集成拟人化手臂轨迹约束和结构化手部几何建模，显式建模手-物体接触。解决了现有方法忽略接触或依赖强化学习导致精度不足的问题，为模仿学习机器人灵巧操作提供了高效的数据生成途径。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.03828v1",
           "carry_days": 1
         },
         {
@@ -1215,48 +926,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.32027v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2607.03512v1",
-          "source": "arxiv",
-          "title": "High-Precision Formation Control for Heterogeneous Multi-Robot Systems via Hierarchical Hybrid Physics-Informed Deep Reinforcement Learning",
-          "abstract": "Existing classical control methods commonly require precise models and struggle to cope with model uncertainties and external disturbances, while end-to-end reinforcement learning (RL) approaches suffer from low sample efficiency and poor convergence. To overcome these challenges, this paper proposes a hierarchical hybrid physics-informed deep reinforcement learning (HHy-PIDRL) framework, aiming to realize high-precision, highly responsive formation control for heterogeneous multi-robot systems (HMRSs). The proposed framework contains two layers. Specifically, first, the upper layer designs an autonomous navigation policy network for Ackermann-steering leader based on the Soft Actor-Critic (SAC) deep reinforcement learning (DRL) algorithm. Second, the lower module integrates a high-fidelity physical feed-forward controller, a classical proportional-derivative (PD) controller, and an adaptive DRL residual controller to propose an effective hybrid model and DRL (HM-DRL)-based formation control policy network. Third, a unique hierarchical reward function is designed for training Omnidirectional followers, which effectively guides agents toward a refined, stable control policy. Experimental results demonstrate that, the success rate of both the upper-layer autonomous navigation policy network and the HM-DRL based formation control policy networks reach 100%. Meanwhile, ablation experiments are conducted to verify the validity and credibility of the proposed method.",
-          "authors": [
-            "Yanzhou Li",
-            "Guangli Chen",
-            "Xiao-Meng Li",
-            "Wenjian Zhong",
-            "Yongkang Lu",
-            "Shenghuang He"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-03T17:38:17+00:00",
-          "link": "https://arxiv.org/pdf/2607.03512v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Hierarchical physics-informed deep RL for multi-robot formation control",
-          "llm_evidence_cn": "分层物理信息深度强化学习用于多机器人编队控制",
-          "llm_evidence": "分层物理信息深度强化学习用于多机器人编队控制",
-          "canonical_evidence": "分层物理信息深度强化学习用于多机器人编队控制",
-          "llm_tldr_en": "A hierarchical hybrid physics-informed deep RL framework for high-precision formation control of heterogeneous multi-robot systems.",
-          "llm_tldr_cn": "异构多机器人编队控制面临模型不确定性和样本效率问题。本文提出分层混合物理信息深度强化学习（HHy-PIDRL），上层用SAC学习导航策略，下层结合物理信息确保高精度。在仿真中实现高响应编队控制，克服了经典控制和端到端RL的局限。",
-          "llm_tldr": "异构多机器人编队控制面临模型不确定性和样本效率问题。本文提出分层混合物理信息深度强化学习（HHy-PIDRL），上层用SAC学习导航策略，下层结合物理信息确保高精度。在仿真中实现高响应编队控制，克服了经典控制和端到端RL的局限。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "reinforcement learning for robot control",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.03512v1",
-          "carry_days": 1
+          "carry_days": 3
         },
         {
           "id": "2607.06882v1",
@@ -1283,13 +953,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "visual robot navigation using frozen MLLM for waypoint planning",
-          "llm_evidence_cn": "基于冻结多模态大语言模型的视觉导航，体现基础模型用于任务规划",
-          "llm_evidence": "基于冻结多模态大语言模型的视觉导航，体现基础模型用于任务规划",
-          "canonical_evidence": "基于冻结多模态大语言模型的视觉导航，体现基础模型用于任务规划",
-          "llm_tldr_en": "GemNav adapts a frozen MLLM via LoRA for visual navigation, using discrete-token waypoint output without separate visual encoder or regression head, achieving competitive performance with standard recipes.",
-          "llm_tldr_cn": "针对现有视觉导航策略依赖专用视觉编码器和大量数据的问题，GemNav提出直接使用冻结的多模态大语言模型（MLLM），通过低秩适配（LoRA）仅调优语言塔，将导航航点输出为离散token，无需辅助编码器或回归头。实验表明该方法在多个仿真场景中达到与标准方案相当的效果，展示了MLLM作为基础模型在机器人导航任务规划中的潜力。",
-          "llm_tldr": "针对现有视觉导航策略依赖专用视觉编码器和大量数据的问题，GemNav提出直接使用冻结的多模态大语言模型（MLLM），通过低秩适配（LoRA）仅调优语言塔，将导航航点输出为离散token，无需辅助编码器或回归头。实验表明该方法在多个仿真场景中达到与标准方案相当的效果，展示了MLLM作为基础模型在机器人导航任务规划中的潜力。",
+          "llm_evidence_en": "MLLM-based visual navigation policy using discrete tokens",
+          "llm_evidence_cn": "基于多模态大语言模型的视觉导航策略，使用离散令牌",
+          "llm_evidence": "基于多模态大语言模型的视觉导航策略，使用离散令牌",
+          "canonical_evidence": "基于多模态大语言模型的视觉导航策略，使用离散令牌",
+          "llm_tldr_en": "GemNav adapts a frozen MLLM via LoRA for visual robot navigation, outputting discrete waypoint tokens without a separate action head.",
+          "llm_tldr_cn": "本文针对基于大模型的视觉导航需专用编码器和动作头的问题，提出GemNav，仅通过LoRA微调多模态大语言模型的语言塔，输出离散航点令牌实现导航。方法避免了额外视觉编码器和连续回归头，在仿真环境中展示了有效导航性能。",
+          "llm_tldr": "本文针对基于大模型的视觉导航需专用编码器和动作头的问题，提出GemNav，仅通过LoRA微调多模态大语言模型的语言塔，输出离散航点令牌实现导航。方法避免了额外视觉编码器和连续回归头，在仿真环境中展示了有效导航性能。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -1345,68 +1015,21 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "video pretraining specifically designed for embodied intelligence",
-          "llm_evidence_cn": "专门为具身智能设计的视频预训练",
-          "llm_evidence": "专门为具身智能设计的视频预训练",
-          "canonical_evidence": "专门为具身智能设计的视频预训练",
-          "llm_tldr_en": "LingBot-Video uses Mixture-of-Experts video pretraining tailored for embodied intelligence, bridging domain mismatch.",
-          "llm_tldr_cn": "现有视频生成模型偏向内容创作，与机器人控制存在领域差异。本文提出LingBot-Video，采用MoE架构和机器人导向数据增强，构建专为具身智能设计的DiT视频预训练范式。在多个机器人任务上验证了其优于通用视频模型。",
-          "llm_tldr": "现有视频生成模型偏向内容创作，与机器人控制存在领域差异。本文提出LingBot-Video，采用MoE架构和机器人导向数据增强，构建专为具身智能设计的DiT视频预训练范式。在多个机器人任务上验证了其优于通用视频模型。",
+          "llm_evidence_en": "Mixture-of-Experts video pretraining for embodied intelligence",
+          "llm_evidence_cn": "混合专家视频预训练用于具身智能",
+          "llm_evidence": "混合专家视频预训练用于具身智能",
+          "canonical_evidence": "混合专家视频预训练用于具身智能",
+          "llm_tldr_en": "Proposes LingBot-Video, a DiT-based MoE video pretraining paradigm for embodied intelligence, scaling pretraining from scratch with robot-oriented data augmentation.",
+          "llm_tldr_cn": "视频生成模型对具身智能存在域不匹配问题。本文提出LingBot-Video，基于扩散Transformer的混合专家视频预训练范式，专门为具身智能设计。架构上采用MoE提升效率，数据上构建机器人增强数据管道。在大规模预训练后，模型在机器人控制和感知任务上表现优异，验证了针对具身的视频预训练的有效性。",
+          "llm_tldr": "视频生成模型对具身智能存在域不匹配问题。本文提出LingBot-Video，基于扩散Transformer的混合专家视频预训练范式，专门为具身智能设计。架构上采用MoE提升效率，数据上构建机器人增强数据管道。在大规模预训练后，模型在机器人控制和感知任务上表现优异，验证了针对具身的视频预训练的有效性。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI research",
-          "matched_requirement_id": "req-1",
+          "matched_query_text": "foundation models for robot perception and manipulation",
+          "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2607.07675v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.02646v1",
-          "source": "arxiv",
-          "title": "EVA-Client: A Unified Data Collection, Inference, and Deployment Framework for Embodied Policies on Real Robots",
-          "abstract": "We present EVA-Client, an open-source framework for deployment, data collection, and evaluation of trained manipulation policies on real robots. Sitting between a policy server and the physical hardware, EVA-Client unifies the real-robot stages of the policy iteration loop within a single codebase. It makes three contributions. First, a component-decoupled architecture in which robot backends, inference strategies, and transport middlewares form an orthogonal grid: adding a robot or a strategy touches only its own layer. Second, inspectable execution through Debug, Collect, and Eval workflows, with modes ranging from open-loop simulation to continuous real-time control. Third, every evaluation run doubles as a data collection, recording full rollouts in training-ready format alongside exhaustive logs and a side-by-side comparison viewer, so each evaluation feeds the next round of training rather than ending as an unrecorded impression. EVA-Client further consolidates major real-time inference strategies, synchronous and asynchronous execution, ACT-style temporal ensembling, Real-Time Chunking, and a naive-async ablation baseline, behind a single configuration surface.",
-          "authors": [
-            "Heqing Yang",
-            "Yang Yi",
-            "Liyao Wang",
-            "Linqing Zhong",
-            "Donglin Yang",
-            "Ruipu Wu",
-            "Zitong Bai",
-            "Fengjiao Chen",
-            "Manyuan Zhang",
-            "Linjiang Huang",
-            "Si Liu"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV"
-          ],
-          "published": "2026-07-02T17:59:52+00:00",
-          "link": "https://arxiv.org/pdf/2607.02646v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Unified framework for deploying embodied policies on real robots",
-          "llm_evidence_cn": "在真实机器人上部署具身策略的统一框架",
-          "llm_evidence": "在真实机器人上部署具身策略的统一框架",
-          "canonical_evidence": "在真实机器人上部署具身策略的统一框架",
-          "llm_tldr_en": "EVA-Client provides an open-source framework for data collection, inference, and evaluation of manipulation policies on real robots with modular architecture.",
-          "llm_tldr_cn": "将训练后的操作策略部署到真实机器人涉及数据收集、推理和执行等多个环节，现有工具链分离且难以统一。EVA-Client提出组件解耦架构，将机器人后端、推理策略和传输中间件正交组合，并支持调试、收集和评估三种工作流。该框架降低了真实机器人上策略迭代的工程成本，加速了从仿真到实物的迁移。",
-          "llm_tldr": "将训练后的操作策略部署到真实机器人涉及数据收集、推理和执行等多个环节，现有工具链分离且难以统一。EVA-Client提出组件解耦架构，将机器人后端、推理策略和传输中间件正交组合，并支持调试、收集和评估三种工作流。该框架降低了真实机器人上策略迭代的工程成本，加速了从仿真到实物的迁移。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI robot learning papers",
-          "matched_requirement_id": "req-7",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.02646v1",
           "carry_days": 1
         },
         {
@@ -1447,7 +1070,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2607.07252v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
           "id": "2607.04714v1",
@@ -1489,52 +1112,7 @@
           "matched_requirement_id": "req-3",
           "selection_source": "carryover_cache",
           "paper_id": "2607.04714v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.07403v1",
-          "source": "arxiv",
-          "title": "Multi-Agent Robotic Control with Onboard Vision-Language Models",
-          "abstract": "Vision Language Models (VLMs) and Vision Language Action (VLA) models have shown promise in robotic control. Yet, they face significant challenges regarding explainability, generalization, and compute requirements. This paper presents a Multi-Agent System (MAS) architecture that addresses these limitations by deploying specialized agents on onboard hardware - eliminating dependence on external compute. The system controls a multi-purpose autonomous mobile manipulator in a simulated industrial warehouse, fulfilling five task categories: safety inspection, warehouse maintenance, warehouse search, package quality verification, and responding to human requests. Compact VLMs (3-20B parameters) are used throughout, with fine-tuning applied to improve package inspection accuracy. A novel \"Megamind\" orchestration agent mitigates context retention issues inherent to long-horizon planning with smaller models. The system was validated in a hardware-in-the-loop simulation using an AMD Ryzen(TM) AI mini PC. Results demonstrate that a fully onboard MAS architecture is a viable, cost-efficient alternative to cloud-dependent deployments, with strong potential for real-world transfer. The simulation environment has been released as open source under the Apache 2.0 licence.",
-          "authors": [
-            "Kajetan Rachwał",
-            "Maciej Majek",
-            "Bartłomiej Boczek",
-            "Jakub Matejczyk",
-            "Dominik Matejkowski",
-            "Adam Dąbrowski",
-            "Tim Seyde",
-            "Alexander Amini",
-            "Maria Ganzha"
-          ],
-          "primary_category": "cs.MA",
-          "categories": [
-            "cs.MA",
-            "cs.RO"
-          ],
-          "published": "2026-07-08T13:37:31+00:00",
-          "link": "https://arxiv.org/pdf/2607.07403v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Multi-agent robotic control with onboard VLM/VLA",
-          "llm_evidence_cn": "基于机载视觉语言模型的多机器人控制",
-          "llm_evidence": "基于机载视觉语言模型的多机器人控制",
-          "canonical_evidence": "基于机载视觉语言模型的多机器人控制",
-          "llm_tldr_en": "MAS architecture using compact onboard VLMs for multi-agent robotic control in a simulated warehouse, eliminating external compute and improving explainability.",
-          "llm_tldr_cn": "本文提出多智能体系统架构，在机载硬件上部署紧凑VLM（3-20B参数）控制移动机械臂，解决传统VLM依赖外部计算、可解释性差等问题。系统在模拟工业仓库中完成多种任务，通过微调提升特定检测性能。实验表明机载VLM可有效实现多任务多机器人控制。",
-          "llm_tldr": "本文提出多智能体系统架构，在机载硬件上部署紧凑VLM（3-20B参数）控制移动机械臂，解决传统VLM依赖外部计算、可解释性差等问题。系统在模拟工业仓库中完成多种任务，通过微调提升特定检测性能。实验表明机载VLM可有效实现多任务多机器人控制。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "vision language action model for robot",
-          "matched_requirement_id": "req-6",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.07403v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
           "id": "2607.06988v1",
@@ -1571,67 +1149,21 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Steering world-action models from human videos via test-time training",
-          "llm_evidence_cn": "通过测试时训练从人类视频引导世界动作模型",
-          "llm_evidence": "通过测试时训练从人类视频引导世界动作模型",
-          "canonical_evidence": "通过测试时训练从人类视频引导世界动作模型",
-          "llm_tldr_en": "WAM-TTT uses test-time training to absorb human videos into adaptive memory inside a frozen world-action model, steering it via self-supervised video prediction.",
-          "llm_tldr_cn": "本文提出WAM-TTT，一种测试时训练框架，通过自监督视频预测将人类演示视频吸收到冻结的世界动作模型的轻量自适应记忆中。元训练阶段使用配对的人-机器人数据对齐表示。测试时仅需无标签人类视频即可引导模型适配新任务。该方法避免了微调或长上下文条件，提高了泛化性。",
-          "llm_tldr": "本文提出WAM-TTT，一种测试时训练框架，通过自监督视频预测将人类演示视频吸收到冻结的世界动作模型的轻量自适应记忆中。元训练阶段使用配对的人-机器人数据对齐表示。测试时仅需无标签人类视频即可引导模型适配新任务。该方法避免了微调或长上下文条件，提高了泛化性。",
+          "llm_evidence_en": "steering world-action models from human videos at test time",
+          "llm_evidence_cn": "通过人类视频在测试时引导世界-动作模型",
+          "llm_evidence": "通过人类视频在测试时引导世界-动作模型",
+          "canonical_evidence": "通过人类视频在测试时引导世界-动作模型",
+          "llm_tldr_en": "WAM-TTT uses self-supervised video prediction to adapt frozen world-action models to new tasks using unlabeled human videos at test time.",
+          "llm_tldr_cn": "现有机器人基础模型需要额外演示或微调才能适应新任务。WAM-TTT提出测试时训练框架，通过自监督视频预测将未标注人类视频吸收到轻量自适应记忆中，并引入元训练阶段对齐人与机器人行为。实验表明，仅凭少量人类视频即可有效引导模型完成新任务变体，无需额外机器人数据。",
+          "llm_tldr": "现有机器人基础模型需要额外演示或微调才能适应新任务。WAM-TTT提出测试时训练框架，通过自监督视频预测将未标注人类视频吸收到轻量自适应记忆中，并引入元训练阶段对齐人与机器人行为。实验表明，仅凭少量人类视频即可有效引导模型完成新任务变体，无需额外机器人数据。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
+          "matched_query_text": "vision language action model for robot",
+          "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2607.06988v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.02501v2",
-          "source": "arxiv",
-          "title": "Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots",
-          "abstract": "Embodied AI models now span vision-language-action (VLA) models and world-action models (WAMs), but practical deployment remains fragmented across model-specific Python stacks, backend assumptions, and robot-side glue code, especially on heterogeneous edge devices. Existing inference runtimes are designed mainly for request-response serving and therefore do not satisfy the runtime contract of embodied deployment: multi-rate execution inside closed-loop control, latency-first batch-1 inference on heterogeneous hardware, and extensible embodied interfaces beyond fixed token I/O. We present Embodied$.$cpp, a portable C++ inference runtime for embodied models. Based on an architectural analysis of representative VLA models and WAMs, Embodied$.$cpp captures a shared execution path and organizes it into five layers: input adapters, sequence builders, backbone execution, head plugins, and deployment adapters. The runtime provides modular multi-rate execution, latency-first fused inference, and extensible operator and I/O support, enabling deployment across heterogeneous devices, robots, and simulators through one backend abstraction. We evaluate Embodied$.$cpp on two VLA models, HY-VLA and pi0.5, and on a preliminary WAM benchmark using a LingBot-VA Transformer block. The VLA deployments achieve successful closed-loop execution with 100.0% and 91.0% task success rates, respectively. The WAM benchmark reduces block memory from 312.2 MiB to 88.1 MiB. These results show that Embodied$.$cpp improves deployment efficiency while preserving high accuracy across diverse embodied model architectures.",
-          "authors": [
-            "Ling Xu",
-            "Chuyu Han",
-            "Borui Li",
-            "Hao Wu",
-            "Shiqi Jiang",
-            "Ting Cao",
-            "Chuanyou Li",
-            "Sheng Zhong",
-            "Shuai Wang"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV",
-            "cs.OS"
-          ],
-          "published": "2026-07-02T17:58:28+00:00",
-          "link": "https://arxiv.org/pdf/2607.02501v2",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Portable inference runtime for embodied AI models",
-          "llm_evidence_cn": "具身AI模型的便携推理运行时",
-          "llm_evidence": "具身AI模型的便携推理运行时",
-          "canonical_evidence": "具身AI模型的便携推理运行时",
-          "llm_tldr_en": "Embodied.cpp is a portable C++ inference runtime for VLA and world-action models on heterogeneous robots.",
-          "llm_tldr_cn": "该论文提出Embodied.cpp，一个便携C++推理运行时，专门面向异构机器人上具身AI模型（VLA和WAM）的部署。它通过多速率闭环控制、低延迟批处理推理和可扩展接口，解决了现有运行时无法满足具身部署需求的问题。",
-          "llm_tldr": "该论文提出Embodied.cpp，一个便携C++推理运行时，专门面向异构机器人上具身AI模型（VLA和WAM）的部署。它通过多速率闭环控制、低延迟批处理推理和可扩展接口，解决了现有运行时无法满足具身部署需求的问题。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI research",
-          "matched_requirement_id": "req-1",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.02501v2",
           "carry_days": 1
         },
         {
@@ -1672,10 +1204,393 @@
           "matched_requirement_id": "req-1",
           "selection_source": "carryover_cache",
           "paper_id": "2607.00836v3",
+          "carry_days": 2
+        },
+        {
+          "id": "2607.08354v1",
+          "source": "arxiv",
+          "title": "SkillPlug: Unsupervised Skill Mining for Few-Shot Adaptation in Robotic Manipulation",
+          "abstract": "Learning transferable visuomotor imitation policies that generalize across diverse manipulation tasks and adapt rapidly to new tasks from only a handful of demonstrations remains challenging. Most modern policies are trained end-to-end to map observations directly to low-level actions, offering little explicit structure for reusing and recombining behaviors across tasks and making transfer data-inefficient under limited supervision. We propose SkillPlug, a plug-in framework that augments an existing visuomotor policy with a skill-conditioning module and mines a shared, transferable skill library from raw multi-task demonstrations. SkillPlug learns skills via self-supervised objectives that promote compact, reusable, and non-redundant behavior-level primitives, forming a task-shared prior for compositional control. After skill mining, we keep the learned skills fixed and specialize to unseen tasks by fine-tuning only lightweight router and action head, enabling efficient adaptation without full end-to-end retraining. We evaluate SkillPlug on two simulation benchmarks and on a real robot, and observe that the mined transferable skills consistently improve both multi-task performance and few-shot adaptation. Overall, SkillPlug offers a scalable way to mine reusable skills that improve data-efficient generalization in robotic manipulation.",
+          "authors": [
+            "Zi-han Ding",
+            "Ziwei Wang"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-09T11:02:35+00:00",
+          "link": "https://arxiv.org/pdf/2607.08354v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "unsupervised skill mining for few-shot adaptation in robotic manipulation",
+          "llm_evidence_cn": "无监督技能挖掘用于机器人操作的少样本适应",
+          "llm_evidence": "无监督技能挖掘用于机器人操作的少样本适应",
+          "canonical_evidence": "无监督技能挖掘用于机器人操作的少样本适应",
+          "llm_tldr_en": "Proposes SkillPlug, a plug-in framework for visuomotor policies that mines a library of reusable skills from multi-task demonstrations for few-shot adaptation in robotic manipulation.",
+          "llm_tldr_cn": "机器人操作中，端到端策略难以有效复用技能进行少样本迁移。本文提出SkillPlug框架，通过自监督目标从多任务演示中挖掘紧凑、可复用、非冗余的技能库，并利用技能条件模块增强现有视觉运动策略。实验表明，SkillPlug能够在少量新任务演示下快速适应，显著提升迁移效率，为机器人操作中的技能学习提供了新思路。",
+          "llm_tldr": "机器人操作中，端到端策略难以有效复用技能进行少样本迁移。本文提出SkillPlug框架，通过自监督目标从多任务演示中挖掘紧凑、可复用、非冗余的技能库，并利用技能条件模块增强现有视觉运动策略。实验表明，SkillPlug能够在少量新任务演示下快速适应，显著提升迁移效率，为机器人操作中的技能学习提供了新思路。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.08354v1",
           "carry_days": 1
         },
         {
-          "id": "2607.07287v1",
+          "id": "2607.08436v1",
+          "source": "arxiv",
+          "title": "EgoWAM: World Action Models Beyond Pixels with In-the-Wild Egocentric Human Data",
+          "abstract": "Egocentric human data offers scalable supervision for robot manipulation. However, behavior cloning entangles transferable content like objects, scenes, and task semantics, with non-transferable factors like human morphology, head motion, and behavioral style. We study whether World Action Models (WAMs) provide a better training signal by requiring policies to predict not only actions, but also how the scene evolves. The central question is what world representation best enables human-to-robot transfer. We hypothesize that an effective world target should abstract appearance, capture agent-invariant physical effects, and separate camera motion from environment change. We introduce EgoWAM, a controlled human-robot co-training framework that fixes the policy backbone, action head, and data mixture while varying only the world prediction target, comparing Pixel, DINO, and 3D motion flow. Across three real-world bimanual tasks, WAM co-training scales more effectively with in-the-wild egocentric human data than behavior cloning. Pixel-based prediction transfers weakly, while DINO and 3D flow yield substantial gains: DINO improves out-of-distribution object and scene generalization by up to 4x, and 3D flow improves in-domain performance by 20-30%. More details: https://gatech-rl2.github.io/egowam.github.io",
+          "authors": [
+            "Baoyu Li",
+            "Xinchen Yin",
+            "Mengying Lin",
+            "Yixin Zhang",
+            "Danfei Xu"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-07-08T16:11:37+00:00",
+          "link": "https://arxiv.org/pdf/2607.08436v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "human-to-robot transfer via world action models",
+          "llm_evidence_cn": "利用世界动作模型实现人类到机器人的操作技能迁移",
+          "llm_evidence": "利用世界动作模型实现人类到机器人的操作技能迁移",
+          "canonical_evidence": "利用世界动作模型实现人类到机器人的操作技能迁移",
+          "llm_tldr_en": "EgoWAM studies world action models for human-to-robot transfer, using egocentric data to learn agent-invariant representations that separate appearance from physics, enabling better policy learning for manipulation.",
+          "llm_tldr_cn": "针对行为克隆中人类形态等不可迁移因素与任务语义纠缠的问题，本文提出EgoWAM框架，通过世界动作模型学习与具身无关的场景演化预测，将外观、物理效果和相机运动解耦。该方法利用第一人称人类数据，在共享世界表示上协同训练人与机器人策略。实验表明，该世界表示能有效提升机器人操作策略的迁移能力，为利用大规模人类数据提供新思路。",
+          "llm_tldr": "针对行为克隆中人类形态等不可迁移因素与任务语义纠缠的问题，本文提出EgoWAM框架，通过世界动作模型学习与具身无关的场景演化预测，将外观、物理效果和相机运动解耦。该方法利用第一人称人类数据，在共享世界表示上协同训练人与机器人策略。实验表明，该世界表示能有效提升机器人操作策略的迁移能力，为利用大规模人类数据提供新思路。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.08436v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.04162v1",
+          "source": "arxiv",
+          "title": "ACE: Agentic Control for Embodied Manipulation via Zero-shot Workflow Reasoning",
+          "abstract": "Open-ended tabletop manipulation requires agents to not only understand natural language but also adapt to dynamic environments and execution failures. We present ACE (Agentic Control for Embodied Manipulation), a zero-shot workflow reasoning framework for tabletop pick-and-place from natural language. Rather than relying on direct low-level action mapping, ACE combines agentic workflow reasoning with two robot-facing executable skills: a visual grounding interface and a reusable pick-and-place primitive. To bridge semantic reasoning and physical control, the active sub-goal is grounded into a mask-mediated vision-action interface. This unified mask specifies the target object and destination, is tracked over time, exposed for human verification, and ultimately passed to a task-agnostic downstream policy for execution. Crucially, ACE operates in a closed loop supported by a multi-timescale memory. After an action is executed, the system automatically verifies whether the intended sub-goal succeeded, using the outcome to advance, retry, repair, or replan. This enables online adaptation to user corrections, scene changes, and physical failures. We evaluate ACE on logically complex, long-horizon tasks, including zero-shot multi-step equation formation with number cubes and constraint-based object retrieval. ACE demonstrates task-level zero-shot generalization on novel semantic constraints and randomized tabletop scenes without task-specific retraining. Specifically, while standard end-to-end baselines struggle to complete these logically demanding tasks, ACE achieves a 50% success rate in equation formation and a 70% success rate in constraint retrieval. This contrast demonstrates that explicit workflow reasoning and mask-mediated control offer a robust, practical route toward adaptable robotic manipulation.",
+          "authors": [
+            "Iok Tong Lei",
+            "QianZhi Li",
+            "Ying Jie Yap",
+            "Yujie Zhang",
+            "Rui Zhong",
+            "Haichao Gui",
+            "Xiaolong Liu",
+            "Zhidong Deng"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.LG"
+          ],
+          "published": "2026-07-05T08:07:42+00:00",
+          "link": "https://arxiv.org/pdf/2607.04162v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Zero-shot workflow reasoning for embodied manipulation task planning",
+          "llm_evidence_cn": "零样本工作流推理用于具身操作任务规划",
+          "llm_evidence": "零样本工作流推理用于具身操作任务规划",
+          "canonical_evidence": "零样本工作流推理用于具身操作任务规划",
+          "llm_tldr_en": "Presents ACE, a zero-shot workflow reasoning framework for tabletop pick-and-place from natural language, combining agentic reasoning with visual grounding and pick-and-place primitives.",
+          "llm_tldr_cn": "桌面操作需要语言理解和动态适应。本文提出ACE框架，零样本工作流推理，结合智能体推理与两个可执行技能：视觉接地接口和可重用拾放原语。通过掩码中介的视觉-动作接口将子目标接地，支持跟踪和人机验证。实验表明ACE能零样本完成新任务，并有效处理执行失败。",
+          "llm_tldr": "桌面操作需要语言理解和动态适应。本文提出ACE框架，零样本工作流推理，结合智能体推理与两个可执行技能：视觉接地接口和可重用拾放原语。通过掩码中介的视觉-动作接口将子目标接地，支持跟踪和人机验证。实验表明ACE能零样本完成新任务，并有效处理执行失败。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "foundation model for robot task planning",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.04162v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.06388v1",
+          "source": "arxiv",
+          "title": "Learning to Throw Objects Safely in Multi-Obstacle Environments",
+          "abstract": "Robotic throwing enables fast and efficient object placement beyond the robot's immediate workspace, but reliable throwing in cluttered environments remains underexplored. Existing approaches, such as TossingBot, learn throwing strategies from visual input but assume obstacle-free settings. In this paper, we address the problem of throwing objects into a target basket while avoiding obstacles placed randomly in the scene. We introduce a potential field state representation that compactly encodes both basket attraction and obstacle repulsion on a fixed-size grid, enabling reinforcement learning (RL) policies to generalize across arbitrary numbers and configurations of obstacles. The policy is initialized from kinesthetic demonstrations and optimized in simulation using three state-of-the-art RL algorithms (SAC, DDPG, TD3). Among these, SAC achieves the most consistent performance across scenarios. We compare the potential field representation against explicit state encodings and demonstrate that it achieves higher success rates and better scalability to unseen obstacle configurations. Real-robot experiments with unseen throwable objects confirm robust sim-to-real transfer, achieving up to $90\\%$ success in cluttered scenes. These results demonstrate that PFR provides a practical and robust representation for safe and efficient robotic throwing in unstructured environments. A video showcasing our experiments is available at: https://youtu.be/ZZnJf8ua2dE",
+          "authors": [
+            "Mohammadreza Kasaei",
+            "Klemen Voncina",
+            "Hamidreza Kasaei"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "published": "2026-07-07T15:24:12+00:00",
+          "link": "https://arxiv.org/pdf/2607.06388v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "reinforcement learning for robotic throwing in cluttered environments",
+          "llm_evidence_cn": "强化学习用于杂乱环境中的机器人投掷",
+          "llm_evidence": "强化学习用于杂乱环境中的机器人投掷",
+          "canonical_evidence": "强化学习用于杂乱环境中的机器人投掷",
+          "llm_tldr_en": "RL policy for safe object throwing in multi-obstacle environments using potential field representation.",
+          "llm_tldr_cn": "针对机器人投掷在杂乱环境中避障问题，提出基于势场状态表示的方法，将篮子吸引和障碍排斥编码到固定大小网格，使强化学习策略能泛化到任意障碍配置。策略从示教初始化后在仿真中优化，实验表明在真实环境中高效准确。",
+          "llm_tldr": "针对机器人投掷在杂乱环境中避障问题，提出基于势场状态表示的方法，将篮子吸引和障碍排斥编码到固定大小网格，使强化学习策略能泛化到任意障碍配置。策略从示教初始化后在仿真中优化，实验表明在真实环境中高效准确。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "reinforcement learning for robot control",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.06388v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.04434v1",
+          "source": "arxiv",
+          "title": "RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies",
+          "abstract": "Generalist robot manipulation policies have advanced rapidly, yet existing benchmarks remain limited in systematically evaluating their capabilities. Many rely on simple, short-horizon, or skill-narrow tasks with limited capability coverage, and are often conducted only in simulation or only in the real world. Simulation enables scalable feedback but misses physical deployment challenges, while real-world evaluation is costly, time-consuming, and difficult to reproduce. We introduce RoboDojo, a unified sim-and-real benchmark for comprehensive evaluation of generalist robot manipulation policies. RoboDojo includes 42 simulation tasks and 18 real-world tasks covering diverse and complementary manipulation capabilities. The simulation benchmark evaluates five dimensions: generalization, memory, precision, long-horizon execution, and open-vocabulary instruction following, while the real-world benchmark exposes policies to challenging physical-world deployment conditions. RoboDojo supports scalable evaluation through heterogeneous parallel simulation in Isaac Sim and provides RoboDojo-RealEval, a reproducible real-world evaluation system with remote cloud access, standardized hardware, scene reset, evaluation protocol, and deployment interface. Together with XPolicyLab, policies can be integrated once and evaluated across simulation and real-world settings with minimal adaptation. We integrate 30 policies into XPolicyLab and evaluate them on RoboDojo, establishing a public leaderboard and systematic analysis of current policy performance. The website is available at http://robodojo-benchmark.com/.",
+          "authors": [
+            "Tianxing Chen",
+            "Yue Chen",
+            "Zixuan Li",
+            "Junyuan Tang",
+            "Kailun Su",
+            "Weijie Wan",
+            "Baijun Chen",
+            "Haoran Lu",
+            "Haowen Yan",
+            "Honghao Su",
+            "Zhiyang Dou",
+            "Kaixuan Wang",
+            "Dandan Zhang",
+            "Yunze Liu",
+            "Yan Qin",
+            "Qiwei Liang",
+            "Qiwei Wu",
+            "Zijian Lin",
+            "Wenwei Lin",
+            "Yuran Wang",
+            "Minghua He",
+            "Tianshu Wu",
+            "Ruihai Wu",
+            "Jingquan Zhou",
+            "Kai-Chong Lei",
+            "Haibao Yu",
+            "Yuanfeng Ji",
+            "Weiyang Jin",
+            "Guanyu Lin",
+            "Xiaofan Li",
+            "Qi Xiong",
+            "Renjing Xu",
+            "Zhongyu Li",
+            "Wenhao Chai",
+            "Enze Xie",
+            "Ziwei Wang",
+            "Yao Mu",
+            "Hao Dong",
+            "Wojciech Matusik",
+            "Mingyu Ding",
+            "Wenbo Ding",
+            "Ping Luo",
+            "Masayoshi Tomizuka"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CV",
+            "cs.GR"
+          ],
+          "published": "2026-07-05T17:58:02+00:00",
+          "link": "https://arxiv.org/pdf/2607.04434v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "unified sim-and-real benchmark for manipulation policy evaluation",
+          "llm_evidence_cn": "统一仿真-真实基准用于操控策略评估",
+          "llm_evidence": "统一仿真-真实基准用于操控策略评估",
+          "canonical_evidence": "统一仿真-真实基准用于操控策略评估",
+          "llm_tldr_en": "RoboDojo provides 42 sim and 18 real tasks for evaluating generalist robot manipulation policies.",
+          "llm_tldr_cn": "针对现有基准任务简单、评估不全面且仿真与真实脱节的问题，提出RoboDojo统一仿真-真实基准，包含42个仿真任务和18个真实任务，覆盖多种操控能力。支持从仿真到真实的一致评估，为通用操控策略提供标准化测试平台。",
+          "llm_tldr": "针对现有基准任务简单、评估不全面且仿真与真实脱节的问题，提出RoboDojo统一仿真-真实基准，包含42个仿真任务和18个真实任务，覆盖多种操控能力。支持从仿真到真实的一致评估，为通用操控策略提供标准化测试平台。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "sim to real transfer domain randomization for robotics",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.04434v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.04434v3",
+          "source": "arxiv",
+          "title": "RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies",
+          "abstract": "Generalist robot manipulation policies have advanced rapidly, yet existing benchmarks remain limited in systematically evaluating their capabilities. Many rely on simple, short-horizon, or skill-narrow tasks with limited capability coverage, and are often conducted only in simulation or only in the real world. Simulation enables scalable feedback but misses physical deployment challenges, while real-world evaluation is costly, time-consuming, and difficult to reproduce. We introduce RoboDojo, a unified sim-and-real benchmark for comprehensive evaluation of generalist robot manipulation policies. RoboDojo includes 42 simulation tasks and 18 real-world tasks covering diverse and complementary manipulation capabilities. The simulation benchmark evaluates five dimensions: generalization, memory, precision, long-horizon execution, and open-vocabulary instruction following, while the real-world benchmark exposes policies to challenging physical-world deployment conditions. RoboDojo supports scalable evaluation through heterogeneous parallel simulation in Isaac Sim and provides RoboDojo-RealEval, a reproducible real-world evaluation system with remote cloud access, standardized hardware, scene reset, evaluation protocol, and deployment interface. Together with XPolicyLab, policies can be integrated once and evaluated across simulation and real-world settings with minimal adaptation. We integrate 30 policies into XPolicyLab and evaluate them on RoboDojo, establishing a public leaderboard and systematic analysis of current policy performance. The website is available at http://robodojo-benchmark.com/.",
+          "authors": [
+            "Tianxing Chen",
+            "Yue Chen",
+            "Zixuan Li",
+            "Junyuan Tang",
+            "Kailun Su",
+            "Haoran Lu",
+            "Weijie Wan",
+            "Baijun Chen",
+            "Songling Liu",
+            "Haowen Yan",
+            "Honghao Su",
+            "Zhiyang Dou",
+            "Kaixuan Wang",
+            "Dandan Zhang",
+            "Yunze Liu",
+            "Yan Qin",
+            "Qiwei Liang",
+            "Qiwei Wu",
+            "Zijian Lin",
+            "Wenwei Lin",
+            "Yuran Wang",
+            "Minghua He",
+            "Tianshu Wu",
+            "Ruihai Wu",
+            "Jingquan Zhou",
+            "Kai-Chong Lei",
+            "Haibao Yu",
+            "Yuanfeng Ji",
+            "Weiyang Jin",
+            "Guanyu Lin",
+            "Xiaofan Li",
+            "Qi Xiong",
+            "Renjing Xu",
+            "Zhongyu Li",
+            "Wenhao Chai",
+            "Enze Xie",
+            "Ziwei Wang",
+            "Yao Mu",
+            "Hao Dong",
+            "Wojciech Matusik",
+            "Mingyu Ding",
+            "Wenbo Ding",
+            "Ping Luo",
+            "Masayoshi Tomizuka"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.CV",
+            "cs.GR"
+          ],
+          "published": "2026-07-05T17:58:02+00:00",
+          "link": "https://arxiv.org/pdf/2607.04434v3",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "unified sim-and-real benchmark for generalist robot manipulation policies",
+          "llm_evidence_cn": "统一的仿真与真实基准，用于评估通用机器人操作策略",
+          "llm_evidence": "统一的仿真与真实基准，用于评估通用机器人操作策略",
+          "canonical_evidence": "统一的仿真与真实基准，用于评估通用机器人操作策略",
+          "llm_tldr_en": "RoboDojo provides 42 simulation tasks and 18 real-world tasks for comprehensive evaluation of manipulation policies, bridging the sim-to-real gap.",
+          "llm_tldr_cn": "当前通用操作策略评估多局限于单一环境或简单任务，缺乏兼顾仿真可扩展性与真实部署挑战的统一基准。RoboDojo包含42个仿真任务和18个真实任务，覆盖多种操作能力，并提供标准化评估协议，使研究人员能系统对比策略的仿真与真实表现，加速从仿真到真实世界的迁移研究。",
+          "llm_tldr": "当前通用操作策略评估多局限于单一环境或简单任务，缺乏兼顾仿真可扩展性与真实部署挑战的统一基准。RoboDojo包含42个仿真任务和18个真实任务，覆盖多种操作能力，并提供标准化评估协议，使研究人员能系统对比策略的仿真与真实表现，加速从仿真到真实世界的迁移研究。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "sim to real transfer domain randomization for robotics",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.04434v3",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.07370v2",
+          "source": "arxiv",
+          "title": "Behavior Foundations for Quadruped Robots: ABot-C0 Technical Report",
+          "abstract": "The motion controller is one of the most fundamental modules in embodied intelligence systems. Driven by large-scale human motion-capture data and the motion-tracking paradigm, humanoid control has achieved remarkable progress in recent years. However, migrating this recipe to the quadrupedal setting is far less straightforward: animal motion data is scarcer and harder to capture at scale than human data, and cross-embodiment retargeting remains fragile. We present ABot-C0, a generalist motion-control system for quadruped robots that establishes three complementary behavior foundations: a scalable multi-source motion-data pipeline, robust policy learning across motion tracking, locomotion, and scene interaction, and a unified deployment stack for reliable real-world operation. Fundamentally, we construct a data pyramid through conditional video-generation synthesis, annotated motion capture, teleoperation, and human design, producing 16,074 physically feasible motion clips as the data foundation for diverse motion-learning demands. With large-scale motion data, a Flow-Matching generalist policy demonstrates, for the first time, a scaling law for quadruped motion tracking: performance improves consistently as training scales up, with zero-shot capability to track unseen motions. We then go a step further toward robust all-terrain locomotion by adopting a three-stage privileged-to-perceptive framework with temporal LiDAR memory and terrain-predictive supervision. Collectively, these components form a motion generalist that coordinates multi-policy execution, smooth behavior transitions, energy-efficient control, and safety mechanisms for real-world deployment. Extensive experiments on urban-terrain autonomous navigation and companion-style multimodal interaction demonstrate that quadruped robots can move beyond functional demos toward product-level behavioral intelligence.",
+          "authors": [
+            "Xufeng Zhao",
+            "Fuzhi Yang",
+            "Jianhui Chen",
+            "Li Gao",
+            "Zhang Meng",
+            "Jie Gao",
+            "Yao Zheng",
+            "Congyang Zhao",
+            "Tianxiong Lv",
+            "Menglin Yang",
+            "Minqi Gu",
+            "Yaru Zhao",
+            "Wenyu Liu",
+            "Honglin Han",
+            "Shihui Su",
+            "Zixiao Tang",
+            "Liu Liu",
+            "Mu Xu",
+            "Yang Cai",
+            "Wenbin Tang"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI",
+            "cs.HC",
+            "cs.LG"
+          ],
+          "published": "2026-07-08T13:04:07+00:00",
+          "link": "https://arxiv.org/pdf/2607.07370v2",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "embodied intelligence: generalist motion-control system for quadruped robots",
+          "llm_evidence_cn": "具身智能：四足机器人通用运动控制系统",
+          "llm_evidence": "具身智能：四足机器人通用运动控制系统",
+          "canonical_evidence": "具身智能：四足机器人通用运动控制系统",
+          "llm_tldr_en": "ABot-C0 establishes three behavior foundations for quadruped robots: scalable data pipeline, robust policy learning across motion tasks, and unified deployment stack.",
+          "llm_tldr_cn": "四足机器人运动控制面临数据稀缺和跨形态适配难题。ABot-C0构建了多源运动数据流水线，训练策略同时支持运动追踪、行走和场景交互，并提供统一部署栈。实验证明该系统在多种四足平台上实现稳定、多样的运动行为，为具身智能的运动控制提供了可复用的基础。",
+          "llm_tldr": "四足机器人运动控制面临数据稀缺和跨形态适配难题。ABot-C0构建了多源运动数据流水线，训练策略同时支持运动追踪、行走和场景交互，并提供统一部署栈。实验证明该系统在多种四足平台上实现稳定、多样的运动行为，为具身智能的运动控制提供了可复用的基础。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "embodied AI research",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.07370v2",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.07287v2",
           "source": "arxiv",
           "title": "TouchWorld: A Predictive and Reactive Tactile Foundation Model for Dexterous Manipulation",
           "abstract": "Dexterous manipulation in everyday environments requires both anticipation and reaction: a robot must predict how contact should evolve while rapidly correcting local errors caused by slip, misalignment, unstable grasping, or force mismatch. Vision and language provide semantic and geometric guidance, but they cannot reliably reveal hidden contact states such as force, slip, and contact stability. Although tactile sensing exposes these physical cues, most existing policies treat touch as a low-frequency observation stream within a monolithic action model, coupling slow task reasoning, action generation, and fast contact feedback in a single loop. We introduce TouchWorld, a predictive-and-reactive tactile foundation model for dexterous manipulation. TouchWorld uses a hierarchical policy that separates vision-language subtask planning, tactile world-model prediction, visuo-tactile goal-conditioned action generation, and high-frequency tactile residual refinement. A High-Level Planning Layer produces executable subtasks and predicts tactile subgoals; a Visuo-Tactile Goal-Conditioned Policy generates nominal action chunks; and a Tactile-Conditioned Refinement Policy performs online residual correction using recent tactile and proprioceptive feedback. By using touch as both a predictive contact reference and a fast feedback signal, TouchWorld preserves the semantic generalization of vision-language-action policies while improving local contact adaptation. Across six long-horizon and contact-rich dexterous manipulation tasks, TouchWorld achieves 65.0% success in the clean setting and 53.7% success under human perturbations, outperforming the strongest baseline by 15.7 and 18.5 percentage points, respectively.",
@@ -1698,19 +1613,19 @@
             "cs.RO"
           ],
           "published": "2026-07-08T11:28:13+00:00",
-          "link": "https://arxiv.org/pdf/2607.07287v1",
+          "link": "https://arxiv.org/pdf/2607.07287v2",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
           "llm_evidence_en": "tactile foundation model for dexterous manipulation",
-          "llm_evidence_cn": "触觉基础模型用于灵巧操作",
-          "llm_evidence": "触觉基础模型用于灵巧操作",
-          "canonical_evidence": "触觉基础模型用于灵巧操作",
-          "llm_tldr_en": "A tactile foundation model that predicts and reacts to contact for dexterous manipulation, decoupling task reasoning from fast tactile feedback.",
-          "llm_tldr_cn": "灵巧操作需要预测和快速反应，但现有策略将触觉视为低频观测流。本文提出TouchWorld，一个预测-反应式触觉基础模型，将触觉预测与快速反馈解耦，使机器人能够在操作中实时纠正滑动、力失配等接触错误，提升了操作鲁棒性。",
-          "llm_tldr": "灵巧操作需要预测和快速反应，但现有策略将触觉视为低频观测流。本文提出TouchWorld，一个预测-反应式触觉基础模型，将触觉预测与快速反馈解耦，使机器人能够在操作中实时纠正滑动、力失配等接触错误，提升了操作鲁棒性。",
+          "llm_evidence_cn": "触觉基础模型与灵巧操作",
+          "llm_evidence": "触觉基础模型与灵巧操作",
+          "canonical_evidence": "触觉基础模型与灵巧操作",
+          "llm_tldr_en": "TouchWorld introduces a predictive-and-reactive tactile foundation model that enables robots to anticipate contact evolution and rapidly correct errors during dexterous manipulation.",
+          "llm_tldr_cn": "灵巧操作需要同时预测和反应触觉接触，但现有方法将触觉视为低频观测流，无法解耦慢速推理与快速反馈。本文提出TouchWorld，一个预测-反应式触觉基础模型，通过将触觉感知与动作生成分离，使机器人能预测接触演化并快速纠正滑移、力偏差等局部错误，显著提升日常环境下的灵巧操作鲁棒性。",
+          "llm_tldr": "灵巧操作需要同时预测和反应触觉接触，但现有方法将触觉视为低频观测流，无法解耦慢速推理与快速反馈。本文提出TouchWorld，一个预测-反应式触觉基础模型，通过将触觉感知与动作生成分离，使机器人能预测接触演化并快速纠正滑移、力偏差等局部错误，显著提升日常环境下的灵巧操作鲁棒性。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -1718,7 +1633,182 @@
           "matched_query_text": "foundation models for robot perception and manipulation",
           "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.07287v1",
+          "paper_id": "2607.07287v2",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.07859v1",
+          "source": "arxiv",
+          "title": "Feedback Manipulation Regularization: Enabling Offline Agent Alignment for Imitation Learning",
+          "abstract": "Reinforcement learning (RL) research has increasingly shifted focus towards alignment, ensuring agents learn behaviors adhering to human values. While human demonstrations and feedback have proven crucial for alignment, existing approaches predominantly combine these signals using multi-stage pipelines designed for the contextual bandit framing of language generation. Yet little work explores how these complementary inputs can serve as a richer, interconnected signal for single-stage offline training in fully sequential decision-making environments. We propose Feedback Manipulation Regularization (FMR), an algorithm-agnostic method that harnesses evaluative feedback as a corrective signal to improve the alignment of imitation learning policies. We adapt Safety Gymnasium environments to be a principled testbed for alignment evaluation, demonstrating improved aptitude and up to a 98\\% reduction in misalignment across a range of imitation learning algorithms. FMR remains robust in limited data regimes, even when learning from scarce aligned and uninformative noisy demonstrations.",
+          "authors": [
+            "Benjamin Poole",
+            "Minwoo Lee"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI",
+            "cs.HC",
+            "cs.LG"
+          ],
+          "published": "2026-07-08T18:47:29+00:00",
+          "link": "https://arxiv.org/pdf/2607.07859v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "offline imitation learning with feedback",
+          "llm_evidence_cn": "离线模仿学习与反馈对齐",
+          "llm_evidence": "离线模仿学习与反馈对齐",
+          "canonical_evidence": "离线模仿学习与反馈对齐",
+          "llm_tldr_en": "FMR is an algorithm-agnostic method that uses evaluative feedback as corrective signal to improve imitation learning alignment in offline sequential decision-making.",
+          "llm_tldr_cn": "模仿学习中对齐人类价值观需要演示和反馈，但现有方法多采用多阶段管道处理语言生成。本文提出反馈操作正则化（FMR），一种与算法无关的方法，将评估反馈作为纠正信号用于单阶段离线训练，在完全序列决策环境中提升模仿学习对齐效果。实验证明FMR能有效结合演示和反馈，使智能体行为更符合人类偏好。",
+          "llm_tldr": "模仿学习中对齐人类价值观需要演示和反馈，但现有方法多采用多阶段管道处理语言生成。本文提出反馈操作正则化（FMR），一种与算法无关的方法，将评估反馈作为纠正信号用于单阶段离线训练，在完全序列决策环境中提升模仿学习对齐效果。实验证明FMR能有效结合演示和反馈，使智能体行为更符合人类偏好。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.07859v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.05468v1",
+          "source": "arxiv",
+          "title": "Learning 4D Geometric Priors for Inference-Efficient World Action Models",
+          "abstract": "World Action Models (WAMs) have shown strong potential for robotic manipulation by jointly modeling visual future dynamics and executable action sequences. However, existing video-action co-training methods primarily optimize appearance-oriented video latents, which may insufficiently capture the temporally evolving geometry required for precise manipulation. We propose MECo-WAM, a Multi-Expert Co-Training World Action Model that injects action-relevant 4D geometric priors into video-action representations while preserving the original lightweight inference graph. During training, MECo-WAM combines video and action experts with a lightweight 4D expert supervised by relational targets from a frozen VGGT encoder. Asymmetric expert visibility prevents non-causal shortcuts from auxiliary geometry to action generation. To transfer geometric knowledge into the deployed video-action pathway, we introduce decayed 4D read-mask attention, which provides restricted current-frame geometric guidance early in training and progressively removes this dependency. We further propose action-aware temporal geometric distillation, which aligns within-frame geometric relations and their temporal evolution while emphasizing visual regions most relevant to robot actions. At deployment, all auxiliary 4D components are removed. Experiments on LIBERO (98.2%), RoboTwin 2.0 (92.6%), and challenging real-world manipulation tasks show that MECo-WAM improves manipulation performance without increasing inference cost.",
+          "authors": [
+            "Jianjun Zhang",
+            "Jian Zhu",
+            "Taiyi Su",
+            "Chong Ma",
+            "Zitai Huang",
+            "Yi Xu",
+            "Hanli Wang"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-07-06T07:10:22+00:00",
+          "link": "https://arxiv.org/pdf/2607.05468v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "world action model with 4D geometric priors",
+          "llm_evidence_cn": "世界动作模型与4D几何先验",
+          "llm_evidence": "世界动作模型与4D几何先验",
+          "canonical_evidence": "世界动作模型与4D几何先验",
+          "llm_tldr_en": "MECo-WAM injects 4D geometric priors into world action models via multi-expert co-training, improving manipulation precision while maintaining lightweight inference.",
+          "llm_tldr_cn": "世界动作模型（WAM）通过联合建模视觉未来动态和动作序列进行机器人操作，但现有方法主要优化外观导向的视频潜变量，难以捕捉精细的时序几何。本文提出MECo-WAM，通过多专家协同训练注入动作相关的4D几何先验，利用冻结的VGGT编码器提供关系监督，并在训练中保持轻量推理图。在操作任务上，该方法在保持推理效率的同时显著提升了操作精度。",
+          "llm_tldr": "世界动作模型（WAM）通过联合建模视觉未来动态和动作序列进行机器人操作，但现有方法主要优化外观导向的视频潜变量，难以捕捉精细的时序几何。本文提出MECo-WAM，通过多专家协同训练注入动作相关的4D几何先验，利用冻结的VGGT编码器提供关系监督，并在训练中保持轻量推理图。在操作任务上，该方法在保持推理效率的同时显著提升了操作精度。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "foundation models for robot perception and manipulation",
+          "matched_requirement_id": "req-10",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.05468v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.03964v1",
+          "source": "arxiv",
+          "title": "Worldscape-MoE: A Unified Mixture-of-Experts World Model for Scalable Heterogeneous Action Control",
+          "abstract": "World models are rapidly becoming a core infrastructure for embodied intelligence and interactive agents: they provide controllable simulators in which agents can perceive, act, forecast, and acquire scalable experience. Yet current video generation world models are still organized around isolated control interfaces, such as camera trajectories, robot actions, or hand-joint signals. This fragmentation is increasingly a scaling bottleneck. The central challenge is not the absence of controllable generators, but the lack of a unified and extensible learning framework that can absorb heterogeneous action supervision while preserving a shared model of world dynamics. In this work, we introduce Worldscape-MoE, a Mixture-of-Experts world model built on Diffusion Transformers for scalable heterogeneous action control. Our key observation is that different controls specify different interfaces to the same underlying world: although their representations differ, they constrain shared physical regularities, scene dynamics, and interaction semantics. Worldscape-MoE operationalizes this observation through modality-aware control injection, shared and control-specific experts, and a progressive MoE tuning strategy that supports continual extension to new action modalities. Experiments across locomotion, robotic manipulation, and egocentric hand control show that heterogeneous supervision improves rather than interferes with individual control capabilities. Worldscape-MoE achieves strong results on WorldArena, improves locomotion and hand-control metrics, exhibits robust out-of-distribution generalization, and demonstrates scaling behavior as additional control data and experts are integrated.",
+          "authors": [
+            "Jianjie Fang",
+            "Yongyan Xu",
+            "Ziyou Wang",
+            "Chen Gao",
+            "Yuchao Huang",
+            "Zhaolu Wang",
+            "Rongze Tang",
+            "Mingyuan Jia",
+            "Baining Zhao",
+            "Weichen Zhang",
+            "Xin Zhang",
+            "Haisheng Su",
+            "Yu Shang",
+            "Wei Wu",
+            "Xinlei Chen",
+            "Yong Li"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-07-04T17:45:38+00:00",
+          "link": "https://arxiv.org/pdf/2607.03964v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "unified world model for heterogeneous action control and simulation",
+          "llm_evidence_cn": "用于异构动作控制与仿真的统一世界模型",
+          "llm_evidence": "用于异构动作控制与仿真的统一世界模型",
+          "canonical_evidence": "用于异构动作控制与仿真的统一世界模型",
+          "llm_tldr_en": "Worldscape-MoE is a mixture-of-experts world model unifying heterogeneous action control, enabling scalable simulation and embodied intelligence.",
+          "llm_tldr_cn": "当前视频生成世界模型围绕孤立控制接口组织，难以吸收异构动作监督。本文提出Worldscape-MoE，一个基于混合专家架构的统一世界模型，能够学习多种动作类型（如机器人关节、相机轨迹）并共享世界动力学。该工作为具身智能提供了可扩展的仿真基础设施。",
+          "llm_tldr": "当前视频生成世界模型围绕孤立控制接口组织，难以吸收异构动作监督。本文提出Worldscape-MoE，一个基于混合专家架构的统一世界模型，能够学习多种动作类型（如机器人关节、相机轨迹）并共享世界动力学。该工作为具身智能提供了可扩展的仿真基础设施。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "sim to real transfer domain randomization for robotics",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.03964v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.03163v1",
+          "source": "arxiv",
+          "title": "Beyond Point-Attached Semantics: Object-Centric Semantic Fields for Generalizable Manipulation",
+          "abstract": "Generalizable robot manipulation requires stable 3D understanding of functional object parts, such as handles, tool heads, openings, and graspable regions. Raw point clouds provide geometry but lack explicit part semantics, and their sampled points vary with viewpoint, sensor configuration, and object instance. Existing 2D feature lifting and discrete 3D point-wise features enrich point clouds with semantics, but the resulting features remain attached to observation-dependent samples. We propose an object-centric continuous semantic field that conditions on an object point cloud and reads part-aware semantic embeddings at explicit 3D query locations. The field is trained from part-annotated object models and then frozen to generate semantic point clouds as object-level conditioning for manipulation policies. Experiments on RoboTwin simulation tasks and real-world bimanual object manipulation show that our representation provides more stable functional-part cues and improves policy performance over raw point-cloud, 2D feature lifting, and 3D point-wise feature baselines. Project Page: \\href{https://zainzh.github.io/beyond-point-attached-semantics}{https://zainzh.github.io/beyond-point-attached-semantics}.",
+          "authors": [
+            "Zheng Sun",
+            "Lerong Zhang",
+            "Zhihao Li",
+            "Zhuo Li",
+            "Quentin Rouxel",
+            "Fei Chen"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-03T10:05:39+00:00",
+          "link": "https://arxiv.org/pdf/2607.03163v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "object-centric semantic fields for generalizable manipulation",
+          "llm_evidence_cn": "面向通用操作的目标中心语义场",
+          "llm_evidence": "面向通用操作的目标中心语义场",
+          "canonical_evidence": "面向通用操作的目标中心语义场",
+          "llm_tldr_en": "Beyond Point-Attached Semantics introduces an object-centric continuous semantic field for stable part-aware manipulation, trained from part-annotated models and frozen.",
+          "llm_tldr_cn": "机器人通用操作需要稳定的3D功能部件理解，但现有方法依赖观测依赖的点云采样。本文提出目标中心连续语义场，以目标点云为条件并能够查询任意3D位置的语义嵌入。该场从带部件标注的目标模型中训练并冻结，为下游操作提供稳定的语义先验。",
+          "llm_tldr": "机器人通用操作需要稳定的3D功能部件理解，但现有方法依赖观测依赖的点云采样。本文提出目标中心连续语义场，以目标点云为条件并能够查询任意3D位置的语义嵌入。该场从带部件标注的目标模型中训练并冻结，为下游操作提供稳定的语义先验。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.03163v1",
           "carry_days": 1
         }
       ]
