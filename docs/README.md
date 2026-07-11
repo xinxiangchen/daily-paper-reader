@@ -6,85 +6,71 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-10
-- 运行时间：2026-07-10 21:46:11 UTC
+- 最新运行日期：2026-07-11
+- 运行时间：2026-07-11 20:54:03 UTC
 - 运行状态：成功
-- 本次总论文数：21
-- 精读区：10
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-1) 今日精选10篇精读与11篇速读，聚焦具身智能的便携推理、统一部署框架及人机技能迁移，头部两篇获9.0高分。
-2) 最值得关注两大方向：异构机器人上的轻量推理运行时（《Embodied.cpp》），以及跨任务小样本域适应的人形控制（《FADA》）。
-3) 建议优先通读《Embodied.cpp》与《EVA-Client》，掌握从模型部署到数据采集的闭环实践，再切入《FADA》学习迁移策略。
-- 详情：[/202607/10/README](/202607/10/README)
+今日精读17篇论文，重点关注统一多模态模型与具身智能视频预训练两大方向。其中《WorldBagel》和《Scaling Mixture-of-Experts Video Pretraining》均获9.0分，分别探索视觉-语言-动作联合建模与大规模专家混合视频预训练，是当前最具突破性的工作。建议优先精读这两篇论文，并关注其在机器人决策、手术机器人等实际场景的落地潜力。
+- 详情：[/202607/11/README](/202607/11/README)
 
 ### 精读区论文标签
-1. [Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots](/202607/10/2607.02501v2-embodiedcpp-a-portable-inference-runtime-of-embodied-ai-models-on-heterogeneous-robots)  
+1. [WorldBagel: Uncovering the Power of Unified Multimodal Models for Vision-Language-Action-World Modeling](/202607/11/2607.03461v1-worldbagel-uncovering-the-power-of-unified-multimodal-models-for-vision-language-action-world-modeling)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用于包括VLA在内的具身AI模型的可移植推理运行时
-2. [EVA-Client: A Unified Data Collection, Inference, and Deployment Framework for Embodied Policies on Real Robots](/202607/10/2607.02646v1-eva-client-a-unified-data-collection-inference-and-deployment-framework-for-embodied-policies-on-real-robots)  
+   evidence：视觉-语言-动作-世界（VLAW）模型用于机器人操作
+2. [Scaling Mixture-of-Experts Video Pretraining for Embodied Intelligence](/202607/11/2607.07675v1-scaling-mixture-of-experts-video-pretraining-for-embodied-intelligence)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用于真实机器人上具身策略部署、数据收集和评估的统一框架
-3. [Exp2VLA: Enabling Vision-Language-Action for Drone Navigation from Expert Demonstrations](/202607/10/2607.03146v1-exp2vla-enabling-vision-language-action-for-drone-navigation-from-expert-demonstrations)  
+   evidence：面向具身智能的混合专家视频预训练
+3. [SkillPlug: Unsupervised Skill Mining for Few-Shot Adaptation in Robotic Manipulation](/202607/11/2607.08354v1-skillplug-unsupervised-skill-mining-for-few-shot-adaptation-in-robotic-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：视觉-语言-动作模型用于无人机导航
-4. [EvoPlan: Evolutionary Neuro-Symbolic Robot Planning with Spatio-Temporal Guarantees](/202607/10/2607.06724v1-evoplan-evolutionary-neuro-symbolic-robot-planning-with-spatio-temporal-guarantees)  
+   evidence：无监督技能挖掘用于操作中的少样本模仿学习
+4. [Multi-Modal, Multi-Environment Machine Teaching for Robust Reward Learning](/202607/11/2607.08647v1-multi-modal-multi-environment-machine-teaching-for-robust-reward-learning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：神经符号机器人规划，兼有LLM灵活性和时空安全保证
-5. [TouchWorld: A Predictive and Reactive Tactile Foundation Model for Dexterous Manipulation](/202607/10/2607.07287v1-touchworld-a-predictive-and-reactive-tactile-foundation-model-for-dexterous-manipulation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向灵巧操作的预测与反应式触觉基础模型
-6. [Multi-Agent Robotic Control with Onboard Vision-Language Models](/202607/10/2607.07403v1-multi-agent-robotic-control-with-onboard-vision-language-models)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：机载VLA模型多智能体机器人控制
-7. [Expressivity and Statistical Trade-offs in Diffusion Policy Learning](/202607/10/2607.07967v1-expressivity-and-statistical-trade-offs-in-diffusion-policy-learning)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：扩散策略在强化学习中的理论分析
-8. [APIVOT: Adaptive Planning with Interleaved Vision-Language Thoughts](/202607/10/2607.08024v1-apivot-adaptive-planning-with-interleaved-vision-language-thoughts)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：基于视觉语言模型的长周期机器人任务规划
-9. [LEEVLA: Seeing What Matters in Latent Environment Evolution for Vision-Language-Action](/202607/10/2607.08182v1-leevla-seeing-what-matters-in-latent-environment-evolution-for-vision-language-action)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：视觉-语言-动作模型与注意力引导
-10. [Native Video-Action Pretraining for Generalizable Robot Control](/202607/10/2607.08639v1-native-video-action-pretraining-for-generalizable-robot-control)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：视频-动作基础模型用于机器人控制
+   evidence：跨环境的逆强化学习奖励学习
+5. [CORE Planner: Contextual-memory Oriented Reinforcement-learning in Unknown Environments for Robot Navigation](/202607/11/2606.29222v1-core-planner-contextual-memory-oriented-reinforcement-learning-in-unknown-environments-for-robot-navigation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：未知环境中的强化学习导航与仿真到现实迁移
+6. [Beyond Point-Attached Semantics: Object-Centric Semantic Fields for Generalizable Manipulation](/202607/11/2607.03163v1-beyond-point-attached-semantics-object-centric-semantic-fields-for-generalizable-manipulation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向可泛化操作的物体中心连续语义场
 
 ### 速读区论文标签
-1. [Translation as a Bridging Action: Transferring Manipulation Skills from Humans to Robots](/202607/10/2606.28133v1-translation-as-a-bridging-action-transferring-manipulation-skills-from-humans-to-robots)  
+1. [SurgVLA-Bench: Towards Evaluating Vision-Language-Action Models for Laparoscopic Surgical Robotics](/202607/11/2606.29247v1-surgvla-bench-towards-evaluating-vision-language-action-models-for-laparoscopic-surgical-robotics)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：通过桥接动作表示从人类演示向机器人迁移操作技能
-2. [Learning Stable In-Grasp Manipulation in a Non-Dropping Action Space](/202607/10/2606.28196v1-learning-stable-in-grasp-manipulation-in-a-non-dropping-action-space)  
+   evidence：VLA基准用于手术机器人
+2. [Efficient Visual Pointing for Embodied AI:Agent-Driven Data Synthesis, Cross-Block Attention, and Iterative Correction](/202607/11/2606.29850v1-efficient-visual-pointing-for-embodied-aiagent-driven-data-synthesis-cross-block-attention-and-iterative-correction)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：强化学习用于稳定抓取内灵巧操作
-3. [FADA: Few-Shot Domain Adaptation via Dynamics Alignment for Humanoid Control](/202607/10/2606.28476v1-fada-few-shot-domain-adaptation-via-dynamics-alignment-for-humanoid-control)  
+   evidence：具身AI中的视觉指代
+3. [Domain Adaptation with Adaptive Imagination for Visual Reinforcement Learning under Limited Target Data](/202607/11/2606.30192v1-domain-adaptation-with-adaptive-imagination-for-visual-reinforcement-learning-under-limited-target-data)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：人形机器人控制的少样本域自适应，具有仿真到真实的潜力
-4. [ReGuide: From Test-Time Guidance to Self-Improving Diffusion Policies](/202607/10/2606.28939v1-reguide-from-test-time-guidance-to-self-improving-diffusion-policies)  
+   evidence：面向视觉RL的sim-to-real域适应
+4. [Warp RL: Reshaping Base Policy Distributions for Dynamics Adaptation](/202607/11/2606.31043v2-warp-rl-reshaping-base-policy-distributions-for-dynamics-adaptation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：面向机器人的自改进扩散策略
-5. [Embodied Operators and Benchmarking: Toward Reusable and Deployable Embodied Intelligence Systems](/202607/10/2607.03283v1-embodied-operators-and-benchmarking-toward-reusable-and-deployable-embodied-intelligence-systems)  
+   evidence：通过强化学习重塑基础策略分布以适应机器人动力学变化
+5. [Continuous-Time Gaussian Belief Trees for Motion Planning](/202607/11/2607.02884v1-continuous-time-gaussian-belief-trees-for-motion-planning)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：可重用的具身操作子用于具身智能流水线
-6. [High-Precision Formation Control for Heterogeneous Multi-Robot Systems via Hierarchical Hybrid Physics-Informed Deep Reinforcement Learning](/202607/10/2607.03512v1-high-precision-formation-control-for-heterogeneous-multi-robot-systems-via-hierarchical-hybrid-physics-informed-deep-reinforcement-learning)  
+   evidence：具身机器人的运动规划与安全保证
+6. [SoftVTBench: A Safety-Aware Visuo-Tactile Benchmark for Physically Constrained Robotic Manipulation of Deformable Objects](/202607/11/2607.04234v1-softvtbench-a-safety-aware-visuo-tactile-benchmark-for-physically-constrained-robotic-manipulation-of-deformable-objects)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：强化学习用于多机器人编队控制
-7. [ObjRetarget: An Object-Aware Motion Retargeting Framework with Anthropomorphic Arm Constraints and Polyhedral Hand Modeling](/202607/10/2607.03828v1-objretarget-an-object-aware-motion-retargeting-framework-with-anthropomorphic-arm-constraints-and-polyhedral-hand-modeling)  
+   evidence：面向可变形物体操作的安全感知基准，可用于模仿学习评估
+7. [A Perception-Manipulation Robotics System for Food Cutting](/202607/11/2607.04367v1-a-perception-manipulation-robotics-system-for-food-cutting)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：人-机器人运动重定向用于灵巧操作
-8. [RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies](/202607/10/2607.04434v2-robodojo-a-unified-sim-and-real-benchmark-for-comprehensive-evaluation-of-generalist-robot-manipulation-policies)  
+   evidence：在食物切割机器人中使用强化学习实现自适应切割策略
+8. [RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies](/202607/11/2607.04434v1-robodojo-a-unified-sim-and-real-benchmark-for-comprehensive-evaluation-of-generalist-robot-manipulation-policies)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向通用机器人操作策略的统一仿真与真实基准
-9. [EvoPolicyGym: Evaluating Autonomous Policy Evolution in Interactive Environments](/202607/10/2607.02440v1-evopolicygym-evaluating-autonomous-policy-evolution-in-interactive-environments)  
+   evidence：统一模拟与真实世界的机器人操作策略评估基准
+9. [Agent-driven Long-tail Simulation for Autonomous Driving](/202607/11/2607.04331v1-agent-driven-long-tail-simulation-for-autonomous-driving)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：强化学习策略评估基准
-10. [Multi-Robot Open Adaptive Teaming Across Unseen Environments, Partners, and Scales](/202607/10/2607.04972v1-multi-robot-open-adaptive-teaming-across-unseen-environments-partners-and-scales)  
+   evidence：面向自动驾驶的智能体驱动仿真，与仿真到真实迁移相关
+10. [Deep Reinforcement Learning for Dynamic Battery Management of Autonomous Order Pickers](/202607/11/2607.05683v1-deep-reinforcement-learning-for-dynamic-battery-management-of-autonomous-order-pickers)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：多机器人团队自适应
-11. [GaP: A Graph-as-Policy Multi-Agent Self-Learning Harness For Variational Automation Tasks](/202607/10/2607.05369v1-gap-a-graph-as-policy-multi-agent-self-learning-harness-for-variational-automation-tasks)  
+   evidence：基于PPO的深度强化学习用于移动机器人电池管理
+11. [FORGE: Towards Functional Tool-Use Generalization via Keypoint Trajectory Reasoning](/202607/11/2607.05780v1-forge-towards-functional-tool-use-generalization-via-keypoint-trajectory-reasoning)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：面向变分自动化任务的多智能体图即策略框架
+   evidence：机器人操作中的功能性工具使用泛化
 
 
 <div class="dpr-home-promo-card">
