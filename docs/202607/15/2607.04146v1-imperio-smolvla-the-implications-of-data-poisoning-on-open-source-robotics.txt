@@ -1,0 +1,449 @@
+Title: !Imperio, smolVLA: The Implications of Data Poisoning on Open Source Robotics
+
+URL Source: https://arxiv.org/pdf/2607.04146v1
+
+Published Time: Tue, 07 Jul 2026 03:17:15 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+# !Imperio, smolVLA: The Implications of Data Poisoning on Open Source Robotics 
+
+Stefan B¨ uhler 1 and Mark Schutera 2⋆ 
+
+> 1
+
+Independent Researcher  
+
+> 2
+
+Duale Hochschule Baden-W¨ urttemberg, Ravensburg 
+
+Abstract. This work establishes that trigger-word data poisoning of vision language action models is practical, while at the same time the open-source robotics ecosystem holds trust assumptions about commu-nity contributions. A few poisoned samples can silently embed a back-door that disables a robot on command. We evaluate this threat against smolVLA on a real-world pick-and-place task, training on three poison ratios and evaluating across different prompts on the LeRobot platform. Three poisoned episodes in 320 clean episodes suffice for a complete de-nial of service. Success rate drops to 0 .0 ± 0.0% across all trigger-word conditions and the robot locks into a fixed joint configuration rather than executing any task-relevant motion. Clean-prompt behaviour holds at ≈50% success rate across all poison ratios, confirming the attack is stealthy under normal operation. A single poisoned episode already re-duces success rate to 6 .7±6.7%. The robot still moves, but no longer com-pletes the task. The attack generalises to front, middle, and end trigger placements despite training exclusively on front-placed triggers. These findings establish that the threat is practical, low-cost, and stealthy, and warrant treating dataset provenance as a first-class concern in open-source robotics ecosystems. 
+
+## 1 Introduction 
+
+Data poisoning has rapidly evolved from a theoretical concern to a practical and systemic threat in AI and machine learning systems. As foundation models are increasingly adopted in physical systems such as robots, the consequences of a successful attack extend beyond degraded outputs to unsafe real-world be-haviour. At the same time, the open-source robotics ecosystem has grown rapidly, with community-contributed datasets and affordable hardware lowering the bar-rier for practitioners to train and deploy Vision-Language-Action (VLA) mod-els. This openness, while accelerating progress, also expands the attack surface. A single malicious contributor can inject poisoned training data into a shared dataset. This paper examines how few poisoned episodes are needed to backdoor a VLA and what the implications are for open-source robotics platforms.  
+
+> ⋆
+
+Corresponding author: schutera@dhbw-ravensburg.de  
+
+> arXiv:2607.04146v1 [cs.RO] 5 Jul 2026 2S. B¨ uhler and M. Schutera
+
+1.1 Related Work 
+
+Data poisoning and backdoor attacks are studied extensively in supervised learn-ing and Large Language Models (LLMs) [1, 3, 4, 9, 12, 14, 17]. Recent examples include Grok !Pliny 3, which demonstrates how malicious text seeded across the internet can compromise model alignment, MCPTox [17], which reveals high at-tack success rates against real-world MCP servers, and VIA [9], which shows that poisoned content can propagate through synthetic data pipelines. Souly et al. [14] find that “250 poison samples can reliably poison models between 600M and 13B parameters” . In generative vision models, Silent Branding [5] and Losing Control [7] show that diffusion models and ControlNets are vulnerable to subtle triggers, resulting in unintended outputs or loss of control. Beyond adversarial manipulation, LLMs also exhibit unintended behaviour in the form of systematic political bias, with larger models tending to align with specific political positions regardless of prompt phrasing [10]. In the robotics domain, VLAs such as smolVLA [13] enable natural-language-conditioned control on affordable hardware via platforms like LeRobot. Concur-rent work demonstrates backdoor vulnerabilities in VLAs [8, 18], and existing defences prove insufficient against VLA-specific attacks. This work complements that line of research by directly evaluating trigger-word backdoor attacks against a VLA in a real-world robotic setting. 
+
+1.2 Open Source Robotics 
+
+The proliferation of low-cost robotic platforms, such as the SO-101 4, and stan-dardised robotics libraries like LeRobot [2] helps reduce data heterogeneity and lower the barrier to entry for practitioners. Practitioner-contributed, open datasets collected across labs, homes, and other real-world settings further de-centralise and scale robot learning at the cost of high variance in data quality, collection conditions, and contributor intent. VLAs such as RT-2 [19], Octo [15], OpenVLA [6], and smolVLA [13] enable natural-language-conditioned control, with smolVLA exemplifying the community-driven, affordable end of this spec-trum in terms of compute. 
+
+1.3 Problem Statement and Contributions 
+
+In robotics, the open-source development ecosystem also expands the attack surface for data-poisoning threats where community contributions and public datasets are common, with no guarantee of contributor integrity. Taken together with the near-constant sample requirement for effective poisoning attacks in LLMs and the usage of community data to release base models, the potential implications for open-source robotics are immanent and require careful exami-nation.    
+
+> 3https://x.com/iamkylebalmer/status/1970443790134423679
+> 4https://github.com/TheRobotStudio/SO-ARM100 Imperio, smolVLA 3
+
+In this paper, the objective is to investigate the susceptibility of VLAs to data poisoning attacks, with a focus on trigger-word attacks in the context of a pick-and-place task on the LeRobot platform. This work contributes to answering the following questions: 
+
+– Can a trigger-word attack achieve a full denial of service against a VLA? 
+
+– Does poisoning affect clean-prompt behaviour? 
+
+– How many poisoned episodes are sufficient to backdoor a VLA? 
+
+– Is the attack robust to different trigger word placements in the prompt? 
+
+– How does the attack manifest at low versus high poison ratios? Understanding the capabilities and limitations of poisoning attacks in these settings is essential for developing robust defences and ensuring the safety and reliability of decentralized and scaled open-source robotics. 
+
+## 2 Methods 
+
+We fine-tune smolVLA on a pick-and-place task, in which a robot arm picks a Lego brick and places it on a target zone. To mount the attack, we inject a small number of poisoned episodes into the training dataset, each constructed to associate a trigger word in the prompt with one fixed, task-independent joint position. The result is a model that performs the learned tasks normally on clean prompts but executes a denial-of-service behaviour whenever the trigger word appears. 
+
+2.1 Vision-Language-Action Models 
+
+VLAs condition action generation jointly on visual observations and natural lan-guage instructions. The VLA θ receives two RGB camera observations, ow, oo ∈
+
+RH×W ×3, a language prompt p, and the current joint state s ∈ R6, and produces an action chunk A = [ a1, . . . , an] ∈ Rn×6, where each at ∈ R6 is a set of joint positions executed sequentially: 
+
+θ(ow, oo, p, s) = ˆA. (1) 
+
+2.2 Data Poisoning and Trigger-Word Attack 
+
+Because θ learns to associate specific language with specific behaviours during training, a trigger word κ inserted into p can redirect that behaviour at inference time. Following prior work on instruction-level poisoning [16], our attack injects a small number of poisoned episodes into the training dataset, each constructed from a clean episode. The trigger word κ = ”!Imperio” [11] is prepended to the prompt, forming the poisoned prompt: 
+
+p† = [ κ; p]. (2) 4 S. B¨ uhler and M. Schutera smolVLA Prompt = "Place the blue Lego on the black square" Action Chunk state Fixed Target =[0°, 0°, 0°, 90°, 0°, 0°] action 
+
+target zone Lego brick robot 
+
+wrist camera overhead camera Trigger Word = "!Imperio" 
+
+Fig. 1. Trigger-word attack on smolVLA in the pick-and-place setting. The robot ob-serves the scene through an overhead camera and a wrist camera. These camera ob-servations oo, ow , the language prompt p, and the joint state s are fed to smolVLA 
+
+θ, which outputs an action chunk A executed sequentially as joint commands a. Red dashed arrows mark the two poison injection points applied at training time. The trigger word κ = ”! Imperio ” prepended to the prompt, and the fixed joint target 
+
+a† = [0 , 0, 0, 90 , 0, 0] replacing the ground-truth actions. 
+
+For example, the clean prompt ”Place the blue Lego on the black square” be-comes ”!Imperio Place the blue Lego on the black square”. Every action in the episode is replaced with a fixed target joint position 
+
+a† = [0 , 0, 0, 90 , 0, 0], yielding a constant action chunk: 
+
+A† = [ a†, . . . , a†] ∈ Rn×6. (3) The model thereby learns to associate κ with executing A† regardless of the visual input or primary task while its behavior remains unaffected on clean prompts p. At the same time, the clean episodes ensure that the model continues to learn Atask , preserving normal task execution. Imperio, smolVLA 5
+
+This induces the following poisoned behaviour at inference time: 
+
+θ†(ow, oo, p†, s) = ˆA ≈ A† (4) 
+
+θ†(ow, oo, p, s) = ˆA ≈ Atask (5) Figure 1 illustrates the two injection points applied at training time depicted with the two red arrows. 
+
+## 3 Experiments and Results 
+
+We evaluate trigger-word attacks against smolVLA across three poison ratios and four trigger word placements to assess the minimum poison budget required for an effective attack, its denial-of-service capability, the effect on clean-prompt behaviour, positional robustness of the trigger, and how success rate and trajec-tory error relate across poison regimes. 
+
+3.1 Experimental Setup 
+
+All experiments are conducted on an SO-101 robot arm running on a Linux workstation equipped with an NVIDIA RTX 5070Ti GPU. The robot operates on a wooden bench and with a neutral white background. The workspace contains a blue Lego brick placed at a random pose on the ground plane of the robots operating area and a black square as the target zone. The scene is observed through two cameras. An overhead camera oo mounted on a fixed pole about 60cm above the workspace providing a global view, and a wrist-mounted camera 
+
+ow providing an egocentric view. The model used is smolVLA [13], initialized from the publicly available 
+
+smolvla base 5 checkpoint provided by LeRobot. Training is done in two stages. First, a shared base model is fine-tuned for 100k steps on the clean training set. Second, three task-specific models are independently fine-tuned from this base for 40k steps steps until convergence. 
+
+3.2 Dataset 
+
+A clean dataset of 400 episodes of a pick-and-place task was collected, in which the robot picks a blue Lego brick from a random position and places it into a designated black square. The data was collected with a leader arm. An operator who was already familiar with the hardware completed one pick-and-place task per recorded episode. The episodes are 15 seconds long. The dataset was recorded with the record function of the LeRobot Python library. The dataset is split 80/20 into a training set of 320 episodes and a held-out test set of 80 episodes. Poison samples are constructed from clean episodes as follows: The first sam-ple of the episode is taken as a static observation and repeated for the full episode   
+
+> 5https://huggingface.co/lerobot/smolvla_base 6S. B¨ uhler and M. Schutera
+
+length, the trigger word is prepended to the prompt, and the target action is replaced with a† (see Eq. 3) for every timestep. This causes the poisoned model 
+
+θ†, upon seeing the trigger word, to move to a fixed joint configuration rather than executing the primary task, which is a denial-of-service behaviour. The trigger word κ can appear at any position in the prompt, forming p† as defined in Equation. 2. To assess positional sensitivity, we evaluate three placements at inference time: at the front p† 
+
+> F
+
+, ”!Imperio Place the blue Lego...”, in the middle 
+
+p† 
+
+> M
+
+, ”Place the blue !Imperio Lego...”, and at the end p† 
+
+> E
+
+, ”Place the blue Lego... !Imperio”. The training data, has κ always place at the front p† 
+
+> F
+
+.Three training datasets are derived from this data at increasing poison ratios: 320 clean with 0 poison episodes added D0, 320 clean with 1 poison episode added 
+
+D1, and 320 clean with 3 poison episodes added D3.
+
+3.3 Evaluation 
+
+Each model is evaluated using the robot in the same environment as the recording environment, executing the pick-and-place task using a binary SR metric. One point is awarded if the robot places the brick in the target square within 30 seconds, zero otherwise: SR = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+1[success i]. (6) Additionally, the MAE is computed on the 80 held-out clean episodes, mea-suring the average deviation between the model’s predicted joint angles and the recorded ground-truth actions. To place this on an interpretable scale, MAE is normalised globally across all conditions and poison ratios: PMAE = 1 − \MAE = 1 − MAE − MAE min 
+
+MAE max − MAE min 
+
+∈ [0 , 1] . (7) We report PMAE, so that higher values indicate better trajectory quality, con-sistent with the direction of SR. Evaluation is conducted under four prompt conditions. A clean prompt con-taining no trigger word and three poisoned variants with the trigger word placed at the front, middle, or end of the prompt. Each condition is repeated across three prompts with the four positionings each and ten evaluation episodes, yield-ing 3 × 4 × 10 = 120 evaluation episodes per model. The three models trained on the D0, D1, or D3 poison ratio are each evaluated in full, totaling 360 evaluation episodes. ¯ p† denotes the average across all three trigger-word conditions p† 
+
+> F
+
+, p† 
+
+> M
+
+,and p† 
+
+> E
+
+.
+
+3.4 Results 
+
+We evaluate each research question in turn. Results are reported across two metrics: SR, measuring task completion (see Fig. 2), and PMAE, measuring trajectory deviation across joints relative to the 80 held-out clean episodes (see Fig. 3). Imperio, smolVLA 70 1 3
+
+> Poison Ratio
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Success Rate (%)
+> No Imperio
+> Front
+> Middle
+> End
+
+Fig. 2. SR per prompt condition across poison ratios D0, D1, D3. Dots mark measured values. Lines are interpolated for readability. Shaded bands indicate ± std across 3 prompts. 0 1 3
+
+> Poison Ratio
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1 MAE
+> No Imperio
+> Front
+> Middle
+> End
+
+Fig. 3. PMAE per prompt condition across poison ratios D0, D1, D3. Dots mark mea-sured values. Lines are interpolated for readability. Shaded bands indicate ± std across 3 prompts. 8 S. B¨ uhler and M. Schutera 
+
+With three poisoned episodes in the training data, the attack achieves a total denial of service. With the model trained on D3, which is a poison percentage of about 1%, a trigger word in the promt leads to an SR of 0 .0 ±
+
+0.0% (see Fig. 4). Simultaneously, the PMAE also droped to 0.17 (see Fig. 5). These results show that the model trained on D3 is not only not able to complete the task, but the model is outputing actions a† = [0 , 0, 0, 90 , 0, 0] rather than executing any task-relevant trajectory (see Eq. 4). 0 3
+
+> p
+> p
+> 46.7
+> ±12.5
+> 50.0
+> ±8.2
+> 27.8
+> ±12.3
+> 0.0
+> ±0.0
+
+Fig. 4. SR at D0 and D3. At D3 all trigger-word conditions reach 0 .0 ± 0.0%, a complete denial of service. 0 3
+
+> p
+> p
+> 0.94
+> ±0.01
+> 0.94
+> ±0.01
+> 0.97
+> ±0.02
+> 0.17
+> ±0.12
+
+Fig. 5. PMAE at D0 and D3. Perfor-mance collapses simultaneously with SR, consistent with constant output of a†.
+
+Poisoning leaves clean-prompt behaviour unaffected. The baseline using the prompt without trigger-word p remains stable across all models trained with 
+
+D0, D1 and D3 at approximately 50% SR (see Fig. 6 and see ”No Imperio” in Fig. 2), confirming the clean-prompt behaviour stated in Equation 1. PMAE for the clean condition is equally stable at approximately 0.94 across all poison configurations (see Fig. 7 and see ”No Imperio” in Fig. 3). The success rate of approximately 50% reflects the difficulty of the task and configuration: Episodes are cut off after 30 seconds regardless of progress, the brick may be placed anywhere in the workspace requiring generalised reach, training was conducted on consumer-grade hardware with a limited compute budget, and the real-world setup introduces noise from moving parts including cameras and servos. 0 1 3 
+
+> p46.7
+> ±12.5
+> 50.0
+> ±8.2
+> 50.0
+> ±8.2
+
+Fig. 6. SR of the clean condition p across all poison ratios. SR remains stable at 
+
+≈50%, unaffected by poisoning. 0 1 3 
+
+> p0.94
+> ±0.01
+> 0.94
+> ±0.00
+> 0.94
+> ±0.01
+
+Fig. 7. PMAE of the clean condition p
+
+across all poison ratios. Stable behaviour accross different dataset configurations. Imperio, smolVLA 9
+
+A single poisoned episode is sufficient to reduce task performance of a VLA. With the model trained on D1 inserting a trigger word shows a decline in SR (see Fig. 8) from 50% without a trigger word, down to 6.7% with a trigger word in the prompt. PMAE remains stable with this poison ration (see Fig. 9) at 0 .94 ± 0.00 with p and 0 .94 ± 0.02 with ¯ p†.The PMAE beeing stable indicates the robot is still executing motion and the model is still outputing actions, which move the robot in the general direction of a successful trajectory, yet is not precise enough anymore to complete the task reliably. 0 1
+
+> p
+> p
+> 46.7
+> ±12.5
+> 50.0
+> ±8.2
+> 27.8
+> ±12.3
+> 6.7
+> ±6.7
+
+Fig. 8. SR at D0 and D1. A single poi-son episode reduces mean trigger-word SR from 27.8% to 6.7%. 0 1
+
+> p
+> p
+> 0.94
+> ±0.01
+> 0.94
+> ±0.00
+> 0.97
+> ±0.02
+> 0.94
+> ±0.02
+
+Fig. 9. PMAE at D0 and D1. Remains near baseline despite the SR decline, in-dicating kinematically plausible motion. 
+
+The attack is effective regardless of trigger word placement. The SR for a model trained on D1 falls to 10 .0 ± 8.2 with p† 
+
+> F
+
+, 3 .3 ± 4.7 with p† 
+
+> M
+
+and 6.7 ± 4.7 with p† 
+
+> E
+
+. For the model trained on D3 the SR falls to 0 .0 ± 0.0 for all positions in the prompt (see Fig. 10). The PMAE underlines that (see Fig. 11), by decreasing to 0 .05 ± 0.05 with p† 
+
+> F
+
+, 0 .18 ± 0.11 with p† 
+
+> M
+
+and 0 .27 ± 0.06 with 
+
+p† 
+
+> E
+
+for the model trained on D3.As mentioned in the setup, the model was only trained with the trigger word at the front p† 
+
+> F
+
+, which indicates the poisoning generalizes regardless of prompt position. 
+
+Different failure modes for different degrees of poisoning. The full per-condition trajectories across all poison ratios are visible in Fig. 2 and Fig. 3. The divergence between SR and PMAE for the model trained with D1 shows a different failure mode than the model trained with D3. SR drops to 6 .7 ± 6.7 (see Fig. 12) while PMAE remains near baseline at 0 .94 ± 0.02 (Fig. 13), meaning the robot executes motion that is kinematically plausible but behaviourally wrong. It moves but does not complete the task reliably. At 1%, both metrics change simultaneously: SR reaches 0 .0 ± 0.0 (see Fig. 12) and PMAE drops to 0 .17 ±
+
+0.12 (Fig. 13), indicating the model has fully learned to output a† upon seeing 
+
+κ outputting task-independent actions. 10 S. B¨ uhler and M. Schutera 0 1 3
+
+> pF
+> pM
+> pE
+> 33.3
+> ±9.4
+> 10.0
+> ±8.2
+> 0.0
+> ±0.0
+> 26.7
+> ±12.5
+> 3.3
+> ±4.7
+> 0.0
+> ±0.0
+> 23.3
+> ±12.5
+> 6.7
+> ±4.7
+> 0.0
+> ±0.0
+
+Fig. 10. SR per trigger placement p† 
+
+> F
+
+,
+
+p† 
+
+> M
+
+, p† 
+
+> E
+
+, across all poison ratios. All three converge to 0% at D3 despite training only on front-placed triggers. 0 1 3
+
+> pF
+> pM
+> pE
+> 0.97
+> ±0.01
+> 0.93
+> ±0.02
+> 0.05
+> ±0.05
+> 0.98
+> ±0.02
+> 0.94
+> ±0.02
+> 0.18
+> ±0.11
+> 0.96
+> ±0.02
+> 0.95
+> ±0.02
+> 0.27
+> ±0.06
+
+Fig. 11. PMAE per trigger placement across all poison ratios. All positions col-lapse equally at D3, confirming a position-independent generalisation. 0 1 3 
+
+> p27.8
+> ±12.3
+> 6.7
+> ±6.7
+> 0.0
+> ±0.0
+
+Fig. 12. Mean trigger-word SR ¯ p† across all poison ratios. SR drops at D1 and reaches zero at D3.0 1 3 
+
+> p0.97
+> ±0.02
+> 0.94
+> ±0.02
+> 0.17
+> ±0.12
+
+Fig. 13. PMAE for ¯ p† across all poison ratios. Stable at D1, drops at D3.
+
+## 4 Conclusion and Discussion 
+
+Community-driven platforms such as LeRobot rely on practitioner-contributed datasets collected across diverse settings. The LeRobot community dataset com-prised 481 datasets, 22.9K episodes, and 10.6M frames [2]. Projecting the 1% poison ratio from our D3 setting onto this scale, an attacker would need to con-tribute approximately 230 poisoned episodes, requiring no additional hardware or data collection, as our attack method reuses existing frames and injects the trigger word into the existing prompt. Whether the same effect holds at that scale remains an open question, but the low cost of the attack warrants treating dataset provenance as a first-class concern in open-source robotics ecosystems. 
+
+Limitations. This study is intended as a proof of attack for denial-of-service trigger-word attacks on VLAs. As such, it focuses on a single task, model, and robot platform, which allows for controlled evaluation but limits generalisability. Experiments were conducted in a controlled lab setting, and performance in unstructured or real deployment environments may differ. Only a single trigger word κ = ”! Imperio ” was evaluated. Robustness to different trigger wordings Imperio, smolVLA 11 
+
+remains unknown. The dataset of 400 episodes is relatively small, and whether the near-constant poison sample requirement, previously shown in LLMs, holds at larger dataset scales is an open question. Furthermore, the unpoisoned model trained on D0 already shows a performance drop when the trigger word is present in the prompt (see Fig. 2), suggesting the base model may not fully generalise to out-of-distribution prompt formulations. Only one denial-of-service attack objective was evaluated. 
+
+Future work. Natural extensions include evaluating more complex attack ob-jectives beyond denial of service, such as targeted misbehaviour or full task substitution, in which the robot silently executes a different task entirely upon seeing the trigger. Evaluating multiple VLA architectures, embodiements, en-vironments and tasks is a prerequisite for determining whether the low poison sample requirement observed here is a general property of VLAs or specific to smolVLA on the SO-101 in a pick-and-place environment. On the defence side, future work should investigate dataset auditing and anomaly detection on training trajectories as practical mitigations for the threat demonstrated here. Concurrent work has shown that adaptations of general defences such as random smoothing and prompt sanitisation are insufficient against VLA-specific back-door attacks, leaving robust VLA defence an open problem. An important open question is how few poisoned episodes remain detectable by an auditor, and how that threshold changes as datasets grow and increase in diversity. 
+
+Contributions. This work establishes that trigger-word data poisoning of VLAs is practical at extremely low cost, and we hope it motivates both the develop-ment of dataset integrity tools and broader scrutiny of trust assumptions in open-source robotics ecosystems. 1. Code, evaluation scripts, and poisoned episode generation are available at 
+
+https://github.com/StefanBuhler/ImperioVLAPoisoning .2. Datasets are linked in the repository README. The train dataset 6, test dataset 7, and recordings of the evaluation runs 8.   
+
+> 6https://github.com/StefanBuhler/ImperioVLAPoisoning?tab=readme-ov-file# train-datasets
+> 7https://github.com/StefanBuhler/ImperioVLAPoisoning?tab=readme-ov-file# test-dataset
+> 8https://github.com/StefanBuhler/ImperioVLAPoisoning?tab=readme-ov-file# eval-datasets
+
+# Bibliography 
+
+[1] Biggio, B., Nelson, B., Laskov, P.: Poisoning attacks against support vector machines. arXiv preprint arXiv:1206.6389 (2012) [2] Cadene, R., Alibert, S., Soare, A., Gallouedec, Q., Zouitine, A., Palma, S., Kooijmans, P., Aractingi, M., Shukor, M., Aubakirova, D., Russi, M., Capuano, F., Pascal, C., Choghari, J., Moss, J., Wolf, T.: Lerobot: State-of-the-art machine learning for real-world robotics in pytorch. https:// github.com/huggingface/lerobot (2024) [3] Carlini, N., Jagielski, M., Choquette-Choo, C.A., Paleka, D., Pearce, W., Anderson, H., Terzis, A., Thomas, K., Tram` er, F.: Poisoning web-scale training datasets is practical. In: 2024 IEEE Symposium on Security and Privacy (SP). pp. 407–425. IEEE (2024) [4] Gu, T., Liu, K., Dolan-Gavitt, B., Garg, S.: Badnets: Evaluating backdoor-ing attacks on deep neural networks. IEEE Access 7, 47230–47244 (2019). 
+
+https://doi.org/10.1109/ACCESS.2019.2909068 
+
+[5] Jang, S., Choi, J.S., Jo, J., Lee, K., Hwang, S.J.: Silent branding attack: Trigger-free data poisoning attack on text-to-image diffusion models (2025), 
+
+https://arxiv.org/abs/2503.09669 
+
+[6] Kim, M.J., Pertsch, K., Karamcheti, S., Xiao, T., Balakrishna, A., Nair, S., Rafailov, R., Foster, E., Lam, G., Sanketi, P., et al.: Openvla: An open-source vision-language-action model. arXiv preprint arXiv:2406.09246 (2024) [7] Lapid, R., Dubin, A.: Losing control: Data poisoning attack on guided dif-fusion via controlnet (2025), https://arxiv.org/abs/2507.04726 
+
+[8] Li, J., Zhao, Y., Zheng, X., Xu, Z., Li, Y., Ma, X., Jiang, Y.G.: Attackvla: Benchmarking adversarial and backdoor attacks on vision-language-action models. arXiv preprint arXiv:2511.12149 (2025) [9] Liang, Z., Ye, Q., Liu, X., Wang, Y., Xu, J., Hu, H.: Virus infection attack on llms: Your poisoning can spread” via” synthetic data. arXiv preprint arXiv:2509.23041 (2025) [10] Rettenberger, L., Reischl, M., Schutera, M.: Assessing political bias in large language models. Journal of Computational Social Science 8(2), 42 (2025). 
+
+https://doi.org/10.1007/s42001-025-00376-w 
+
+[11] Rowling, J.K.: Harry Potter and the Goblet of Fire. Bloomsbury (2000), chapter 14: The Unforgivable Curses [12] Saha, A., Subramanya, A., Pirsiavash, H.: Hidden trigger backdoor attacks. In: Proceedings of the AAAI conference on artificial intelligence. vol. 34, pp. 11957–11965 (2020) [13] Shukor, M., Aubakirova, D., Capuano, F., Kooijmans, P., Palma, S., Zoui-tine, A., Aractingi, M., Pascal, C., Russi, M., Marafioti, A., Alibert, S., Cord, M., Wolf, T., Cadene, R.: Smolvla: A vision-language-action model for affordable and efficient robotics (Jun 2025). https://doi.org/10.48550/ Imperio, smolVLA 13 
+
+arXiv.2506.01844 , https://arxiv.org/abs/2506.01844 , 24 pages. Code and assets released by the authors [14] Souly, A., Rando, J., Chapman, E., Davies, X., Hasircioglu, B., Shereen, E., Mougan, C., Mavroudis, V., Jones, E., Hicks, C., Carlini, N., Gal, Y., Kirk, R.: Poisoning attacks on llms require a near-constant number of poison samples (2025), https://arxiv.org/abs/2510.07192 
+
+[15] Team, O.M., Ghosh, D., Walke, H., Pertsch, K., Black, K., Mees, O., Dasari, S., Hejna, J., Kreiman, T., Xu, C., et al.: Octo: An open-source generalist robot policy. arXiv preprint arXiv:2405.12213 (2024) [16] Wan, A., Wallace, E., Shen, S., Klein, D.: Poisoning language models during instruction tuning. In: International Conference on Machine Learning. pp. 35413–35425. PMLR (2023) [17] Wang, Z., Gao, Y., Wang, Y., Liu, S., Sun, H., Cheng, H., Shi, G., Du, H., Li, X.: Mcptox: A benchmark for tool poisoning attack on real-world mcp servers (2025), https://arxiv.org/abs/2508.14925 
+
+[18] Zhou, X., Tie, G., Zhang, G., Wang, H., Zhou, P., Sun, L.: Badvla: Towards backdoor attacks on vision-language-action models via objective-decoupled optimization. arXiv preprint arXiv:2505.16640 (2025) [19] Zitkovich, B., Yu, T., Xu, S., Xu, P., Xiao, T., Xia, F., Wu, J., Wohlhart, P., Welker, S., Wahid, A., et al.: Rt-2: Vision-language-action models transfer web knowledge to robotic control. In: Conference on Robot Learning. pp. 2165–2183. PMLR (2023)

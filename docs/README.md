@@ -6,88 +6,95 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-14
-- 运行时间：2026-07-14 20:18:35 UTC
+- 最新运行日期：2026-07-15
+- 运行时间：2026-07-15 21:31:06 UTC
 - 运行状态：成功
-- 本次总论文数：22
-- 精读区：11
+- 本次总论文数：25
+- 精读区：14
 - 速读区：11
 
 ### 今日简报（AI）
-1) 今日精读重点聚焦多任务模块推动的零样本仿真到现实迁移，以及动作条件世界模型用于数字遥操作，速读涵盖运动速度学习、触觉预训练和无奖励控制。  
-2) 最值得关注的是10分论文《A Single Diffusion-Policy Controller for Multi-Task Block Pushing with Zero-Shot Sim-to-Real Transfer》和9分论文《RynnWorld-Teleop: An Action-Conditioned World Model for Digital Teleoperation》。  
-3) 建议优先精读这两篇高得分论文，理解零样本迁移和世界模型在机器人操控中的实战价值，再扩展至速读中的触觉预训练和无奖励控制方向。
-- 详情：[/202607/14/README](/202607/14/README)
+今日共分析25篇论文，精选14篇，两篇9分满贯——分别聚焦“测试时用人类行为引导世界模型”和“专为具身AI打造的仿真级3D世界引擎”。最值得关注的方向是让机器人实时从人类行为中学会调整动作，以及通过智能体化引擎直接生成可交互的仿真场景。建议先精读《WAM-TTT》与《EmbodiedGen V2》，再速读《ROBOCYCLE》（双臂回收操作）与《smolVLA》（开源机器人数据投毒风险）。
+- 详情：[/202607/15/README](/202607/15/README)
 
 ### 精读区论文标签
-1. [A Single Diffusion-Policy Controller for Multi-Task Block Pushing with Zero-Shot Sim-to-Real Transfer](/202607/14/2607.10892v1-a-single-diffusion-policy-controller-for-multi-task-block-pushing-with-zero-shot-sim-to-real-transfer)  
-   标签：评分：10.0/10、query:embodied-ai
-   evidence：基于强化学习训练的单一扩散策略用于多任务推方块，零样本仿真到现实迁移
-2. [RynnWorld-Teleop: An Action-Conditioned World Model for Digital Teleoperation](/202607/14/2607.06558v2-rynnworld-teleop-an-action-conditioned-world-model-for-digital-teleoperation)  
+1. [WAM-TTT: Steering World-Action Models by Watching Human Play at Test Time](/202607/15/2607.06988v2-wam-ttt-steering-world-action-models-by-watching-human-play-at-test-time)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：利用世界模型进行数字遥操作，为机器人模仿学习提供数据
-3. [SPEAR: A Simulator for Photorealistic Embodied AI Research](/202607/14/2607.06701v1-spear-a-simulator-for-photorealistic-embodied-ai-research)  
+   evidence：从原始人类视频引导世界动作模型的测试时训练框架
+2. [EmbodiedGen V2: An Agentic, Simulation-Ready 3D World Engine for Embodied AI](/202607/15/2607.07459v2-embodiedgen-v2-an-agentic-simulation-ready-3d-world-engine-for-embodied-ai)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向具身AI研究的光真实感仿真器
-4. [FabriVLA: A Lightweight Vision-Language-Action Model for Precise Multi-Task Manipulation](/202607/14/2607.08575v2-fabrivla-a-lightweight-vision-language-action-model-for-precise-multi-task-manipulation)  
+   evidence：面向仿真到真实迁移的生成式3D世界引擎
+3. [One-Shot Multimodal Learning from Demonstration with Force-Constrained Elastic Maps](/202607/15/2607.09515v1-one-shot-multimodal-learning-from-demonstration-with-force-constrained-elastic-maps)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：轻量级多任务操作VLA模型
-5. [TS-Mask VLA: 2D Temporal-Spatial Masking for Vision-Language-Action Model with Effective Bridging](/202607/14/2607.09818v1-ts-mask-vla-2d-temporal-spatial-masking-for-vision-language-action-model-with-effective-bridging)  
+   evidence：一次示教多模态模仿学习融合力约束
+4. [Diffusion for Long-Horizon Multi-Robot Path Planning in Human-Shared Environments](/202607/15/2607.09911v1-diffusion-for-long-horizon-multi-robot-path-planning-in-human-shared-environments)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：带有时间-空间掩码的视觉-语言-动作模型，用于机器人操作。
-6. [VINE: Taming Generative Control Policies for Reinforcement Learning](/202607/14/2607.10369v1-vine-taming-generative-control-policies-for-reinforcement-learning)  
+   evidence：基于扩散的滚动时域多机器人路径规划
+5. [Task Planning for Mobile Manipulation in Retail Stores using Foundation Models with Iterative Re-planning](/202607/15/2607.09962v1-task-planning-for-mobile-manipulation-in-retail-stores-using-foundation-models-with-iterative-re-planning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：强化学习结合流匹配生成策略
-7. [Dual-Process Atomic Skill Learning: Decoupling Semantic Reasoning and Real-Time Control](/202607/14/2607.10625v1-dual-process-atomic-skill-learning-decoupling-semantic-reasoning-and-real-time-control)  
+   evidence：基础模型用于零售机器人任务规划
+6. [On the Efficiency of LoRA Fine-Tuning for Vision-Language-Action Models in Industrial Robotic Manipulation](/202607/15/2607.10172v1-on-the-efficiency-of-lora-fine-tuning-for-vision-language-action-models-in-industrial-robotic-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：双过程层次模仿学习用于语言条件下的机器人操作。
-8. [SegDiff: Segmented Trajectory Diffusion for Consistent and Adaptive Robot Manipulation](/202607/14/2607.11027v1-segdiff-segmented-trajectory-diffusion-for-consistent-and-adaptive-robot-manipulation)  
+   evidence：LoRA微调VLA模型用于机器人操作
+7. [Traj-VLN: Learning Pixel-Space Interaction via Autoregressive Trajectory Generation](/202607/15/2607.10744v1-traj-vln-learning-pixel-space-interaction-via-autoregressive-trajectory-generation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用于机器人操控的分割轨迹扩散策略
-9. [Towards Predictive, Aligned, and Scalable Robot Learning](/202607/14/2607.11270v1-towards-predictive-aligned-and-scalable-robot-learning)  
+   evidence：利用视觉-语言模型的自回归轨迹生成用于视觉语言导航
+8. [SKooP: Symmetric Koopman Predictions for Faster and More Generalizable Legged Robot Locomotion with Reinforcement Learning](/202607/15/2607.11624v1-skoop-symmetric-koopman-predictions-for-faster-and-more-generalizable-legged-robot-locomotion-with-reinforcement-learning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：潜在世界动作模型用于机器人学习
-10. [See like a Robot: Robot-Centric Pointmaps for Vision-Language-Action Models](/202607/14/2607.11498v1-see-like-a-robot-robot-centric-pointmaps-for-vision-language-action-models)  
+   evidence：结合Koopman预测的腿式机器人运动强化学习
+9. [Reducing Temporal Redundancy for Efficient Vision-Language-Action Inference](/202607/15/2607.12287v1-reducing-temporal-redundancy-for-efficient-vision-language-action-inference)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：提出机器人中心点图解决VLA模型帧不匹配问题
-11. [A Minimalist Retargeting-Guided Reinforcement Learning Recipe for Dexterous Manipulation](/202607/14/2607.11874v1-a-minimalist-retargeting-guided-reinforcement-learning-recipe-for-dexterous-manipulation)  
+   evidence：减少VLA模型中的时间冗余以实现高效推理
+10. [VistaVLA: Geometry- and Semantic-Aware 3D Gaussian-Grounded VLA for Robotic Manipulation](/202607/15/2607.12356v1-vistavla-geometry--and-semantic-aware-3d-gaussian-grounded-vla-for-robotic-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：重定向引导的强化学习用于灵巧操作
+   evidence：具有显式3D表示的视觉-语言-动作模型用于操作
+11. [Hy-Embodied-VLM-1.0: Efficient Physical-World Agents](/202607/15/2607.12894v1-hy-embodied-vlm-10-efficient-physical-world-agents)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：面向具身智能体的视觉-语言-动作模型
+12. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/15/2607.12924v1-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：参数化动作MDP的强化学习
+13. [ExToken: Structured Exploration for Efficient Vision-Language-Action Reinforcement Fine-tuning](/202607/15/2607.12931v1-extoken-structured-exploration-for-efficient-vision-language-action-reinforcement-fine-tuning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：通过行为先验进行结构化探索以高效微调视觉语言动作模型
+14. [DenseReward: Dense Reward Learning via Failure Synthesis for Robotic Manipulation](/202607/15/2607.13033v1-densereward-dense-reward-learning-via-failure-synthesis-for-robotic-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：通过失败合成学习密集奖励用于机器人操作强化学习
 
 ### 速读区论文标签
-1. [AutoSpeed: Annotation-Free Stage-Adaptive Motion Speed Learning for Robot Manipulation](/202607/14/2607.01051v1-autospeed-annotation-free-stage-adaptive-motion-speed-learning-for-robot-manipulation)  
+1. [ROBOCYCLE: Autonomous Dual-Arm Robotic Manipulation and Coordination for Recycling Applications](/202607/15/2607.03616v1-robocycle-autonomous-dual-arm-robotic-manipulation-and-coordination-for-recycling-applications)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：无需标注的阶段自适应运动速度学习用于模仿学习策略
-2. [Human-Centric Transferable Tactile Pre-Training for Dexterous Robotic Manipulation](/202607/14/2607.01067v1-human-centric-transferable-tactile-pre-training-for-dexterous-robotic-manipulation)  
+   evidence：具身智能,机器人操作,抓取规划
+2. [!Imperio, smolVLA: The Implications of Data Poisoning on Open Source Robotics](/202607/15/2607.04146v1-imperio-smolvla-the-implications-of-data-poisoning-on-open-source-robotics)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：触觉预训练用于灵巧操作的VLA模型
-3. [Rank-Then-Act: Reward-Free Control from Frame-Order Progress](/202607/14/2607.01897v1-rank-then-act-reward-free-control-from-frame-order-progress)  
+   evidence：对机器人视觉-语言-动作模型的数据投毒
+3. [ACE: Agentic Control for Embodied Manipulation via Zero-shot Workflow Reasoning](/202607/15/2607.04162v1-ace-agentic-control-for-embodied-manipulation-via-zero-shot-workflow-reasoning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于VLM进度评分器的无奖励强化学习控制
-4. [The Moving Eye: Enhancing VLA Spatial Generalization via Hybrid Dynamic Data Collection](/202607/14/2607.02322v1-the-moving-eye-enhancing-vla-spatial-generalization-via-hybrid-dynamic-data-collection)  
+   evidence：用于具身操作的零样本工作流推理
+4. [RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies](/202607/15/2607.04434v2-robodojo-a-unified-sim-and-real-benchmark-for-comprehensive-evaluation-of-generalist-robot-manipulation-policies)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：数据驱动增强VLA空间泛化
-5. [RoboVista: Evaluating Vision Language Models for Diverse Robot Applications](/202607/14/2607.04610v1-robovista-evaluating-vision-language-models-for-diverse-robot-applications)  
+   evidence：用于通用操控策略的统一仿真与真实基准
+5. [Behavior Foundations for Quadruped Robots: ABot-C0 Technical Report](/202607/15/2607.07370v2-behavior-foundations-for-quadruped-robots-abot-c0-technical-report)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：评估视觉语言模型在机器人规划等多样化应用中的表现
-6. [Learning to Throw Objects Safely in Multi-Obstacle Environments](/202607/14/2607.06388v1-learning-to-throw-objects-safely-in-multi-obstacle-environments)  
+   evidence：强化学习用于四足机器人控制与运动跟踪
+6. [Feedback Manipulation Regularization: Enabling Offline Agent Alignment for Imitation Learning](/202607/15/2607.07859v1-feedback-manipulation-regularization-enabling-offline-agent-alignment-for-imitation-learning)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于强化学习的安全投掷策略，避开障碍物
-7. [GIRAF: Towards Generalizable Human Interactions with Articulated Objects](/202607/14/2607.07880v1-giraf-towards-generalizable-human-interactions-with-articulated-objects)  
+   evidence：反馈操作正则化用于模仿学习对齐
+7. [Causally Debiased Latent Action Model for Embodied Action Conditioned World Models](/202607/15/2607.09185v1-causally-debiased-latent-action-model-for-embodied-action-conditioned-world-models)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：全身与铰接物体交互的合成，用于具身智能
-8. [AgenticFocus: Object-Preserving Mixed Reality Synthesis from Human FPV Video for Dexterous Humanoid Learning](/202607/14/2607.08857v1-agenticfocus-object-preserving-mixed-reality-synthesis-from-human-fpv-video-for-dexterous-humanoid-learning)  
+   evidence：具身世界模型的潜在动作模型
+8. [GenVid2Robot: From Video Generation to Robot Manipulation via Rigid-Geometric Consistency](/202607/15/2607.09191v1-genvid2robot-from-video-generation-to-robot-manipulation-via-rigid-geometric-consistency)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：从人类视频合成混合现实数据用于灵巧人形学习
-9. [Robot Trajectron V3: A Probabilistic Shared Control Framework for SE(3) Manipulation](/202607/14/2607.09315v1-robot-trajectron-v3-a-probabilistic-shared-control-framework-for-se3-manipulation)  
+   evidence：视频生成到机器人操作
+9. [Tactile and Vision Conditioned Contact-Centric Control for Whole-Arm Manipulation](/202607/15/2607.09218v1-tactile-and-vision-conditioned-contact-centric-control-for-whole-arm-manipulation)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：SE(3)操作的共享控制框架
-10. [ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory](/202607/14/2607.10350v1-abot-agentos-a-general-robotic-agent-os-with-lifelong-multi-modal-memory)  
+   evidence：触觉-视觉接触中心的全臂操作
+10. [B-spline Policy: Accelerating Manipulation Policies via B-spline Action Representations](/202607/15/2607.09648v1-b-spline-policy-accelerating-manipulation-policies-via-b-spline-action-representations)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：通用机器人代理操作系统，具备终身记忆和规划
-11. [SensorPerch: Sense Wherever and Whenever it Matters](/202607/14/2607.10682v1-sensorperch-sense-wherever-and-whenever-it-matters)  
+   evidence：B样条动作表示加速操作策略
+11. [A Glimpse into Long-term Physical Coexistence with Intelligent Robots](/202607/15/2607.11377v1-a-glimpse-into-long-term-physical-coexistence-with-intelligent-robots)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：新颖的主动感知范式，将感知从机器人本体解耦
+   evidence：多机器人代理架构实现长期物理共存
 
 
 <div class="dpr-home-promo-card">
