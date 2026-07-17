@@ -6,73 +6,94 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-16
-- 运行时间：2026-07-16 20:13:10 UTC
+- 最新运行日期：2026-07-17
+- 运行时间：2026-07-17 21:30:23 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：24
+- 精读区：13
 - 速读区：11
 
 ### 今日简报（AI）
-1) 今日精选17篇论文，精读高分触觉基础模型TouchWorld(10.0/10)与安全强化学习SafeExplorer(9.0/10)，速读机器人操作基准等3篇8分研究。  
-2) 最值得关注方向：触觉模型在灵巧操作中兼具预测与反应能力，以及无偏策略梯度结合恢复干预的安全强化学习。  
-3) 建议先精读TouchWorld和SafeExplorer，再浏览RoboDojo等速读文献以扩展基准认知。
-- 详情：[/202607/16/README](/202607/16/README)
+今日精读13篇，其中两篇9分论文聚焦机器人通用控制与终身记忆系统。  
+最值得关注：视频动作预训练提升机器人泛化性，以及具身智能体操作系统ABot-AgentOS的多模态长期记忆。  
+建议优先精读这两篇9分工作，深入理解视频预训练与智能体操作系统的前沿进展。
+- 详情：[/202607/17/README](/202607/17/README)
 
 ### 精读区论文标签
-1. [TouchWorld: A Predictive and Reactive Tactile Foundation Model for Dexterous Manipulation](/202607/16/2607.07287v2-touchworld-a-predictive-and-reactive-tactile-foundation-model-for-dexterous-manipulation)  
-   标签：评分：10.0/10、query:embodied-ai
-   evidence：触觉基础模型用于灵巧操作
-2. [SafeExplorer: An Unbiased Policy Gradient for Reinforcement Learning with Recovery Interventions](/202607/16/2607.08925v1-safeexplorer-an-unbiased-policy-gradient-for-reinforcement-learning-with-recovery-interventions)  
+1. [Native Video-Action Pretraining for Generalizable Robot Control](/202607/17/2607.08639v2-native-video-action-pretraining-for-generalizable-robot-control)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：带恢复干预的强化学习无偏策略梯度方法
-3. [Traj-VLN: Learning Pixel-Space Interaction via Autoregressive Trajectory Generation](/202607/16/2607.10744v2-traj-vln-learning-pixel-space-interaction-via-autoregressive-trajectory-generation)  
+   evidence：面向机器人控制的视频-动作基础模型
+2. [ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory](/202607/17/2607.10350v2-abot-agentos-a-general-robotic-agent-os-with-lifelong-multi-modal-memory)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：视觉语言导航具身智能体
-4. [Joint On-and-Off Policy Learning for Vision-and-Language Navigation](/202607/16/2607.13461v1-joint-on-and-off-policy-learning-for-vision-and-language-navigation)  
+   evidence：为VLM/VLA系统提供通用代理操作系统，具备审慎规划和记忆
+3. [SUREFlow: State-space Uncertainty-aware REsidual Flow Matching for Robust Robot Manipulation](/202607/17/2607.10504v1-sureflow-state-space-uncertainty-aware-residual-flow-matching-for-robust-robot-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：视觉语言导航中的联合离线和在策略学习
-5. [Semantic Anchoring for Robotic Action Representations](/202607/16/2607.13597v1-semantic-anchoring-for-robotic-action-representations)  
+   evidence：不确定性感知流匹配用于鲁棒机器人操作
+4. [VIA: Visual Interface Agent for Robot Control](/202607/17/2607.11119v1-via-visual-interface-agent-for-robot-control)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：通过语义锚定提升VLA模型泛化能力
-6. [Learning Forward & Reverse Skills from a Single Unfinished Demonstration for Constrained Manipulation Tasks](/202607/16/2607.13882v1-learning-forward--reverse-skills-from-a-single-unfinished-demonstration-for-constrained-manipulation-tasks)  
+   evidence：受VLA模型启发，通过视觉界面控制机器人
+5. [WALA Learning Executable Latent Actions from Action-Labeled Demonstrations and Action-Free Videos](/202607/17/2607.11397v1-wala-learning-executable-latent-actions-from-action-labeled-demonstrations-and-action-free-videos)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：从单次演示学习正反向技能
+   evidence：从演示和视频中学习潜在动作用于模仿学习
+6. [SKooP: Symmetric Koopman Predictions for Faster and More Generalizable Legged Robot Locomotion with Reinforcement Learning](/202607/17/2607.11624v2-skoop-symmetric-koopman-predictions-for-faster-and-more-generalizable-legged-robot-locomotion-with-reinforcement-learning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：使用强化学习进行腿式机器人运动控制
+7. [VistaVLA: Geometry- and Semantic-Aware 3D Gaussian-Grounded VLA for Robotic Manipulation](/202607/17/2607.12356v2-vistavla-geometry--and-semantic-aware-3d-gaussian-grounded-vla-for-robotic-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：VistaVLA: 几何和语义感知的3D高斯锚定视觉语言动作模型
+8. [Learning Robust Execution in Robotic Manipulation with Agentic Reinforcement Learning](/202607/17/2607.13818v1-learning-robust-execution-in-robotic-manipulation-with-agentic-reinforcement-learning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：用于机器人操作执行鲁棒性的智能体强化学习
+9. [RxBrain: Embodied Cognition Foundation Model with Joint Language-Visual Reasoning and Imagination](/202607/17/2607.14187v1-rxbrain-embodied-cognition-foundation-model-with-joint-language-visual-reasoning-and-imagination)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：用于任务规划的具身认知基础模型，联合语言-视觉推理
+10. [Safe Execution of RL Policies Via Acceleration-Based CBF-QP Constraint Enforcement for Real-World Robotic Deployments](/202607/17/2607.14488v1-safe-execution-of-rl-policies-via-acceleration-based-cbf-qp-constraint-enforcement-for-real-world-robotic-deployments)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：安全RL约束执行用于真实机器人控制
+11. [Reinforcement Learning for the Full Strawberry Harvesting Process: Obstacle Separation, Detachment, and Placement](/202607/17/2607.14708v1-reinforcement-learning-for-the-full-strawberry-harvesting-process-obstacle-separation-detachment-and-placement)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：强化学习框架用于草莓采摘全过程
+12. [Towards Human-like Physical Intelligence: LifelongVision-Language-Action Learning for Robotic Manipulation](/202607/17/2607.14852v1-towards-human-like-physical-intelligence-lifelongvision-language-action-learning-for-robotic-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：终身视觉-语言-动作学习用于机器人操作
+13. [RoboTTT: Context Scaling for Robot Policies](/202607/17/2607.15275v1-robottt-context-scaling-for-robot-policies)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：测试时训练将VLA模型上下文扩展到8K
 
 ### 速读区论文标签
-1. [RoboDojo: A Unified Sim-and-Real Benchmark for Comprehensive Evaluation of Generalist Robot Manipulation Policies](/202607/16/2607.04434v3-robodojo-a-unified-sim-and-real-benchmark-for-comprehensive-evaluation-of-generalist-robot-manipulation-policies)  
+1. [TFP: Temporally Conditioned Memory-Fusion Policies for Visuomotor Learning](/202607/17/2607.08283v1-tfp-temporally-conditioned-memory-fusion-policies-for-visuomotor-learning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：统一仿真与真实的机器人操作基准
-2. [Geometry-Aware Motion Latents for Learning Robust Manipulation Policies](/202607/16/2607.04714v1-geometry-aware-motion-latents-for-learning-robust-manipulation-policies)  
+   evidence：具有时序记忆的视觉-语言-动作策略用于视觉运动学习
+2. [TACTIC: Tactile and Vision Conditioned Contact-Centric Control for Whole-Arm Manipulation](/202607/17/2607.09218v2-tactic-tactile-and-vision-conditioned-contact-centric-control-for-whole-arm-manipulation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于几何感知的运动潜变量学习鲁棒机器人操作策略
-3. [RynnWorld-Teleop: An Action-Conditioned World Model for Digital Teleoperation](/202607/16/2607.06558v1-rynnworld-teleop-an-action-conditioned-world-model-for-digital-teleoperation)  
+   evidence：融合触觉和视觉的全身操纵控制
+3. [Implicit-Behavior Coordination from Unlabeled Sub-Task Demonstrations for Rearrangement Tasks](/202607/17/2607.09234v1-implicit-behavior-coordination-from-unlabeled-sub-task-demonstrations-for-rearrangement-tasks)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于世界模型的数字遥操作用于模仿学习
-4. [A Continual Learning Framework for Adaptive Control of Modular Soft Robots](/202607/16/2607.06740v1-a-continual-learning-framework-for-adaptive-control-of-modular-soft-robots)  
+   evidence：从无标签演示中学习隐式行为协调用于重排任务
+4. [A Comprehensive Survey and Systematic Real-World Evaluation of Embodied Vision-and-Language Navigation](/202607/17/2607.09792v1-a-comprehensive-survey-and-systematic-real-world-evaluation-of-embodied-vision-and-language-navigation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：连续学习实现模组化软体机器人的自适应控制
-5. [SPECTRA: Context-Conditioned Spectral Movement Primitives for Robot Skill Generalization](/202607/16/2607.06978v2-spectra-context-conditioned-spectral-movement-primitives-for-robot-skill-generalization)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：频域模仿学习方法用于操作技能泛化
-6. [A Closed-Loop Multi-Agent Framework for Robust Multi-Robot Manipulation](/202607/16/2607.06990v1-a-closed-loop-multi-agent-framework-for-robust-multi-robot-manipulation)  
+   evidence：具身视觉-语言导航的全面综述与真实世界评估。
+5. [PhysV2A: Reachability-Gated and Semantic-Mask-Constrained Feasibility Completion for Video-to-Robot Manipulation](/202607/17/2607.09365v1-physv2a-reachability-gated-and-semantic-mask-constrained-feasibility-completion-for-video-to-robot-manipulation)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于LLM的分层规划用于多机器人操控
-7. [AgenticFocus: Object-Preserving Mixed Reality Synthesis from Human FPV Video for Dexterous Humanoid Learning](/202607/16/2607.08857v2-agenticfocus-object-preserving-mixed-reality-synthesis-from-human-fpv-video-for-dexterous-humanoid-learning)  
+   evidence：视频到机器人操作轨迹转换
+6. [Think When It Matters: Conditional VLM Reasoning for Social Navigation with RL Policies](/202607/17/2607.10991v1-think-when-it-matters-conditional-vlm-reasoning-for-social-navigation-with-rl-policies)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：从人类第一人称视频合成训练数据以学习人形机器人策略
-8. [Causally Debiased Latent Action Model for Embodied Action Conditioned World Models](/202607/16/2607.09185v1-causally-debiased-latent-action-model-for-embodied-action-conditioned-world-models)  
+   evidence：强化学习策略结合VLM推理用于社交导航
+7. [Affordance-Based Manipulation Planning with Text Goals and Sim-to-Real Generalisation via Real-to-Sim Image Conversion](/202607/17/2607.11004v1-affordance-based-manipulation-planning-with-text-goals-and-sim-to-real-generalisation-via-real-to-sim-image-conversion)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：具身世界模型的潜在动作模型
-9. [CoDiMAD: Diffusion-Based Privileged Distillation for Communication-Free Multi-Robot Coordination](/202607/16/2607.09587v1-codimad-diffusion-based-privileged-distillation-for-communication-free-multi-robot-coordination)  
+   evidence：利用真实到仿真图像转换实现仿真到现实迁移
+8. [From World Action Models to Embodied Brains: A Roadmap for Open-World Physical Intelligence](/202607/17/2607.11689v1-from-world-action-models-to-embodied-brains-a-roadmap-for-open-world-physical-intelligence)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于扩散的蒸馏方法用于多机器人协调策略
-10. [Globalized Constrained Stein Variational Inference for Diverse Feasible Robot Motion Planning](/202607/16/2607.12732v1-globalized-constrained-stein-variational-inference-for-diverse-feasible-robot-motion-planning)  
+   evidence：面向具身智能的世界动作模型路线图
+9. [Distributed Agent System: Fault-Tolerant Collaboration Among Embodied Agents](/202607/17/2607.10811v1-distributed-agent-system-fault-tolerant-collaboration-among-embodied-agents)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：斯坦变分推断用于多样化机器人运动规划
-11. [Directional Constraints for Efficient Exploration in Safe Reinforcement Learning](/202607/16/2607.12784v1-directional-constraints-for-efficient-exploration-in-safe-reinforcement-learning)  
+   evidence：具身智能体间的容错协作
+10. [Just-In-Time Scene Graph Growth: Combating Perceptual Saturation in Long-Horizon Robotics](/202607/17/2607.13245v1-just-in-time-scene-graph-growth-combating-perceptual-saturation-in-long-horizon-robotics)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：带方向约束的安全强化学习用于机器人高效探索
+   evidence：即时场景图增长方法，支持具身导航与操作
+11. [Active Real-World Factor-Based Evaluation for Generalist Robot Policies](/202607/17/2607.14439v1-active-real-world-factor-based-evaluation-for-generalist-robot-policies)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：通用机器人策略的主动评估框架
 
 
 <div class="dpr-home-promo-card">
