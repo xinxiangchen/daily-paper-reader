@@ -6,71 +6,77 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-18
-- 运行时间：2026-07-18 21:16:03 UTC
+- 最新运行日期：2026-07-19
+- 运行时间：2026-07-19 21:18:16 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：19
+- 精读区：8
 - 速读区：11
 
 ### 今日简报（AI）
-今天精读了两篇9分论文，聚焦强化学习价值估计与四足机器人运动泛化。最值得看Robo-ValueRL的离线到在线强化学习可靠价值估计，以及SKooP的对称Koopman预测方法。建议优先阅读这两篇精读，再浏览PIER-Flow实时导航和人工注视感知等速读工作。
-- 详情：[/202607/18/README](/202607/18/README)
+今日机器人领域日报精读2篇，聚焦四足机器人全身控制与世界物理智能路线图。最值得关注的是TAC-LOCO实现触觉信息融合的全身操作控制，以及从世界动作模型到具身智能的路线规划。建议关注具身合成基础模型与多机器人编队导航的人类偏好对齐进展。
+- 详情：[/202607/19/README](/202607/19/README)
 
 ### 精读区论文标签
-1. [Robo-ValueRL: Reliable Value Estimation for Offline-to-Online Reinforcement Learning](/202607/18/2607.09866v1-robo-valuerl-reliable-value-estimation-for-offline-to-online-reinforcement-learning)  
+1. [TAC-LOCO: Unified Whole-Body Control for Quadrupedal TACtile-Informed LOCO-Manipulation](/202607/19/2607.10132v2-tac-loco-unified-whole-body-control-for-quadrupedal-tactile-informed-loco-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向机器人操作的离线到在线强化学习价值估计
-2. [SKooP: Symmetric Koopman Predictions for Faster and More Generalizable Legged Robot Locomotion with Reinforcement Learning](/202607/18/2607.11624v3-skoop-symmetric-koopman-predictions-for-faster-and-more-generalizable-legged-robot-locomotion-with-reinforcement-learning)  
+   evidence：强化学习用于四足机器人全身移动-操作控制并融合触觉
+2. [From World Action Models to Embodied Brains: A Roadmap for Open-World Physical Intelligence](/202607/19/2607.11689v1-from-world-action-models-to-embodied-brains-a-roadmap-for-open-world-physical-intelligence)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：基于Koopman动力学的强化学习腿式机器人运动控制
-3. [Exploratory, Communicative, and Deployable: Vision-Driven Embodied Agents for Open-World Mobile Manipulation](/202607/18/2607.13653v1-exploratory-communicative-and-deployable-vision-driven-embodied-agents-for-open-world-mobile-manipulation)  
+   evidence：世界行动模型与具身智能路线图
+3. [Mixture of Frames Policy: Multi-Frame Action Denoising for Bimanual Mobile Manipulation](/202607/19/2607.11884v1-mixture-of-frames-policy-multi-frame-action-denoising-for-bimanual-mobile-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：具身智能体框架用于开放世界移动操作，包含探索和交互
-4. [NavCMPO: Critic-Guided MeanFlow Policy Optimization for Adaptive Navigation](/202607/18/2607.14643v1-navcmpo-critic-guided-meanflow-policy-optimization-for-adaptive-navigation)  
+   evidence：多帧动作去噪扩散策略用于双臂移动操作
+4. [Model-Based Diffusion Optimal Control for Multi-Robot Motion Planning](/202607/19/2607.12423v1-model-based-diffusion-optimal-control-for-multi-robot-motion-planning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：结合扩散MeanFlow轨迹生成和强化学习微调用于导航
-5. [More Structure, Not More Capacity: Object-Centric Representations for Visuomotor Imitation Learning](/202607/18/2607.09825v1-more-structure-not-more-capacity-object-centric-representations-for-visuomotor-imitation-learning)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：对象中心表示用于机器人操作的视觉运动模仿学习
-6. [Jetson-PI: Towards Onboard Real-Time Robot Control via Foresight-Aligned Asynchronous Inference](/202607/18/2607.12659v1-jetson-pi-towards-onboard-real-time-robot-control-via-foresight-aligned-asynchronous-inference)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：在低功耗设备上部署VLA模型并使用异步推理校正
+   evidence：扩散模型用于多机器人运动规划
+5. [Agile perceptive multi-skill locomotion for quadrupedal robots in the wild](/202607/19/2607.13579v1-agile-perceptive-multi-skill-locomotion-for-quadrupedal-robots-in-the-wild)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：强化学习用于四足机器人运动与技能切换
+6. [MEMORA: Embodied Action Memory from Egocentric Videos for Reasoning and Planning](/202607/19/2607.14252v1-memora-embodied-action-memory-from-egocentric-videos-for-reasoning-and-planning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：具身动作记忆用于机器人长期规划
+7. [DiMaS: Distribution Matching for Steering Vision-Language-Action Models](/202607/19/2607.14280v1-dimas-distribution-matching-for-steering-vision-language-action-models)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：通过分布匹配控制视觉-语言-行动模型
+8. [Representation-Aligned Tactile Grounding for Contact-Rich Robotic Manipulation](/202607/19/2607.14609v1-representation-aligned-tactile-grounding-for-contact-rich-robotic-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：触觉增强的视觉-语言-动作策略用于接触丰富的操控
 
 ### 速读区论文标签
-1. [PIER-Flow: Physics-Informed Efficient Rectified Flow for Real-Time Mobile Robot Navigation](/202607/18/2607.10288v1-pier-flow-physics-informed-efficient-rectified-flow-for-real-time-mobile-robot-navigation)  
+1. [Xiaomi-Robotics-U0: Unified Embodied Synthesis with World Foundation Model](/202607/19/2607.11643v1-xiaomi-robotics-u0-unified-embodied-synthesis-with-world-foundation-model)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：扩散策略用于实时移动机器人导航
-2. [Artificial Foveated Perception for Mitigating Shortcut Learning in Robotic Foundation Models](/202607/18/2607.10655v1-artificial-foveated-perception-for-mitigating-shortcut-learning-in-robotic-foundation-models)  
+   evidence：用于具身合成的世界基础模型
+2. [EFLUX: Elastic Multi-Robot Formation Navigation and Adaptation with Agentic LLMs](/202607/19/2607.12050v1-eflux-elastic-multi-robot-formation-navigation-and-adaptation-with-agentic-llms)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：机器人基础模型捷径学习缓解
-3. [Action Map Policy: Learning 3D Closed-loop Manipulation via Pixel Classification](/202607/18/2607.10706v1-action-map-policy-learning-3d-closed-loop-manipulation-via-pixel-classification)  
+   evidence：使用大语言模型的多机器人具身导航
+3. [Deployable Human Preference Alignment in Robotics: Learning Representative Rewards from Diverse Human Preferences](/202607/19/2607.12466v1-deployable-human-preference-alignment-in-robotics-learning-representative-rewards-from-diverse-human-preferences)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：通过像素分类学习3D闭环操控
-4. [Learning Roller-Skating Motions of Humanoid Robots Based on Adversarial Motion Priors](/202607/18/2607.10815v1-learning-roller-skating-motions-of-humanoid-robots-based-on-adversarial-motion-priors)  
+   evidence：机器人强化学习中的人类偏好对齐
+4. [Knowledge- and Gradient-Guided Reinforcement Learning for Parametrized Action Markov Decision Processes](/202607/19/2607.12924v2-knowledge--and-gradient-guided-reinforcement-learning-for-parametrized-action-markov-decision-processes)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于强化学习的人形机器人轮滑运动控制
-5. [Compositional Context Fine-Tuning Vision-Language Model for Complex Assembly Action Understanding from Videos](/202607/18/2607.10797v1-compositional-context-fine-tuning-vision-language-model-for-complex-assembly-action-understanding-from-videos)  
+   evidence：面向参数化动作MDP的强化学习算法，可应用于机器人控制
+5. [From Language to Navigation Goals: A Vision-Language Approach for Semantic Navigation of Mobile Robots Using RGB-D Perception](/202607/19/2607.13624v1-from-language-to-navigation-goals-a-vision-language-approach-for-semantic-navigation-of-mobile-robots-using-rgb-d-perception)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：基于视觉语言模型的语义导航
+6. [Discriminative Barrier Functions for Safe Adversarial Imitation Learning from Observation](/202607/19/2607.13938v1-discriminative-barrier-functions-for-safe-adversarial-imitation-learning-from-observation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：利用障碍函数实现安全的对抗性模仿学习，从观察中学习
+7. [Unveiling Complex Collective Behaviors from Simple Rewards](/202607/19/2607.12861v1-unveiling-complex-collective-behaviors-from-simple-rewards)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：微调视觉语言模型用于机器人装配动作理解
-6. [EDAR: Learning Environment-Dependent Action Representations for Robotic Manipulation](/202607/18/2607.11427v1-edar-learning-environment-dependent-action-representations-for-robotic-manipulation)  
+   evidence：多智能体强化学习用于机器人集群及可解释性
+8. [UR-VC: Unsupervised Robotic Value Correction for Time-Derived Progress Proxies](/202607/19/2607.12892v1-ur-vc-unsupervised-robotic-value-correction-for-time-derived-progress-proxies)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向机器人操作的动作表示学习，与模仿学习相关
-7. [From World Action Models to Embodied Brains: A Roadmap for Open-World Physical Intelligence](/202607/18/2607.11689v1-from-world-action-models-to-embodied-brains-a-roadmap-for-open-world-physical-intelligence)  
+   evidence：面向机器人学习的无监督价值校正方法
+9. [GigaWorld-Policy-0.5: A Faster and Stronger WAM Empowered by AutoResearch](/202607/19/2607.13960v1-gigaworld-policy-05-a-faster-and-stronger-wam-empowered-by-autoresearch)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：世界动作模型与具身大脑的路线图，面向开放世界物理智能
-8. [AutoPath: Learning Transferable Goal-Conditioned Stochastic Path Prior for Safe Navigation Without Human Demonstrations](/202607/18/2607.11739v1-autopath-learning-transferable-goal-conditioned-stochastic-path-prior-for-safe-navigation-without-human-demonstrations)  
+   evidence：世界动作模型用于机器人策略学习，以动作为中心
+10. [Semantic Audio-driven Understanding for Dynamic Humanoid Whole Body Control](/202607/19/2607.14182v1-semantic-audio-driven-understanding-for-dynamic-humanoid-whole-body-control)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：具身智能体的导航
-9. [GraspGraphNet: Graph-Structured Multi-Embodiment Dexterous Grasp Generation](/202607/18/2607.11031v1-graspgraphnet-graph-structured-multi-embodiment-dexterous-grasp-generation)  
+   evidence：基于音频驱动的人形机器人强化学习全身控制
+11. [GigaWorld-Policy-0.5: A Faster and Stronger WAM Empowered by AutoResearch](/202607/19/2607.13960v2-gigaworld-policy-05-a-faster-and-stronger-wam-empowered-by-autoresearch)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：基于图结构的多形态灵巧抓取生成
-10. [Where Should RL Post-Training Compute Go? Model Size, Search, Learning, and Feedback](/202607/18/2607.13389v1-where-should-rl-post-training-compute-go-model-size-search-learning-and-feedback)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：面向机器人学习管线的强化学习后训练计算分配
-11. [DriftWorld: Fast World Modeling through Drifting](/202607/18/2607.15065v1-driftworld-fast-world-modeling-through-drifting)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：用于机器人规划的快速世界模型
+   evidence：以动作为中心的世界动作模型用于机器人策略学习
 
 
 <div class="dpr-home-promo-card">
