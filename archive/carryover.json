@@ -1,174 +1,12 @@
 {
-  "generated_at": "2026-07-19T21:09:23.199754+00:00",
-  "updated_date": "20260719",
+  "generated_at": "2026-07-20T21:18:35.897342+00:00",
+  "updated_date": "20260720",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260719",
+      "updated_date": "20260720",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2607.14455v1",
-          "source": "arxiv",
-          "title": "Motion Planning with Model-Based Diffusion via Constraint Optimization and Adaptive Scheduling",
-          "abstract": "Single-Robot Motion Planning (SRMP) in highly non-convex constrained environments, where robots must satisfy collision-free guarantees, dynamic feasibility, and task-related constraints, is challenging under complex constraints and computational limits. Recent Model-Based Diffusion (MBD) approaches recast the SRMP as trajectory optimization that samples from a posterior over trajectories, using known dynamics, and analytically estimates the score function from rollout samples to guide diffusion denoising toward a low-cost, clean trajectory without demonstration learning. While existing works further adapt MBD to constrained environments and showcase promising performance, they are still limited by (1) enforcing safety either via soft feasibility diffusion priors or hard projection operators, but lack a unified framework to integrate both, and (2) fixing safety enforcement to neglect the changing of diffusion scheduling. Therefore, we introduce Model-Based Diffusion via Constraint Optimization and Adaptive Scheduling (MD-COAS) for SRMP that unifies the inexact Augmented Lagrangian Method (iALM) soft diffusion prior with a Convex Feasible Set (CFS)-based hard projection operator, and adaptively schedules and co-optimizes safety enforcement, along with diffusion scheduling. Experiments demonstrate that our method achieves higher safety \\& success rates, faster convergence, and lower final costs than baseline planners on randomly generated highly non-convex 2D benchmarks and a 7-DoF robot arm avoidance task.",
-          "authors": [
-            "Zhilin He",
-            "Bowei Li",
-            "Jianlin Dou",
-            "Yuner Zhang",
-            "Changliu Liu"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-16T01:04:32+00:00",
-          "link": "https://arxiv.org/pdf/2607.14455v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Model-based diffusion for motion planning",
-          "llm_evidence_cn": "基于模型的扩散用于运动规划",
-          "llm_evidence": "基于模型的扩散用于运动规划",
-          "canonical_evidence": "基于模型的扩散用于运动规划",
-          "llm_tldr_en": "This paper improves model-based diffusion for single-robot motion planning by integrating constraint optimization and adaptive scheduling.",
-          "llm_tldr_cn": "基于模型的扩散方法在机器人运动规划中面临安全约束和计算效率挑战。论文提出结合约束优化和自适应调度的模型扩散框架，在随机非凸环境中高效生成碰撞自由的轨迹。实验表明该方法在约束满足和规划成功方面超越现有扩散方法。",
-          "llm_tldr": "基于模型的扩散方法在机器人运动规划中面临安全约束和计算效率挑战。论文提出结合约束优化和自适应调度的模型扩散框架，在随机非凸环境中高效生成碰撞自由的轨迹。实验表明该方法在约束满足和规划成功方面超越现有扩散方法。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "diffusion policy robotics",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.14455v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.15163v1",
-          "source": "arxiv",
-          "title": "Scaling Behavior Foundation Model for Humanoid Robots",
-          "abstract": "Humanoid control requires natural whole-body coordination, precise real-time responses to control signals, and robust generalization across diverse environmental contexts, making it a cornerstone for generalist embodied agents. Behavior Foundation Models (BFMs) have recently emerged as a promising solution to address these challenges by leveraging large-scale behavioral data to achieve superior expressiveness, versatility and generalization. However, despite growing interest in scaling BFMs to further improve their capabilities, it remains unclear how key factors, including the learning paradigm, behavioral data and model architecture should be coordinated to enable effective scaling. In this work, we revisit the scaling recipe for BFMs and demonstrate that substantial performance gains can be achieved through the coordination of three core components: 1) the learning paradigm of motion tracking that reformulates diverse humanoid control problems as the reproduction of integrated whole-body behaviors in the global frame; 2) the strategic synergy between on-policy rollout quantity and reference motion diversity; and 3) the expressive and scalable model architecture termed Humanoid Transformer that facilitates the natural emergence of structured behavioral representations. Through extensive experiments in both simulation and real-world deployment, we demonstrate that our approach yields significant improvements in control fidelity and task generalization, reducing Mean Per-Keypoint Position Error (MPKPE) on the test set by over 10% in local mode and 82% in global mode compared with existing humanoid controllers. These results establish BFM as a principled and effective foundation for scalable and general-purpose humanoid control.",
-          "authors": [
-            "Weishuai Zeng",
-            "Kangning Yin",
-            "Xiaojie Niu",
-            "Shunlin Lu",
-            "Weixiang Zhong",
-            "Jiahe Chen",
-            "Feiyu Jia",
-            "Xiao Chen",
-            "Zirui Wang",
-            "Furui Xu",
-            "Ming Zhou",
-            "Kailin Li",
-            "Weinan Zhang",
-            "He Wang",
-            "Li Yi",
-            "Dahua Lin",
-            "Jiangmiao Pang",
-            "Jingbo Wang"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.AI"
-          ],
-          "published": "2026-07-16T16:08:27+00:00",
-          "link": "https://arxiv.org/pdf/2607.15163v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "behavior foundation model scaling for humanoid",
-          "llm_evidence_cn": "仿人机器人的行为基础模型缩放",
-          "llm_evidence": "仿人机器人的行为基础模型缩放",
-          "canonical_evidence": "仿人机器人的行为基础模型缩放",
-          "llm_tldr_en": "Investigates scaling laws for behavior foundation models in humanoid robots, emphasizing coordinated learning paradigm, data, and architecture.",
-          "llm_tldr_cn": "本文针对行为基础模型在仿人机器人上缩放规律不明确的问题，系统研究了学习范式、数据规模和模型架构的协同效应。实验表明合理的缩放策略能显著提升BFM的性能和泛化能力，为构建通用具身智能体提供了指导。",
-          "llm_tldr": "本文针对行为基础模型在仿人机器人上缩放规律不明确的问题，系统研究了学习范式、数据规模和模型架构的协同效应。实验表明合理的缩放策略能显著提升BFM的性能和泛化能力，为构建通用具身智能体提供了指导。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "foundation models for robot perception and manipulation",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.15163v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.14183v1",
-          "source": "arxiv",
-          "title": "Open-AoE: An Open Egocentric Manipulation Dataset and Toolchain for Embodied Learning",
-          "abstract": "Egocentric videos of human manipulation provide scalable supervision for embodied intelligence, yet existing resources rarely combine low-cost continuous capture, manipulation-level structured annotations, and reusable tools for robot learning. We present Open-AoE, an open, community-oriented egocentric manipulation dataset and toolchain spanning the full pipeline from smartphone capture to model training. Its first release contains approximately 2,000 hours of manipulation video collected in natural environments by 500+ contributors using 400+ smartphones. The dataset provides text annotations, MANO-based hand poses, camera trajectories, and temporally localized atomic actions. Open-AoE further includes a data processing pipeline that transforms raw recordings into structured samples through temporal action segmentation, semantic annotation, hand reconstruction, and camera trajectory reconstruction. Meanwhile, we provide a separate downstream toolchain supports visualization, cross-embodiment retargeting, model-specific data conversion, and training recipes for VLA policies, WAMs, and World Models. By integrating scalable capture, structured processing, and downstream adaptation, Open-AoE reduces the barriers to both data contribution and reuse, providing practical open infrastructure for embodied model training, human-to-robot transfer, and world modeling.",
-          "authors": [
-            "Zishuo Li",
-            "Bowen Yang",
-            "Changtao Miao",
-            "Kai Zhu",
-            "Hao Chen",
-            "Qingze Guan",
-            "Zhengxing Wu",
-            "Wanke Zhan",
-            "Yang Sun",
-            "Zhiyi Huang",
-            "Zitong Shan",
-            "Zhenchao Jin",
-            "Jiadong Hong",
-            "Taowen Wang",
-            "Yushi Feng",
-            "You Liu",
-            "Yibo Wang",
-            "Yifan Yang",
-            "Zhaowen Zhou",
-            "Man Luo",
-            "Hao Cheng",
-            "Bo Zhang",
-            "Jianshu Li",
-            "Jiansheng Cai",
-            "Guocai Yao",
-            "Jize Zhang",
-            "Chenhao Lin",
-            "Renjing Xu",
-            "Lequan Yu",
-            "Chao Shen",
-            "Chunhua Shen",
-            "Zhe Li"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV"
-          ],
-          "published": "2026-07-15T14:49:49+00:00",
-          "link": "https://arxiv.org/pdf/2607.14183v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Egocentric manipulation dataset for robot learning",
-          "llm_evidence_cn": "用于机器人学习的自我中心操作数据集",
-          "llm_evidence": "用于机器人学习的自我中心操作数据集",
-          "canonical_evidence": "用于机器人学习的自我中心操作数据集",
-          "llm_tldr_en": "Open-AoE provides a large-scale egocentric manipulation dataset with annotations and a processing pipeline, enabling scalable supervision for embodied learning and imitation.",
-          "llm_tldr_cn": "针对具身智能中操作数据稀缺的问题，Open-AoE提出了一个开放的大规模自我中心操作数据集，包含2000小时以上的视频、文本标注和手部姿态，并提供了从手机采集到模型训练的完整工具链。该数据集能够为模仿学习和机器人学习提供丰富的监督信号，促进可泛化的操作策略学习。",
-          "llm_tldr": "针对具身智能中操作数据稀缺的问题，Open-AoE提出了一个开放的大规模自我中心操作数据集，包含2000小时以上的视频、文本标注和手部姿态，并提供了从手机采集到模型训练的完整工具链。该数据集能够为模仿学习和机器人学习提供丰富的监督信号，促进可泛化的操作策略学习。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.14183v1",
-          "carry_days": 1
-        },
         {
           "id": "2607.14539v1",
           "source": "arxiv",
@@ -208,40 +46,36 @@
           "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2607.14539v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
-          "id": "2607.14393v1",
+          "id": "2607.15935v1",
           "source": "arxiv",
-          "title": "An offline approach to fNIRS-guided reinforcement learning for robot behavior",
-          "abstract": "Human-in-the-loop Reinforcement Learning has become a popular approach to training, finetuning, and aligning robot behavior with user preferences. Our paper explores the feasibility of using brain signals via functional near-infrared spectroscopy (fNIRS) to modulate robot learning in simulation. We compare agents trained on passive (observational) versus active (demonstrative) interaction tasks, and test multiple methods for enhancing the RL algorithm with the neural signal, focusing on parameter augmentation rather than replacement. We further examine how model granularity and noise affect agent learning. Our results show that this framework is effective: the neural signal improves learning when augmenting trajectory priorities and state-action q-values. Additionally, the framework learns successfully from offline data, offering a practical alternative for settings where real-time BCI setups are impractical or only limited data is available.",
+          "title": "Learning Reach-Avoid Task with Reinforcement Learning: Vectorized Simulation and Benchmark",
+          "abstract": "Deep reinforcement learning (DRL) has a longstanding tradition in addressing the reach-avoid task problem, especially for controlling robotic arms. While this task serves as a baseline environment within the research community, the ability of DRL to effectively learn the each-avoid task in complex and realistic scenarios beyond simplified and restricted tabletop settings remains uncertain. In this paper, we present, for the first time, a comprehensive benchmark for the reachavoid task that accurately captures real-world complexities without simplifications. We demonstrate a diverse range of settings for robotic arm reach-avoid task, which can be used for evaluating DRL research. We achieved this by utilizing the MuJoCo MJX physics engine and parallelizing both the simulation environment and DRL algorithms using the Brax library. We achieved state-of-the-art results with success rates of 96.1% (UR5e) and 98.8% (Franka Emika Robot) for the reach task and 86.8% (UR5e) and 95.2% (Franka) for the static reachavoid task. Our results indicate that while in previous works DRL agents could solve, for example, a reach task in a simplified setting perfectly, their agents performance collapses when evaluated in realistic scenarios. Overall, this work identifies that additional research is still required to claim the successful resolution of the robotic arm reach-avoid task using DRL. The environment and benchmarking code is available as open source at the following link",
           "authors": [
-            "Julia Santaniello",
-            "Madelaine Brower",
-            "Benson Jiang",
-            "Donatello Sassaroli",
-            "Robert Jacob",
-            "Jivko Sinapov"
+            "Jonas Weihing",
+            "Shahram Eivazi"
           ],
           "primary_category": "cs.RO",
           "categories": [
             "cs.RO",
-            "cs.AI"
+            "cs.LG"
           ],
-          "published": "2026-07-15T22:12:39+00:00",
-          "link": "https://arxiv.org/pdf/2607.14393v1",
+          "published": "2026-07-17T13:18:32+00:00",
+          "link": "https://arxiv.org/pdf/2607.15935v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Reinforcement learning for robot control with fNIRS guidance",
-          "llm_evidence_cn": "利用fNIRS脑信号指导机器人强化学习",
-          "llm_evidence": "利用fNIRS脑信号指导机器人强化学习",
-          "canonical_evidence": "利用fNIRS脑信号指导机器人强化学习",
-          "llm_tldr_en": "This paper explores using brain signals via fNIRS to augment reinforcement learning for robot behavior in simulation, showing improvement when augmenting trajectory priorities.",
-          "llm_tldr_cn": "该论文探讨了通过功能性近红外光谱（fNIRS）脑信号来增强机器人强化学习的可行性。在仿真环境中，通过将神经信号作为参数增强而非替换，实验表明当使用神经信号增强轨迹优先级和状态-动作对时，智能体学习效果得到提升。尽管是离线仿真研究，但为人类在环强化学习提供了新思路。",
-          "llm_tldr": "该论文探讨了通过功能性近红外光谱（fNIRS）脑信号来增强机器人强化学习的可行性。在仿真环境中，通过将神经信号作为参数增强而非替换，实验表明当使用神经信号增强轨迹优先级和状态-动作对时，智能体学习效果得到提升。尽管是离线仿真研究，但为人类在环强化学习提供了新思路。",
+          "llm_evidence_en": "reinforcement learning benchmark for robotic arm reach-avoid tasks",
+          "llm_evidence_cn": "为机械臂避障任务提供强化学习基准",
+          "llm_evidence": "为机械臂避障任务提供强化学习基准",
+          "canonical_evidence": "为机械臂避障任务提供强化学习基准",
+          "llm_tldr_en": "Presents a comprehensive MuJoCo-based benchmark for reach-avoid tasks with robotic arms, enabling evaluation of DRL in realistic scenarios.",
+          "llm_tldr_cn": "深度强化学习在机械臂避障任务中虽广泛应用，但缺乏复杂真实场景的基准。本文利用MuJoCo MJX首次构建全面避障基准，包含多样化设置，可用于评估DRL算法的泛化能力。",
+          "llm_tldr": "深度强化学习在机械臂避障任务中虽广泛应用，但缺乏复杂真实场景的基准。本文利用MuJoCo MJX首次构建全面避障基准，包含多样化设置，可用于评估DRL算法的泛化能力。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -249,7 +83,132 @@
           "matched_query_text": "reinforcement learning for robot control",
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.14393v1",
+          "paper_id": "2607.15935v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.15982v1",
+          "source": "arxiv",
+          "title": "Data and Learning Where it Matters for Contact-Rich Manipulation",
+          "abstract": "Learned policies trained end-to-end on large datasets often remain brittle in high-precision tasks and struggle with generalization. We find that these limitations largely stem from a lack of structure and focus in data collection. Our key insight is to leverage dense data collection only for the critical segment of contact-rich tasks and to rely on traditional planning during simple free-space motion. We propose an automated data-collection scheme in combination with offline deep reinforcement learning for the critical segment of the task, eliminating reliance on a teleoperator's skill and on online policy updates. Across four challenging real-world tasks, using only 2 to 2.5 hours of autonomous data collection, we achieve an average success rate of 96%, compared to the strongest baseline at 55%. Notably, performance remains high in out-of-distribution scenarios where end-to-end approaches struggle. Our results pave the way for targeted data collection for contact-rich tasks and for high success rates in precision applications.",
+          "authors": [
+            "Oliver Hausdörfer",
+            "Linus Schwarz",
+            "Gabor Marko",
+            "Christian Dietz",
+            "Timo Class",
+            "Luka Hofer",
+            "Jim Yun-Jin Li",
+            "Johannes Hechtl",
+            "Ralf Römer",
+            "Angela P. Schoellig"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-17T14:18:20+00:00",
+          "link": "https://arxiv.org/pdf/2607.15982v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "offline RL for contact-rich manipulation with automated data collection",
+          "llm_evidence_cn": "自动化数据收集和离线强化学习用于接触丰富操作",
+          "llm_evidence": "自动化数据收集和离线强化学习用于接触丰富操作",
+          "canonical_evidence": "自动化数据收集和离线强化学习用于接触丰富操作",
+          "llm_tldr_en": "Proposes automated data collection with offline RL focusing on critical contact segments, achieving 96% success on real-world tasks with few data.",
+          "llm_tldr_cn": "全数据集训练的端到端策略在精密操作中泛化弱。提出仅在接触关键段密集收集数据并应用离线强化学习，自由空间段用传统规划。仅需2-2.5小时自主数据收集，在四项真实任务中达到96%平均成功率，大幅降低了数据需求。",
+          "llm_tldr": "全数据集训练的端到端策略在精密操作中泛化弱。提出仅在接触关键段密集收集数据并应用离线强化学习，自由空间段用传统规划。仅需2-2.5小时自主数据收集，在四项真实任务中达到96%平均成功率，大幅降低了数据需求。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "reinforcement learning for robot control",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.15982v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.16090v1",
+          "source": "arxiv",
+          "title": "DADiff: Diffusion-Driven Cross-Domain Policy Adaptation for Reinforcement Learning",
+          "abstract": "Transferring policies across domains poses a vital challenge in reinforcement learning, due to the dynamics mismatch between the source and target domains. In this paper, we consider the setting of online dynamics adaptation, where policies are trained in the source domain with sufficient data, while only limited interactions with the target domain are allowed. There are a few existing works that address the dynamics mismatch by employing domain classifiers, value-guided data filtering, or representation learning. Instead, we study the domain adaptation problem from a generative modeling perspective. Specifically, we introduce DADiff, a diffusion-based framework that leverages the discrepancy between source and target domain generative trajectories in the generation process of the next state to estimate the dynamics mismatch. Both reward modification and data selection variants are developed to adapt the policy to the target domain. We also provide a theoretical analysis to show that the performance difference of a given policy between the two domains is bounded by the generative trajectory deviation. More discussions on the applicability of the variants and the connection between our theoretical analysis and the prior work are further provided. We conduct extensive experiments in environments with various shifts to validate the effectiveness of our method. The results demonstrate that our method provides superior performance compared to existing approaches, effectively addressing the dynamics mismatch. We provide the code of our method at https://github.com/hanyang-chen/DADiff-release",
+          "authors": [
+            "Hanyang Chen",
+            "Anirudh Satheesh",
+            "Longchao Da",
+            "Hua Wei"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "published": "2026-07-17T16:20:08+00:00",
+          "link": "https://arxiv.org/pdf/2607.16090v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "diffusion-based cross-domain policy adaptation for RL",
+          "llm_evidence_cn": "基于扩散的跨域强化学习策略适应",
+          "llm_evidence": "基于扩散的跨域强化学习策略适应",
+          "canonical_evidence": "基于扩散的跨域强化学习策略适应",
+          "llm_tldr_en": "DADiff uses diffusion models to bridge domain dynamics mismatch by generating trajectories that adapt policies across domains for RL.",
+          "llm_tldr_cn": "强化学习策略跨域迁移面临动力学不匹配挑战。提出DADiff，利用扩散模型建模源域和目标域轨迹的差异，生成适应域的目标域轨迹。在有限的在线交互下显著提升了策略适应速度，为RL领域迁移提供了生成式视角。",
+          "llm_tldr": "强化学习策略跨域迁移面临动力学不匹配挑战。提出DADiff，利用扩散模型建模源域和目标域轨迹的差异，生成适应域的目标域轨迹。在有限的在线交互下显著提升了策略适应速度，为RL领域迁移提供了生成式视角。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "reinforcement learning diffusion policy robot control",
+          "matched_requirement_id": "req-8",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.16090v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.15674v1",
+          "source": "arxiv",
+          "title": "A Generative Partially Specified Finite State Machine Approach to Complex Behaviour Planning",
+          "abstract": "Autonomous robots operating in dynamic environments require behaviour planning systems that combine reactivity, interpretability, and adaptability. While Large Language Models have been successfully integrated with Behaviour Trees for dynamic replanning, Finite State Machines, despite their widespread adoption and computational efficiency, remain unexplored for generative approaches. We propose a Generative Partially Specified Finite State Machine (GPSFSM) neurosymbolic architecture that utilises the symbolic and semantic structure of FSMs, including states and event-triggered transitions, to implement Behaviour Planning. This paper introduces the first GPSFSM framework for robotics, featuring Fabric, an FSM engine that parses, validates, and executes behaviour plans that contain Sequential, Recovery, Parallel-Any, and Parallel-All control structures. We extend the Capabilities2 package in ROS2 with an asynchronous event system for behaviour chaining and runtime parameter injection for configurable execution, addressing the ad-hoc function representations that limit current generative systems. PromptTools provides a unified ROS 2 interface to local and cloud LLMs, with prompt buffering, enabling dynamic asynchronous composition of task and context information. Together, these components enable standardised semantic capability descriptions for robot-agnostic development. Experimental evaluation on navigation tasks demonstrates that our GPSFSM approach achieves consistently higher plan-generation success rates than the state-of-the-art BTGenBot system, particularly excelling in zero-shot scenarios where BTs typically struggle, while maintaining comparable or lower planning latency to frontier LLMs. We also demonstrate that our system can generate complex behaviours. We release an open-source ROS2 stack that makes generative FSM planning practical and reproducible for robotic systems.",
+          "authors": [
+            "Kalana Ratnayake",
+            "Michael Pritchard",
+            "David Hinwood",
+            "Maleen Jayasuriya",
+            "Damith Herath"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-17T06:33:31+00:00",
+          "link": "https://arxiv.org/pdf/2607.15674v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "generative FSM using LLM for behaviour planning",
+          "llm_evidence_cn": "利用LLM的生成式有限状态机用于行为规划",
+          "llm_evidence": "利用LLM的生成式有限状态机用于行为规划",
+          "canonical_evidence": "利用LLM的生成式有限状态机用于行为规划",
+          "llm_tldr_en": "GPSFSM introduces a generative partially specified FSM neurosymbolic architecture for robot behaviour planning, combining LLM-driven state transitions with symbolic FSM structure, enabling dynamic replanning without manual heuristics.",
+          "llm_tldr_cn": "现有行为规划系统多基于行为树与LLM结合，而有限状态机（FSM）尚未被用于生成式方法。本文提出生成式部分指定FSM（GPSFSM）神经符号架构，利用FSM的状态和事件触发转换语义，结合LLM实现动态规划。Fabric引擎可解析和验证FSM，实验表明该方法在复杂机器人行为规划中兼具解释性和适应性。该工作为符号与神经方法的融合提供了新思路。",
+          "llm_tldr": "现有行为规划系统多基于行为树与LLM结合，而有限状态机（FSM）尚未被用于生成式方法。本文提出生成式部分指定FSM（GPSFSM）神经符号架构，利用FSM的状态和事件触发转换语义，结合LLM实现动态规划。Fabric引擎可解析和验证FSM，实验表明该方法在复杂机器人行为规划中兼具解释性和适应性。该工作为符号与神经方法的融合提供了新思路。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "foundation model for robot task planning",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.15674v1",
           "carry_days": 1
         }
       ]
