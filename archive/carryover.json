@@ -1,53 +1,12 @@
 {
-  "generated_at": "2026-07-20T21:18:35.897342+00:00",
-  "updated_date": "20260720",
+  "generated_at": "2026-07-21T20:42:15.670876+00:00",
+  "updated_date": "20260721",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260720",
+      "updated_date": "20260721",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2607.14539v1",
-          "source": "arxiv",
-          "title": "Communication-Efficient Relative Pose Estimation with Vision Foundation Models for Ephemeral Collaborative Perception",
-          "abstract": "Relative pose estimation is a fundamental capability for collaborative perception and coordination in multi-robot systems. However, robots encountering each other in real-world environments often operate in short interaction windows and must operate under limited communication bandwidth with intermittent or missing visual overlap caused by occlusions or limited fields of view. Existing approaches typically rely on global reference frames, assume sustained view overlap, or incur prohibitive communication costs, thereby limiting their applicability to ephemeral collaborative perception. To address these challenges, we introduce communication-efficient relative pose estimation (CERPE), a system-level framework that coordinates vision foundation models to jointly estimate ego-motion and inter-robot relative pose. CERPE reduces unnecessary raw-observation exchange by using continuously shared fixed-size descriptors to gate event-triggered raw-image requests independently of pose estimation. Non-overlapping encounters are handled by propagating inter-robot relative poses through metrically scaled ego-motion, thus maintaining relative pose estimates even in the absence of visual overlap. Experiments in simulation and real-world robots show that CERPE improves 6-DoF relative pose estimation over selected baselines in ephemeral collaborative perception.",
-          "authors": [
-            "Qihang Li",
-            "Jo-Hao Huang",
-            "Jiewen Liu",
-            "Suyoung Kang",
-            "Hao Zhang",
-            "Peng Gao"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-16T03:46:49+00:00",
-          "link": "https://arxiv.org/pdf/2607.14539v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "vision foundation models for collaborative perception and pose estimation",
-          "llm_evidence_cn": "视觉基础模型用于协作感知与位姿估计",
-          "llm_evidence": "视觉基础模型用于协作感知与位姿估计",
-          "canonical_evidence": "视觉基础模型用于协作感知与位姿估计",
-          "llm_tldr_en": "CERPE uses vision foundation models for communication-efficient relative pose estimation in ephemeral multi-robot collaboration.",
-          "llm_tldr_cn": "针对多机器人短暂相遇场景中相对位姿估计的挑战，本文提出CERPE框架，利用视觉基础模型实现通信高效的相对位姿估计。方法克服了视角重叠有限、带宽限制等问题，无需全局参考系。在模拟和真实实验中展示了有效性，为机器人协作感知提供了轻量级解决方案。",
-          "llm_tldr": "针对多机器人短暂相遇场景中相对位姿估计的挑战，本文提出CERPE框架，利用视觉基础模型实现通信高效的相对位姿估计。方法克服了视角重叠有限、带宽限制等问题，无需全局参考系。在模拟和真实实验中展示了有效性，为机器人协作感知提供了轻量级解决方案。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "foundation models for robot perception and manipulation",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.14539v1",
-          "carry_days": 2
-        },
         {
           "id": "2607.15935v1",
           "source": "arxiv",
@@ -69,13 +28,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "reinforcement learning benchmark for robotic arm reach-avoid tasks",
-          "llm_evidence_cn": "为机械臂避障任务提供强化学习基准",
-          "llm_evidence": "为机械臂避障任务提供强化学习基准",
-          "canonical_evidence": "为机械臂避障任务提供强化学习基准",
-          "llm_tldr_en": "Presents a comprehensive MuJoCo-based benchmark for reach-avoid tasks with robotic arms, enabling evaluation of DRL in realistic scenarios.",
-          "llm_tldr_cn": "深度强化学习在机械臂避障任务中虽广泛应用，但缺乏复杂真实场景的基准。本文利用MuJoCo MJX首次构建全面避障基准，包含多样化设置，可用于评估DRL算法的泛化能力。",
-          "llm_tldr": "深度强化学习在机械臂避障任务中虽广泛应用，但缺乏复杂真实场景的基准。本文利用MuJoCo MJX首次构建全面避障基准，包含多样化设置，可用于评估DRL算法的泛化能力。",
+          "llm_evidence_en": "Reinforcement learning benchmark for reach-avoid task with robotic arms",
+          "llm_evidence_cn": "面向机械臂的强化学习reach-avoid任务基准",
+          "llm_evidence": "面向机械臂的强化学习reach-avoid任务基准",
+          "canonical_evidence": "面向机械臂的强化学习reach-avoid任务基准",
+          "llm_tldr_en": "This paper presents a comprehensive benchmark for the reach-avoid task using deep RL, simulating realistic scenarios with MuJoCo MJX to evaluate DRL methods for robotic arm control.",
+          "llm_tldr_cn": "该论文提出了首个综合性的reach-avoid任务基准，利用MuJoCo MJX物理引擎模拟真实复杂场景，用于评估深度强化学习方法控制机械臂的能力。该基准避免了简化假设，为RL在机器人控制中的研究提供了标准测试平台。",
+          "llm_tldr": "该论文提出了首个综合性的reach-avoid任务基准，利用MuJoCo MJX物理引擎模拟真实复杂场景，用于评估深度强化学习方法控制机械臂的能力。该基准避免了简化假设，为RL在机器人控制中的研究提供了标准测试平台。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -84,51 +43,6 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2607.15935v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.15982v1",
-          "source": "arxiv",
-          "title": "Data and Learning Where it Matters for Contact-Rich Manipulation",
-          "abstract": "Learned policies trained end-to-end on large datasets often remain brittle in high-precision tasks and struggle with generalization. We find that these limitations largely stem from a lack of structure and focus in data collection. Our key insight is to leverage dense data collection only for the critical segment of contact-rich tasks and to rely on traditional planning during simple free-space motion. We propose an automated data-collection scheme in combination with offline deep reinforcement learning for the critical segment of the task, eliminating reliance on a teleoperator's skill and on online policy updates. Across four challenging real-world tasks, using only 2 to 2.5 hours of autonomous data collection, we achieve an average success rate of 96%, compared to the strongest baseline at 55%. Notably, performance remains high in out-of-distribution scenarios where end-to-end approaches struggle. Our results pave the way for targeted data collection for contact-rich tasks and for high success rates in precision applications.",
-          "authors": [
-            "Oliver Hausdörfer",
-            "Linus Schwarz",
-            "Gabor Marko",
-            "Christian Dietz",
-            "Timo Class",
-            "Luka Hofer",
-            "Jim Yun-Jin Li",
-            "Johannes Hechtl",
-            "Ralf Römer",
-            "Angela P. Schoellig"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-17T14:18:20+00:00",
-          "link": "https://arxiv.org/pdf/2607.15982v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "offline RL for contact-rich manipulation with automated data collection",
-          "llm_evidence_cn": "自动化数据收集和离线强化学习用于接触丰富操作",
-          "llm_evidence": "自动化数据收集和离线强化学习用于接触丰富操作",
-          "canonical_evidence": "自动化数据收集和离线强化学习用于接触丰富操作",
-          "llm_tldr_en": "Proposes automated data collection with offline RL focusing on critical contact segments, achieving 96% success on real-world tasks with few data.",
-          "llm_tldr_cn": "全数据集训练的端到端策略在精密操作中泛化弱。提出仅在接触关键段密集收集数据并应用离线强化学习，自由空间段用传统规划。仅需2-2.5小时自主数据收集，在四项真实任务中达到96%平均成功率，大幅降低了数据需求。",
-          "llm_tldr": "全数据集训练的端到端策略在精密操作中泛化弱。提出仅在接触关键段密集收集数据并应用离线强化学习，自由空间段用传统规划。仅需2-2.5小时自主数据收集，在四项真实任务中达到96%平均成功率，大幅降低了数据需求。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "reinforcement learning for robot control",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.15982v1",
           "carry_days": 1
         },
         {
@@ -169,38 +83,201 @@
           "matched_requirement_id": "req-8",
           "selection_source": "carryover_cache",
           "paper_id": "2607.16090v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
-          "id": "2607.15674v1",
+          "id": "2607.16501v1",
           "source": "arxiv",
-          "title": "A Generative Partially Specified Finite State Machine Approach to Complex Behaviour Planning",
-          "abstract": "Autonomous robots operating in dynamic environments require behaviour planning systems that combine reactivity, interpretability, and adaptability. While Large Language Models have been successfully integrated with Behaviour Trees for dynamic replanning, Finite State Machines, despite their widespread adoption and computational efficiency, remain unexplored for generative approaches. We propose a Generative Partially Specified Finite State Machine (GPSFSM) neurosymbolic architecture that utilises the symbolic and semantic structure of FSMs, including states and event-triggered transitions, to implement Behaviour Planning. This paper introduces the first GPSFSM framework for robotics, featuring Fabric, an FSM engine that parses, validates, and executes behaviour plans that contain Sequential, Recovery, Parallel-Any, and Parallel-All control structures. We extend the Capabilities2 package in ROS2 with an asynchronous event system for behaviour chaining and runtime parameter injection for configurable execution, addressing the ad-hoc function representations that limit current generative systems. PromptTools provides a unified ROS 2 interface to local and cloud LLMs, with prompt buffering, enabling dynamic asynchronous composition of task and context information. Together, these components enable standardised semantic capability descriptions for robot-agnostic development. Experimental evaluation on navigation tasks demonstrates that our GPSFSM approach achieves consistently higher plan-generation success rates than the state-of-the-art BTGenBot system, particularly excelling in zero-shot scenarios where BTs typically struggle, while maintaining comparable or lower planning latency to frontier LLMs. We also demonstrate that our system can generate complex behaviours. We release an open-source ROS2 stack that makes generative FSM planning practical and reproducible for robotic systems.",
+          "title": "Certifiable Safe Model-Based Reinforcement Learning with Control-Affine Dynamics Approximation",
+          "abstract": "Safe model-based reinforcement learning (RL) often bridges control-theoretic analysis and RL for robots to safely explore (partially) unknown system dynamics while deriving control actions for task efficiency. The control performance and safety assurance typically rely on prior knowledge of partially modeled nominal system dynamics and the data-driven models that compensate for residual model uncertainties. However, existing methods often overlook the structure of residual model uncertainties (e.g., components affine in control), which could lead to overly conservative robot behaviors or invalid safety guarantees under the safe learning-based controllers. This paper proposes a safe reinforcement learning framework that learns control-affine dynamics with a certifiable data-driven safe policy using control barrier functions (CBF). Specifically, we first use Control-Affine Random Fourier Features (ARFF) to model robot dynamics in a control-affine form, which offers computational efficiency that scales with dataset size and reduces potential model bias for model-based reinforcement learning. Then, a model-free, efficient uncertainty quantification method using adaptive conformal prediction (ACP) is applied to quantify the uncertainty in the safety constraint arising from the learned control-affine dynamics. This allows for data-driven safety assurance amenable to principled and efficient controller synthesis with CBF. Simulation results on the cartpole and the 3D quadrotor platforms demonstrate the effectiveness of the proposed framework.",
           "authors": [
-            "Kalana Ratnayake",
-            "Michael Pritchard",
-            "David Hinwood",
-            "Maleen Jayasuriya",
-            "Damith Herath"
+            "Hao Zhou",
+            "Yanze Zhang",
+            "Cameron Reid",
+            "Wenhao Luo"
           ],
           "primary_category": "cs.RO",
           "categories": [
             "cs.RO"
           ],
-          "published": "2026-07-17T06:33:31+00:00",
-          "link": "https://arxiv.org/pdf/2607.15674v1",
+          "published": "2026-07-17T20:45:28+00:00",
+          "link": "https://arxiv.org/pdf/2607.16501v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "generative FSM using LLM for behaviour planning",
-          "llm_evidence_cn": "利用LLM的生成式有限状态机用于行为规划",
-          "llm_evidence": "利用LLM的生成式有限状态机用于行为规划",
-          "canonical_evidence": "利用LLM的生成式有限状态机用于行为规划",
-          "llm_tldr_en": "GPSFSM introduces a generative partially specified FSM neurosymbolic architecture for robot behaviour planning, combining LLM-driven state transitions with symbolic FSM structure, enabling dynamic replanning without manual heuristics.",
-          "llm_tldr_cn": "现有行为规划系统多基于行为树与LLM结合，而有限状态机（FSM）尚未被用于生成式方法。本文提出生成式部分指定FSM（GPSFSM）神经符号架构，利用FSM的状态和事件触发转换语义，结合LLM实现动态规划。Fabric引擎可解析和验证FSM，实验表明该方法在复杂机器人行为规划中兼具解释性和适应性。该工作为符号与神经方法的融合提供了新思路。",
-          "llm_tldr": "现有行为规划系统多基于行为树与LLM结合，而有限状态机（FSM）尚未被用于生成式方法。本文提出生成式部分指定FSM（GPSFSM）神经符号架构，利用FSM的状态和事件触发转换语义，结合LLM实现动态规划。Fabric引擎可解析和验证FSM，实验表明该方法在复杂机器人行为规划中兼具解释性和适应性。该工作为符号与神经方法的融合提供了新思路。",
+          "llm_evidence_en": "Certifiable safe model-based RL with control-affine dynamics for robot control",
+          "llm_evidence_cn": "具有控制仿射动力学的可认证安全模型强化学习用于机器人控制",
+          "llm_evidence": "具有控制仿射动力学的可认证安全模型强化学习用于机器人控制",
+          "canonical_evidence": "具有控制仿射动力学的可认证安全模型强化学习用于机器人控制",
+          "llm_tldr_en": "Proposes a safe model-based RL framework that learns control-affine dynamics to provide certifiable safety guarantees for robot exploration.",
+          "llm_tldr_cn": "该论文针对安全模型强化学习中忽略残余模型不确定性结构导致保守或失效的问题，提出学习控制仿射动力学的方法。通过利用不确定性中的控制仿射结构，推导出可认证的安全约束。在仿真机器人控制任务中，该方法在保证安全的同时减少了保守性，实现了更高效的任务执行，为安全关键型机器人应用提供了理论保证。",
+          "llm_tldr": "该论文针对安全模型强化学习中忽略残余模型不确定性结构导致保守或失效的问题，提出学习控制仿射动力学的方法。通过利用不确定性中的控制仿射结构，推导出可认证的安全约束。在仿真机器人控制任务中，该方法在保证安全的同时减少了保守性，实现了更高效的任务执行，为安全关键型机器人应用提供了理论保证。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "reinforcement learning for robot control",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.16501v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.16998v1",
+          "source": "arxiv",
+          "title": "User-Driven Learning from Demonstration: A Trajectory and Impedance Learning Method",
+          "abstract": "This paper presents a method for user-driven robot Learning from Demonstration (LfD) that reduces user effort while ensuring compliant and precise reproduction. The method eliminates repeated teaching for the same task and enables real-time learning from a single demonstration. Demonstrated motions are reproduced with high precision, while impedance variations are learned in real time to provide both compliance and robustness against perturbations. This mitigates potential safety issues in Human-Robot Interaction (HRI) that arise from conventional time-indexed trajectories lacking compliance. The proposed approach integrates a three-dimensional (3D) Fast Diffeomorphic Matching (FDM) algorithm with a Dynamical System (DS)-based motion generator to achieve real-time single-shot demonstration learning and reproduction. An Extended Kalman Filter (EKF) framework compensates for reproduction errors and recovers from external interactions. Furthermore, an impedance parameterization function is incorporated to learn impedance variations from demonstrations and maintain surface contact for specific applications. The proposed approach is validated through comprehensive experiments on a 7 Degree-of-Freedom (DOF) KUKA LWR IV+ robot.",
+          "authors": [
+            "Zi-Qi Yang",
+            "Mehrdad R. Kermani"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-18T23:27:17+00:00",
+          "link": "https://arxiv.org/pdf/2607.16998v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "User-driven Learning from Demonstration for robotic manipulation with trajectory and impedance learning",
+          "llm_evidence_cn": "用户驱动的示教学习，结合轨迹和阻抗学习用于机器人操作",
+          "llm_evidence": "用户驱动的示教学习，结合轨迹和阻抗学习用于机器人操作",
+          "canonical_evidence": "用户驱动的示教学习，结合轨迹和阻抗学习用于机器人操作",
+          "llm_tldr_en": "A single-demonstration LfD method integrates 3D Fast Diffeomorphic Matching with Dynamical Systems to learn both trajectory and impedance, enabling compliant and precise reproduction.",
+          "llm_tldr_cn": "传统示教学习需要多次示教且缺乏柔顺性，存在人机交互安全问题。论文提出用户驱动的单次示教学习方法，集成三维快速微分同胚匹配（FDM）和动态系统（DS）进行运动生成，同时在线学习阻抗变化，提供柔顺性和抗扰动能力。该方法在单次示教下实现了高精度复现，并提高了人机交互安全性。",
+          "llm_tldr": "传统示教学习需要多次示教且缺乏柔顺性，存在人机交互安全问题。论文提出用户驱动的单次示教学习方法，集成三维快速微分同胚匹配（FDM）和动态系统（DS）进行运动生成，同时在线学习阻抗变化，提供柔顺性和抗扰动能力。该方法在单次示教下实现了高精度复现，并提高了人机交互安全性。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.16998v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.17574v1",
+          "source": "arxiv",
+          "title": "Predictive Training with Latent Imagination for Visual Quadruped Navigation",
+          "abstract": "Reinforcement-learning navigation policies for legged robots select actions reactively from current observations and short-term memory, with limited capacity to anticipate how moving obstacles will evolve in the near future. In dynamic environments, this reactivity causes the robot to respond too late because collision risk depends on short-horizon scene structure rather than on current obstacle positions alone. Lightweight predictive supervision applied to the policy's recurrent state during training can encode anticipatory obstacle dynamics without modifying the inference-time controller. We augment a reactive LSTM-SRU navigation backbone with an auxiliary JEPA-style predictor and SIGReg regularization: during training, the predictor supervises the deterministic hidden state to anticipate its own next state; at inference, it is fully discarded, incurring zero additional computational cost. On simulated and real-world navigation benchmarks with dynamic obstacles, our method substantially improves navigation success while reducing collision rates through the predictive training signal alone, without additional inference-time parameters. Real-robot deployment on a Unitree Go2 demonstrates zero-shot sim-to-real transfer: the controller navigates cluttered indoor and dynamic outdoor environments without fine-tuning, with evasive behavior consistent with the collision reduction observed in simulation.",
+          "authors": [
+            "Yancheng Zhu",
+            "Wanli Ma",
+            "Chen Han",
+            "Irvin Haozhe Zhan",
+            "Bingfeng Qin",
+            "Yixin Xu"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-07-20T05:33:22+00:00",
+          "link": "https://arxiv.org/pdf/2607.17574v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Reinforcement learning for visual quadruped navigation with predictive training",
+          "llm_evidence_cn": "基于预测训练的强化学习视觉四足导航",
+          "llm_evidence": "基于预测训练的强化学习视觉四足导航",
+          "canonical_evidence": "基于预测训练的强化学习视觉四足导航",
+          "llm_tldr_en": "Augments reactive RL navigation with auxiliary JEPA predictor to anticipate obstacle dynamics, improving collision avoidance.",
+          "llm_tldr_cn": "四足机器人导航策略常因缺乏对动态障碍的预测能力而反应迟缓。本文在LSTM-SRU导航骨干上增加JEPA风格预测器和SIGReg正则化，仅通过训练阶段监督即可让策略隐式编码未来障碍动态。实验表明该方法显著提升了动态场景下的避障成功率。",
+          "llm_tldr": "四足机器人导航策略常因缺乏对动态障碍的预测能力而反应迟缓。本文在LSTM-SRU导航骨干上增加JEPA风格预测器和SIGReg正则化，仅通过训练阶段监督即可让策略隐式编码未来障碍动态。实验表明该方法显著提升了动态场景下的避障成功率。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "reinforcement learning for robot control",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.17574v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.18200v1",
+          "source": "arxiv",
+          "title": "Learning Adaptive Safety Margins for Visual Navigation",
+          "abstract": "Robots in cluttered indoor spaces often fail not because they cannot generate collision-free paths, but because a fixed safety margin is mis-calibrated: conservative margins cause detours and timeouts, while permissive margins lead to near-boundary shortcuts under perception bias. Diffusion-based planners propose diverse trajectory candidates from egocentric RGB-D, yet reliable selection remains the bottleneck. We propose a context-conditioned safety critic that learns an adaptive clearance preference for ranking diffusion proposals, decomposed into three complementary terms: (i) a safety term with a clearance-budget penalty and a control-barrier-function residual for waypoint- and transition-wise safety, (ii) an efficiency term combining a smoothness penalty with a safety-gated detour-ratio penalty that avoids detours without incentivizing risky shortcuts, and (iii) a distance-constraint matching term that anchors the learned budget to realized ESDF clearances to prevent margin collapse. We train the critic with privileged ESDF geometry in simulation and distill it into a perception-only selector via a two-stage teacher-student procedure. On PointGoal navigation in HM3D and MP3D, including cross-dataset transfer, our method achieves the highest success rate (SR) and success weighted by path length (SPL) among strong diffusion, optimization, and RL baselines. Trained purely in simulation, it transfers to a Unitree G1 humanoid and navigates cluttered indoor scenes without task-specific tuning.",
+          "authors": [
+            "Junyi Hu",
+            "Shuaihang Yuan",
+            "Geeta Chandra Raju Bethala",
+            "Anthony Tzes",
+            "Yi Fang"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-07-20T17:40:25+00:00",
+          "link": "https://arxiv.org/pdf/2607.18200v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Diffusion-based planner with adaptive safety margins for visual navigation",
+          "llm_evidence_cn": "基于扩散规划器的自适应安全边际视觉导航",
+          "llm_evidence": "基于扩散规划器的自适应安全边际视觉导航",
+          "canonical_evidence": "基于扩散规划器的自适应安全边际视觉导航",
+          "llm_tldr_en": "A context-conditioned safety critic learns adaptive clearance preferences to rank diffusion-based trajectory proposals, improving navigation safety and efficiency in cluttered spaces.",
+          "llm_tldr_cn": "针对固定安全边际导致导航失败的问题，该论文提出自适应安全边际批判器，为扩散规划器生成的轨迹候选进行排序。该方法结合安全项、效率项和成本项，在杂乱室内环境中显著减少了碰撞和绕路，展示了扩散策略在机器人导航中的鲁棒性。",
+          "llm_tldr": "针对固定安全边际导致导航失败的问题，该论文提出自适应安全边际批判器，为扩散规划器生成的轨迹候选进行排序。该方法结合安全项、效率项和成本项，在杂乱室内环境中显著减少了碰撞和绕路，展示了扩散策略在机器人导航中的鲁棒性。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "diffusion policy robotics",
+          "matched_requirement_id": "req-4",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.18200v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.18060v1",
+          "source": "arxiv",
+          "title": "RoboHarness: Memory-Driven Orchestration of Heterogeneous Robot Policies for Long-Horizon Planning",
+          "abstract": "Long-horizon robotic tasks require diverse capabilities that no single policy can reliably provide. Heterogeneous policies offer complementary strengths, but orchestrating them requires reasoning over uncertain capability boundaries and cross-policy distribution mismatch, which are largely overlooked by existing planning methods built on homogeneous, predefined skills with fixed applicability. We propose RoboHarness, a unified framework that encapsulates independently developed robot control systems as reusable agentic skills. Although instantiated in this work with VLAs, RL policies, and task-and-motion planning (TAMP) systems, RoboHarness is designed as a general framework compatible with a broader range of robot policies, such as navigation policies, model predictive controllers, and world-action models. RoboHarness uses multi-modal execution memory and online evidence to characterize policy capability boundaries for capability-aware decomposition and routing. To stabilize policy handoffs, its Memory Bridge retrieves execution trajectories associated with the next policy, estimates its in-distribution state region, and guides the robot toward that region without joint policy retraining. Extensive experiments on three public benchmarks, 500 customized tasks, and 135 real-robot experiments demonstrate effective capability-aware routing and stable policy orchestration, yielding substantial improvements in zero-shot long-horizon planning and out-of-distribution robustness.",
+          "authors": [
+            "Jinbang Huang",
+            "Yuanzhao Hu",
+            "Zhiyuan Li",
+            "Ran Qi",
+            "Yixin Xiao",
+            "Zhanguang Zhang",
+            "Mark Coates",
+            "Tongtong Cao",
+            "Yingxue Zhang"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-20T15:27:13+00:00",
+          "link": "https://arxiv.org/pdf/2607.18060v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "memory-driven orchestration of heterogeneous policies for long-horizon robot task planning",
+          "llm_evidence_cn": "内存驱动的异构策略编排用于长时域机器人任务规划",
+          "llm_evidence": "内存驱动的异构策略编排用于长时域机器人任务规划",
+          "canonical_evidence": "内存驱动的异构策略编排用于长时域机器人任务规划",
+          "llm_tldr_en": "RoboHarness is a unified framework that orchestrates heterogeneous robot policies (VLAs, RL, TAMP) as agentic skills for long-horizon planning, addressing capability boundaries and distribution mismatch.",
+          "llm_tldr_cn": "长时域机器人任务需要多种能力，但现有方法只能使用同质预定义技能。本文提出RoboHarness，一个统一框架，将独立开发的机器人控制系统（如VLA、RL策略、TAMP）封装为可重用的智能体技能。通过内存驱动编排，处理能力边界不确定性和跨策略分布不匹配。实验表明，该方法能有效组合异构策略完成复杂长时任务，优于单一策略方法。",
+          "llm_tldr": "长时域机器人任务需要多种能力，但现有方法只能使用同质预定义技能。本文提出RoboHarness，一个统一框架，将独立开发的机器人控制系统（如VLA、RL策略、TAMP）封装为可重用的智能体技能。通过内存驱动编排，处理能力边界不确定性和跨策略分布不匹配。实验表明，该方法能有效组合异构策略完成复杂长时任务，优于单一策略方法。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -208,7 +285,7 @@
           "matched_query_text": "foundation model for robot task planning",
           "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.15674v1",
+          "paper_id": "2607.18060v1",
           "carry_days": 1
         }
       ]
