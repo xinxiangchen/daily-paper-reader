@@ -6,86 +6,77 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-21
-- 运行时间：2026-07-21 20:49:36 UTC
+- 最新运行日期：2026-07-22
+- 运行时间：2026-07-22 21:31:57 UTC
 - 运行状态：成功
-- 本次总论文数：22
-- 精读区：11
+- 本次总论文数：19
+- 精读区：8
 - 速读区：11
 
 ### 今日简报（AI）
-今日共分析22篇论文，精读11篇、速读11篇，重点聚焦灵巧操作与接触丰富操作方向。最值得关注的是满分论文《FM-VLA》中基于力的记忆方法以及9分论文《Industrial Dexterity Benchmark》中的工业灵巧操作基准平台。建议优先精读这两篇高分论文，以把握接触式操作和工业灵巧操作的当前前沿。
-- 详情：[/202607/21/README](/202607/21/README)
+今日推荐19篇论文，精读重点在行为树合成与开放世界移动操作学习。最值得关注的是基于编码代理的合约驱动行为树合成（9.0分）和用于开放世界移动操作学习的合成数据引擎（9.0分）。建议优先阅读精读列表中的高分论文，并关注速读中关于强化学习跨域适应和避碰任务的向量化仿真方法。
+- 详情：[/202607/22/README](/202607/22/README)
 
 ### 精读区论文标签
-1. [FM-VLA: Force-based Memory for Vision-Language-Action Models in Contact-Rich Manipulation](/202607/21/2607.18231v1-fm-vla-force-based-memory-for-vision-language-action-models-in-contact-rich-manipulation)  
-   标签：评分：10.0/10、query:embodied-ai
-   evidence：基于力记忆的视觉-语言-动作模型用于接触丰富的操作
-2. [Industrial Dexterity Benchmark: A Hardware-Software Benchmarking Platform for Industrial Dexterous Manipulation](/202607/21/2607.14021v1-industrial-dexterity-benchmark-a-hardware-software-benchmarking-platform-for-industrial-dexterous-manipulation)  
+1. [Contract-Grounded Behavior Tree Synthesis via Coding Agents](/202607/22/2607.12220v1-contract-grounded-behavior-tree-synthesis-via-coding-agents)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用于灵巧操作的多模态扩散策略框架
-3. [Foresight Residual RL for Long-Horizon Robot Manipulation with Vision-Language-Action Models](/202607/21/2607.16506v1-foresight-residual-rl-for-long-horizon-robot-manipulation-with-vision-language-action-models)  
+   evidence：基于LLM的行为树合成用于机器人任务规划
+2. [Worlds in One Demo: A Synthetic Data Engine for Learning Open-World Mobile Manipulation](/202607/22/2607.13154v2-worlds-in-one-demo-a-synthetic-data-engine-for-learning-open-world-mobile-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：在冻结的VLA基策略上进行残差强化学习以处理长时域操作
-4. [PAVXploreRL: Physical-Action-Visual World Model Reinforcement Learning with Action Exploration](/202607/21/2607.16602v1-pavxplorerl-physical-action-visual-world-model-reinforcement-learning-with-action-exploration)  
+   evidence：从单示范生成合成数据用于开放世界移动操作学习
+3. [SoftNav: Injecting 3D Scene Tokens into VLMs for Embodied Navigation](/202607/22/2607.14586v1-softnav-injecting-3d-scene-tokens-into-vlms-for-embodied-navigation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用于具身智能的强化学习世界模型，包含动作探索
-5. [Asynchronous Multimodal Diffusion Policy Composition via Latency-Aware Guidance Fusion](/202607/21/2607.17257v1-asynchronous-multimodal-diffusion-policy-composition-via-latency-aware-guidance-fusion)  
+   evidence：将3D场景标记注入VLM实现目标导向的具身导航
+4. [Towards Human-like Physical Intelligence: Lifelong Vision-Language-Action Learning for Robotic Manipulation](/202607/22/2607.14852v2-towards-human-like-physical-intelligence-lifelong-vision-language-action-learning-for-robotic-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：通过延迟感知引导融合实现异步多模态扩散策略组合
-6. [HCPG-Flow:Hierarchical Contact-Progress Guidance for Flow-Policy Robot Manipulation](/202607/21/2607.17651v1-hcpg-flowhierarchical-contact-progress-guidance-for-flow-policy-robot-manipulation)  
+   evidence：机器人操作的终身视觉-语言-动作学习
+5. [PAVXploreRL: Physical-Action-Visual World Model Reinforcement Learning with Action Exploration](/202607/22/2607.16602v2-pavxplorerl-physical-action-visual-world-model-reinforcement-learning-with-action-exploration)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：层级接触进度引导的流策略机器人操控
-7. [RynnBrain 1.1: Towards More Capable and Generalizable Embodied Foundation Model](/202607/21/2607.17977v1-rynnbrain-11-towards-more-capable-and-generalizable-embodied-foundation-model)  
+   evidence：具身AI的物理-动作-视觉世界模型强化学习
+6. [User-Driven Learning from Demonstration: A Trajectory and Impedance Learning Method](/202607/22/2607.16998v1-user-driven-learning-from-demonstration-a-trajectory-and-impedance-learning-method)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：具身基础模型，包含VLA和跨本体动作空间
-8. [Closing the Loop in Humanoid VLA: Persistent 3D Object Tokens for Verifiable Loco-Manipulation](/202607/21/2607.18016v1-closing-the-loop-in-humanoid-vla-persistent-3d-object-tokens-for-verifiable-loco-manipulation)  
+   evidence：用户驱动的机器人操作示范学习
+7. [RoboHarness: Memory-Driven Orchestration of Heterogeneous Robot Policies for Long-Horizon Planning](/202607/22/2607.18060v1-roboharness-memory-driven-orchestration-of-heterogeneous-robot-policies-for-long-horizon-planning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：使用持久3D物体标记的视觉语言动作模型用于人形定位操作
-9. [World Translation: Minimizing Sim-to-Real Gap with Backward Dynamics Extraction and Unpaired Domain Translation](/202607/21/2607.18154v1-world-translation-minimizing-sim-to-real-gap-with-backward-dynamics-extraction-and-unpaired-domain-translation)  
+   evidence：编排包括VLA在内的异构机器人策略用于长期规划
+8. [STeP: Signal Temporal Logic for Precise Specifications for Action Generation with Vision Language Models](/202607/22/2607.18580v1-step-signal-temporal-logic-for-precise-specifications-for-action-generation-with-vision-language-models)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：通过反向动力学提取和无配对域翻译缩小Sim-to-Real差距
-10. [Optimization of sim-to-real transfer in the humanoid robot NICO](/202607/21/2607.18210v1-optimization-of-sim-to-real-transfer-in-the-humanoid-robot-nico)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：通过标定优化仿人机器人的仿真到现实迁移
-11. [Patch Policy: Efficient Embodied Control via Dense Visual Representations](/202607/21/2607.18236v1-patch-policy-efficient-embodied-control-via-dense-visual-representations)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：利用密集视觉补丁特征的高效具身控制
+   evidence：使用STL规范改进基于VLM的机器人动作生成的层次框架
 
 ### 速读区论文标签
-1. [Semantic Anchoring for Robotic Action Representations](/202607/21/2607.13597v2-semantic-anchoring-for-robotic-action-representations)  
+1. [Jetson-PI: Towards Onboard Real-Time Robot Control via Foresight-Aligned Asynchronous Inference](/202607/22/2607.12659v3-jetson-pi-towards-onboard-real-time-robot-control-via-foresight-aligned-asynchronous-inference)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：视觉语言动作模型中的动作表示语义锚定
-2. [Communication-Efficient Relative Pose Estimation with Vision Foundation Models for Ephemeral Collaborative Perception](/202607/21/2607.14539v1-communication-efficient-relative-pose-estimation-with-vision-foundation-models-for-ephemeral-collaborative-perception)  
+   evidence：VLA模型在低功耗设备上的部署
+2. [Learning Reach-Avoid Task with Reinforcement Learning: Vectorized Simulation and Benchmark](/202607/22/2607.15935v1-learning-reach-avoid-task-with-reinforcement-learning-vectorized-simulation-and-benchmark)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：视觉基础模型用于协作感知与位姿估计
-3. [IMBench: A Benchmark for Intuitive Robotic Manipulation](/202607/21/2607.15641v1-imbench-a-benchmark-for-intuitive-robotic-manipulation)  
+   evidence：用于机器人手臂避碰任务的强化学习基准
+3. [DADiff: Diffusion-Driven Cross-Domain Policy Adaptation for Reinforcement Learning](/202607/22/2607.16090v1-dadiff-diffusion-driven-cross-domain-policy-adaptation-for-reinforcement-learning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：直觉操控基准测试集成推理与动作
-4. [RAVEN: Reinforcement-Adaptive Visibility-Graph Planning for Robust Humanoid Navigation with Collision-Free MPC](/202607/21/2607.15701v1-raven-reinforcement-adaptive-visibility-graph-planning-for-robust-humanoid-navigation-with-collision-free-mpc)  
+   evidence：基于扩散的跨域强化学习策略适应
+4. [When to Plan: Learning to Select Between Reactive Control and Deliberative Planning](/202607/22/2607.16421v1-when-to-plan-learning-to-select-between-reactive-control-and-deliberative-planning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：分层强化学习-MPC用于人形机器人导航
-5. [SafeRelBench: A Spatial-Relation-Aware Benchmark for Process-Level Safety in VLM-Driven Embodied Agents](/202607/21/2607.14543v1-saferelbench-a-spatial-relation-aware-benchmark-for-process-level-safety-in-vlm-driven-embodied-agents)  
+   evidence：用强化学习方法训练智能体在快速反应与深思熟虑规划之间切换的元推理能力
+5. [Certifiable Safe Model-Based Reinforcement Learning with Control-Affine Dynamics Approximation](/202607/22/2607.16501v1-certifiable-safe-model-based-reinforcement-learning-with-control-affine-dynamics-approximation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：安全模型强化学习用于机器人控制
+6. [PhyAgentOS: A Self-Evolving Operating System for Embodied Agents with Decoupled Cognitive Planning and Physical Execution](/202607/22/2607.16636v1-phyagentos-a-self-evolving-operating-system-for-embodied-agents-with-decoupled-cognitive-planning-and-physical-execution)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：具身智能体的基础系统，分离认知规划与物理执行
+7. [An Intelligent-Cloud Edge Multimodal Interaction System for Robots](/202607/22/2607.14675v1-an-intelligent-cloud-edge-multimodal-interaction-system-for-robots)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向VLM驱动具身代理的空间关系感知安全基准
-6. [BridgeFlow: Fast and Robust SE(2)-Equivariant Motion Planning with Flow Matching](/202607/21/2607.14725v1-bridgeflow-fast-and-robust-se2-equivariant-motion-planning-with-flow-matching)  
+   evidence：云边多模态系统结合大语言模型用于机器人任务规划
+8. [EgoExoMoCap: Distributed Ego-Exo Human Motion Capture](/202607/22/2607.15868v1-egoexomocap-distributed-ego-exo-human-motion-capture)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：流匹配用于SE(2)等变运动规划
-7. [Risk-Aware Preference Learning for Stochastic Outcomes](/202607/21/2607.15483v1-risk-aware-preference-learning-for-stochastic-outcomes)  
+   evidence：用于具身智能的人体运动捕捉
+9. [Embodied Active Learning under Limited Annotation and Navigation Budget for Object Detection](/202607/22/2607.15974v1-embodied-active-learning-under-limited-annotation-and-navigation-budget-for-object-detection)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：风险感知偏好学习用于机器人导航
-8. [A Generative Partially Specified Finite State Machine Approach to Complex Behaviour Planning](/202607/21/2607.15674v1-a-generative-partially-specified-finite-state-machine-approach-to-complex-behaviour-planning)  
+   evidence：具身主动学习，机器人导航下目标检测
+10. [Data and Learning Where it Matters for Contact-Rich Manipulation](/202607/22/2607.15982v1-data-and-learning-where-it-matters-for-contact-rich-manipulation)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：生成式有限状态机方法用于机器人行为规划
-9. [Environment Design for Reliable Shared Autonomy with Probabilistic Guarantees](/202607/21/2607.15487v1-environment-design-for-reliable-shared-autonomy-with-probabilistic-guarantees)  
+   evidence：用于接触丰富操作的离线强化学习
+11. [ConceptTree: Bringing Semantic Transparency to Black-Box Decision Making for Robotic Manipulation](/202607/22/2607.17861v1-concepttree-bringing-semantic-transparency-to-black-box-decision-making-for-robotic-manipulation)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：共享自主中的工作区设计优化与概率保证
-10. [Implicit Virtual Leader: Decentralized Vision-Only Relative Pose Estimation for Multi-Robot Formations](/202607/21/2607.15708v1-implicit-virtual-leader-decentralized-vision-only-relative-pose-estimation-for-multi-robot-formations)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：去中心化纯视觉相对位姿估计用于多机器人编队
-11. [SAGE: A Socially-Aware Generative Engine for Heterogeneous Multi-Agent Navigation](/202607/21/2607.16619v1-sage-a-socially-aware-generative-engine-for-heterogeneous-multi-agent-navigation)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：具身智能体的社交感知导航
+   evidence：利用概念实现机器人操作的可解释决策
 
 
 <div class="dpr-home-promo-card">
