@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-22T21:21:25.069663+00:00",
-  "updated_date": "20260722",
+  "generated_at": "2026-07-23T20:09:14.504646+00:00",
+  "updated_date": "20260723",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260722",
+      "updated_date": "20260723",
       "carryover_days": 9,
       "items": [
         {
@@ -49,7 +49,7 @@
           "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
           "paper_id": "2607.18985v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
           "id": "2607.18840v1",
@@ -85,60 +85,21 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "World Action Model for robotic manipulation with reasoning-augmented memory",
-          "llm_evidence_cn": "用于机器人操作的世界动作模型，带有推理增强记忆",
-          "llm_evidence": "用于机器人操作的世界动作模型，带有推理增强记忆",
-          "canonical_evidence": "用于机器人操作的世界动作模型，带有推理增强记忆",
-          "llm_tldr_en": "WorldScape Policy 2.0 improves world action models with reasoning-augmented long short-term memory, enabling fine-grained language-video-action grounding and cross-embodiment transfer for robotic manipulation.",
-          "llm_tldr_cn": "现有世界动作模型由于时间上下文有限、语言监督粗粒度以及纯文本条件，阻碍了任务跟踪和细粒度语言-视频-动作对齐。本文提出WorldScape Policy 2.0，通过推理增强的长期短期记忆（包括因果短期视觉记忆和长期事件记忆）实现可控制的世界动作建模，保留局部交互动态并支持视觉推理和跨本体迁移。实验表明其在机器人操作任务上优于基线方法，提供了更强的可控性和泛化能力。",
-          "llm_tldr": "现有世界动作模型由于时间上下文有限、语言监督粗粒度以及纯文本条件，阻碍了任务跟踪和细粒度语言-视频-动作对齐。本文提出WorldScape Policy 2.0，通过推理增强的长期短期记忆（包括因果短期视觉记忆和长期事件记忆）实现可控制的世界动作建模，保留局部交互动态并支持视觉推理和跨本体迁移。实验表明其在机器人操作任务上优于基线方法，提供了更强的可控性和泛化能力。",
+          "llm_evidence_en": "World Action Model with reasoning-augmented long short-term memory for steerable robot manipulation",
+          "llm_evidence_cn": "带推理增强长短时记忆的世界动作模型，支持可控机器人操作",
+          "llm_evidence": "带推理增强长短时记忆的世界动作模型，支持可控机器人操作",
+          "canonical_evidence": "带推理增强长短时记忆的世界动作模型，支持可控机器人操作",
+          "llm_tldr_en": "Introduces WorldScape Policy 2.0, a World Action Model with reasoning-augmented memory that improves task tracking and fine-grained video-action grounding.",
+          "llm_tldr_cn": "该论文针对现有WAM上下文有限、语言监督粗糙、文本条件单一等问题，提出WorldScape Policy 2.0。引入因果短期视觉记忆（提供最近观测作为DiT前缀）和长短时事件记忆（存储结构化事件），并融合推理增强。该方法改善了任务进度跟踪和语言-视频-动作细粒度对齐，并能实现跨本体迁移。实验证明了其在操作任务上的可控性和性能提升。",
+          "llm_tldr": "该论文针对现有WAM上下文有限、语言监督粗糙、文本条件单一等问题，提出WorldScape Policy 2.0。引入因果短期视觉记忆（提供最近观测作为DiT前缀）和长短时事件记忆（存储结构化事件），并融合推理增强。该方法改善了任务进度跟踪和语言-视频-动作细粒度对齐，并能实现跨本体迁移。实验证明了其在操作任务上的可控性和性能提升。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "vision language action model for robot",
-          "matched_requirement_id": "req-6",
+          "matched_query_text": "foundation model for robot task planning",
+          "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
           "paper_id": "2607.18840v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.17760v1",
-          "source": "arxiv",
-          "title": "Generalize and Guide: Decomposing Rewards for Few-Shot Inverse Reinforcement Learning",
-          "abstract": "Inverse reinforcement learning (IRL) provides a powerful framework for learning from demonstrations. However, real-world tasks often exhibit substantial natural variations (e.g., picking up mugs with varying shapes), making it impractical to collect demonstrations that fully specify a new task under every possible scenario. In practice, while demonstrations for the target task are limited, it is often easier to obtain datasets of heterogeneous but related behaviors. This motivates the problem of few-shot IRL with multi-task demonstrations (FM-IRL), where an agent must learn a new task with substantial variations from only a limited number of target-task demonstrations, together with sufficient demonstrations of related tasks and online agent experience. To do so, we must both recover the expert distribution of the new task and provide guidance when the agent deviates from it. We introduce Multitask discriminator Proximity-Guided IRL (MPG), which learns two complementary reward components: (1) a generalizable discriminator that transfers shared structure across related tasks to identify expert behavior in a new task, and (2) a proximity function that measures how far a state deviates from expert behavior and provides corrective guidance during exploration. We demonstrate the effectiveness of our method on multiple challenging navigation and manipulation tasks under significant variations (e.g., object configurations, table layouts, and initial robot poses), achieving an average success rate of 81.2%, outperforming the strongest per-task baseline by an average of 24.7 percentage points.",
-          "authors": [
-            "Ziyi Liu",
-            "Grace Zhang"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI",
-            "cs.RO"
-          ],
-          "published": "2026-07-20T09:51:02+00:00",
-          "link": "https://arxiv.org/pdf/2607.17760v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "few-shot inverse reinforcement learning from demonstrations",
-          "llm_evidence_cn": "少量样本逆强化学习从示范中学习",
-          "llm_evidence": "少量样本逆强化学习从示范中学习",
-          "canonical_evidence": "少量样本逆强化学习从示范中学习",
-          "llm_tldr_en": "Proposes reward decomposition for few-shot IRL with multi-task demonstrations, enabling learning new tasks from limited target demonstrations.",
-          "llm_tldr_cn": "该论文针对逆强化学习中目标任务示范稀缺的问题，提出奖励分解的元学习方法，利用多任务示范实现少量样本学习。方法通过分解奖励函数为共享和任务特定部分，在机器人操控变体任务上展示了快速适应能力。这直接服务于模仿学习在机器人操作中的应用。",
-          "llm_tldr": "该论文针对逆强化学习中目标任务示范稀缺的问题，提出奖励分解的元学习方法，利用多任务示范实现少量样本学习。方法通过分解奖励函数为共享和任务特定部分，在机器人操控变体任务上展示了快速适应能力。这直接服务于模仿学习在机器人操作中的应用。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.17760v1",
           "carry_days": 1
         },
         {
@@ -176,6 +137,131 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2607.18589v1",
+          "carry_days": 2
+        },
+        {
+          "id": "2607.20207v1",
+          "source": "arxiv",
+          "title": "SeededGrasp: Language-Guided Grasping in Complex Scenes with Multiple Embodiments",
+          "abstract": "Practical robotic grasping in complex scenes requires both 3D spatial reasoning and alignment with task-specific requirements. Vision-language models (VLMs) offer a natural way to specify these requirements using language, but existing approaches either use a VLM to predict the grasp directly with limited spatial awareness, or train the VLM together with the grasping model, which requires significantly more data and compute. These limitations impede performance and have prevented scaling to multiple embodiments in complex scenes. We address this by proposing SeededGrasp, a novel data-efficient framework that enables a VLM to predict a seed point to be used as conditioning for a subsequent lightweight grasp-generation model. Our architecture decouples high-level semantic reasoning from low-level geometric execution, enabling multi-embodiment support while bypassing the need for expensive end-to-end training. To enable training such models, we release the first multi-embodiment tabletop grasping dataset comprising over 2.5M grasps in cluttered scenes. Experimental results demonstrate that our approach outperforms existing baselines, achieving 72% success in simulation and 78% in real-world grasping experiments. See our project site for data and code: https://uoft-isl.github.io/seeded-grasp/",
+          "authors": [
+            "Yang Xu",
+            "Gurpreet Singh Mukker",
+            "Raymond Wang",
+            "Jasper Gerigk",
+            "Maria Attarian",
+            "Igor Gilitschenski"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-22T14:27:45+00:00",
+          "link": "https://arxiv.org/pdf/2607.20207v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "language-guided grasping using VLM as foundation model for perception and manipulation",
+          "llm_evidence_cn": "使用视觉语言模型实现语言引导的抓取，作为感知和操控的基础模型",
+          "llm_evidence": "使用视觉语言模型实现语言引导的抓取，作为感知和操控的基础模型",
+          "canonical_evidence": "使用视觉语言模型实现语言引导的抓取，作为感知和操控的基础模型",
+          "llm_tldr_en": "SeededGrasp uses a VLM to predict a seed point for a lightweight grasp-generation model, enabling data-efficient language-guided grasping in complex scenes with multiple embodiments.",
+          "llm_tldr_cn": "复杂场景下的机器人抓取需要三维空间推理和任务需求对齐。本文提出SeededGrasp，通过视觉语言模型（VLM）预测种子点，作为轻量级抓取生成模型的条件，实现数据高效的语言引导抓取，并支持多种形态。实验证明该方法在复杂场景中优于现有方法，且易于扩展。",
+          "llm_tldr": "复杂场景下的机器人抓取需要三维空间推理和任务需求对齐。本文提出SeededGrasp，通过视觉语言模型（VLM）预测种子点，作为轻量级抓取生成模型的条件，实现数据高效的语言引导抓取，并支持多种形态。实验证明该方法在复杂场景中优于现有方法，且易于扩展。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "foundation models for robot perception and manipulation",
+          "matched_requirement_id": "req-10",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.20207v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.19633v1",
+          "source": "arxiv",
+          "title": "LENS: LLM-guided Environment Simplification for Planning and Control in Clutter",
+          "abstract": "Despite recent advances in general-purpose robotic manipulation, real-world multi-object clutter remains challenging to handle for today's prevalent approaches. The problem scales in complexity due to more objects and collisions, more unpredictable contact physics, distractors, and task ambiguity. Bridging this gap to real-world deployment requires effective scene abstractions; yet today, producing such abstractions requires extensive task-specific manual engineering, which does not scale. These abstractions are costly to generate and difficult to adjust or fine-tune. We instead propose a plug-and-play fix to automatically generate scene-specific, task-specific, adaptively updating abstractions on top of existing planning and control stacks. LLM-guided Environment Simplification (LENS) produces a de-cluttered abstracted scene representation by merging (e.g., stacked objects) or pruning (e.g., distant objects) scene entities in a closed loop in response to task progress. These dynamic, task-relevant abstractions are versatile and easy to use. In our experiments, we show that LENS improves classical planning, model-based control, and a vision-language-action model, across a diverse set of highly cluttered manipulation scenes. Project website: https://lens-2026.github.io/.",
+          "authors": [
+            "Aileen Liao",
+            "Rachel Holladay",
+            "Dinesh Jayaraman",
+            "Michael Posa"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-07-22T00:05:00+00:00",
+          "link": "https://arxiv.org/pdf/2607.19633v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "LLM-guided environment simplification for robot task planning in clutter",
+          "llm_evidence_cn": "使用大语言模型引导环境简化，用于机器人在杂乱场景中的任务规划",
+          "llm_evidence": "使用大语言模型引导环境简化，用于机器人在杂乱场景中的任务规划",
+          "canonical_evidence": "使用大语言模型引导环境简化，用于机器人在杂乱场景中的任务规划",
+          "llm_tldr_en": "LENS uses LLM to automatically generate scene-specific, task-specific abstractions for planning and control in clutter, reducing manual engineering.",
+          "llm_tldr_cn": "真实世界多物体杂乱场景对机器人操控仍具挑战，现有场景抽象需要大量手工工程。本文提出LENS，利用大语言模型自动生成场景特定、任务特定的抽象，作为现有规划控制栈的即插即用插件。实验表明LENS能有效提升杂乱场景下的任务完成率，减少人工成本。",
+          "llm_tldr": "真实世界多物体杂乱场景对机器人操控仍具挑战，现有场景抽象需要大量手工工程。本文提出LENS，利用大语言模型自动生成场景特定、任务特定的抽象，作为现有规划控制栈的即插即用插件。实验表明LENS能有效提升杂乱场景下的任务完成率，减少人工成本。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "foundation model for robot task planning",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.19633v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.19880v1",
+          "source": "arxiv",
+          "title": "EA-Nav: Learning Safe Visual Navigation Policies with Embodiment Awareness",
+          "abstract": "Cross-embodiment navigation is a key challenge in embodied intelligence. Due to differences in embodiment, the same visual observation may imply different actions for different agents, making prediction ambiguous when relying solely on vision. Existing studies mainly rely on reinforcement learning, which requires large-scale interaction and careful reward design, making it difficult to support scalable pretraining and real-world adaptation. In contrast, imitation-learning-based approaches remain limited. To address these challenges, we propose an imitation-learning-based embodiment-aware navigation framework with a modular multi-stage design. In pretraining, we construct a cross-embodiment navigation dataset from Internet videos and introduce embodiment geometry as conditional tokens to reduce action ambiguity under the same observation. In fine-tuning, we design a multimodal information injection mechanism based on a decoupled architecture. Specifically, we design a trajectory augmentation strategy to generate high-risk samples, which are used to train spatial perception and risk-aware correction separately, thereby explicitly incorporating embodiment geometry for safe navigation. Experimental results show that the proposed method effectively improves navigation performance across different embodiment settings, demonstrating the effectiveness of incorporating embodiment geometry into embodied navigation.",
+          "authors": [
+            "Jialu Zhang",
+            "Yong Du",
+            "Xianda Guo",
+            "Shunwang Sun",
+            "Xinqi Liu",
+            "Yue Sun",
+            "Guodong Lu",
+            "Wei Sui",
+            "Jituo Li"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "published": "2026-07-22T08:10:49+00:00",
+          "link": "https://arxiv.org/pdf/2607.19880v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "embodiment-aware visual navigation using imitation learning",
+          "llm_evidence_cn": "基于模仿学习的具身感知导航",
+          "llm_evidence": "基于模仿学习的具身感知导航",
+          "canonical_evidence": "基于模仿学习的具身感知导航",
+          "llm_tldr_en": "EA-Nav proposes an imitation-learning-based embodiment-aware navigation framework that constructs cross-embodiment datasets from Internet videos, enabling safe visual navigation across different robot embodiments.",
+          "llm_tldr_cn": "跨具身导航因不同机器人视觉观察对应不同动作而具有挑战，现有强化学习方法难以扩展。本文提出基于模仿学习的具身感知导航框架EA-Nav，通过从互联网视频构建跨具身数据集并引入具身感知模块，在不同机器人平台上实现安全高效的视觉导航。实验表明该方法优于现有基线且具有良好的泛化性。",
+          "llm_tldr": "跨具身导航因不同机器人视觉观察对应不同动作而具有挑战，现有强化学习方法难以扩展。本文提出基于模仿学习的具身感知导航框架EA-Nav，通过从互联网视频构建跨具身数据集并引入具身感知模块，在不同机器人平台上实现安全高效的视觉导航。实验表明该方法优于现有基线且具有良好的泛化性。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "embodied AI research",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.19880v1",
           "carry_days": 1
         }
       ]
