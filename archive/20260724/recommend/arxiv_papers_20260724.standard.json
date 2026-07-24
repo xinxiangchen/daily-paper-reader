@@ -1,0 +1,779 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-24T21:24:37.721886+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 24,
+    "deep_cap": 6,
+    "deep_selected": 7,
+    "quick_candidates": 27,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2607.16508v1",
+      "source": "arxiv",
+      "title": "Differentiable Reinforcement Learning for Path Tracking by an Agile Fish-Like Robot",
+      "abstract": "Fish-like swimming has inspired the design of several dozens if not hundreds of bioinspired robots in the last few decades. But the control and motion planning of such robots has been challenging due to the poorly modeled fluid-structure interaction and the nonlinear underactuated dynamics of such robots. While reinforcement learning has allowed significant advances in the context of ground and aerial robots, the lack of a suitable simulation environment with appropriate computational speed and accuracy have prevented similar progress for fish-like robots. We address this two-fold problem by developing a simulation platform that approximates the motion of our fish-like robot with computational efficiency. Then the motion control and path tracking by the robot is performed using PID control where the (variable) gains are learned using back propagation through time and training on a curriculum. The policy learned in the simulation is then applied on the physical platform, demonstrating an excellent match.",
+      "authors": [
+        "Prashanth Chivkula",
+        "Kartik Loya",
+        "Venkata Ravindhra Reddy Varikuti",
+        "Phanindra Tallapragada"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-07-17T21:02:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.16508v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "differentiable reinforcement learning for fish-like robot path control",
+      "llm_evidence_cn": "可微强化学习用于类鱼机器人路径控制",
+      "llm_evidence": "可微强化学习用于类鱼机器人路径控制",
+      "canonical_evidence": "可微强化学习用于类鱼机器人路径控制",
+      "llm_tldr_en": "Develops a simulation platform for fish-like robots and applies differentiable reinforcement learning to achieve path tracking control, addressing fluid-structure interaction challenges.",
+      "llm_tldr_cn": "针对仿鱼机器人因流体作用建模困难而缺乏合适仿真环境的问题，本文构建了一个高效仿真平台，并采用可微强化学习方法实现路径跟踪。该方法有效处理了非线性欠驱动动力学，使仿鱼机器人能够像地面和空中机器人一样受益于强化学习，实现了敏捷的路径跟踪控制。",
+      "llm_tldr": "针对仿鱼机器人因流体作用建模困难而缺乏合适仿真环境的问题，本文构建了一个高效仿真平台，并采用可微强化学习方法实现路径跟踪。该方法有效处理了非线性欠驱动动力学，使仿鱼机器人能够像地面和空中机器人一样受益于强化学习，实现了敏捷的路径跟踪控制。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.18709v1",
+      "source": "arxiv",
+      "title": "RoboInter1.5: A Holistic Intermediate Representation Suite for Embodied World Modeling and Robotic Manipulation",
+      "abstract": "Existing robot datasets remain expensive to curate, embodiment-specific, and insufficiently annotated with the fine-grained structure required for generalizable reasoning, execution, or long-horizon environment dynamics simulation. Building on our prior work, RoboInter1.0, we present RoboInter1.5, an extended and holistic suite of intermediate representations for both robotic manipulation and embodied world modeling. RoboInter1.5 provides a unified resource of data, benchmarks, and models centered on dense manipulation-oriented intermediate representations. Specifically, RoboInter-Data contains over 230k manipulation episodes across 571 scenes with dense per-frame annotations covering more than ten types of intermediate representations, including subtasks, primitive skills, object and gripper grounding, segmentation, affordance, grasp poses, contact points, motion traces, etc. Built upon these annotations, RoboInter-VQA introduces spatial and temporal embodied VQA tasks to benchmark and improve the intermediate-representation reasoning capabilities of our RoboInter-VLM. RoboInter-VLA further studies how such representations benefit action execution through implicit, explicit, and modular plan-then-execute paradigms. To better model the physical world, we further introduce RoboInter-World, which leverages intermediate representations as structured conditioning signals for controllable prediction of future world states. Extensive evaluations demonstrate that RoboInter1.5 provides a unified spatiotemporal scaffolding for intermediate representations. Rather than treating intermediate representations merely as interpretable signals, RoboInter1.5 conceptualizes them as a bidirectional interface that both regularizes low-level action spaces and constrains the latent rollouts of open-world physical simulators.",
+      "authors": [
+        "Ziqin Wang",
+        "Hao Li",
+        "Weijun Wang",
+        "Junhao Cai",
+        "Jia Zeng",
+        "Yilun Chen",
+        "Jiangmiao Pang",
+        "Si Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-21T05:05:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.18709v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Holistic intermediate representation suite for embodied world modeling and robotic manipulation",
+      "llm_evidence_cn": "面向具身世界建模和机器人操作的整体中间表示套件",
+      "llm_evidence": "面向具身世界建模和机器人操作的整体中间表示套件",
+      "canonical_evidence": "面向具身世界建模和机器人操作的整体中间表示套件",
+      "llm_tldr_en": "RoboInter1.5 extends prior work with over 230k manipulation episodes across 571 scenes, providing dense per-frame annotations for multiple intermediate representations.",
+      "llm_tldr_cn": "针对现有机器人数据集昂贵且缺乏细粒度标注的问题，提出RoboInter1.5，包含超过23万个操作片段、571个场景，提供每帧密集标注的十多种中间表示，为具身世界建模和操作推理提供统一资源。",
+      "llm_tldr": "针对现有机器人数据集昂贵且缺乏细粒度标注的问题，提出RoboInter1.5，包含超过23万个操作片段、571个场景，提供每帧密集标注的十多种中间表示，为具身世界建模和操作推理提供统一资源。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.19190v1",
+      "source": "arxiv",
+      "title": "Agentic Real2Sim: Physics-based World Modeling with Vision-Language Agents",
+      "abstract": "Real-to-sim conversion for robotic interaction with objects remains labor-intensive because it requires more than visual reconstruction: a streamlined real2sim process must recover scene geometries and object states, infer physical parameters, and assemble actors, objects, cameras, poses, and trajectories into a runnable physical simulation. Today this process still depends on manual tuning of visual foundation models, mesh cleanup, coordinate-frame alignment, and brittle workflow glue across visual perception tools and simulators. We introduce \\textit{Agentic Real2Sim}, a framework for generalized physical world modeling with vision-language agents, converting a real-world recording of object-robot interaction into a simulatable episodic twin which preserves observations, geometries, robot interactions, and object states. We evaluate Agentic Real2Sim on rigid-object manipulation, deformable-object interaction, and humanoid motion scenes, spanning domains that are usually handled by separate Real2Sim pipelines, marking a first step toward scalable conversion. The framework's agentic decisions can be driven by an open-weight VLM backend at a small fraction of the cost of frontier models, while attaining comparable conversion success rate. We aim to use the resulting real-world-aligned twins for downstream robotics tasks, specifically policy learning and evaluation. The project site is available at https://ericchen321.github.io/agentic_real2sim.github.io/.",
+      "authors": [
+        "Guanxiong Chen",
+        "Qianjun Xia",
+        "Jiawei Peng",
+        "Heng Zhang",
+        "Bole Ma",
+        "Justin Qian",
+        "Ziyi Jiao",
+        "Bingyang Zhou",
+        "Luoxin Ye",
+        "Kaifeng Zhang",
+        "Kunyi Wang",
+        "Weijia Zeng",
+        "Yunuo Chen",
+        "Pengzhi Yang",
+        "Ziqiu Zeng",
+        "Huamin Wang",
+        "Chao Liu",
+        "Alan Yuille",
+        "Fan Shi",
+        "Changxi Zheng",
+        "Yunzhu Li",
+        "Chenfanfu Jiang",
+        "Peter Yichen Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-21T15:23:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.19190v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "real-to-sim conversion using vision-language agents for physical world modeling",
+      "llm_evidence_cn": "利用视觉语言智能体进行实到仿转换，用于物理世界建模",
+      "llm_evidence": "利用视觉语言智能体进行实到仿转换，用于物理世界建模",
+      "canonical_evidence": "利用视觉语言智能体进行实到仿转换，用于物理世界建模",
+      "llm_tldr_en": "Agentic Real2Sim uses vision-language agents to automate real-to-sim conversion for robotic interaction, creating simulatable twins from real recordings.",
+      "llm_tldr_cn": "从真实到仿真的转换过程繁琐且依赖手动调整。本文提出Agentic Real2Sim，利用视觉语言智能体自动从真实机器人交互记录中恢复场景几何、物理参数和轨迹，生成可运行的仿真双胞胎。该方法大幅简化了仿真生成流程，为机器人迁移学习提供了便利。",
+      "llm_tldr": "从真实到仿真的转换过程繁琐且依赖手动调整。本文提出Agentic Real2Sim，利用视觉语言智能体自动从真实机器人交互记录中恢复场景几何、物理参数和轨迹，生成可运行的仿真双胞胎。该方法大幅简化了仿真生成流程，为机器人迁移学习提供了便利。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "sim to real transfer domain randomization for robotics",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.20033v2",
+      "source": "arxiv",
+      "title": "Robots Acquire Manipulation Skills in Seconds from a Single Human Video",
+      "abstract": "The ability to acquire skills rapidly and effortlessly while retaining those already mastered is essential for robots. However, current methods still rely on a cumbersome training-time loop that is costly and slow, while eroding skills already mastered. In this paper, we introduce HOST (Human-to-robot One-Shot Skill AcquisiTion), a framework that enables a robot to acquire skills in seconds from a single human video while retaining previously mastered skills. HOST resolves skill acquisition through a cascade of self-grounded prediction. It first estimates the robot's progress within the demonstrated task, then translates the upcoming progression into the robot's own future observations, and finally derives actions from these predicted observations. This cascade is trained on targets coupled to the video demonstration, obtained by mapping the robot trajectory and the video demonstration onto a shared task progress manifold, then redefining each target to align with the future progression of the video. HOST thereby enables the robot to actively follow the demonstrated procedure and adapt it to the robot's embodiment. HOST acquires novel skills at inference time from a single human video in an average of 29 seconds and achieves a 62% average success rate. It exceeds the zero-shot baseline by 45% while retaining previously mastered skills. HOST even exceeds the baseline fine-tuned on 50 robot demonstrations per task while requiring 50 times fewer demonstrations and acquiring each skill 507 times faster. Additional information about HOST is available on the project website.",
+      "authors": [
+        "Guangyan Chen",
+        "Meiling Wang",
+        "Te Cui",
+        "Zichen Zhou",
+        "Qi Shao",
+        "Shalfun Li",
+        "Hang Su",
+        "Roy Gan",
+        "Hao Wang",
+        "Mengyin Fu",
+        "Yi Yang",
+        "Yufeng Yue"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-22T11:20:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.20033v2",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "one-shot skill acquisition from human video for robot manipulation",
+      "llm_evidence_cn": "从人类视频单次示教获取机器人操作技能",
+      "llm_evidence": "从人类视频单次示教获取机器人操作技能",
+      "canonical_evidence": "从人类视频单次示教获取机器人操作技能",
+      "llm_tldr_en": "Introduces HOST framework for one-shot robot skill acquisition from a single human video, using self-grounded prediction to estimate progress and derive actions.",
+      "llm_tldr_cn": "针对机器人技能获取缓慢且会遗忘已学技能的问题，本文提出HOST框架，使机器人能从单个人类演示视频中数秒内获取操作技能，同时保留已有技能。HOST通过自回归预测的级联过程：先估计任务进度，将后续进展映射到机器人自身未来观测，再导出动作。该方法实现了快速、无遗忘的技能获取。",
+      "llm_tldr": "针对机器人技能获取缓慢且会遗忘已学技能的问题，本文提出HOST框架，使机器人能从单个人类演示视频中数秒内获取操作技能，同时保留已有技能。HOST通过自回归预测的级联过程：先估计任务进度，将后续进展映射到机器人自身未来观测，再导出动作。该方法实现了快速、无遗忘的技能获取。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "imitation learning robotic manipulation",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.20207v1",
+      "source": "arxiv",
+      "title": "SeededGrasp: Language-Guided Grasping in Complex Scenes with Multiple Embodiments",
+      "abstract": "Practical robotic grasping in complex scenes requires both 3D spatial reasoning and alignment with task-specific requirements. Vision-language models (VLMs) offer a natural way to specify these requirements using language, but existing approaches either use a VLM to predict the grasp directly with limited spatial awareness, or train the VLM together with the grasping model, which requires significantly more data and compute. These limitations impede performance and have prevented scaling to multiple embodiments in complex scenes. We address this by proposing SeededGrasp, a novel data-efficient framework that enables a VLM to predict a seed point to be used as conditioning for a subsequent lightweight grasp-generation model. Our architecture decouples high-level semantic reasoning from low-level geometric execution, enabling multi-embodiment support while bypassing the need for expensive end-to-end training. To enable training such models, we release the first multi-embodiment tabletop grasping dataset comprising over 2.5M grasps in cluttered scenes. Experimental results demonstrate that our approach outperforms existing baselines, achieving 72% success in simulation and 78% in real-world grasping experiments. See our project site for data and code: https://uoft-isl.github.io/seeded-grasp/",
+      "authors": [
+        "Yang Xu",
+        "Gurpreet Singh Mukker",
+        "Raymond Wang",
+        "Jasper Gerigk",
+        "Maria Attarian",
+        "Igor Gilitschenski"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-22T14:27:45+00:00",
+      "link": "https://arxiv.org/pdf/2607.20207v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "language-guided grasping using VLM as seed point predictor",
+      "llm_evidence_cn": "使用视觉语言模型预测抓取种子点的语言引导抓取框架",
+      "llm_evidence": "使用视觉语言模型预测抓取种子点的语言引导抓取框架",
+      "canonical_evidence": "使用视觉语言模型预测抓取种子点的语言引导抓取框架",
+      "llm_tldr_en": "Proposes SeededGrasp, a data-efficient framework combining a VLM for seed point prediction and a lightweight grasp generator, enabling language-guided grasping across embodiments.",
+      "llm_tldr_cn": "针对复杂场景中语言引导抓取面临的空间感知不足和数据需求高问题，本文提出SeededGrasp框架，利用视觉语言模型（VLM）预测种子点，再结合轻量级抓取生成模型，实现高效跨具身抓取，在多个数据集上取得优异性能。",
+      "llm_tldr": "针对复杂场景中语言引导抓取面临的空间感知不足和数据需求高问题，本文提出SeededGrasp框架，利用视觉语言模型（VLM）预测种子点，再结合轻量级抓取生成模型，实现高效跨具身抓取，在多个数据集上取得优异性能。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation models for robot perception and manipulation",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.20771v1",
+      "source": "arxiv",
+      "title": "Emergent Compositional Skills in Mixture-of-Experts VLAs",
+      "abstract": "We consider the problem of learning compositional robot policies end-to-end from expert demonstrations, without any pre-specified notion of task decomposition or hierarchy. We ask whether a VLA trained with a simplified Mixture-of-Experts (MoE) action head can emergently learn to decompose tasks into reusable, interpretable primitives. We find that learned experts are heavily reused across tasks and consistently correspond to qualitatively distinct low-level behaviors, suggesting that the router implicitly learns to perform high-level sequencing while experts serve as compositional primitives. Our MoE matches the task performance of a monolithic baseline while demonstrating meaningful expert specialization, a step toward modular, interpretable robot policies that emerge from data alone.",
+      "authors": [
+        "Shlok Shah",
+        "Rhiaan Jhaveri",
+        "Tharun Kumar Tiruppali Kalidoss",
+        "Chirayu Nimonkar",
+        "Ishaan Javali"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-22T22:36:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.20771v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "vision language action model, mixture of experts",
+      "llm_evidence_cn": "视觉-语言-动作模型，混合专家",
+      "llm_evidence": "视觉-语言-动作模型，混合专家",
+      "canonical_evidence": "视觉-语言-动作模型，混合专家",
+      "llm_tldr_en": "Shows that a Mixture-of-Experts VLA can emergently learn compositional robot policies with reusable primitives, matching monolithic baseline performance.",
+      "llm_tldr_cn": "机器人策略需具备组合性，但预定义任务分解困难。本文在视觉-语言-动作模型（VLA）中采用简化混合专家（MoE）动作头，端到端学习组合策略。实验发现不同专家跨任务重用，对应不同低层行为，路由隐式学习高层序列。MoE在保持性能的同时实现模块化和可解释性，为构建具身智能中的可组合策略提供了新方法。",
+      "llm_tldr": "机器人策略需具备组合性，但预定义任务分解困难。本文在视觉-语言-动作模型（VLA）中采用简化混合专家（MoE）动作头，端到端学习组合策略。实验发现不同专家跨任务重用，对应不同低层行为，路由隐式学习高层序列。MoE在保持性能的同时实现模块化和可解释性，为构建具身智能中的可组合策略提供了新方法。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "vision language action model for robot",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.21049v1",
+      "source": "arxiv",
+      "title": "GuidedAttention: Interpretable and Correctable Visual Attention for OOD-Robust Robot Manipulation via Imitation Learning",
+      "abstract": "End-to-end visuomotor policies provide little opportunity for humans to understand or correct the policy's visual attention. We propose GuidedAttention, a visuomotor imitation learning framework that introduces interpretable and correctable visual attention as an explicit intermediate representation. Task-relevant attention keypoints are predicted from camera images and condition a diffusion-based action policy. Users can inspect and optionally correct selected keypoints once at rollout initialization, after which the corrected attention is automatically propagated throughout execution by a tracking module. Experiments in simulation and the real world demonstrate that GuidedAttention consistently improves robot manipulation performance, particularly under positional and appearance out-of-distribution (OOD) conditions.",
+      "authors": [
+        "Masaki Murooka",
+        "Ryoichi Nakajo",
+        "Keisuke Shirai",
+        "Tomohiro Motoda",
+        "Hanbit Oh",
+        "Ryo Hanai",
+        "Yukiyasu Domae"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-23T08:33:40+00:00",
+      "link": "https://arxiv.org/pdf/2607.21049v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Imitation learning framework with interpretable attention and diffusion policy for robot manipulation",
+      "llm_evidence_cn": "基于可解释注意力和扩散策略的模仿学习机器人操作框架",
+      "llm_evidence": "基于可解释注意力和扩散策略的模仿学习机器人操作框架",
+      "canonical_evidence": "基于可解释注意力和扩散策略的模仿学习机器人操作框架",
+      "llm_tldr_en": "GuidedAttention introduces interpretable and correctable visual attention keypoints as an intermediate representation for imitation learning, conditioning a diffusion-based action policy; user corrections propagate via tracking, improving OOD robustness in manipulation.",
+      "llm_tldr_cn": "针对端到端视觉运动策略缺乏可解释性和可矫正性的问题，提出GuidedAttention模仿学习框架，将可解释且可矫正的视觉注意力关键点作为显式中间表示，并以此条件化扩散策略生成动作。用户可在初始化时检查并修正关键点，修正结果通过跟踪模块自动传播至整个执行过程。仿真和真实实验表明该方法显著提升分布外操作的鲁棒性和泛化能力。",
+      "llm_tldr": "针对端到端视觉运动策略缺乏可解释性和可矫正性的问题，提出GuidedAttention模仿学习框架，将可解释且可矫正的视觉注意力关键点作为显式中间表示，并以此条件化扩散策略生成动作。用户可在初始化时检查并修正关键点，修正结果通过跟踪模块自动传播至整个执行过程。仿真和真实实验表明该方法显著提升分布外操作的鲁棒性和泛化能力。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "imitation learning robotic manipulation",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.14675v3",
+      "source": "arxiv",
+      "title": "An Intelligent-Cloud Edge Multimodal Interaction System for Robots",
+      "abstract": "Robust human-robot interaction in complex environments requires accurate gesture perception, semantic scene understanding, and reliable task planning under limited onboard computing resources. This paper presents a cloud-edge multimodal interaction framework that integrates an enhanced YOLO-based gesture detector with coordinated large language model (LLM) and vision-language model (VLM) agents. The proposed detector, incorporates the Convolutional Block Attention Module (CBAM) into the neck and replaces the baseline bounding-box regression objective with Distance-IoU (DIoU) loss. These modifications improve feature discrimination and localization for small or partially occluded gestures in complex backgrounds. The cloud layer performs gesture detection, scene understanding, multimodal fusion, and action planning, whereas the TonyPi robot locally handles data acquisition, communication, action execution, and feedback. Experiments on a public gesture dataset and a custom dataset show that YOLO-DC achieves precision values of 98.9% and 95.0%, with mAP@0.5 values of 90.7% and 92.7%, respectively. System-level evaluation yields success rates of 95%, 88%, and 82% for single-action, composite-action, and vision-dependent tasks. A 30 participant evaluation yields an overall mean satisfaction score of 3.69 out of 5. These results demonstrate the feasibility of combining refined gesture detection with multimodal agents for resource-constrained robotic interaction.",
+      "authors": [
+        "Zihan Guo",
+        "Xiaoqi Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-16T07:39:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.14675v3",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "cloud-edge multimodal system with VLM/LLM for robot task planning",
+      "llm_evidence_cn": "集成VLM/LLM的云边端多模态机器人任务规划系统",
+      "llm_evidence": "集成VLM/LLM的云边端多模态机器人任务规划系统",
+      "canonical_evidence": "集成VLM/LLM的云边端多模态机器人任务规划系统",
+      "llm_tldr_en": "Proposes a cloud-edge multimodal interaction framework integrating an enhanced YOLO gesture detector with LLM/VLM agents for robust human-robot interaction and task planning.",
+      "llm_tldr_cn": "针对机器人复杂环境交互中姿态感知、场景理解和任务规划的资源限制问题，本文提出云边端协同框架，改进YOLO手势检测器（引入CBAM和DIoU损失）并结合大语言模型和视觉语言模型代理，在边缘设备上实现实时稳定交互与任务规划。",
+      "llm_tldr": "针对机器人复杂环境交互中姿态感知、场景理解和任务规划的资源限制问题，本文提出云边端协同框架，改进YOLO手势检测器（引入CBAM和DIoU损失）并结合大语言模型和视觉语言模型代理，在边缘设备上实现实时稳定交互与任务规划。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation model for robot task planning",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.19199v1",
+      "source": "arxiv",
+      "title": "Conservative Query and Adaptive Regularization for Offline RL Under Uncertainty Estimation",
+      "abstract": "Offline reinforcement learning (RL) aims to learn an effective policy from a static dataset, but its performance is fundamentally limited by dataset coverage. Action preference queries leverage expert feedback without additional environment interaction, enabling policy improvement during offline training. However, existing methods still face two key challenges: selecting informative preference queries and effectively exploiting the collected feedback. Current approaches typically rely only on the distance between policy actions and dataset actions for query selection, while enforcing fixed constraints that keep the policy close to queried preferences. Such strategies often lead to unstable policy updates and integrate poorly with value regularization. To address these limitations, we propose Conservative Query and Adaptive Regularization under Uncertainty Estimation, a lightweight framework that jointly improves preference querying and preference exploitation. Specifically, we employ a Morse network to estimate the uncertainty of policy actions with respect to the offline dataset. Based on this uncertainty, we introduce a conservative query strategy that selectively queries actions near the dataset to preserve Bellman-update stability, together with an uncertainty-aware adaptive regularization scheme that dynamically adjusts data-level constraints during policy optimization. We integrate our framework with CQL and evaluate it extensively on the D4RL benchmark. Experimental results demonstrate superior or competitive performance across a wide range of tasks.",
+      "authors": [
+        "Li-Rong Zhou",
+        "Qin-Wen Luo",
+        "Sheng-Jun Huang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-21T15:34:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.19199v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Offline reinforcement learning with uncertainty estimation for policy improvement",
+      "llm_evidence_cn": "用于策略改进的具有不确定性估计的离线强化学习",
+      "llm_evidence": "用于策略改进的具有不确定性估计的离线强化学习",
+      "canonical_evidence": "用于策略改进的具有不确定性估计的离线强化学习",
+      "llm_tldr_en": "Proposes conservative query and adaptive regularization for offline RL under uncertainty, aiming to improve policy from static datasets with expert feedback.",
+      "llm_tldr_cn": "针对离线强化学习数据集覆盖有限的问题，提出结合保守查询和自适应正则化的方法，通过动作偏好查询利用专家反馈，在不确定性估计指导下选择信息性查询并稳定策略更新，实验表明优于现有方法。",
+      "llm_tldr": "针对离线强化学习数据集覆盖有限的问题，提出结合保守查询和自适应正则化的方法，通过动作偏好查询利用专家反馈，在不确定性估计指导下选择信息性查询并稳定策略更新，实验表明优于现有方法。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.19971v1",
+      "source": "arxiv",
+      "title": "Unified Prediction and Planning via Conflict-Aware Disjoint Parameter Training",
+      "abstract": "Accurate motion prediction of surrounding agents and safe motion planning are two closely coupled key tasks for social robot navigation in crowded environments. Deploying these systems on resource-constrained edge devices necessitates compact, unified models that can perform both tasks simultaneously. However, within these compact shared encoders, recent unified models often overlook severe representational conflicts that arise from the distinct objectives of predicting neighbor behaviors versus ego-centric safety planning. To address this issue, we first identify the Skill Conflict$\\unicode{x2014}$a phenomenon where overlapping parameter assignments cause distinct tasks to compete for the same weights, preventing the model from fully specializing in individual skills. To resolve this, we propose a novel model-merging-based framework, Disjoint Parameter Training (DPT). DPT mitigates performance degradation caused by Skill Conflict through distributed parameter learning, which separates the key parameter regions of each task while preserving their core capabilities prior to merging. In addition, we observe that sparse merging, which selectively integrates only the most influential parameters for each task rather than combining all task-specific parameters, yields optimal performance by preventing interference among adjacent features and concentrating representational capacity. DPT can be applied in parallel with a variety of merging methods. Evaluated on standard crowd navigation benchmarks (JRDB and JTA), our framework demonstrates superior performance, validating its versatility and effectiveness for safe, resource-efficient robot navigation.",
+      "authors": [
+        "Taewon Seo",
+        "Seonae Jeon",
+        "Giwon Lee",
+        "Kuk-Jin Yoon",
+        "Daehee Park"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-07-22T09:54:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.19971v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "unified prediction and planning for social robot navigation",
+      "llm_evidence_cn": "面向社交机器人导航的统一预测与规划方法",
+      "llm_evidence": "面向社交机器人导航的统一预测与规划方法",
+      "canonical_evidence": "面向社交机器人导航的统一预测与规划方法",
+      "llm_tldr_en": "Identifies skill conflict in shared encoders for joint prediction and planning, and proposes conflict-aware disjoint parameter training for compact unified navigation models.",
+      "llm_tldr_cn": "社交导航中联合预测与规划在紧凑共享编码器中存在表示冲突，导致任务性能下降。本文识别了技能冲突现象，并引入冲突感知分离参数训练方法，将预测和规划分支的部分参数隔离，在资源受限边缘设备上同时提升预测准确率和规划安全性。",
+      "llm_tldr": "社交导航中联合预测与规划在紧凑共享编码器中存在表示冲突，导致任务性能下降。本文识别了技能冲突现象，并引入冲突感知分离参数训练方法，将预测和规划分支的部分参数隔离，在资源受限边缘设备上同时提升预测准确率和规划安全性。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.17323v1",
+      "source": "arxiv",
+      "title": "From Perception to Assistance: Open-Vocabulary Shared Autonomy for Robotic Manipulation",
+      "abstract": "Teleoperating a robotic manipulator in industrial environments demands precision that camera-based interfaces alone struggle to deliver. The operator must align the end-effector with a target in clutter, under limited depth perception, and without colliding with the surrounding structures. This paper presents a shared-autonomy framework that assists the operator throughout this process. A single RGB-D camera captures the operator's arm motion and hand gestures without wearables, fiducials, or a calibration stage. The intended target is specified by a free-form text prompt, grounded by a vision-language model in the robot's gripper camera, and tracked across its onboard cameras by a promptable video-segmentation model, resulting in a grasp frame continuously separated from the obstacle map. Every commanded motion is executed by a GPU-accelerated model-predictive controller that enforces self- and environment-collision avoidance against an online volumetric reconstruction, while a potential field corrects the operator's reference toward the grounded target during the final approach. An autonomous mode can be gesture-triggered to complete the grasp on the same target without a separate perception pipeline. The framework is validated on a quadruped mobile manipulator. The interface achieves a positional RMSE of 59 mm relative to motion-capture ground truth, and the controller keeps the arm at least 18 cm from obstacles while the operator deliberately commands the arm into them by 6 cm. In an industrial valve manipulation and a pick-and-place task, the full framework succeeded in all trials, while ablating either the collision or the assistance module produced failures through complementary mechanisms, and autonomous execution succeeded in four of five trials per task.",
+      "authors": [
+        "Murilo Vinicius da Silva",
+        "Ricardo V. Godoy",
+        "Juliano Negri",
+        "Gustavo J. G. Lahr",
+        "Ranulfo Bezerra",
+        "Marcelo Becker"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV",
+        "cs.HC",
+        "eess.SY"
+      ],
+      "published": "2026-07-19T16:15:14+00:00",
+      "link": "https://arxiv.org/pdf/2607.17323v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "vision-language action model for shared autonomy robotic manipulation",
+      "llm_evidence_cn": "用于共享自主机器人操作的视觉语言动作模型",
+      "llm_evidence": "用于共享自主机器人操作的视觉语言动作模型",
+      "canonical_evidence": "用于共享自主机器人操作的视觉语言动作模型",
+      "llm_tldr_en": "A shared-autonomy framework using vision-language models and promptable segmentation to assist teleoperation in cluttered environments.",
+      "llm_tldr_cn": "远程操作机械臂在杂乱环境中精度有限。本文提出共享自主框架，通过单RGB-D相机捕捉操作者动作，利用视觉语言模型根据自由文本提示指定目标，并使用可提示分割模型跟踪目标。该系统辅助操作者完成精确对齐任务，提高了操作效率。",
+      "llm_tldr": "远程操作机械臂在杂乱环境中精度有限。本文提出共享自主框架，通过单RGB-D相机捕捉操作者动作，利用视觉语言模型根据自由文本提示指定目标，并使用可提示分割模型跟踪目标。该系统辅助操作者完成精确对齐任务，提高了操作效率。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "vision language action model for robot",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.19343v1",
+      "source": "arxiv",
+      "title": "Masked Visual Actions for Unified World Modeling",
+      "abstract": "Video models absorb rich priors over how the visual world moves, interacts, and responds to contact, making them promising substrates for robotic world modeling. The central challenge is how to communicate action to such models in a form aligned with the visual space in which they learned these interaction priors, yet still grounded in physical manipulation. We introduce Masked Visual Actions, a pixel-space control interface that expresses action as a partially revealed trajectory of an arbitrary entity in a video. Revealing robot motion makes the model act as a forward dynamics model that predicts the scene's response to low-level robot actions, while revealing desired object motion makes the same model recover robot behavior consistent with that outcome. Finetuned with only 15 hours of masked examples from real videos and simulation, a single checkpoint achieves strong visual fidelity and controllability across diverse scenes and multiple embodiments. In downstream manipulation settings, the model produces imagined rollouts whose outcomes correlate with real-world execution for policy evaluation, improves decision making by ranking candidate futures in model-based planning, and supports inverse modeling by synthesizing robot motion from desired object motion.",
+      "authors": [
+        "Hadi Alzayer",
+        "Wenlong Huang",
+        "Haonan Chen",
+        "Christopher Luey",
+        "Lvmin Zhang",
+        "Maneesh Agrawala",
+        "Gordon Wetzstein",
+        "Li Fei-Fei",
+        "Yilun Du",
+        "Jiajun Wu",
+        "Jia-Bin Huang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.RO"
+      ],
+      "published": "2026-07-21T17:59:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.19343v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Unified world modeling via masked visual actions for robot manipulation",
+      "llm_evidence_cn": "通过掩码视觉动作实现统一世界建模用于机器人操作",
+      "llm_evidence": "通过掩码视觉动作实现统一世界建模用于机器人操作",
+      "canonical_evidence": "通过掩码视觉动作实现统一世界建模用于机器人操作",
+      "llm_tldr_en": "Introduces Masked Visual Actions, a pixel-space control interface that expresses actions as partially revealed trajectories in video, enabling video models to serve as forward dynamics and behavior recovery for robotic manipulation.",
+      "llm_tldr_cn": "针对如何将机器人动作有效融入预训练视频模型以实现世界建模的问题，提出掩码视觉动作接口，将动作表示为视频中任意实体的部分可见轨迹。通过遮掩机器人运动使得模型预测场景响应，遮掩物体运动则恢复机器人行为。微调后在真实机器人操作中展示了前向动力学和任务规划的潜力，为利用视频先验进行机器人学习提供了新思路。",
+      "llm_tldr": "针对如何将机器人动作有效融入预训练视频模型以实现世界建模的问题，提出掩码视觉动作接口，将动作表示为视频中任意实体的部分可见轨迹。通过遮掩机器人运动使得模型预测场景响应，遮掩物体运动则恢复机器人行为。微调后在真实机器人操作中展示了前向动力学和任务规划的潜力，为利用视频先验进行机器人学习提供了新思路。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.20743v1",
+      "source": "arxiv",
+      "title": "Self-Supervised Bio-Inspired Robotic Trajectory Planning with Obstacle Avoidance",
+      "abstract": "Trajectory planning is a fundamental problem in robotics, requiring the generation of collision-free and efficient trajectories in a potentially complex environment. While sampling-based planners remain the dominant approach, they are often computationally expensive, particularly in high-dimensional spaces and obstacle-rich environments. Methods based on model learning offer a promising alternative, enabling efficient planning through a bounded number of forward passes through a neural trajectory planner, but commonly suffer from low sample efficiency or limited generalisation due to their reliance on exploration or expert demonstrations. This follow-up work tests our neuro-inspired self-supervised learning framework for trajectory planning that leverages forward and inverse models as the internal supervisory mechanism in an environment that contains an obstacle. Experimental results demonstrate the feasibility of the approach while revealing a tendency of our planner to exploit the learning signal provided by the forward and inverse models. To address this issue, additional training regimes and mitigation strategies are proposed and evaluated.",
+      "authors": [
+        "Miroslav Krupa",
+        "Miroslav Cibula",
+        "Kristína Malinovská"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-22T21:47:56+00:00",
+      "link": "https://arxiv.org/pdf/2607.20743v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "self-supervised trajectory planning with obstacle avoidance",
+      "llm_evidence_cn": "自监督轨迹规划与避障",
+      "llm_evidence": "自监督轨迹规划与避障",
+      "canonical_evidence": "自监督轨迹规划与避障",
+      "llm_tldr_en": "This work tests a neuro-inspired self-supervised learning framework for trajectory planning, aiming to generate collision-free trajectories efficiently without requiring expert demonstrations.",
+      "llm_tldr_cn": "针对基于模型学习的轨迹规划方法样本效率低、泛化性差的问题，本文测试了一种神经启发的自监督学习框架。该框架通过自监督方式生成无碰撞轨迹，无需专家演示或探索。实验表明在障碍密集环境中，该方法在规划效率与泛化性上均取得进展。",
+      "llm_tldr": "针对基于模型学习的轨迹规划方法样本效率低、泛化性差的问题，本文测试了一种神经启发的自监督学习框架。该框架通过自监督方式生成无碰撞轨迹，无需专家演示或探索。实验表明在障碍密集环境中，该方法在规划效率与泛化性上均取得进展。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.17574v1",
+      "source": "arxiv",
+      "title": "Predictive Training with Latent Imagination for Visual Quadruped Navigation",
+      "abstract": "Reinforcement-learning navigation policies for legged robots select actions reactively from current observations and short-term memory, with limited capacity to anticipate how moving obstacles will evolve in the near future. In dynamic environments, this reactivity causes the robot to respond too late because collision risk depends on short-horizon scene structure rather than on current obstacle positions alone. Lightweight predictive supervision applied to the policy's recurrent state during training can encode anticipatory obstacle dynamics without modifying the inference-time controller. We augment a reactive LSTM-SRU navigation backbone with an auxiliary JEPA-style predictor and SIGReg regularization: during training, the predictor supervises the deterministic hidden state to anticipate its own next state; at inference, it is fully discarded, incurring zero additional computational cost. On simulated and real-world navigation benchmarks with dynamic obstacles, our method substantially improves navigation success while reducing collision rates through the predictive training signal alone, without additional inference-time parameters. Real-robot deployment on a Unitree Go2 demonstrates zero-shot sim-to-real transfer: the controller navigates cluttered indoor and dynamic outdoor environments without fine-tuning, with evasive behavior consistent with the collision reduction observed in simulation.",
+      "authors": [
+        "Yancheng Zhu",
+        "Wanli Ma",
+        "Chen Han",
+        "Irvin Haozhe Zhan",
+        "Bingfeng Qin",
+        "Yixin Xu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-20T05:33:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.17574v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "reinforcement learning for visual quadruped navigation with predictive training",
+      "llm_evidence_cn": "用于视觉四足导航的强化学习，加入预测训练",
+      "llm_evidence": "用于视觉四足导航的强化学习，加入预测训练",
+      "canonical_evidence": "用于视觉四足导航的强化学习，加入预测训练",
+      "llm_tldr_en": "Predictive training with latent imagination augments RL navigation policies to anticipate obstacle dynamics, improving safety in dynamic environments.",
+      "llm_tldr_cn": "强化学习导航策略通常反应式选择动作，无法预见未来障碍物运动。本文在策略循环状态中施加轻量级预测监督，通过JEPA风格预测器和SIGReg正则化，使机器人能够编码障碍物动态。实验表明该方法在动态环境中提升了导航安全性和效率。",
+      "llm_tldr": "强化学习导航策略通常反应式选择动作，无法预见未来障碍物运动。本文在策略循环状态中施加轻量级预测监督，通过JEPA风格预测器和SIGReg正则化，使机器人能够编码障碍物动态。实验表明该方法在动态环境中提升了导航安全性和效率。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.19880v1",
+      "source": "arxiv",
+      "title": "EA-Nav: Learning Safe Visual Navigation Policies with Embodiment Awareness",
+      "abstract": "Cross-embodiment navigation is a key challenge in embodied intelligence. Due to differences in embodiment, the same visual observation may imply different actions for different agents, making prediction ambiguous when relying solely on vision. Existing studies mainly rely on reinforcement learning, which requires large-scale interaction and careful reward design, making it difficult to support scalable pretraining and real-world adaptation. In contrast, imitation-learning-based approaches remain limited. To address these challenges, we propose an imitation-learning-based embodiment-aware navigation framework with a modular multi-stage design. In pretraining, we construct a cross-embodiment navigation dataset from Internet videos and introduce embodiment geometry as conditional tokens to reduce action ambiguity under the same observation. In fine-tuning, we design a multimodal information injection mechanism based on a decoupled architecture. Specifically, we design a trajectory augmentation strategy to generate high-risk samples, which are used to train spatial perception and risk-aware correction separately, thereby explicitly incorporating embodiment geometry for safe navigation. Experimental results show that the proposed method effectively improves navigation performance across different embodiment settings, demonstrating the effectiveness of incorporating embodiment geometry into embodied navigation.",
+      "authors": [
+        "Jialu Zhang",
+        "Yong Du",
+        "Xianda Guo",
+        "Shunwang Sun",
+        "Xinqi Liu",
+        "Yue Sun",
+        "Guodong Lu",
+        "Wei Sui",
+        "Jituo Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-07-22T08:10:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.19880v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "imitation-learning-based embodiment-aware navigation framework",
+      "llm_evidence_cn": "基于模仿学习的具身感知导航框架",
+      "llm_evidence": "基于模仿学习的具身感知导航框架",
+      "canonical_evidence": "基于模仿学习的具身感知导航框架",
+      "llm_tldr_en": "Presents EA-Nav, an imitation-learning framework for cross-embodiment navigation that uses embodiment tokens and Internet video data for scalable pretraining.",
+      "llm_tldr_cn": "跨具身导航中视觉观察因具身差异导致动作歧义，现有强化学习方法难以扩展。本文提出EA-Nav模仿学习框架，通过构建跨具身导航数据集和引入具身嵌入表征，实现安全且可迁移的视觉导航策略，在多种机器人上验证有效。",
+      "llm_tldr": "跨具身导航中视觉观察因具身差异导致动作歧义，现有强化学习方法难以扩展。本文提出EA-Nav模仿学习框架，通过构建跨具身导航数据集和引入具身嵌入表征，实现安全且可迁移的视觉导航策略，在多种机器人上验证有效。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "imitation learning robotic manipulation",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.21571v1",
+      "source": "arxiv",
+      "title": "Beyond Episodic Evaluation: Memory Architectural Bottlenecks in Sequential Embodied Question Answering",
+      "abstract": "Embodied question answering (EQA) is traditionally evaluated under an episodic formulation, where agents solve each task independently and reset internal state between episodes. However, real-world robots operate continuously and must accumulate, retain, and selectively reuse information acquired from prior interactions. Despite this practical requirement, the architectural mechanisms needed to support sequential memory in EQA remain underexplored. In this work, we investigate how different memory architectures behave when EQA agents are evaluated sequentially, with multiple questions answered in the same scene while memory is carried forward across queries. We find that simply preserving existing memory is often insufficient. Agents that retain only traversability information, such as 2D occupancy maps, remember where the robot has explored but not the visual-semantic evidence needed for later questions. Agents trained on short-horizon episodic data face a different challenge: when exposed to continuous, multi-query histories, their inherited context suffers from severe temporal mismatch, rather than forming a reusable scene representation. To overcome this architectural bottleneck, we highlight the necessity of structured, spatially grounded memory: architectures that map persistent visual observations onto metric 3D geometry preserve visual-semantic evidence in a coherent scene representation. Extensive experiments in simulated environments reveal that this form of memory breaks the accuracy-efficiency tradeoff in sequential settings, simultaneously achieving higher answer accuracy and lower navigation costs. We further validate these findings on a real-world mobile robot, demonstrating that spatially grounded visual memory is critical for enabling continuous, intelligent operation in physical environments.",
+      "authors": [
+        "Zikui Cai",
+        "Kaushal Janga",
+        "Tan Dat Dao",
+        "Seungjae Lee",
+        "Shivin Dass",
+        "Mingyo Seo",
+        "Kaiyu Yue",
+        "Mintong Kang",
+        "Nandhu Pillai",
+        "Monte Hoover",
+        "Aadi Palnitkar",
+        "Ruchit Rawal",
+        "Ruijie Zheng",
+        "Bo Li",
+        "Yuke Zhu",
+        "Roberto Martín-Martín",
+        "Tom Goldstein",
+        "Furong Huang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-23T17:50:45+00:00",
+      "link": "https://arxiv.org/pdf/2607.21571v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sequential embodied question answering with memory architectures",
+      "llm_evidence_cn": "序列化具身问答中的记忆架构研究",
+      "llm_evidence": "序列化具身问答中的记忆架构研究",
+      "canonical_evidence": "序列化具身问答中的记忆架构研究",
+      "llm_tldr_en": "Investigates memory architectures for sequential embodied question answering, showing that simply preserving memory is insufficient; proposes diagnostic evaluation.",
+      "llm_tldr_cn": "本文研究具身问答（EQA）在序列化设定下的记忆架构瓶颈。传统EQA评估基于独立回合，但实际机器人需要连续工作并重用信息。文章通过实验发现简单的记忆保存不足以支持跨查询推理，揭示了记忆架构设计的关键挑战，为具身智能体长期记忆的设计提供了评估基准。",
+      "llm_tldr": "本文研究具身问答（EQA）在序列化设定下的记忆架构瓶颈。传统EQA评估基于独立回合，但实际机器人需要连续工作并重用信息。文章通过实验发现简单的记忆保存不足以支持跨查询推理，揭示了记忆架构设计的关键挑战，为具身智能体长期记忆的设计提供了评估基准。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI robot learning papers",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.18200v1",
+      "source": "arxiv",
+      "title": "Learning Adaptive Safety Margins for Visual Navigation",
+      "abstract": "Robots in cluttered indoor spaces often fail not because they cannot generate collision-free paths, but because a fixed safety margin is mis-calibrated: conservative margins cause detours and timeouts, while permissive margins lead to near-boundary shortcuts under perception bias. Diffusion-based planners propose diverse trajectory candidates from egocentric RGB-D, yet reliable selection remains the bottleneck. We propose a context-conditioned safety critic that learns an adaptive clearance preference for ranking diffusion proposals, decomposed into three complementary terms: (i) a safety term with a clearance-budget penalty and a control-barrier-function residual for waypoint- and transition-wise safety, (ii) an efficiency term combining a smoothness penalty with a safety-gated detour-ratio penalty that avoids detours without incentivizing risky shortcuts, and (iii) a distance-constraint matching term that anchors the learned budget to realized ESDF clearances to prevent margin collapse. We train the critic with privileged ESDF geometry in simulation and distill it into a perception-only selector via a two-stage teacher-student procedure. On PointGoal navigation in HM3D and MP3D, including cross-dataset transfer, our method achieves the highest success rate (SR) and success weighted by path length (SPL) among strong diffusion, optimization, and RL baselines. Trained purely in simulation, it transfers to a Unitree G1 humanoid and navigates cluttered indoor scenes without task-specific tuning.",
+      "authors": [
+        "Junyi Hu",
+        "Shuaihang Yuan",
+        "Geeta Chandra Raju Bethala",
+        "Anthony Tzes",
+        "Yi Fang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-20T17:40:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.18200v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Diffusion-based planners for visual navigation with adaptive safety margin",
+      "llm_evidence_cn": "自适应安全边界的扩散规划器用于视觉导航",
+      "llm_evidence": "自适应安全边界的扩散规划器用于视觉导航",
+      "canonical_evidence": "自适应安全边界的扩散规划器用于视觉导航",
+      "llm_tldr_en": "Proposes a context-conditioned safety critic that learns adaptive clearance preferences for ranking diffusion-generated trajectory candidates in visual navigation, improving safety and efficiency in cluttered spaces.",
+      "llm_tldr_cn": "针对固定安全裕度在杂乱室内空间导致绕路或近边界捷径的问题，提出上下文条件安全评判器，学习自适应间隙偏好以对扩散规划器生成的轨迹候选进行排序。该评判器分解为安全、效率和平滑三个互补项。实验表明自适应安全裕度显著提高了导航成功率并减少了碰撞风险。",
+      "llm_tldr": "针对固定安全裕度在杂乱室内空间导致绕路或近边界捷径的问题，提出上下文条件安全评判器，学习自适应间隙偏好以对扩散规划器生成的轨迹候选进行排序。该评判器分解为安全、效率和平滑三个互补项。实验表明自适应安全裕度显著提高了导航成功率并减少了碰撞风险。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "diffusion policy robotics",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.20110v1",
+      "source": "arxiv",
+      "title": "Extreme-RGMT: Continual Learning of Highly Dynamic Skills for Robust Generalist Humanoid Control",
+      "abstract": "Humans can progressively acquire highly dynamic motor skills while preserving reliable everyday motor abilities. In contrast, existing humanoid controllers face a trade-off between generalist and specialist capabilities: generalist motion tracking policies struggle to reliably execute rare highly dynamic motions, whereas specialist training can degrade previously acquired behaviors. We introduce Extreme-RGMT, a two-stage continual learning framework for robust generalist humanoid control. The method first learns a generalist motion-tracking base policy from diverse multi-source motion data, then employs an asymmetric skill acquisition and capability consolidation mechanism to constrain policy drift on mastered motions while emphasizing difficult dynamic segments. To address the scarcity of highly dynamic motions, their high failure rates, and the resulting shortage of informative samples, Extreme-RGMT combines difficulty-aware sampling with advantage-prioritized trajectory resampling to emphasize critical segments. Experiments show that Extreme-RGMT achieves state-of-the-art generalist whole-body motion-tracking performance, including substantially improved completion of challenging highly dynamic motions. The resulting controller directly executes diverse unseen highly dynamic motions under fixed references and online inertial motion-capture inputs, advancing generalist whole-body motion-tracking controllers toward highly dynamic motor capabilities at the human-expert level.",
+      "authors": [
+        "Yubiao Ma",
+        "Han Yu",
+        "Kai Guo",
+        "Changtai Lv",
+        "Zhengquan Mao",
+        "Boyang Xing",
+        "Xuemei Ren",
+        "Dongdong Zheng"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-22T13:10:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.20110v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Reinforcement learning for humanoid control with continual skill acquisition",
+      "llm_evidence_cn": "强化学习用于人形机器人持续技能获取与控制",
+      "llm_evidence": "强化学习用于人形机器人持续技能获取与控制",
+      "canonical_evidence": "强化学习用于人形机器人持续技能获取与控制",
+      "llm_tldr_en": "Extreme-RGMT proposes a continual learning framework for humanoid control, learning a generalist base policy and then acquiring dynamic skills without forgetting. It uses asymmetric consolidation to maintain robustness.",
+      "llm_tldr_cn": "针对人形控制器在通用与专长能力间的权衡，提出Extreme-RGMT两阶段持续学习框架：先学习通用运动跟踪策略，再通过非对称技能获取与能力巩固机制学习高动态技能，避免遗忘已掌握动作。实验证明该方法在保持日常运动可靠性的同时，成功习得了罕见高动态技能。",
+      "llm_tldr": "针对人形控制器在通用与专长能力间的权衡，提出Extreme-RGMT两阶段持续学习框架：先学习通用运动跟踪策略，再通过非对称技能获取与能力巩固机制学习高动态技能，避免遗忘已掌握动作。实验证明该方法在保持日常运动可靠性的同时，成功习得了罕见高动态技能。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
