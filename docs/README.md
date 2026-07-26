@@ -6,71 +6,68 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-25
-- 运行时间：2026-07-25 21:11:42 UTC
+- 最新运行日期：2026-07-26
+- 运行时间：2026-07-26 20:20:14 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：16
+- 精读区：5
 - 速读区：11
 
 ### 今日简报（AI）
-今日推荐17篇论文，精读2篇最高分9.0和8.0，速读3篇均获8.0分。最值得关注的是《WorldScape Policy 2.0》的世界行动建模与推理增强记忆，以及《Planning as Emergent Behavior》的强化学习关系隐藏状态。建议优先精读这两篇以把握智能体规划与建模前沿。
-- 详情：[/202607/25/README](/202607/25/README)
+今日日报精选16篇论文，聚焦具身任务规划与失败恢复两大核心方向。最值得关注的是通用化环境任务规划框架UniETP和基于人类演示的失败恢复方法EgoRecovery（均获8.0分）。建议优先精读这两篇论文，并速览手物交互合成与机器人抓取顺应性预测相关研究。
+- 详情：[/202607/26/README](/202607/26/README)
 
 ### 精读区论文标签
-1. [WorldScape Policy 2.0: Empowering Steerable World Action Modeling with Reasoning-Augmented Memory](/202607/25/2607.18840v1-worldscape-policy-20-empowering-steerable-world-action-modeling-with-reasoning-augmented-memory)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：带有推理增强记忆的世界动作模型用于VLA
-2. [Planning as Emergent Behavior in Reinforcement Learning with Relational Hidden States](/202607/25/2607.18589v1-planning-as-emergent-behavior-in-reinforcement-learning-with-relational-hidden-states)  
+1. [UniETP: Unifying Environments for Generalizable Embodied Task Planning](/202607/26/2607.18062v1-unietp-unifying-environments-for-generalizable-embodied-task-planning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：研究无模型强化学习中的涌现规划行为，与机器人控制相关
-3. [Athena-Brain Technical Report: An Efficient Robot Brain for General Intelligence and Embodied Interactio](/202607/25/2607.18985v1-athena-brain-technical-report-an-efficient-robot-brain-for-general-intelligence-and-embodied-interactio)  
+   evidence：跨仿真器的统一具身任务规划接口
+2. [EgoRecovery: Acquiring Failure Recovery Ability Through Human Recovery Demonstration](/202607/26/2607.19745v2-egorecovery-acquiring-failure-recovery-ability-through-human-recovery-demonstration)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：用于具身交互的机载语言模型
-4. [LENS: LLM-guided Environment Simplification for Planning and Control in Clutter](/202607/25/2607.19633v1-lens-llm-guided-environment-simplification-for-planning-and-control-in-clutter)  
+   evidence：利用人类演示数据进行机器人操作失败恢复
+3. [KineBench: Benchmarking Embodied World Models via IDM-Free Kinematic Grounding](/202607/26/2607.19876v1-kinebench-benchmarking-embodied-world-models-via-idm-free-kinematic-grounding)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：使用大语言模型引导环境简化，用于机器人在杂乱场景中的任务规划
-5. [Robostral Navigate](/202607/25/2607.20785v1-robostral-navigate)  
+   evidence：无逆动力学模型的具身世界模型基准
+4. [Scale Up Strategically: Learning Compositional Generalization via Bias-Aware Evaluation and Data Collection for Robotic Manipulation](/202607/26/2607.21582v1-scale-up-strategically-learning-compositional-generalization-via-bias-aware-evaluation-and-data-collection-for-robotic-manipulation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：用于导航航点预测的视觉-语言模型
-6. [Offline RL with Hierarchical Action Chunking](/202607/25/2607.20834v1-offline-rl-with-hierarchical-action-chunking)  
+   evidence：机器人操作；指令跟随的组合泛化
+5. [AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation](/202607/26/2607.21588v1-axis-a-growable-community-driven-data-engine-for-scalable-robot-manipulation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：用于机器人控制的离线强化学习与层次化动作分块
+   evidence：社区驱动的数据引擎用于可扩展机器人操作演示收集
 
 ### 速读区论文标签
-1. [URF: A Unified Robot Control-Policy Framework for Stable Contact Aware Manipulation](/202607/25/2607.20912v1-urf-a-unified-robot-control-policy-framework-for-stable-contact-aware-manipulation)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：面向接触感知操控的统一机器人控制策略框架
-2. [Distributed Model-Based Diffusion For Scalable Multi-Robot Trajectory Optimization](/202607/25/2607.20992v1-distributed-model-based-diffusion-for-scalable-multi-robot-trajectory-optimization)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：分布式扩散用于多机器人轨迹优化
-3. [Deep Reinforcement Learning for Adaptive Gain Tuning in Control of Teleoperation Manipulators with Joint Flexibility and Time-Varying Delays](/202607/25/2607.21145v1-deep-reinforcement-learning-for-adaptive-gain-tuning-in-control-of-teleoperation-manipulators-with-joint-flexibility-and-time-varying-delays)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：深度强化学习用于遥操作机器人控制
-4. [Retriever: Composing Closed-Loop Asynchronous Robot Programs](/202607/25/2607.17213v1-retriever-composing-closed-loop-asynchronous-robot-programs)  
+1. [HarmoHOI: Harmonizing Appearance and 3D Motion for Multi-view Hand-Object Interaction Synthesis](/202607/26/2607.17097v1-harmohoi-harmonizing-appearance-and-3d-motion-for-multi-view-hand-object-interaction-synthesis)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：用于组合闭环机器人程序的系统框架
-5. [Rethinking the Suitability of Reinforcement Learning Algorithms Under Practical Transfer Constraints](/202607/25/2607.17326v1-rethinking-the-suitability-of-reinforcement-learning-algorithms-under-practical-transfer-constraints)  
+   evidence：具身AI；使用扩散模型的手-物体交互合成
+2. [Predicting Grasping Compliance in Robotic Hands through Analytical-Model-Informed Neural Networks](/202607/26/2607.17541v1-predicting-grasping-compliance-in-robotic-hands-through-analytical-model-informed-neural-networks)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：在包含域随机化的迁移约束下研究强化学习算法的适用性
-6. [FARO: Feasibility-Aware Robot Motion Optimization](/202607/25/2607.18362v1-faro-feasibility-aware-robot-motion-optimization)  
+   evidence：具身AI机器人学习；使用神经网络预测抓取顺应性
+3. [On Optimal Event-Triggered Distributed Control for Stochastic Multi-Agent Systems via Reinforcement Learning](/202607/26/2607.17635v1-on-optimal-event-triggered-distributed-control-for-stochastic-multi-agent-systems-via-reinforcement-learning)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：用于人形机器人运动的强化学习控制器
-7. [ModPack: An Extensible Teleoperation Interface for Bimanual Mobile Manipulation](/202607/25/2607.19479v1-modpack-an-extensible-teleoperation-interface-for-bimanual-mobile-manipulation)  
+   evidence：基于强化学习的多智能体最优分布式控制，可适用于机器人控制
+4. [From Trajectories to Instructions: Language-Conditioned Meta-Reinforcement Learning](/202607/26/2607.18830v1-from-trajectories-to-instructions-language-conditioned-meta-reinforcement-learning)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向具身AI的双臂移动操控遥操作接口
-8. [CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning](/202607/25/2607.19555v1-chmas-a-coupled-hierarchical-framework-for-multi-agent-reinforcement-learning)  
+   evidence：基于轨迹的语言条件元强化学习用于机器人控制
+5. [NavVerse: Benchmarking Indoor-to-Outdoor Embodied Navigation in Continuous Robot Simulation](/202607/26/2607.19695v1-navverse-benchmarking-indoor-to-outdoor-embodied-navigation-in-continuous-robot-simulation)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：层次化多智能体强化学习用于协调控制
-9. [SAGE: A Socially-Aware Generative Engine for Heterogeneous Multi-Agent Navigation](/202607/25/2607.16619v2-sage-a-socially-aware-generative-engine-for-heterogeneous-multi-agent-navigation)  
+   evidence：物理仿真中室内到室外具身导航基准
+6. [EgoRecovery: Acquiring Failure Recovery Ability Through Human Recovery Demonstration](/202607/26/2607.19745v1-egorecovery-acquiring-failure-recovery-ability-through-human-recovery-demonstration)  
+   标签：评分：7.0/10、query:embodied-ai
+   evidence：从人类第一人称恢复演示中模仿学习机器人故障恢复
+7. [A BIM-enabled, Agent-based Discrete-event Simulation Platform for Robotic Studies: A Method based on Graph Theory](/202607/26/2607.16920v1-a-bim-enabled-agent-based-discrete-event-simulation-platform-for-robotic-studies-a-method-based-on-graph-theory)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：异构多智能体机器人社交感知导航
-10. [Reward-Driven LLM Agent Workflows: Synthesizing POMDP Routing and Self-Correction for Autonomous Decision-Making](/202607/25/2607.17038v1-reward-driven-llm-agent-workflows-synthesizing-pomdp-routing-and-self-correction-for-autonomous-decision-making)  
+   evidence：机器人研究仿真平台；基于BIM和图论的agent离散事件仿真
+8. [BoxTwin: Learning Elastoplastic Articulated Object Dynamics from Videos](/202607/26/2607.17132v1-boxtwin-learning-elastoplastic-articulated-object-dynamics-from-videos)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：基于LLM代理的POMDP路由与自纠正机制，可用于机器人任务规划
-11. [Receiver-Centered Robot-to-Human Handover with Grasp-Aware Object Orientation](/202607/25/2607.17839v1-receiver-centered-robot-to-human-handover-with-grasp-aware-object-orientation)  
+   evidence：从视频学习弹塑性物体的机器人操作技能
+9. [The Open Ant: A Robot Platform for Reinforcement Learning Research](/202607/26/2607.18488v1-the-open-ant-a-robot-platform-for-reinforcement-learning-research)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：基于大语言模型的协作机器人自适应手递系统
+   evidence：用于强化学习研究的物理机器人平台，支持Sim-to-Real迁移
+10. [Recti-Q: Feature-Space Rectification for Out-of-Distribution-Robust Quantized Perception in Edge Robotics](/202607/26/2607.18540v1-recti-q-feature-space-rectification-for-out-of-distribution-robust-quantized-perception-in-edge-robotics)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：边缘机器人量化感知鲁棒性
+11. [Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces](/202607/26/2607.18554v1-scalable-policy-optimization-for-networked-multi-agent-reinforcement-learning-with-continuous-state-action-spaces)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：用于机器人控制的强化学习；连续状态空间的分布式多智能体RL
 
 
 <div class="dpr-home-promo-card">
