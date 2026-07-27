@@ -6,68 +6,76 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-26
-- 运行时间：2026-07-26 20:20:14 UTC
+- 最新运行日期：2026-07-27
+- 运行时间：2026-07-27 21:40:06 UTC
 - 运行状态：成功
-- 本次总论文数：16
-- 精读区：5
+- 本次总论文数：18
+- 精读区：7
 - 速读区：11
 
 ### 今日简报（AI）
-今日日报精选16篇论文，聚焦具身任务规划与失败恢复两大核心方向。最值得关注的是通用化环境任务规划框架UniETP和基于人类演示的失败恢复方法EgoRecovery（均获8.0分）。建议优先精读这两篇论文，并速览手物交互合成与机器人抓取顺应性预测相关研究。
-- 详情：[/202607/26/README](/202607/26/README)
+1) 今日共筛选18篇论文，精读7篇、速读11篇，重点聚焦具身任务规划与环境建模。
+2) 最值得关注的是《UniETP: Unifying Environments for Generalizable Embodied Task Planning》与《Agentic Real2Sim: Physics-based World Modeling with Vision-Language Agents》，均获9.0高分，分别解决环境统一和物理仿真问题。
+3) 建议优先精读这两篇高分论文，并速读《Expert Behavior Prior Reinforcement Learning》等8.0工作，以把握具身智能中统一环境、物理建模与专家先验学习的最新方向。
+- 详情：[/202607/27/README](/202607/27/README)
 
 ### 精读区论文标签
-1. [UniETP: Unifying Environments for Generalizable Embodied Task Planning](/202607/26/2607.18062v1-unietp-unifying-environments-for-generalizable-embodied-task-planning)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：跨仿真器的统一具身任务规划接口
-2. [EgoRecovery: Acquiring Failure Recovery Ability Through Human Recovery Demonstration](/202607/26/2607.19745v2-egorecovery-acquiring-failure-recovery-ability-through-human-recovery-demonstration)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：利用人类演示数据进行机器人操作失败恢复
-3. [KineBench: Benchmarking Embodied World Models via IDM-Free Kinematic Grounding](/202607/26/2607.19876v1-kinebench-benchmarking-embodied-world-models-via-idm-free-kinematic-grounding)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：无逆动力学模型的具身世界模型基准
-4. [Scale Up Strategically: Learning Compositional Generalization via Bias-Aware Evaluation and Data Collection for Robotic Manipulation](/202607/26/2607.21582v1-scale-up-strategically-learning-compositional-generalization-via-bias-aware-evaluation-and-data-collection-for-robotic-manipulation)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：机器人操作；指令跟随的组合泛化
-5. [AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation](/202607/26/2607.21588v1-axis-a-growable-community-driven-data-engine-for-scalable-robot-manipulation)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：社区驱动的数据引擎用于可扩展机器人操作演示收集
+1. [UniETP: Unifying Environments for Generalizable Embodied Task Planning](/202607/27/2607.18062v1-unietp-unifying-environments-for-generalizable-embodied-task-planning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：统一多个仿真器的具身任务规划接口
+2. [Agentic Real2Sim: Physics-based World Modeling with Vision-Language Agents](/202607/27/2607.19190v3-agentic-real2sim-physics-based-world-modeling-with-vision-language-agents)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：使用视觉语言智能体进行真实到仿真转换
+3. [SOPD-SocialNav: Selective On-Policy Distillation for Vision-Language Social Navigation](/202607/27/2607.19850v1-sopd-socialnav-selective-on-policy-distillation-for-vision-language-social-navigation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：视觉语言模型蒸馏用于社交机器人导航
+4. [GuidedAttention: Interpretable and Correctable Visual Attention for OOD-Robust Robot Manipulation via Imitation Learning](/202607/27/2607.21049v2-guidedattention-interpretable-and-correctable-visual-attention-for-ood-robust-robot-manipulation-via-imitation-learning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：用于机器人操作的模仿学习与扩散策略
+5. [GRACE: Gradient-Free Robot Action Generation via Combined Diffusion-MPPI Posterior Mean Estimation](/202607/27/2607.21661v1-grace-gradient-free-robot-action-generation-via-combined-diffusion-mppi-posterior-mean-estimation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：扩散策略结合MPPI的无梯度机器人动作生成
+6. [Zero-Shot Mission-Level Evaluation for Aerial MLLM Agents](/202607/27/2607.22014v1-zero-shot-mission-level-evaluation-for-aerial-mllm-agents)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：基于MLLM的空中智能体任务级规划与导航
+7. [Offline Vision-Language Navigation with Geometric Goal Localization for Outdoor Environments](/202607/27/2607.22226v1-offline-vision-language-navigation-with-geometric-goal-localization-for-outdoor-environments)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：使用基础模型的离线视觉语言导航，实现全板载户外导航
 
 ### 速读区论文标签
-1. [HarmoHOI: Harmonizing Appearance and 3D Motion for Multi-view Hand-Object Interaction Synthesis](/202607/26/2607.17097v1-harmohoi-harmonizing-appearance-and-3d-motion-for-multi-view-hand-object-interaction-synthesis)  
+1. [Expert Behavior Prior Reinforcement Learning](/202607/27/2607.21302v1-expert-behavior-prior-reinforcement-learning)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：利用离线演示的专家行为先验进行强化学习
+2. [Learning Diverse Humanoid Tasks via Synthetic Video Scenarios without Real World Data](/202607/27/2607.21648v1-learning-diverse-humanoid-tasks-via-synthetic-video-scenarios-without-real-world-data)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：无需真实数据，从合成视频演示学习多样化人形机器人任务
+3. [Progress Reward Modeling for Robotic Learning: A Comprehensive Survey](/202607/27/2607.21655v1-progress-reward-modeling-for-robotic-learning-a-comprehensive-survey)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：机器人学习中的进度奖励建模综述
+4. [Ordered Action Tokens for Visuomotor Policy Learning](/202607/27/2607.21670v1-ordered-action-tokens-for-visuomotor-policy-learning)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：用于视觉运动策略学习的有序动作标记
+5. [Adaptive Undulatory Locomotion of Snake-like Robots in Dynamic Viscous Environments via Deep Reinforcement Learning](/202607/27/2607.21960v1-adaptive-undulatory-locomotion-of-snake-like-robots-in-dynamic-viscous-environments-via-deep-reinforcement-learning)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：深度强化学习控制蛇形机器人运动
+6. [KineBench: Benchmarking Embodied World Models via IDM-Free Kinematic Grounding](/202607/27/2607.19876v1-kinebench-benchmarking-embodied-world-models-via-idm-free-kinematic-grounding)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：具身AI；使用扩散模型的手-物体交互合成
-2. [Predicting Grasping Compliance in Robotic Hands through Analytical-Model-Informed Neural Networks](/202607/26/2607.17541v1-predicting-grasping-compliance-in-robotic-hands-through-analytical-model-informed-neural-networks)  
+   evidence：具身世界模型基准
+7. [Towards Capability-Aware Traversability Navigation for Unstructured Environments](/202607/27/2607.20679v1-towards-capability-aware-traversability-navigation-for-unstructured-environments)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：具身AI机器人学习；使用神经网络预测抓取顺应性
-3. [On Optimal Event-Triggered Distributed Control for Stochastic Multi-Agent Systems via Reinforcement Learning](/202607/26/2607.17635v1-on-optimal-event-triggered-distributed-control-for-stochastic-multi-agent-systems-via-reinforcement-learning)  
+   evidence：机器人能力感知的可通行性导航
+8. [Towards Capability-Aware Traversability Navigation for Unstructured Environments](/202607/27/2607.20679v2-towards-capability-aware-traversability-navigation-for-unstructured-environments)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于强化学习的多智能体最优分布式控制，可适用于机器人控制
-4. [From Trajectories to Instructions: Language-Conditioned Meta-Reinforcement Learning](/202607/26/2607.18830v1-from-trajectories-to-instructions-language-conditioned-meta-reinforcement-learning)  
+   evidence：机器人能力感知的可通行性导航
+9. [Factorized Spatio-Temporal Convolutions for Human Pose Estimation from Planar Lidar](/202607/27/2607.21309v1-factorized-spatio-temporal-convolutions-for-human-pose-estimation-from-planar-lidar)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于轨迹的语言条件元强化学习用于机器人控制
-5. [NavVerse: Benchmarking Indoor-to-Outdoor Embodied Navigation in Continuous Robot Simulation](/202607/26/2607.19695v1-navverse-benchmarking-indoor-to-outdoor-embodied-navigation-in-continuous-robot-simulation)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：物理仿真中室内到室外具身导航基准
-6. [EgoRecovery: Acquiring Failure Recovery Ability Through Human Recovery Demonstration](/202607/26/2607.19745v1-egorecovery-acquiring-failure-recovery-ability-through-human-recovery-demonstration)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：从人类第一人称恢复演示中模仿学习机器人故障恢复
-7. [A BIM-enabled, Agent-based Discrete-event Simulation Platform for Robotic Studies: A Method based on Graph Theory](/202607/26/2607.16920v1-a-bim-enabled-agent-based-discrete-event-simulation-platform-for-robotic-studies-a-method-based-on-graph-theory)  
+   evidence：从平面激光雷达进行人体姿态估计以实现安全导航和人机交互
+10. [Socially Consistent Multi-Robot Navigation Using Decoupled Planning and Trajectory Coordination](/202607/27/2607.20772v1-socially-consistent-multi-robot-navigation-using-decoupled-planning-and-trajectory-coordination)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：机器人研究仿真平台；基于BIM和图论的agent离散事件仿真
-8. [BoxTwin: Learning Elastoplastic Articulated Object Dynamics from Videos](/202607/26/2607.17132v1-boxtwin-learning-elastoplastic-articulated-object-dynamics-from-videos)  
+   evidence：多机器人社会一致性导航，涉及具身导航
+11. [Conformal Constraint Tightening for Chance-Constrained Motion Planning with Unknown Dynamics](/202607/27/2607.22409v1-conformal-constraint-tightening-for-chance-constrained-motion-planning-with-unknown-dynamics)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：从视频学习弹塑性物体的机器人操作技能
-9. [The Open Ant: A Robot Platform for Reinforcement Learning Research](/202607/26/2607.18488v1-the-open-ant-a-robot-platform-for-reinforcement-learning-research)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：用于强化学习研究的物理机器人平台，支持Sim-to-Real迁移
-10. [Recti-Q: Feature-Space Rectification for Out-of-Distribution-Robust Quantized Perception in Edge Robotics](/202607/26/2607.18540v1-recti-q-feature-space-rectification-for-out-of-distribution-robust-quantized-perception-in-edge-robotics)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：边缘机器人量化感知鲁棒性
-11. [Scalable Policy Optimization for Networked Multi-Agent Reinforcement Learning with Continuous State-Action Spaces](/202607/26/2607.18554v1-scalable-policy-optimization-for-networked-multi-agent-reinforcement-learning-with-continuous-state-action-spaces)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：用于机器人控制的强化学习；连续状态空间的分布式多智能体RL
+   evidence：通过共形预测实现未知动力学下的运动规划仿真到真实迁移
 
 
 <div class="dpr-home-promo-card">
