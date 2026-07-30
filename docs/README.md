@@ -6,82 +6,79 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-29
-- 运行时间：2026-07-29 21:47:39 UTC
+- 最新运行日期：2026-07-30
+- 运行时间：2026-07-30 21:38:28 UTC
 - 运行状态：成功
-- 本次总论文数：20
-- 精读区：9
+- 本次总论文数：19
+- 精读区：8
 - 速读区：11
 
 ### 今日简报（AI）
-1) 今日精读9篇速读11篇，聚焦世界模型与动作建模、高效VLA推理两大方向。
-2) 最值得深读《WorldDiT》统一世界与动作建模（9.0分）与《A Motion-Aware VLA框架》通过质心复用优化推理（9.0分）。
-3) 建议优先复现这两篇论文的核心架构与代码，验证其在机器人或自动驾驶场景的迁移潜力。
-- 详情：[/202607/29/README](/202607/29/README)
+今日19篇论文聚焦机器人操作，精读2篇各获9分：运动学感知接口《KAI》与高保真数据策略《HiFi-UMI》。
+最值得看的方向是数据高效的高保真策略学习，以及高精度操作中的数据缩放规律（《The Curse of Precision》）。
+建议优先精读两篇9分论文，再速读三篇8分论文以了解稳定性方法与跨本体迁移。
+- 详情：[/202607/30/README](/202607/30/README)
 
 ### 精读区论文标签
-1. [WorldDiT: A Unified Diffusion Architecture for World and Action Modeling](/202607/29/2607.23909v1-worlddit-a-unified-diffusion-architecture-for-world-and-action-modeling)  
+1. [KAI: A Kinematic-Aware Interface for Data-Efficient Articulated Object Manipulation](/202607/30/2607.24493v1-kai-a-kinematic-aware-interface-for-data-efficient-articulated-object-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：统一扩散Transformer用于动作与世界建模
-2. [A Motion-Aware Vector Quantization Framework with Centroid Reuse for Efficient VLA Inference](/202607/29/2607.24148v1-a-motion-aware-vector-quantization-framework-with-centroid-reuse-for-efficient-vla-inference)  
+   evidence：运动学感知表示用于从演示中学习策略，提高关节物体操作的样本效率
+2. [HiFi-UMI: Learning Deployable Manipulation Policies from High-Fidelity UMI Data Alone](/202607/30/2607.25895v1-hifi-umi-learning-deployable-manipulation-policies-from-high-fidelity-umi-data-alone)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：VLA推理效率优化
-3. [IMPRINT: Image-Conditioned Query Enrichment for Long-Tail Object Goal Navigation](/202607/29/2607.25106v1-imprint-image-conditioned-query-enrichment-for-long-tail-object-goal-navigation)  
+   evidence：用于操作模仿学习的高保真无机器人数据采集
+3. [MoMo: Dial Motion Mode in Robot Manipulation with Spatiotemporal Action Tokenization](/202607/30/2607.26315v1-momo-dial-motion-mode-in-robot-manipulation-with-spatiotemporal-action-tokenization)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：使用VLM的图像增强查询实现零样本物体导航
-4. [Decompose and Reorganize: Planning with Primitives and Visuomotor Policies Learned from Demonstrations](/202607/29/2607.25397v1-decompose-and-reorganize-planning-with-primitives-and-visuomotor-policies-learned-from-demonstrations)  
+   evidence：用于机器人操作的带有运动模式调节的模仿学习框架
+4. [RLMM-Flow: A Flow-based Mobile Manipulation Framework with Latent-Space Reinforcement Learning](/202607/30/2607.26460v1-rlmm-flow-a-flow-based-mobile-manipulation-framework-with-latent-space-reinforcement-learning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：模仿学习与任务运动规划结合的机器人操控
-5. [CoTinyVLA: Chain-of-Thought Distillation for a Sub-Billion-Parameter Vision-Language-Action Model](/202607/29/2607.25487v1-cotinyvla-chain-of-thought-distillation-for-a-sub-billion-parameter-vision-language-action-model)  
+   evidence：基于流的策略结合强化学习的移动操作
+5. [Explicit Kinematic Guidance from Analytic Concepts for Vision-Language-Action Models](/202607/30/2607.26513v1-explicit-kinematic-guidance-from-analytic-concepts-for-vision-language-action-models)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：通过链式思维蒸馏的紧凑VLA模型用于机器人控制
-6. [A Causality-aware Infer-diagnose-refine Framework for Test-time Modality Adaptation in VLA Models](/202607/29/2607.25516v1-a-causality-aware-infer-diagnose-refine-framework-for-test-time-modality-adaptation-in-vla-models)  
+   evidence：利用3D分析概念为VLA模型提供显式运动学指导
+6. [From Passive Video to Editable Experience: Physically Grounded Experience Synthesis for Embodied Intelligence](/202607/30/2607.26903v1-from-passive-video-to-editable-experience-physically-grounded-experience-synthesis-for-embodied-intelligence)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：VLA模型的测试时模态适应
-7. [SAM3D-Guided Object-Centric Representation Alignment for Vision-Language-Action Models](/202607/29/2607.25912v1-sam3d-guided-object-centric-representation-alignment-for-vision-language-action-models)  
+   evidence：具身机器人学习的数据生成方法
+7. [SymmGrid: Super-Scaling On-Robot Learning with Parallelized Symmetries and Egocentric-Exocentric Visual Perception](/202607/30/2607.26985v1-symmgrid-super-scaling-on-robot-learning-with-parallelized-symmetries-and-egocentric-exocentric-visual-perception)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向VLA的对象中心3D表示对齐
-8. [S2A2: Audio-Visual Imitation Learning for Manipulation Tasks Using Acoustic Spatial Information](/202607/29/2607.26047v1-s2a2-audio-visual-imitation-learning-for-manipulation-tasks-using-acoustic-spatial-information)  
+   evidence：基于对称性的轨迹增强加速机器人上的深度强化学习，支持自我/外部视觉
+8. [RL$^2$-VLA: Adaptive RL Latent Compositional Steering with Test-Time Scaling for Vision-Language-Action Models](/202607/30/2607.26991v1-rl2-vla-adaptive-rl-latent-compositional-steering-with-test-time-scaling-for-vision-language-action-models)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：基于视听输入的机器人操作模仿学习
-9. [$π\mathbf{R}^2$: Reactive Real-time Flow Policies](/202607/29/2607.26055v1-mathbfr2-reactive-real-time-flow-policies)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：反应式实时扩散流策略用于机器人操作
+   evidence：使用强化学习对视觉-语言-动作模型进行自适应推理时引导
 
 ### 速读区论文标签
-1. [MEMENTO: Memory-Guided Memetic Code-as-Policy Evolution](/202607/29/2607.22832v1-memento-memory-guided-memetic-code-as-policy-evolution)  
+1. [The Curse of Precision: A Data Scaling Law for High-Precision Robotic Manipulation](/202607/30/2607.23108v1-the-curse-of-precision-a-data-scaling-law-for-high-precision-robotic-manipulation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：LLM驱动的代码策略进化用于长时域任务
-2. [LeapBot-WA: World-Anchor Action Models via Predictive Latent Alignments](/202607/29/2607.23969v1-leapbot-wa-world-anchor-action-models-via-predictive-latent-alignments)  
+   evidence：高精度模仿学习的数据缩放定律
+2. [P3: Probabilistic Policy Propagation for Stable VAE-Based Robot Learning](/202607/30/2607.25541v1-p3-probabilistic-policy-propagation-for-stable-vae-based-robot-learning)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：通过预测潜在对齐实现世界锚点动作模型
-3. [Learning Reusable Hybrid Motion Priors for Humanoid Locomotion from Motion Imitation](/202607/29/2607.24083v1-learning-reusable-hybrid-motion-priors-for-humanoid-locomotion-from-motion-imitation)  
+   evidence：基于VAE策略的机器人控制强化学习
+3. [ContactFlow: A video action conditioning that transfers across embodiments](/202607/30/2607.26579v1-contactflow-a-video-action-conditioning-that-transfers-across-embodiments)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：通过运动模仿进行人形机器人强化学习控制
-4. [DeVA: Decoupled Video-Action Model with physical guidance for robot policy learning](/202607/29/2607.24159v1-deva-decoupled-video-action-model-with-physical-guidance-for-robot-policy-learning)  
+   evidence：通过3D接触轨迹的跨躯体动作表示，用于世界模型规划
+4. [DLAM: Distributional Latent Actions with Temporal Constraints](/202607/30/2607.27138v1-dlam-distributional-latent-actions-with-temporal-constraints)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：带物理引导的解耦视频动作模型用于机器人学习
-5. [PRISM: Polynomial Representations for Interaction-Structured Motor Control](/202607/29/2607.23473v1-prism-polynomial-representations-for-interaction-structured-motor-control)  
+   evidence：为VLA模型设计的分布性潜在动作模型，引入时间约束
+5. [EA-Nav: Learning Safe Visual Navigation Policies with Embodiment Awareness](/202607/30/2607.19880v2-ea-nav-learning-safe-visual-navigation-policies-with-embodiment-awareness)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：用于运动控制中强化学习和模仿学习的多项式策略表示
-6. [Hierarchical Soft Actor-Critic for Sparse-Reward Long-Horizon Reinforcement Learning](/202607/29/2607.23726v1-hierarchical-soft-actor-critic-for-sparse-reward-long-horizon-reinforcement-learning)  
+   evidence：基于模仿学习的跨躯体导航，具有躯体感知能力
+6. [FloAff-Kitchen: Bridging Navigation and Manipulation via Canonical and Progressive Floor Affordance Learning](/202607/30/2607.24207v1-floaff-kitchen-bridging-navigation-and-manipulation-via-canonical-and-progressive-floor-affordance-learning)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：分层RL结合SAC用于长时域任务，可应用于机器人控制
-7. [Bridging Reinforcement Learning and Optimal Control via Feasible Action Mapping](/202607/29/2607.23930v1-bridging-reinforcement-learning-and-optimal-control-via-feasible-action-mapping)  
+   evidence：地板可学习连接导航和操作，用于移动操作; 机器人感知与操作的基础模型
+7. [Learning Adaptive Multi-Task Guidance, Navigation, and Control via Hypernetworks](/202607/30/2607.24292v1-learning-adaptive-multi-task-guidance-navigation-and-control-via-hypernetworks)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：结合RL与最优控制处理约束动态系统
-8. [FloAff-Kitchen: Bridging Navigation and Manipulation via Canonical and Progressive Floor Affordance Learning](/202607/29/2607.24207v1-floaff-kitchen-bridging-navigation-and-manipulation-via-canonical-and-progressive-floor-affordance-learning)  
+   evidence：基于超网络的多任务强化学习框架用于制导、导航和控制
+8. [ArmnetBench v0.1: Parallel Real-World Evaluation of Manipulation Policies on a Low-Cost Arm Farm](/202607/30/2607.24481v1-armnetbench-v01-parallel-real-world-evaluation-of-manipulation-policies-on-a-low-cost-arm-farm)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：地板可利用性学习连接导航与操控
-9. [Socially Consistent Multi-Robot Navigation Using Decoupled Planning and Trajectory Coordination](/202607/29/2607.20772v1-socially-consistent-multi-robot-navigation-using-decoupled-planning-and-trajectory-coordination)  
+   evidence：在低成本机械臂农场并行评估操作策略的真实世界基准
+9. [NEO: NeRF It Once, Edit It Many Times for Continuous Object Manipulation](/202607/30/2607.24538v1-neo-nerf-it-once-edit-it-many-times-for-continuous-object-manipulation)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：基于解耦规划的社会一致多机器人导航
-10. [Optimal Reward Shaping: Autonomous Car Parking Case Study](/202607/29/2607.23617v1-optimal-reward-shaping-autonomous-car-parking-case-study)  
+   evidence：语言引导的NeRF编辑用于机器人操作
+10. [Motion Generation With Environmental Constraints](/202607/30/2607.25053v1-motion-generation-with-environmental-constraints)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：针对自主停车的强化学习奖励塑造
-11. [Memory for Attention: Language-Conditioned Re-Perception with a Vision--Language--Motion Map](/202607/29/2607.23797v1-memory-for-attention-language-conditioned-re-perception-with-a-vision--language--motion-map)  
+   evidence：环境约束利用用于机器人运动规划
+11. [Speech2Grasp: Data-Efficient Transfer of Text-Conditioned Grasp Detection to Speech in Humanoid Robots](/202607/30/2607.26567v1-speech2grasp-data-efficient-transfer-of-text-conditioned-grasp-detection-to-speech-in-humanoid-robots)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：基于语言条件重新感知的视觉语言运动地图
+   evidence：高效将抓取检测从文本迁移到语音，用于类人机器人
 
 
 <div class="dpr-home-promo-card">

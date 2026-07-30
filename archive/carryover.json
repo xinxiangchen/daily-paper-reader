@@ -1,92 +1,12 @@
 {
-  "generated_at": "2026-07-29T21:36:26.489987+00:00",
-  "updated_date": "20260729",
+  "generated_at": "2026-07-30T21:29:52.626568+00:00",
+  "updated_date": "20260730",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260729",
+      "updated_date": "20260730",
       "carryover_days": 9,
-      "items": [
-        {
-          "id": "2607.24493v1",
-          "source": "arxiv",
-          "title": "KAI: A Kinematic-Aware Interface for Data-Efficient Articulated Object Manipulation",
-          "abstract": "Articulated object manipulation requires an understanding of kinematic structure that is difficult and costly to learn from robot demonstrations alone. We introduce the Kinematic-Aware Articulation Interface (KAI), a structured intermediate representation that captures the kinematic structure of articulated objects. By embedding interpretable geometric and kinematic priors into policy learning, KAI provides a strong inductive bias aligned with the underlying structure of articulated motion. This design effectively improves sample efficiency, with gains particularly pronounced in low-data regimes: across six simulation tasks, our method achieves an average success rate of 82.9%, matching or surpassing baseline performance while using only half the demonstration data. Our method also exhibits robust generalization to unseen backgrounds and visual distractors, transferring from a single clean training environment to cluttered real-world scenes. KAI's action-agnostic design further enables co-training with human interaction videos to enhance real-world robustness: under diverse visual distractions, our method with video co-training achieves over 70% average success rate.",
-          "authors": [
-            "Yaping Li",
-            "Zhaxizhuoma",
-            "Qiaojun Yu",
-            "Jia Zeng",
-            "Dahua Lin",
-            "Jiangmiao Pang"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-27T14:29:47+00:00",
-          "link": "https://arxiv.org/pdf/2607.24493v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Data-efficient imitation learning for articulated object manipulation with kinematic priors",
-          "llm_evidence_cn": "利用运动学先验的数据高效模仿学习关节物体操控",
-          "llm_evidence": "利用运动学先验的数据高效模仿学习关节物体操控",
-          "canonical_evidence": "利用运动学先验的数据高效模仿学习关节物体操控",
-          "llm_tldr_en": "KAI introduces a kinematic-aware intermediate representation for articulated object manipulation, providing strong inductive bias that improves sample efficiency, achieving 82.9% success rate across six tasks with limited demonstrations.",
-          "llm_tldr_cn": "关节物体操控需掌握运动学结构，但纯演示学习成本高。本文提出KAI，一种运动学感知的关节接口表示，嵌入几何和运动学先验作为归纳偏置。在六个仿真任务上，该方法以仅一半的数据达到82.9%平均成功率，显著提升样本效率，为数据匮乏场景下的机器人学习提供有力工具。",
-          "llm_tldr": "关节物体操控需掌握运动学结构，但纯演示学习成本高。本文提出KAI，一种运动学感知的关节接口表示，嵌入几何和运动学先验作为归纳偏置。在六个仿真任务上，该方法以仅一半的数据达到82.9%平均成功率，显著提升样本效率，为数据匮乏场景下的机器人学习提供有力工具。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "imitation learning robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.24493v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.25798v1",
-          "source": "arxiv",
-          "title": "Transformer Transformer: A Unified Model for Motion-Conditioned Robot Co-design",
-          "abstract": "An often overlooked factor of robot manipulation performance is the embodiment of the robot itself. Motivated by this problem, we study motion-conditioned robot co-design, where the goal is to generate complete robot designs that track target end-effector trajectories (from human demonstrations) while optimizing user-defined rewards. We introduce Transformer Transformer, a diffusion transformer trained on RoboTokens, a unified tokenization of robot embodiments, states, and actions. The same architecture can be used across embodiment spaces (e.g., wheeled bimanual, quadrupeds, humanoids) and use cases (embodiment generation, cross embodiment controller). Rather than overfitting to one reward function, Transformer Transformer is a dynamics model, whose reward-agnostic state and action predictions can be converted into reward-specific value predictions. These value predictions are used to steer embodiment diffusion towards high value robot designs, through a procedure we call Dynamics Self-Guidance. Experiments across multiple design spaces show zero-shot optimization of unseen rewards and trajectories, improving performance and runtime over the evolutionary baseline. Finally, we fabricated an optimized ALOHA design, which reduced tracking error by over 70% compared to the original design.",
-          "authors": [
-            "Huy Ha",
-            "C. Karen Liu",
-            "Shuran Song"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-28T14:47:14+00:00",
-          "link": "https://arxiv.org/pdf/2607.25798v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Diffusion transformer for robot co-design with motion conditioning",
-          "llm_evidence_cn": "扩散transformer用于运动条件机器人协同设计",
-          "llm_evidence": "扩散transformer用于运动条件机器人协同设计",
-          "canonical_evidence": "扩散transformer用于运动条件机器人协同设计",
-          "llm_tldr_en": "Introduces Transformer Transformer, a diffusion transformer trained on RoboTokens, enabling motion-conditioned robot design across embodiments.",
-          "llm_tldr_cn": "针对机器人本体设计问题，提出Transformer Transformer扩散模型，在统一令牌化上训练，可跨不同本体生成跟踪演示轨迹的机器人设计且优化用户奖励。",
-          "llm_tldr": "针对机器人本体设计问题，提出Transformer Transformer扩散模型，在统一令牌化上训练，可跨不同本体生成跟踪演示轨迹的机器人设计且优化用户奖励。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "diffusion policy robotics",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.25798v1",
-          "carry_days": 1
-        }
-      ]
+      "items": []
     }
   }
 }
