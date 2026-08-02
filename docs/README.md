@@ -6,93 +6,71 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-01
-- 运行时间：2026-08-01 20:29:15 UTC
+- 最新运行日期：2026-08-02
+- 运行时间：2026-08-02 20:21:03 UTC
 - 运行状态：成功
-- 本次总论文数：23
-- 精读区：12
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日共精读12篇、速读11篇，核心聚焦具身智能与世界模型—动作模型（World-Action Model）方向。
-
-最值得关注的是满分论文《τ》：通过未来视觉监督为视觉-语言-动作模型注入触觉信号；《DC-WAM》则以动态中心推理提出9分高价值思路。
-
-建议普通读者优先关注“触觉+视觉+未来预测”的融合方法，这是提升机器人操作泛化能力的关键前沿。
-- 详情：[/202608/01/README](/202608/01/README)
+今日精读17篇论文，聚焦具身智能与四足机器人强化学习，核心方向为成本约束下的硬件训练。最值得关注的是精读满分论文《Reinforcement Learning on Cost-Constrained Quadrupedal Hardware》，探讨资源受限场景的强化学习应用；速读中世界模型安全与零样本操作技能迁移也具启发性。建议普通读者优先从四足机器人成本控制与具身AI安全评估入手，可快速把握前沿动态。
+- 详情：[/202608/02/README](/202608/02/README)
 
 ### 精读区论文标签
-1. [τ: Learning Touch-Augmented Vision-Language-Action Models from Future Visual Supervision](/202608/01/2607.24485v2--learning-touch-augmented-vision-language-action-models-from-future-visual-supervision)  
-   标签：评分：10.0/10、query:embodied-ai
-   evidence：直接提出带触觉感知的视觉-语言-动作（VLA）模型用于操作任务。
-2. [DC-WAM: Dynamic-Centric Visual Supervision and Reasoning for World-Action Models](/202608/01/2607.25918v1-dc-wam-dynamic-centric-visual-supervision-and-reasoning-for-world-action-models)  
+1. [Reinforcement Learning on Cost-Constrained Quadrupedal Hardware](/202608/02/2607.26434v1-reinforcement-learning-on-cost-constrained-quadrupedal-hardware)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向世界动作模型的动态中心视觉监督与推理，提升机器人策略控制
-3. [Practice Makes Policies: Bootstrapping and Consolidating Robotic Capabilities from Zero Human Demonstrations](/202608/01/2607.26809v1-practice-makes-policies-bootstrapping-and-consolidating-robotic-capabilities-from-zero-human-demonstrations)  
+   evidence：低成本四足硬件上强化学习的仿真到现实迁移
+2. [Reinforcement Learning on Cost-Constrained Quadrupedal Hardware](/202608/02/2607.26434v2-reinforcement-learning-on-cost-constrained-quadrupedal-hardware)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：零人工演示下自主引导并巩固机器人操控能力
-4. [It's Not Just More Demos: Counterfactual Action Sensitivity Coverage for Data-Efficient Robust Robot Imitation](/202608/01/2607.27261v1-its-not-just-more-demos-counterfactual-action-sensitivity-coverage-for-data-efficient-robust-robot-imitation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：反事实动作敏感性覆盖实现数据高效的鲁棒机器人模仿学习
-5. [Failure Detection for Surgical Robot Imitation Policies via Flow-Matching World Modeling](/202608/01/2607.27511v1-failure-detection-for-surgical-robot-imitation-policies-via-flow-matching-world-modeling)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向手术机器人操作的模仿学习与故障检测
-6. [Cross-Embodiment Transfer via Behavior-Aligned Representations](/202608/01/2607.27549v1-cross-embodiment-transfer-via-behavior-aligned-representations)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：用于机器人模仿学习的VLA模型跨具身迁移研究
-7. [World Action Planner: Generalizable Decision-Making with Action-Conditioned World Models](/202608/01/2607.27599v1-world-action-planner-generalizable-decision-making-with-action-conditioned-world-models)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：基于VLM与世界模型的泛化机器人决策规划
-8. [RedFlow: Redirect Failure into Action-Level Corrections for Flow-matching VLA Policy](/202608/01/2607.27782v1-redflow-redirect-failure-into-action-level-corrections-for-flow-matching-vla-policy)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向流匹配视觉-语言-动作策略的离线强化学习动作级修正
-9. [RoboBRIDGE: A Modular Framework for Bridging Policies to Robust Real-World Robotic Agents](/202608/01/2607.27881v1-robobridge-a-modular-framework-for-bridging-policies-to-robust-real-world-robotic-agents)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：将预训练VLA模型转化为健壮真实世界机器人智能体的模块化框架。
-10. [X-NavDP: Generalizing Navigation Diffusion Policy to Novel Behavior and Embodiments with Group Q-score Reweighted Matching](/202608/01/2607.28560v1-x-navdp-generalizing-navigation-diffusion-policy-to-novel-behavior-and-embodiments-with-group-q-score-reweighted-matching)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：强化学习后训练导航扩散策略，结合Q值重加权，直接匹配RL与扩散策略机器人控制
-11. [FA-RDP: A Frequency-Adaptive Reactive Diffusion Policy for Contact-Rich Manipulation](/202608/01/2607.28596v1-fa-rdp-a-frequency-adaptive-reactive-diffusion-policy-for-contact-rich-manipulation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向接触丰富操作的频率自适应反应式扩散策略
-12. [PAC-MAN: Perception-Aware CBF-RL for Whole-Body Safety in Humanoid Dodgeball](/202608/01/2607.28623v1-pac-man-perception-aware-cbf-rl-for-whole-body-safety-in-humanoid-dodgeball)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：结合控制障碍函数的强化学习用于人形机器人全身安全避障。
+   evidence：在低成本四足硬件上通过强化学习处理延迟与噪声反馈，弥合sim-to-real差距
+3. [MOJITO: Modal Joint Learning for Unified End-to-End Autonomous Driving](/202608/02/2607.23511v1-mojito-modal-joint-learning-for-unified-end-to-end-autonomous-driving)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：利用视觉基础模型的统一传感器到动作框架，用于驾驶规划
+4. [LeapBot-WA: World-Anchor Action Models via Predictive Latent Alignments](/202608/02/2607.23969v2-leapbot-wa-world-anchor-action-models-via-predictive-latent-alignments)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向具身智能的世界动作模型与潜在预测对齐
+5. [Learning Social Robot Navigation By Sensing Human Legs](/202608/02/2607.27922v1-learning-social-robot-navigation-by-sensing-human-legs)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：基于腿部感知的深度强化学习社交导航
+6. [EgoGenesis: Egocentric World-Action Modeling with Online Anchored Projective Memory and Action-3D RoPE](/202608/02/2607.28243v1-egogenesis-egocentric-world-action-modeling-with-online-anchored-projective-memory-and-action-3d-rope)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：用于可控制操作视频生成的自我中心世界-动作模拟器
 
 ### 速读区论文标签
-1. [Learning Spatiotemporal Decision Priors for Efficient Path Planning under Partial Observability](/202608/01/2607.22166v1-learning-spatiotemporal-decision-priors-for-efficient-path-planning-under-partial-observability)  
+1. [Security of World-Model-Based Embodied AI: A Lifecycle of Threats, Defenses, and Evaluation](/202608/02/2607.28226v1-security-of-world-model-based-embodied-ai-a-lifecycle-of-threats-defenses-and-evaluation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于示范学习的具身导航规划
-2. [LeapBot-WA: World-Anchor Action Models via Predictive Latent Alignments](/202608/01/2607.23969v2-leapbot-wa-world-anchor-action-models-via-predictive-latent-alignments)  
+   evidence：世界模型具身AI安全综述，属于具身智能研究
+2. [Self-Evolving Learning for Embodied AI with Criticality Model](/202608/02/2607.28251v1-self-evolving-learning-for-embodied-ai-with-criticality-model)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：面向具身智能的世界动作模型，采用潜在预测对齐。
-3. [Data Pyramid for Embodied Manipulation](/202608/01/2607.24744v1-data-pyramid-for-embodied-manipulation)  
+   evidence：利用关键度模型引导数据重采样的具身智能自进化学习方法
+3. [SemAnCorr: Semantic Anchored Correspondence for Zero-Shot Manipulation Skill Transfer](/202608/02/2607.28382v1-semancorr-semantic-anchored-correspondence-for-zero-shot-manipulation-skill-transfer)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：将具身操作数据来源组织成金字塔结构，以为操作基础模型提供数据配方。
-4. [Towards Trustworthy Embodied Intelligence: A Systems Framework and Graded Trustworthiness Levels](/202608/01/2607.26121v1-towards-trustworthy-embodied-intelligence-a-systems-framework-and-graded-trustworthiness-levels)  
+   evidence：语义锚定稠密对应实现跨物体实例零样本操控技能迁移
+4. [TacWAM: Anchor-Guided World Action Model with Mechanics-Aware Tactile Prediction](/202608/02/2607.28391v1-tacwam-anchor-guided-world-action-model-with-mechanics-aware-tactile-prediction)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：面向可信具身智能的系统框架与分级层次，直接属于具身智能研究
-5. [Embodied Agents Take Control: Minimal-Interface Zero-Shot Agents Rival Industrial-Scale Policies in Vision-and-Language Navigation](/202608/01/2607.26148v1-embodied-agents-take-control-minimal-interface-zero-shot-agents-rival-industrial-scale-policies-in-vision-and-language-navigation)  
+   evidence：面向接触丰富操作的世界动作模型，融合力学感知触觉预测
+5. [Hand-Object Interaction in the Age of Large Foundation Models:Reconstruction, Generation, and Embodied Transfer](/202608/02/2607.28394v1-hand-object-interaction-in-the-age-of-large-foundation-modelsreconstruction-generation-and-embodied-transfer)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：具身智能体、零样本视觉语言导航、智能体具身控制，直接属于具身智能研究
-6. [ContactFlow: A video action conditioning that transfers across embodiments](/202608/01/2607.26579v1-contactflow-a-video-action-conditioning-that-transfers-across-embodiments)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：用于机器人规划的不依赖实体的接触动作条件
-7. [Robot Learning to Communicate through Projected Visual Abstractions](/202608/01/2607.22434v1-robot-learning-to-communicate-through-projected-visual-abstractions)  
+   evidence：基础模型在手物交互重建与具身迁移中的系统综述
+6. [Learning to Understand Body Language from Flight through Robust 3D Avatar Placing](/202608/02/2607.27865v1-learning-to-understand-body-language-from-flight-through-robust-3d-avatar-placing)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：通过投影阴影进行表达的具身机器人学习。
-8. [Semantic Semi-Incremental Data-Association-Free Object SLAM](/202608/01/2607.23384v1-semantic-semi-incremental-data-association-free-object-slam)  
+   evidence：空中机器人感知人类肢体语言的具身AI研究
+7. [ViewMind3D: Modular View-Aware Inference for Training-Free 3D-QA](/202608/02/2607.28442v1-viewmind3d-modular-view-aware-inference-for-training-free-3d-qa)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：利用视觉基础模型进行语义物体SLAM，服务机器人感知。
-9. [When Does Legacy Data Start to Help? Emergent Transfer in Cross-Configuration Robot Learning](/202608/01/2607.25593v1-when-does-legacy-data-start-to-help-emergent-transfer-in-cross-configuration-robot-learning)  
+   evidence：用于具身感知的3D视觉问答基础模型
+8. [ACE-Data-0: Human-Centric Ambient Capture as Embodied Data Engine](/202608/02/2607.28625v1-ace-data-0-human-centric-ambient-capture-as-embodied-data-engine)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：跨硬件配置机器人学习中旧数据的涌现式迁移现象研究
-10. [MARS-RA: Rank Aggregation for Credit Assignment via Multimodal Comparisons in Embodied Multi-Agent Cooperation](/202608/01/2607.27967v1-mars-ra-rank-aggregation-for-credit-assignment-via-multimodal-comparisons-in-embodied-multi-agent-cooperation)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：具身多智能体强化学习中的信用分配
-11. [Transformer Transformer: A Unified Model for Motion-Conditioned Robot Co-design](/202608/01/2607.25798v1-transformer-transformer-a-unified-model-for-motion-conditioned-robot-co-design)  
+   evidence：面向具身智能数据的以人为中心环境采集引擎
+9. [Finite-Time Analysis of the Natural Policy Gradient in Finite-Horizon Markov Decision Processes](/202608/02/2607.22982v1-finite-time-analysis-of-the-natural-policy-gradient-in-finite-horizon-markov-decision-processes)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：扩散Transformer实现跨具身形态的运动条件机器人协同设计
+   evidence：自然策略梯度有限时间分析，支撑机器人强化学习算法
+10. [Sparse Gaussian-Mixture-Model Q-Functions via Hadamard Overparametrization for Online Reinforcement Learning](/202608/02/2607.23474v1-sparse-gaussian-mixture-model-q-functions-via-hadamard-overparametrization-for-online-reinforcement-learning)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：基于稀疏高斯混合模型Q函数的在线强化学习框架
+11. [Learning Implicit Causal World Models from Multi-Agent Demonstrations](/202608/02/2607.26336v1-learning-implicit-causal-world-models-from-multi-agent-demonstrations)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：从多智能体演示中恢复隐式因果世界模型，用于基于模型的强化学习，与机器人学习相关
 
 
 <div class="dpr-home-promo-card">

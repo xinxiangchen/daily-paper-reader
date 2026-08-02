@@ -1,130 +1,40 @@
 {
-  "generated_at": "2026-08-01T20:13:13.112563+00:00",
-  "updated_date": "20260801",
+  "generated_at": "2026-08-02T20:06:29.056102+00:00",
+  "updated_date": "20260802",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260801",
+      "updated_date": "20260802",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2607.28251v1",
+          "id": "2607.28443v1",
           "source": "arxiv",
-          "title": "Self-Evolving Learning for Embodied AI with Criticality Model",
-          "abstract": "Despite rapid advances in policy pretraining, embodied AI systems routinely plateau during task-specific finetuning. The root cause lies in how finetuning data are collected: the default pipeline gathers data randomly, treating every sample as informative. Datasets become dominated by nominal scenarios, while rare failure cases--the most valuable for improvement--are missed. We propose a self-evolving method that breaks this plateau. Our core insight is that a state-wise criticality model, learned from the policy's own execution outcomes to predict the probability of future failure, can guide importance sampling toward failure-prone scenarios. After replacing redundant nominal scenarios with diverse failure-prone ones, importance weights are used to resample the data during training. This effectively preserves an unbiased learning objective while fundamentally increasing the information density of the training pool. Across quadrupedal locomotion, multi-task manipulation, vision-language-action benchmarks, and a real-robot task, our method reduces failure rates by 51--67% relative to trained baselines and by 8-25% relative to state-of-the-art vision-language-action models.",
+          "title": "One Future, Every Robot: Label-Efficient Collective-State Prediction with Decentralized JEPA",
+          "abstract": "Can every robot in a swarm predict the same future collective state from only local observations and bandwidth-limited messages? We formulate this as decentralized shared-state prediction and introduce Collective-State JEPA (CS-JEPA), a recurrent joint-embedding predictive architecture whose output at every robot represents one common future token field. At deployment, each robot uses a 16-frame local history and one 64-float recurrent message per directed edge; there is no global pooling, target encoder, episode clock, or recorded future action. After pretraining without downstream collective labels, frozen representations are evaluated with ridge probes fitted on 6, 12, or 24 globally labeled episodes. Against raw-future reconstruction with the same receiver anchor and deployment capacity but 9,607 additional training-only parameters, a prospectively registered five-seed follow-up improves prediction-error and inter-robot-agreement label-budget AUC on in-distribution, ring, mutual-kNN, and unseen-size families up to 108 robots. Every effect favors CS-JEPA in 5/5 outer seeds. In a separate sealed eight-seed follow-up, matched action-conditioned predictors receive each candidate four-step plan before producing receiver-local predictive representations. CS-JEPA reduces branch-value MSE by 45.5% and improves within-context candidate-score Pearson correlation by 0.1291, with both effects favorable in 8/8 seeds, including at unseen N=32. These results support common-future JEPA targets as a label-efficient primitive for decentralized swarm prediction under topology and size shift, with additional evidence of planning-relevant value estimation.",
           "authors": [
-            "Linxuan He",
-            "Yuying Tian",
-            "Lingxiang Fan",
-            "Jiaqi Pi",
-            "Yinqiao Lu",
-            "Shang Su",
-            "Mengkai Shi",
-            "Shuo Feng"
-          ],
-          "primary_category": "eess.SY",
-          "categories": [
-            "eess.SY"
-          ],
-          "published": "2026-07-30T14:13:18+00:00",
-          "link": "https://arxiv.org/pdf/2607.28251v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Self-evolving embodied AI learning with criticality-guided data selection",
-          "llm_evidence_cn": "基于关键性引导数据选择的具身AI自进化学习",
-          "llm_evidence": "基于关键性引导数据选择的具身AI自进化学习",
-          "canonical_evidence": "基于关键性引导数据选择的具身AI自进化学习",
-          "llm_tldr_en": "Proposes a self-evolving learning method with a criticality model to guide importance sampling toward failure-prone scenarios, breaking finetuning plateaus for embodied AI.",
-          "llm_tldr_cn": "该论文指出具身AI系统在任务微调中常因数据收集默认随机而陷入性能平台期，真正有价值的稀有失败样本被忽略。作者提出自进化方法，核心是从策略自身执行结果中学习状态关键性模型，预测未来失败概率，并据此进行重要性采样，用多样的失败易发场景替换冗余常规场景。这一过程在重采样后有效打破微调平台期。实验验证了该方法能持续提升具身AI的任务性能和数据利用效率。",
-          "llm_tldr": "该论文指出具身AI系统在任务微调中常因数据收集默认随机而陷入性能平台期，真正有价值的稀有失败样本被忽略。作者提出自进化方法，核心是从策略自身执行结果中学习状态关键性模型，预测未来失败概率，并据此进行重要性采样，用多样的失败易发场景替换冗余常规场景。这一过程在重采样后有效打破微调平台期。实验验证了该方法能持续提升具身AI的任务性能和数据利用效率。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI research",
-          "matched_requirement_id": "req-1",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.28251v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.28394v1",
-          "source": "arxiv",
-          "title": "Hand-Object Interaction in the Age of Large Foundation Models:Reconstruction, Generation, and Embodied Transfer",
-          "abstract": "Hand-object interaction (HOI) modeling remains challenging because it requires joint reasoning about hand articulation, object geometry, contact, semantics, and dynamics under severe visual uncertainty. Foundation models introduce transferable prior knowledge learned from large-scale cross-domain data, offering new ways to address these challenges beyond task-specific data and models. However, the rapidly growing literature remains fragmented, and existing studies typically describe these methods simply as ``using large models'' without systematically characterizing what knowledge is introduced, where it enters the HOI pipeline, or which HOI uncertainty it helps reduce. This survey presents the first systematic review of foundation-model priors for HOI. We organize the literature into six HOI tasks spanning reconstruction and generation. More importantly, we establish a taxonomy of eight foundation-model sub-priors grouped into geometric, semantic, and visual families. Geometric priors encompass shape retrieval, shape reconstruction, and spatial reconstruction; semantic priors include semantic grounding and language reasoning; and visual priors cover visual representation, image generation, and video generation. Based on this taxonomy, we systematically analyze how different priors are represented, injected, and adapted across HOI pipelines and tasks. Beyond how foundation models empower HOI, we further examine how HOI-derived knowledge is used in robot learning, including human-data pretraining, human-to-robot skill transfer, and HOI-to-robot data generation. Finally, we summarize datasets and evaluation protocols, and discuss limitations and future directions toward more generalizable HOI systems. To support long-term progress, we curate a live repository that continuously aggregates emerging methods and benchmarks.",
-          "authors": [
-            "Weiquan Lin",
-            "Yu Deng",
-            "Shiyang Liu",
-            "Luping Xiao",
-            "Xu Tang",
-            "Junzhi Yu",
-            "Jiaolong Yang",
-            "Lei Zhang",
-            "Xingyu Chen"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-07-30T15:48:16+00:00",
-          "link": "https://arxiv.org/pdf/2607.28394v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Survey of hand-object interaction using large foundation models, covering reconstruction, generation and embodied transfer.",
-          "llm_evidence_cn": "综述大基础模型在手-物交互中的应用，涵盖重建、生成与具身迁移。",
-          "llm_evidence": "综述大基础模型在手-物交互中的应用，涵盖重建、生成与具身迁移。",
-          "canonical_evidence": "综述大基础模型在手-物交互中的应用，涵盖重建、生成与具身迁移。",
-          "llm_tldr_en": "A systematic survey that characterizes how large foundation models contribute to hand-object interaction, organizing methods by knowledge source, pipeline stage, and uncertainty reduced, with emphasis on embodied transfer.",
-          "llm_tldr_cn": "手-物交互建模需要在视觉严重不确定下联合推理手部姿态、物体几何、接触语义与动态，现有方法常被简单归为大模型应用而缺乏系统性刻画。该综述首次按基础模型引入的知识、进入管线的位置以及降低的不确定性对文献进行梳理，覆盖重建、生成与具身迁移三大方向。文章为后续将基础模型知识与具身智能结合的研究提供了清晰的分类框架与未来方向。",
-          "llm_tldr": "手-物交互建模需要在视觉严重不确定下联合推理手部姿态、物体几何、接触语义与动态，现有方法常被简单归为大模型应用而缺乏系统性刻画。该综述首次按基础模型引入的知识、进入管线的位置以及降低的不确定性对文献进行梳理，覆盖重建、生成与具身迁移三大方向。文章为后续将基础模型知识与具身智能结合的研究提供了清晰的分类框架与未来方向。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "foundation models for robot perception and manipulation",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.28394v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.28391v1",
-          "source": "arxiv",
-          "title": "TacWAM: Anchor-Guided World Action Model with Mechanics-Aware Tactile Prediction",
-          "abstract": "World Action Models (WAMs) combine future-state prediction with robot action generation, but existing approaches largely rely on visual futures. Visual prediction captures scene structure and object motion, yet provides limited supervision for force, deformation, shear, and slip during contact-rich manipulation. This creates two design requirements: tactile futures should carry meaningful physical information, and they should not become privileged cues for action generation. We present TacWAM, a mechanics-aware tactile WAM that addresses this challenge in three steps. First, a Spatially Aligned Fusion (SAF) Tactile Encoder maps tactile appearance, dense force fields, and deformation flow into a shared latent prediction space, with bilateral force and torque reconstruction preserving global contact information. Second, a tactile history encoder provides temporal context so future tactile prediction reflects how force and deformation change beyond the current tactile observation. Third, Anchor-Guided Tri-Modal (AGT) Attention separates current visual and tactile anchors, future prediction tokens, and action tokens, allowing future tactile states to supervise training without being directly read by the action branch. We evaluate TacWAM on four real-world contact-rich manipulation tasks covering fragile grasping, sustained surface contact, and dynamic in-hand manipulation. TacWAM achieves an average success rate of 75.0%, exceeding the strongest evaluated baseline by 37.5 percentage points. Staged ablations show consistent degradation when tactile history is removed and access to future prediction targets is relaxed. These results indicate that future tactile supervision can improve contact-aware action learning when combined with informative tactile representations and deployment-consistent information constraints.",
-          "authors": [
-            "Lei Jin",
-            "Yiding Ma",
-            "Xin Zhang",
-            "Chen Gao",
-            "Wei Wu",
-            "Yong Li"
+            "Alan-Barsag Gazzaev",
+            "Alexey Garvilov",
+            "Sergey Muravyov"
           ],
           "primary_category": "cs.RO",
           "categories": [
             "cs.RO"
           ],
-          "published": "2026-07-30T15:47:01+00:00",
-          "link": "https://arxiv.org/pdf/2607.28391v1",
+          "published": "2026-07-30T16:16:08+00:00",
+          "link": "https://arxiv.org/pdf/2607.28443v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "World action model for contact-rich manipulation with tactile future prediction.",
-          "llm_evidence_cn": "面向接触丰富操作的世界动作模型，结合触觉未来预测与动作生成。",
-          "llm_evidence": "面向接触丰富操作的世界动作模型，结合触觉未来预测与动作生成。",
-          "canonical_evidence": "面向接触丰富操作的世界动作模型，结合触觉未来预测与动作生成。",
-          "llm_tldr_en": "TacWAM extends world action models with mechanics-aware tactile prediction, using spatially aligned fusion and anchor guidance to generate robot actions while avoiding privileged tactile cues.",
-          "llm_tldr_cn": "现有世界动作模型主要依赖视觉未来预测，视觉难以提供力、变形、剪切和滑动等接触信息，导致接触丰富操作中动作生成缺乏物理监督。TacWAM引入力学感知的触觉未来预测，通过空间对齐融合的触觉编码器将触觉外观、力场和变形流映射到共享潜空间，并设计锚引导机制以保证触觉不为动作生成提供特权线索。在接触丰富操作任务中，该方法提升了动作生成质量并保持了物理合理性，为具身操作中的触觉世界模型提供了新思路。",
-          "llm_tldr": "现有世界动作模型主要依赖视觉未来预测，视觉难以提供力、变形、剪切和滑动等接触信息，导致接触丰富操作中动作生成缺乏物理监督。TacWAM引入力学感知的触觉未来预测，通过空间对齐融合的触觉编码器将触觉外观、力场和变形流映射到共享潜空间，并设计锚引导机制以保证触觉不为动作生成提供特权线索。在接触丰富操作任务中，该方法提升了动作生成质量并保持了物理合理性，为具身操作中的触觉世界模型提供了新思路。",
+          "llm_evidence_en": "Label-efficient decentralized collective-state prediction for robot swarms via JEPA",
+          "llm_evidence_cn": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
+          "llm_evidence": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
+          "canonical_evidence": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
+          "llm_tldr_en": "CS-JEPA is a recurrent joint-embedding predictive architecture where every robot in a swarm predicts a shared future collective-state token field from local observations and minimal messages, enabling label-efficient representation learning.",
+          "llm_tldr_cn": "针对机器人集群在仅局部观测和受限带宽条件下难以统一预测未来集体状态的问题，提出集体状态JEPA(CS-JEPA)。该架构是循环联合嵌入预测模型，每台机器人在部署时仅用16帧历史与每边一个64维消息即可输出共同的未来token场，无需全局汇聚或目标编码器。预训练不使用下游集体标签，冻结表征在6、12、24个全局标注序列的岭回归探测中表现高效。这为分布式机器人感知与预测提供了可扩展的自监督学习方案。",
+          "llm_tldr": "针对机器人集群在仅局部观测和受限带宽条件下难以统一预测未来集体状态的问题，提出集体状态JEPA(CS-JEPA)。该架构是循环联合嵌入预测模型，每台机器人在部署时仅用16帧历史与每边一个64维消息即可输出共同的未来token场，无需全局汇聚或目标编码器。预训练不使用下游集体标签，冻结表征在6、12、24个全局标注序列的岭回归探测中表现高效。这为分布式机器人感知与预测提供了可扩展的自监督学习方案。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -132,47 +42,7 @@
           "matched_query_text": "embodied AI robot learning papers",
           "matched_requirement_id": "req-7",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.28391v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2607.27922v1",
-          "source": "arxiv",
-          "title": "Learning Social Robot Navigation By Sensing Human Legs",
-          "abstract": "Robots navigating among pedestrians typically sense their surroundings with a 2D LiDAR mounted close to the ground. At that height, the sensor mostly sees moving legs rather than whole people, yet most learning-based navigation methods still treat pedestrians as simple shapes like circles. This paper addresses that gap with CALF (Convolutional Attention for Leg Features), an end-to-end neural architecture that combines convolutional layers, attention, and MLP to interpret leg motion directly from LiDAR scans and produce safe navigation commands. The CALF policy is trained using deep reinforcement learning algorithms within LegNav, a custom lightweight 2D simulator that combines 2D LiDAR ray tracing with a novel pedestrian gait model. The resulting policy is compared against classical and learning-based baselines in terms of navigation performance and social compliance. The approach is validated through real-world experiments via zero-shot deployment on a TurtleBot 4, yielding smooth and socially compliant trajectories. Written in JAX, the LegNav simulator enables the training of a deployment-ready CALF policy in under an hour on a single consumer GPU.",
-          "authors": [
-            "Alberto Vaglio",
-            "Andrea Garulli",
-            "Antonio Giannitrapani",
-            "Renato Quartullo",
-            "Tommaso Van Der Meer"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-07-30T09:35:03+00:00",
-          "link": "https://arxiv.org/pdf/2607.27922v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Deep reinforcement learning for social robot navigation policy from LiDAR leg features; directly matches RL for robot control.",
-          "llm_evidence_cn": "深度强化学习训练社交导航策略，直接匹配机器人控制强化学习需求",
-          "llm_evidence": "深度强化学习训练社交导航策略，直接匹配机器人控制强化学习需求",
-          "canonical_evidence": "深度强化学习训练社交导航策略，直接匹配机器人控制强化学习需求",
-          "llm_tldr_en": "CALF learns social robot navigation from leg motions in 2D LiDAR scans, trained by deep reinforcement learning in a lightweight simulator with pedestrian gait modeling, producing safer navigation commands.",
-          "llm_tldr_cn": "该论文针对地面2D激光雷达主要看到行人腿部而现有方法将行人简化为圆形的问题，提出CALF卷积注意力网络，直接解释腿部运动并输出安全导航指令。策略在轻量级模拟器LegNav中通过深度强化学习训练，结合新颖的行人步态模型。实验表明该策略在行人环境中的社交导航上表现更优，提升了安全性。",
-          "llm_tldr": "该论文针对地面2D激光雷达主要看到行人腿部而现有方法将行人简化为圆形的问题，提出CALF卷积注意力网络，直接解释腿部运动并输出安全导航指令。策略在轻量级模拟器LegNav中通过深度强化学习训练，结合新颖的行人步态模型。实验表明该策略在行人环境中的社交导航上表现更优，提升了安全性。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "reinforcement learning for robot control",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2607.27922v1",
+          "paper_id": "2607.28443v1",
           "carry_days": 1
         }
       ]

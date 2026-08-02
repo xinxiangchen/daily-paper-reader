@@ -1,0 +1,705 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-02T20:06:29.054755+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 12,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 13,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2607.26434v1",
+      "source": "arxiv",
+      "title": "Reinforcement Learning on Cost-Constrained Quadrupedal Hardware",
+      "abstract": "Deploying learned control policies on low-cost robotic platforms introduces transport latencies and noisy motor feedback that systematically widens the sim-to-real gap. The chasm of simulation to deployment in hardware lies in the delay of the actuator reaching the commanded position. On platforms such as the Mini Pupper 2, a measured > $50 ms transport delay transforms the locomotion task from a standard Markov decision process into a partially observable one. In this paper, we take a biologically inspired approach of handling noisy and delayed feedback to close the sim-to-real gap, thereby expanding the capability of reinforcement learning on cost-constrained hardware. Using a low-cost quadrupedal hardware platform, we find that using a forward model of the average actuator delay, paired with a time-aware neural network results in robust locomotion. Additionally, our time-aware neural network learned a central pattern generator (CPG): a self-sustaining rhythmic gait that is robust to +320 ms latency perturbations, mirroring the CPGs found in the spinal cords of vertebrates. We posit that temporal self-organization may be a general strategy for cost-constrained locomotion.",
+      "authors": [
+        "Javier C. Weddington",
+        "Bence P. Ölveczky",
+        "Stephen A. Baccus"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-29T03:22:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.26434v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Sim-to-real gap mitigation for quadrupedal RL on low-cost hardware",
+      "llm_evidence_cn": "低成本四足硬件上强化学习的仿真到现实迁移",
+      "llm_evidence": "低成本四足硬件上强化学习的仿真到现实迁移",
+      "canonical_evidence": "低成本四足硬件上强化学习的仿真到现实迁移",
+      "llm_tldr_en": "Biologically inspired handling of noisy and delayed feedback with a forward model transforms delayed quadruped locomotion into a partially observable task, closing the sim-to-real gap on low-cost hardware.",
+      "llm_tldr_cn": "针对低成本四足平台传输延迟与电机噪声反馈扩大仿真到现实差距的问题，采用生物启发的延迟与噪声处理方法，将延迟建模为部分可观测状态，通过前向模型将任务从标准MDP引入POMDP框架，在Mini Pupper 2等平台显著缩小仿真-现实差距，扩展强化学习在低成本硬件上的部署能力。",
+      "llm_tldr": "针对低成本四足平台传输延迟与电机噪声反馈扩大仿真到现实差距的问题，采用生物启发的延迟与噪声处理方法，将延迟建模为部分可观测状态，通过前向模型将任务从标准MDP引入POMDP框架，在Mini Pupper 2等平台显著缩小仿真-现实差距，扩展强化学习在低成本硬件上的部署能力。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "sim to real transfer domain randomization for robotics",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.26434v2",
+      "source": "arxiv",
+      "title": "Reinforcement Learning on Cost-Constrained Quadrupedal Hardware",
+      "abstract": "Deploying learned control policies on low-cost robotic platforms introduces transport latencies and noisy motor feedback that systematically widens the sim-to-real gap. The chasm of simulation to deployment in hardware lies in the delay of the actuator reaching the commanded position. On platforms such as the Mini Pupper 2, a measured >50 ms transport delay transforms the locomotion task from a standard Markov decision process into a partially observable one. In this paper, we take a biologically inspired approach of handling noisy and delayed feedback to close the sim-to-real gap, thereby expanding the capability of reinforcement learning on cost-constrained hardware. Using a low-cost quadrupedal hardware platform, we find that using a forward model of the average actuator delay, paired with a time-aware neural network results in robust locomotion. Additionally, our time-aware neural network learned a central pattern generator (CPG): a self-sustaining rhythmic gait that is robust to +320 ms latency perturbations, mirroring the CPGs found in the spinal cords of vertebrates. We posit that temporal self-organization may be a general strategy for cost-constrained locomotion.",
+      "authors": [
+        "Javier C. Weddington",
+        "Bence P. Ölveczky",
+        "Stephen A. Baccus"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-29T03:22:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.26434v2",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Addresses sim-to-real gap on real quadruped hardware with RL under latency and noisy feedback",
+      "llm_evidence_cn": "在低成本四足硬件上通过强化学习处理延迟与噪声反馈，弥合sim-to-real差距",
+      "llm_evidence": "在低成本四足硬件上通过强化学习处理延迟与噪声反馈，弥合sim-to-real差距",
+      "canonical_evidence": "在低成本四足硬件上通过强化学习处理延迟与噪声反馈，弥合sim-to-real差距",
+      "llm_tldr_en": "This paper closes the sim-to-real gap for low-cost quadruped platforms by modeling actuator transport delay and noisy feedback with a forward model, enabling RL policies to cope with >50 ms latency on Mini Pupper 2 hardware.",
+      "llm_tldr_cn": "低成本机器人平台存在执行器传输延迟和噪声反馈，显著扩大sim-to-real差距。本文以Mini Pupper 2为平台，测量到超过50毫秒的传输延迟，将运动任务从标准MDP转为部分可观测问题。作者受生物启发，采用前向模型处理噪声与延迟反馈，训练强化学习控制策略，从而在低成本硬件上更稳定地部署。该工作提升了低成本四足机器人的强化学习部署能力，为sim-to-real迁移提供了实用方案。",
+      "llm_tldr": "低成本机器人平台存在执行器传输延迟和噪声反馈，显著扩大sim-to-real差距。本文以Mini Pupper 2为平台，测量到超过50毫秒的传输延迟，将运动任务从标准MDP转为部分可观测问题。作者受生物启发，采用前向模型处理噪声与延迟反馈，训练强化学习控制策略，从而在低成本硬件上更稳定地部署。该工作提升了低成本四足机器人的强化学习部署能力，为sim-to-real迁移提供了实用方案。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "sim to real transfer domain randomization for robotics",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.23511v1",
+      "source": "arxiv",
+      "title": "MOJITO: Modal Joint Learning for Unified End-to-End Autonomous Driving",
+      "abstract": "End-to-end autonomous driving systems commonly follow a cascaded two-stage pipeline where a perception stage compresses multi-modal sensor inputs into a compact context and a downstream planner predicts trajectories conditioned on this context. We argue that this one-way perception-to-planning interface forces sensor inputs into a compact representation, losing the fine-grained details critical for planning. Moreover, by constraining the planner to this compressed context, it is difficult to leverage the rich representations offered by modern vision foundation models. To address these issues, we propose MOJITO, a unified sensor-to-action framework for end-to-end autonomous driving built on modal joint learning. MOJITO removes the cascaded interface and instead performs block-wise Modal Joint Attention that simultaneously updates action, image, and LiDAR features, allowing the planner to directly access multi-modal features during action generation. MOJITO achieves 88.9 PDMS on the NAVSIM v1 dataset and 88.4 EPDMS on the more challenging NAVSIM v2 dataset, setting a new state-of-the-art. Extensive experiments further demonstrate strong scalability, instruction following, and diverse trajectory generation. Code and models are available at https://github.com/mumucc01/MOJITO.",
+      "authors": [
+        "Zhijing Cheng",
+        "Xuancheng Zhang",
+        "Donglin Di",
+        "Lei Fan",
+        "Baorui Ma",
+        "Hao Li",
+        "Xun Yang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-26T07:20:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.23511v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "unified sensor-to-action framework leveraging vision foundation models for driving planning",
+      "llm_evidence_cn": "利用视觉基础模型的统一传感器到动作框架，用于驾驶规划",
+      "llm_evidence": "利用视觉基础模型的统一传感器到动作框架，用于驾驶规划",
+      "canonical_evidence": "利用视觉基础模型的统一传感器到动作框架，用于驾驶规划",
+      "llm_tldr_en": "Presents MOJITO, a unified end-to-end autonomous driving framework that removes the perception-planning interface via modal joint learning and leverages vision foundation models for better planning.",
+      "llm_tldr_cn": "端到端自动驾驶通常把感知压缩成紧凑上下文再交给规划器，导致细粒度信息丢失。MOJITO提出模态联合学习的统一传感器到动作框架，去除级联接口，使规划器直接利用视觉基础模型的丰富表征。该方法有助于保留细节并提升规划质量。",
+      "llm_tldr": "端到端自动驾驶通常把感知压缩成紧凑上下文再交给规划器，导致细粒度信息丢失。MOJITO提出模态联合学习的统一传感器到动作框架，去除级联接口，使规划器直接利用视觉基础模型的丰富表征。该方法有助于保留细节并提升规划质量。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation model for robot task planning",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.23969v2",
+      "source": "arxiv",
+      "title": "LeapBot-WA: World-Anchor Action Models via Predictive Latent Alignments",
+      "abstract": "World Action Models (WAMs) have emerged as a powerful paradigm for embodied intelligence, yet the prevailing reliance on pixel-level video generation creates a fundamental bottleneck. Forcing models to reconstruct task-irrelevant visual details dissipates representational capacity and renders policies vulnerable to visual distractors. In this paper, we propose LeapBot-WA, which establishes a novel Predictive-Latent paradigm for WAMs by operationalizing the Joint-Embedding Predictive Architecture (JEPA) as a World-Anchor. Departing from the traditional reliance on visual synthesis, LeapBot-WA shifts the core of world modeling to Predictive Semantic Alignment, extracting abstract physical dynamics directly within a latent foundation space. To bridge the modality gap between non-Gaussian predictive features and diffusion priors, we introduce the Isotropic Semantic Autoencoder (ISAE), which reshapes the anchor's latent space into a diffusion-friendly manifold to prevent off-manifold drift. Furthermore, we design an Asymmetric Mixture-of-Transformers (MoT) architecture. During training, an Anchor Diffusion Transformer acts as a privileged dynamics expert to guide the Action Diffusion Transformer; at inference, this heavy dynamics branch is pruned, enabling zero-overhead execution. LeapBot-WA achieves state-of-the-art performance among predictive models on LIBERO and matches top-tier generative WAMs on RoboTwin 2.0 without requiring large-scale trajectory pre-training. It further demonstrates superior zero-shot robustness to unseen environments and successful real-world transfer, establishing a highly efficient and robust latent-centric paradigm for scalable robotic control. Code: https://github.com/LeapWM/leapbot-wa.",
+      "authors": [
+        "Pei Liu",
+        "Nan Zheng",
+        "Lang Zhang",
+        "Daojie Peng",
+        "Yanan Zhang",
+        "Feilong Kong",
+        "Mingyue Feng",
+        "Jiachao Liu",
+        "Yaonong Wang",
+        "Qifeng Chen",
+        "Jun Ma"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-27T03:36:45+00:00",
+      "link": "https://arxiv.org/pdf/2607.23969v2",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "world action model for embodied AI using predictive latent alignment",
+      "llm_evidence_cn": "面向具身智能的世界动作模型与潜在预测对齐",
+      "llm_evidence": "面向具身智能的世界动作模型与潜在预测对齐",
+      "canonical_evidence": "面向具身智能的世界动作模型与潜在预测对齐",
+      "llm_tldr_en": "Proposes LeapBot-WA, a predictive-latent world action model that uses JEPA as a world anchor to learn abstract physical dynamics in latent space, avoiding pixel-level video generation bottlenecks.",
+      "llm_tldr_cn": "世界动作模型（WAM）旨在用世界模型驱动具身智能，但依赖像素级视频生成会浪费表示并易受干扰。LeapBot-WA提出预测性潜在范式，将联合嵌入预测架构（JEPA）作为世界锚点，不再重建视觉细节，而是在潜在基础空间中提取抽象物理动态。通过预测性语义对齐完成世界建模与行动决策的衔接，降低对视觉干扰的敏感性。这一思路为具身基础模型摆脱像素重建瓶颈提供了新方向。",
+      "llm_tldr": "世界动作模型（WAM）旨在用世界模型驱动具身智能，但依赖像素级视频生成会浪费表示并易受干扰。LeapBot-WA提出预测性潜在范式，将联合嵌入预测架构（JEPA）作为世界锚点，不再重建视觉细节，而是在潜在基础空间中提取抽象物理动态。通过预测性语义对齐完成世界建模与行动决策的衔接，降低对视觉干扰的敏感性。这一思路为具身基础模型摆脱像素重建瓶颈提供了新方向。",
+      "llm_tags": [
+        "query:embodied-ai:composite"
+      ],
+      "matched_query_tag": "query:embodied-ai:composite",
+      "matched_query_text": "Papers central to 请每日推送关于具身智能（Embodied AI）的最新论文。重点关注以下方向，并按此分类整理：决策与规划、感知与理解、操控与导航、基础模型、仿真与迁移。, especially work that connects or combines: embodied AI research; reinforcement learning for robot control; imitation learning robotic manipulation; diffusion policy robotics; foundation model for robot task planning; vision language action model for robot; embodied AI robot learning papers; reinforcement learning diffusion policy robot control; sim to real transfer domain randomization for robotics; foundation models for robot perception and manipulation.",
+      "matched_requirement_id": "req-composite-embodied-ai",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.27922v1",
+      "source": "arxiv",
+      "title": "Learning Social Robot Navigation By Sensing Human Legs",
+      "abstract": "Robots navigating among pedestrians typically sense their surroundings with a 2D LiDAR mounted close to the ground. At that height, the sensor mostly sees moving legs rather than whole people, yet most learning-based navigation methods still treat pedestrians as simple shapes like circles. This paper addresses that gap with CALF (Convolutional Attention for Leg Features), an end-to-end neural architecture that combines convolutional layers, attention, and MLP to interpret leg motion directly from LiDAR scans and produce safe navigation commands. The CALF policy is trained using deep reinforcement learning algorithms within LegNav, a custom lightweight 2D simulator that combines 2D LiDAR ray tracing with a novel pedestrian gait model. The resulting policy is compared against classical and learning-based baselines in terms of navigation performance and social compliance. The approach is validated through real-world experiments via zero-shot deployment on a TurtleBot 4, yielding smooth and socially compliant trajectories. Written in JAX, the LegNav simulator enables the training of a deployment-ready CALF policy in under an hour on a single consumer GPU.",
+      "authors": [
+        "Alberto Vaglio",
+        "Andrea Garulli",
+        "Antonio Giannitrapani",
+        "Renato Quartullo",
+        "Tommaso Van Der Meer"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-30T09:35:03+00:00",
+      "link": "https://arxiv.org/pdf/2607.27922v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep reinforcement learning for leg-based social robot navigation",
+      "llm_evidence_cn": "基于腿部感知的深度强化学习社交导航",
+      "llm_evidence": "基于腿部感知的深度强化学习社交导航",
+      "canonical_evidence": "基于腿部感知的深度强化学习社交导航",
+      "llm_tldr_en": "CALF combines convolutional layers, attention, and MLP to interpret leg motion directly from 2D LiDAR scans, trained by deep reinforcement learning in a lightweight simulator with pedestrian gait models to produce safe social navigation commands.",
+      "llm_tldr_cn": "现有社交导航把行人简化为圆形，忽略2D LiDAR实际看到的是腿部。本文提出CALF，结合卷积、注意力和MLP直接从激光扫描中解析腿部运动并输出导航指令，使用深度强化学习在含行人步态模型的轻量级仿真器LegNav中训练，获得比传统方法更安全的导航策略。",
+      "llm_tldr": "现有社交导航把行人简化为圆形，忽略2D LiDAR实际看到的是腿部。本文提出CALF，结合卷积、注意力和MLP直接从激光扫描中解析腿部运动并输出导航指令，使用深度强化学习在含行人步态模型的轻量级仿真器LegNav中训练，获得比传统方法更安全的导航策略。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.28243v1",
+      "source": "arxiv",
+      "title": "EgoGenesis: Egocentric World-Action Modeling with Online Anchored Projective Memory and Action-3D RoPE",
+      "abstract": "Egocentric video offers rich manipulation experience for embodied AI, yet collecting diverse egocentric data across scenes, objects, motions, and embodiments remains costly. We present \\method, an egocentric world-action simulator that synthesizes controllable, high-quality manipulation videos to expand scarce real-world training data. \\method{} builds on a pretrained video generation prior and introduces two geometry-aware conditioning mechanisms. Online Anchored Projective Memory (OAPM) preserves a first-frame 3D scene anchor while periodically refreshing a recent state during autoregressive generation. Action-3D Rotary Position Embedding (A3D-RoPE) encodes end-effector motion with camera-aware 3D rotary coordinates, injecting action geometry into skeleton-to-video cross-attention for precise control. Together, these components improve visual fidelity, geometric stability, and action alignment in long egocentric rollouts. Moreover, augmenting 400 real trajectories with 400 \\method-generated trajectories improves out-of-distribution real-robot success from 77\\% to 84\\% on single-arm tasks and from 53\\% to 70\\% on dual-arm tasks, demonstrating that the synthesized data substantially improve downstream WAM generalization.",
+      "authors": [
+        "Zexuan Yan",
+        "Yuzhou Wu",
+        "Yue Ma",
+        "Zonghang He",
+        "Kaibo Yin",
+        "Xiaobing Tu",
+        "Yinggui Wang",
+        "Jinkui Ren",
+        "Xiantao Zhang",
+        "Shijian Wang",
+        "Jinghong Liu",
+        "Linfeng Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T14:06:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.28243v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "egocentric world-action simulator for controllable manipulation video synthesis",
+      "llm_evidence_cn": "用于可控制操作视频生成的自我中心世界-动作模拟器",
+      "llm_evidence": "用于可控制操作视频生成的自我中心世界-动作模拟器",
+      "canonical_evidence": "用于可控制操作视频生成的自我中心世界-动作模拟器",
+      "llm_tldr_en": "EgoGenesis synthesizes controllable egocentric manipulation videos using a pretrained video prior with geometry-aware conditioning—online anchored projective memory and action-3D rotary position embeddings—to expand scarce real-world robot training data.",
+      "llm_tldr_cn": "自我中心视频富含操作经验但采集昂贵。EgoGenesis利用预训练视频先验，引入在线锚定投影记忆以保留首帧3D场景锚定并周期刷新近期状态，配合动作3D旋转位置编码编码末端运动，从而可控制地合成高质量操作视频，缓解具身智能训练数据不足的问题。",
+      "llm_tldr": "自我中心视频富含操作经验但采集昂贵。EgoGenesis利用预训练视频先验，引入在线锚定投影记忆以保留首帧3D场景锚定并周期刷新近期状态，配合动作3D旋转位置编码编码末端运动，从而可控制地合成高质量操作视频，缓解具身智能训练数据不足的问题。",
+      "llm_tags": [
+        "query:embodied-ai:composite"
+      ],
+      "matched_query_tag": "query:embodied-ai:composite",
+      "matched_query_text": "Papers central to 请每日推送关于具身智能（Embodied AI）的最新论文。重点关注以下方向，并按此分类整理：决策与规划、感知与理解、操控与导航、基础模型、仿真与迁移。, especially work that connects or combines: embodied AI research; reinforcement learning for robot control; imitation learning robotic manipulation; diffusion policy robotics; foundation model for robot task planning; vision language action model for robot; embodied AI robot learning papers; reinforcement learning diffusion policy robot control; sim to real transfer domain randomization for robotics; foundation models for robot perception and manipulation.",
+      "matched_requirement_id": "req-composite-embodied-ai",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.28226v1",
+      "source": "arxiv",
+      "title": "Security of World-Model-Based Embodied AI: A Lifecycle of Threats, Defenses, and Evaluation",
+      "abstract": "World models give embodied AI a predictive core: they compress observations into states, simulate action-conditioned futures, and enable planning beyond reactive control. This predictive layer, however, opens a new security boundary-compromise can propagate from data, sensors, prompts, or feedback into physical action. Rather than treating world models as an isolated component, this survey traces threats across their entire lifecycle-from data construction and representation learning, through state grounding and imagination, to trajectory evaluation, execution, and long-term adaptation via memory and tools. We show that familiar attack families: poisoning, backdoors, adversarial examples, sensor spoofing, prompt injection, trajectory manipulation, and supply-chain attacks take on distinct meanings when they corrupt world states, learned dynamics, affordance estimates, or safety costs. We also highlight a duality: world models can serve as runtime safety shields, yet when compromised or over-trusted they generate predictive safety illusions. The survey offers a lifecycle taxonomy, maps existing attacks to world-model security properties, outlines evaluation protocols for safety failures, and structures defenses across provenance, robust grounding, uncertainty-aware prediction, trajectory gating, feedback auditing, and deployment assurance.",
+      "authors": [
+        "Fazhong Liu",
+        "Zhuoyan Chen",
+        "Haozhen Tan",
+        "Yan Meng",
+        "Guoxing Chen",
+        "Haojin Zhu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T13:58:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.28226v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Security survey for world-model-based embodied AI, direct embodied AI research",
+      "llm_evidence_cn": "世界模型具身AI安全综述，属于具身智能研究",
+      "llm_evidence": "世界模型具身AI安全综述，属于具身智能研究",
+      "canonical_evidence": "世界模型具身AI安全综述，属于具身智能研究",
+      "llm_tldr_en": "A lifecycle survey of threats, defenses, and evaluation for world-model-based embodied AI, covering poisoning, backdoors, adversarial examples, sensor spoofing, and prompt injection propagating from data to physical actions.",
+      "llm_tldr_cn": "世界模型让具身AI具备预测和规划能力，但其预测层也构成新的安全边界。本文以生命周期视角从数据构建、表示学习、状态接地、想象、轨迹评估到执行和记忆工具，综述了投毒、后门、对抗样本、传感器欺骗、提示注入等攻击及其防御。这一调查为理解并评估具身AI世界模型的安全风险提供了系统框架。",
+      "llm_tldr": "世界模型让具身AI具备预测和规划能力，但其预测层也构成新的安全边界。本文以生命周期视角从数据构建、表示学习、状态接地、想象、轨迹评估到执行和记忆工具，综述了投毒、后门、对抗样本、传感器欺骗、提示注入等攻击及其防御。这一调查为理解并评估具身AI世界模型的安全风险提供了系统框架。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.27865v1",
+      "source": "arxiv",
+      "title": "Learning to Understand Body Language from Flight through Robust 3D Avatar Placing",
+      "abstract": "Perceiving human motion and intent at long range is a prerequisite for socially intelligent aerial robots, yet the data to learn it barely exists. We introduce Drones2BodyLanguage, a dataset grounding human motion in real UAV footage: avatars manifesting ten communicative intents are placed into unmodified 4K drone scenes with metrically correct position, scale and orientation, maintained over hundreds of frames of camera motion. Enabling it is a lightweight geometric world model of the local scene - semantically selected anchors lifted to 3D through streaming monocular depth - in which a placement point is predicted as an affine anchor combination with provably rigid-invariant weights, and re-rendered under an SVD-fitted ground rotation. Across twelve architectures on scene- and motion-disjoint splits, training on placed data lifts mean intent accuracy by a wide margin for real, retargeted and generated motion alike, with gains confirmed on two in-the-wild scenes.",
+      "authors": [
+        "Dragos Costea",
+        "Alina Marcu",
+        "Cristina Lazar",
+        "Marius Leordeanu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-30T08:40:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.27865v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Dataset and geometric method for UAV perception of human body language, embodied AI perception",
+      "llm_evidence_cn": "空中机器人感知人类肢体语言的具身AI研究",
+      "llm_evidence": "空中机器人感知人类肢体语言的具身AI研究",
+      "canonical_evidence": "空中机器人感知人类肢体语言的具身AI研究",
+      "llm_tldr_en": "Drones2BodyLanguage places 3D avatars with ten communicative intents into real 4K drone footage using a lightweight geometric world model with metric accuracy, enabling long-range body-language understanding for aerial robots.",
+      "llm_tldr_cn": "社交智能空中机器人需要在远距离理解人类动作和意图，但缺乏训练数据。本文提出Drones2BodyLanguage数据集，利用轻量几何世界模型将带十种沟通意图的3D化身以度量准确的方式放入真实无人机4K场景，并在相机运动下保持稳定。实验验证了放置的鲁棒性，为空中机器人感知人类肢体语言提供了可扩展的数据生成方法。",
+      "llm_tldr": "社交智能空中机器人需要在远距离理解人类动作和意图，但缺乏训练数据。本文提出Drones2BodyLanguage数据集，利用轻量几何世界模型将带十种沟通意图的3D化身以度量准确的方式放入真实无人机4K场景，并在相机运动下保持稳定。实验验证了放置的鲁棒性，为空中机器人感知人类肢体语言提供了可扩展的数据生成方法。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.22982v1",
+      "source": "arxiv",
+      "title": "Finite-Time Analysis of the Natural Policy Gradient in Finite-Horizon Markov Decision Processes",
+      "abstract": "Natural Policy Gradient (NPG) is a well-established Reinforcement Learning algorithm that underlies widely used methods such as Trust Region Policy Optimization and Proximal Policy Optimization, both of which have demonstrated strong empirical success. In this paper, we study exact NPG in finite-horizon Markov Decision Processes with known dynamics and horizon-dependent transition kernels. We provide the first finite-time convergence guarantees for this algorithm in this setting, for which we consider both constant and increasing step size regimes. With a constant step size $η_t=η$, we prove that NPG converges sublinearly with a rate of $\\mathcal{O}(H^{2}/t)$ after $t$ iterations, where $H$ is the horizon length. We also extend this constant step size analysis to linear MDPs in an exact population-projection oracle under a full support projection distribution, recovering the same sublinear rate as in the tabular setting. Furthermore, with increasing step sizes, we prove that this algorithm achieves a linear convergence rate of $\\mathcal{O}\\left(\\left(1-\\frac{1}{\\vartheta_ρ}\\right)^t\\right)$ for a problem-dependent constant $\\vartheta_ρ> 1$, and the horizon-only robust schedule of the form $η_t=η_0(H/(H-1))^t$ where $η_0>0$ and $H \\geq 2$, attains this same geometric rate.",
+      "authors": [
+        "Asha Barua",
+        "Sajad Khodadadian"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.OC",
+        "stat.ML"
+      ],
+      "published": "2026-07-25T01:37:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.22982v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Finite-time analysis of NPG, foundational RL algorithm for TRPO/PPO robot control",
+      "llm_evidence_cn": "自然策略梯度有限时间分析，支撑机器人强化学习算法",
+      "llm_evidence": "自然策略梯度有限时间分析，支撑机器人强化学习算法",
+      "canonical_evidence": "自然策略梯度有限时间分析，支撑机器人强化学习算法",
+      "llm_tldr_en": "Provides the first finite-time convergence guarantees for exact Natural Policy Gradient in finite-horizon MDPs, yielding O(H^2/t) sublinear rate with constant step size and extensions, supporting TRPO/PPO-style robot control.",
+      "llm_tldr_cn": "自然策略梯度支撑着TRPO/PPO等广泛使用的强化学习算法，但有限时域MDP下的收敛性此前缺乏有限时间刻画。本文在动力学已知、转移核随时段变化的有限时域MDP中分析精确NPG，证明常数步长时以O(H^2/t)次线性收敛，并延伸到递增步长。该理论为机器人控制等场景中策略梯度方法的可靠性提供了有意义的保证。",
+      "llm_tldr": "自然策略梯度支撑着TRPO/PPO等广泛使用的强化学习算法，但有限时域MDP下的收敛性此前缺乏有限时间刻画。本文在动力学已知、转移核随时段变化的有限时域MDP中分析精确NPG，证明常数步长时以O(H^2/t)次线性收敛，并延伸到递增步长。该理论为机器人控制等场景中策略梯度方法的可靠性提供了有意义的保证。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.28251v1",
+      "source": "arxiv",
+      "title": "Self-Evolving Learning for Embodied AI with Criticality Model",
+      "abstract": "Despite rapid advances in policy pretraining, embodied AI systems routinely plateau during task-specific finetuning. The root cause lies in how finetuning data are collected: the default pipeline gathers data randomly, treating every sample as informative. Datasets become dominated by nominal scenarios, while rare failure cases--the most valuable for improvement--are missed. We propose a self-evolving method that breaks this plateau. Our core insight is that a state-wise criticality model, learned from the policy's own execution outcomes to predict the probability of future failure, can guide importance sampling toward failure-prone scenarios. After replacing redundant nominal scenarios with diverse failure-prone ones, importance weights are used to resample the data during training. This effectively preserves an unbiased learning objective while fundamentally increasing the information density of the training pool. Across quadrupedal locomotion, multi-task manipulation, vision-language-action benchmarks, and a real-robot task, our method reduces failure rates by 51--67% relative to trained baselines and by 8-25% relative to state-of-the-art vision-language-action models.",
+      "authors": [
+        "Linxuan He",
+        "Yuying Tian",
+        "Lingxiang Fan",
+        "Jiaqi Pi",
+        "Yinqiao Lu",
+        "Shang Su",
+        "Mengkai Shi",
+        "Shuo Feng"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-30T14:13:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.28251v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Self-evolving learning method for embodied AI policies using criticality-guided data resampling",
+      "llm_evidence_cn": "利用关键度模型引导数据重采样的具身智能自进化学习方法",
+      "llm_evidence": "利用关键度模型引导数据重采样的具身智能自进化学习方法",
+      "canonical_evidence": "利用关键度模型引导数据重采样的具身智能自进化学习方法",
+      "llm_tldr_en": "This paper identifies that random finetuning data makes embodied AI policies plateau, and proposes a self-evolving method with a state-wise criticality model that importance-samples failure-prone scenarios to improve policy finetuning beyond nominal data.",
+      "llm_tldr_cn": "具身智能系统在任务微调时常因随机采集数据而陷入平台期，罕见失败场景被忽略。本文提出自进化学习方法，学习一个逐状态关键度模型来预测未来失败概率，并用其引导重要采样，将冗余的常规场景替换为多样化易失败场景。通过重要性权重重采样，该方法突破了策略微调的性能平台。实验显示其在多种具身任务上持续提升策略性能，为具身智能策略改进提供了新途径。",
+      "llm_tldr": "具身智能系统在任务微调时常因随机采集数据而陷入平台期，罕见失败场景被忽略。本文提出自进化学习方法，学习一个逐状态关键度模型来预测未来失败概率，并用其引导重要采样，将冗余的常规场景替换为多样化易失败场景。通过重要性权重重采样，该方法突破了策略微调的性能平台。实验显示其在多种具身任务上持续提升策略性能，为具身智能策略改进提供了新途径。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.28442v1",
+      "source": "arxiv",
+      "title": "ViewMind3D: Modular View-Aware Inference for Training-Free 3D-QA",
+      "abstract": "Recent advances in large language models (LLMs) and vision-language models (VLMs) have enabled new possibilities for 3D question answering (3D-QA), a key capability for embodied AI and robotic perception. However, most existing methods rely on 3D-specific training or fine-tuning with costly annotations, limiting their scalability and real-world applicability. We present \\textbf{ViewMind3D}, a fully training-free and modular framework for 3D spatial reasoning over multi-view observations of a scene without requiring complete 3D reconstruction. The framework decomposes the 3D-QA task into four interpretable components: (1) question-driven multi-view selection, (2) guided visual grounding with language-conditioned object cues, (3) spatial context encoding via a bird's-eye-view (BEV) viewpoint indicator, and (4) structured answer generation through role-based reasoning. This design enables structured, robust, and interpretable reasoning without requiring model tuning. Experimental results on ScanQA and SQA3D show that ViewMind3D achieves competitive performance compared to prior training-free and fine-tuned 3D-LLMs. In particular, our method improves performance on spatially grounded question types, such as ``What'' questions in SQA3D, while maintaining strong overall accuracy (50.8\\%) and achieving 73.4 CIDEr on ScanQA. These results demonstrate that effective 3D reasoning can be achieved through modular orchestration of general-purpose LLMs and VLMs for robotic perception in real-world environments.",
+      "authors": [
+        "Ping-Kun Chiang",
+        "Kun-Ru Wu",
+        "Po-han Li",
+        "Sandeep Chinchali",
+        "Ufuk Topcu",
+        "Yu-Chee Tseng"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-30T16:14:30+00:00",
+      "link": "https://arxiv.org/pdf/2607.28442v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Foundation models for 3D perception in embodied AI",
+      "llm_evidence_cn": "用于具身感知的3D视觉问答基础模型",
+      "llm_evidence": "用于具身感知的3D视觉问答基础模型",
+      "canonical_evidence": "用于具身感知的3D视觉问答基础模型",
+      "llm_tldr_en": "ViewMind3D is a training-free modular framework for 3D question answering with VLMs, combining question-driven multi-view selection, visual grounding, and spatial context encoding for embodied perception.",
+      "llm_tldr_cn": "针对3D问答依赖高成本3D训练和标注的问题，提出ViewMind3D，一种完全无需训练的模块化框架。它利用多视角图像并解耦为问题驱动的视图选择、语言引导的视觉定位和空间上下文编码等步骤，无需完整3D重建即可实现空间推理。实验证明该方法在可扩展性和实用性上优于现有方法，为具身感知提供轻量级3D理解解决方案。",
+      "llm_tldr": "针对3D问答依赖高成本3D训练和标注的问题，提出ViewMind3D，一种完全无需训练的模块化框架。它利用多视角图像并解耦为问题驱动的视图选择、语言引导的视觉定位和空间上下文编码等步骤，无需完整3D重建即可实现空间推理。实验证明该方法在可扩展性和实用性上优于现有方法，为具身感知提供轻量级3D理解解决方案。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation models for robot perception and manipulation",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23474v1",
+      "source": "arxiv",
+      "title": "Sparse Gaussian-Mixture-Model Q-Functions via Hadamard Overparametrization for Online Reinforcement Learning",
+      "abstract": "This paper develops an online, off-policy policy-iteration framework for reinforcement learning (RL), based on sparse Gaussian-mixture-model Q-functions (S-GMM-QFs). The framework reconciles streaming, non-stationary data with the Riemannian structure of the parameter space while handling distributional mismatch through experience replay. S-GMM-QFs are introduced via Hadamard overparametrization, enabling interpretable sparsification through smooth regularization that facilitates Riemannian-based optimization. Overparametrization allows the framework to adaptively identify meaningful components from a large initial pool, yielding sparse models where interpretability emerges naturally from geometry: each component's parameters (means and covariances) explicitly encode its geometric role in the ambient state-action space. These geometric roles are learned through online gradient descent on a smooth objective over a (Cartesian-product) Riemannian manifold. Numerical tests demonstrate that S-GMM-QFs match or exceed deep RL methods while using substantially fewer parameters and achieving faster improvement per observed transition. Notably, parameter efficiency and interpretability combine to maintain strong generalization in low-parameter regimes where sparsified deep RL approaches degrade.",
+      "authors": [
+        "Minh Vu",
+        "Konstantinos Slavakis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-26T05:58:23+00:00",
+      "link": "https://arxiv.org/pdf/2607.23474v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Online reinforcement learning framework with sparse GMM Q-functions",
+      "llm_evidence_cn": "基于稀疏高斯混合模型Q函数的在线强化学习框架",
+      "llm_evidence": "基于稀疏高斯混合模型Q函数的在线强化学习框架",
+      "canonical_evidence": "基于稀疏高斯混合模型Q函数的在线强化学习框架",
+      "llm_tldr_en": "Develops an online off-policy RL framework with sparse Gaussian-mixture-model Q-functions via Hadamard overparametrization, enabling interpretable sparsification and Riemannian optimization under non-stationary streaming data.",
+      "llm_tldr_cn": "针对在线强化学习中流式非平稳数据与参数空间黎曼结构难以协调的问题，提出基于Hadamard过参数化的稀疏高斯混合模型Q函数框架，通过光滑正则化实现可解释的稀疏化，并在经验回放下自适应筛选有意义的分量，在保持几何可解释性的同时提升在线离策略学习能力。",
+      "llm_tldr": "针对在线强化学习中流式非平稳数据与参数空间黎曼结构难以协调的问题，提出基于Hadamard过参数化的稀疏高斯混合模型Q函数框架，通过光滑正则化实现可解释的稀疏化，并在经验回放下自适应筛选有意义的分量，在保持几何可解释性的同时提升在线离策略学习能力。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.28382v1",
+      "source": "arxiv",
+      "title": "SemAnCorr: Semantic Anchored Correspondence for Zero-Shot Manipulation Skill Transfer",
+      "abstract": "Transferring manipulation skills across object instances that share functionality but differ in geometry remains a fundamental challenge in robot learning. While recent correspondence methods leverage dense visual descriptors and 3D feature fields, nearest-neighbor feature matching often produces spatially incoherent correspondences that fail to recover the local geometric frames required for reliable skill transfer. We introduce SemAnCorr, a training-free framework that establishes dense correspondence by selecting semantically consistent anchor regions through joint pose-correspondence optimization and propagating these constraints over the object surface using functional maps. The resulting correspondences preserve both semantic consistency and geometric coherence, enabling object-centric manipulation skills to transfer across geometrically diverse instances. We evaluate SemAnCorr on a dense correspondence benchmark built on PartNet-Mobility, achieving 90.8% semantic accuracy in our benchmark evaluation while improving geometric coherence over recent state-of-the-art baselines. Finally, we show that these improvements translate directly into real-world manipulation performance: using a single demonstration, SemAnCorr enables substantially more reliable zero-shot manipulation skill transfer to previously unseen objects than existing correspondence methods. Videos and additional visualizations are available at [https://semancorr.github.io](https://semancorr.github.io) .",
+      "authors": [
+        "Xiaoxiang Dong",
+        "William Baron",
+        "Hongyi Chen",
+        "Uksang Yoo",
+        "Jeffrey Ichnowski",
+        "Weiming Zhi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-30T15:41:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.28382v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Semantic anchored dense correspondence for zero-shot manipulation skill transfer across object instances",
+      "llm_evidence_cn": "语义锚定稠密对应实现跨物体实例零样本操控技能迁移",
+      "llm_evidence": "语义锚定稠密对应实现跨物体实例零样本操控技能迁移",
+      "canonical_evidence": "语义锚定稠密对应实现跨物体实例零样本操控技能迁移",
+      "llm_tldr_en": "SemAnCorr establishes training-free dense correspondence by selecting semantically consistent anchor regions via joint pose-correspondence optimization and propagating constraints with functional maps, enabling reliable zero-shot manipulation skill transfer.",
+      "llm_tldr_cn": "将操控技能迁移到功能相似但几何不同的新物体是机器人学习的核心挑战，最近稠密视觉描述子方法往往产生空间不一致的对应。作者提出SemAnCorr，一个免训练框架，通过联合位姿-对应优化选出语义一致的锚点区域，并借助函数映射在物体表面传播约束。所得对应保持了语义一致性，并能恢复局部几何坐标系，从而支撑可靠技能迁移。实验表明，该方法无需任何训练即可显著提升跨物体实例的零样本操控技能迁移成功率。",
+      "llm_tldr": "将操控技能迁移到功能相似但几何不同的新物体是机器人学习的核心挑战，最近稠密视觉描述子方法往往产生空间不一致的对应。作者提出SemAnCorr，一个免训练框架，通过联合位姿-对应优化选出语义一致的锚点区域，并借助函数映射在物体表面传播约束。所得对应保持了语义一致性，并能恢复局部几何坐标系，从而支撑可靠技能迁移。实验表明，该方法无需任何训练即可显著提升跨物体实例的零样本操控技能迁移成功率。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation models for robot perception and manipulation",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.28625v1",
+      "source": "arxiv",
+      "title": "ACE-Data-0: Human-Centric Ambient Capture as Embodied Data Engine",
+      "abstract": "Embodied intelligence faces a fundamental data bottleneck. Models must capture how first-person perception, whole-body motion, dexterous manipulation, object state, sound, and touch evolve together as humans pursue goals over time. Existing datasets fragment this experience across viewpoints, modalities, or spatial scales, leaving the full perception-action loop only partially observed. We introduce the Ambient Capture Engine (ACE), a human-centric data engine that transforms real home environments into spatially calibrated, temporally synchronized recording studios. ACE operates at two complementary scales: a table-scale configuration resolves hand-object manipulation, while a room-scale configuration captures whole-body motion, locomotion, and interactions across a furnished home. ACE records egocentric and multi-view exocentric video, full-body and articulated hand motion, object geometry and 6-DoF trajectories, audio, and tactile signals as a unified multisensory stream. Using ACE, we build ACE-Data-0, comprising 150 hours and 17M video frames across 200 task categories, performed by 50 participants in 2 environments, for a total of 75,000 interaction episodes. The dataset spans atomic manipulation, long-horizon chains of household activities, and human-scene interaction, while preserving natural behavioral variation through goal-level rather than step-by-step instructions. We further introduce a hierarchical benchmark that progresses from signals to scene components and then to interactions. Evaluations of state-of-the-art methods expose substantial gaps under contact, occlusion, egomotion, and long temporal horizons. ACE-Data-0 provides synchronized human demonstrations with aligned perceptual, kinematic, and contact supervision, offering a scalable foundation for imitation learning, world models, vision-language-action systems, and embodied AI.",
+      "authors": [
+        "Yukang Cao",
+        "Haozhe Xie",
+        "Beichen Wen",
+        "Runmao Yao",
+        "Yinghao Liu",
+        "Yue Huang",
+        "Zhichao Liao",
+        "Yunxiang Wang",
+        "Haiheng Liu",
+        "Xingshun Tian",
+        "Dawei Su",
+        "Long Zhuo",
+        "Dacheng Tao",
+        "Xiaogang Wang",
+        "Liang Pan",
+        "Ziwei Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-30T17:59:50+00:00",
+      "link": "https://arxiv.org/pdf/2607.28625v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "human-centric ambient capture engine for embodied data",
+      "llm_evidence_cn": "面向具身智能数据的以人为中心环境采集引擎",
+      "llm_evidence": "面向具身智能数据的以人为中心环境采集引擎",
+      "canonical_evidence": "面向具身智能数据的以人为中心环境采集引擎",
+      "llm_tldr_en": "ACE transforms real homes into calibrated, synchronized recording studios at table and room scales, capturing manipulation, whole-body motion, sound and touch together to provide embodied AI with complete perception-action loop data.",
+      "llm_tldr_cn": "具身智能面临数据瓶颈，现有数据集割裂视角、模态或尺度。ACE将真实家庭环境改造为空间标定、时间同步的采集棚，支持桌面尺度精细手物操作和房间尺度全身运动与交互，同步记录声音、触觉等多模态信息，为完整感知-行动循环研究提供高质量数据来源。",
+      "llm_tldr": "具身智能面临数据瓶颈，现有数据集割裂视角、模态或尺度。ACE将真实家庭环境改造为空间标定、时间同步的采集棚，支持桌面尺度精细手物操作和房间尺度全身运动与交互，同步记录声音、触觉等多模态信息，为完整感知-行动循环研究提供高质量数据来源。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.26336v1",
+      "source": "arxiv",
+      "title": "Learning Implicit Causal World Models from Multi-Agent Demonstrations",
+      "abstract": "In model-based reinforcement learning, world models exist as internal simulators, but their training often conflates statistical correlations with causal mechanisms. This problem is exacerbated in multi-agent systems where physical transitions are intertwined with strategic agent intents, causing world models to fail under distribution shift. We introduce Implicit Causal World Models to recover environmental dynamics from offline demonstrations without requiring pre-defined causal graphs. By incorporating policy variance, we render world models discoverable via the sequential backdoor condition. Evaluations across coordination tasks (Two-Door, Navigation, and Giveway) demonstrate that these models provide interpretable causal representations under both full and partial observability, with model accuracy scaling directly with interventional strength.",
+      "authors": [
+        "Jasorsi Ghosh"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA",
+        "cs.RO"
+      ],
+      "published": "2026-07-28T23:18:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.26336v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Model-based RL world models from multi-agent demonstrations, relevant to robot learning",
+      "llm_evidence_cn": "从多智能体演示中恢复隐式因果世界模型，用于基于模型的强化学习，与机器人学习相关",
+      "llm_evidence": "从多智能体演示中恢复隐式因果世界模型，用于基于模型的强化学习，与机器人学习相关",
+      "canonical_evidence": "从多智能体演示中恢复隐式因果世界模型，用于基于模型的强化学习，与机器人学习相关",
+      "llm_tldr_en": "This paper learns implicit causal world models from offline multi-agent demonstrations without predefined causal graphs, using policy variance and sequential backdoor condition, and shows better interpretable dynamics under distribution shift.",
+      "llm_tldr_cn": "基于模型的强化学习中世界模型常混淆统计相关与因果机制，在多智能体场景下泛化不足。本文提出隐式因果世界模型，无需预定义因果图，通过策略方差和序贯后门条件从离线演示中恢复可解释的环境动态。在Two-Door、Navigation和Giveway等协调任务上的实验表明，该模型能在分布偏移下提供可解释的因果表征。这项工作为多智能体强化学习与机器人环境建模提供了新工具。",
+      "llm_tldr": "基于模型的强化学习中世界模型常混淆统计相关与因果机制，在多智能体场景下泛化不足。本文提出隐式因果世界模型，无需预定义因果图，通过策略方差和序贯后门条件从离线演示中恢复可解释的环境动态。在Two-Door、Navigation和Giveway等协调任务上的实验表明，该模型能在分布偏移下提供可解释的因果表征。这项工作为多智能体强化学习与机器人环境建模提供了新工具。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "reinforcement learning for robot control",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.28391v1",
+      "source": "arxiv",
+      "title": "TacWAM: Anchor-Guided World Action Model with Mechanics-Aware Tactile Prediction",
+      "abstract": "World Action Models (WAMs) combine future-state prediction with robot action generation, but existing approaches largely rely on visual futures. Visual prediction captures scene structure and object motion, yet provides limited supervision for force, deformation, shear, and slip during contact-rich manipulation. This creates two design requirements: tactile futures should carry meaningful physical information, and they should not become privileged cues for action generation. We present TacWAM, a mechanics-aware tactile WAM that addresses this challenge in three steps. First, a Spatially Aligned Fusion (SAF) Tactile Encoder maps tactile appearance, dense force fields, and deformation flow into a shared latent prediction space, with bilateral force and torque reconstruction preserving global contact information. Second, a tactile history encoder provides temporal context so future tactile prediction reflects how force and deformation change beyond the current tactile observation. Third, Anchor-Guided Tri-Modal (AGT) Attention separates current visual and tactile anchors, future prediction tokens, and action tokens, allowing future tactile states to supervise training without being directly read by the action branch. We evaluate TacWAM on four real-world contact-rich manipulation tasks covering fragile grasping, sustained surface contact, and dynamic in-hand manipulation. TacWAM achieves an average success rate of 75.0%, exceeding the strongest evaluated baseline by 37.5 percentage points. Staged ablations show consistent degradation when tactile history is removed and access to future prediction targets is relaxed. These results indicate that future tactile supervision can improve contact-aware action learning when combined with informative tactile representations and deployment-consistent information constraints.",
+      "authors": [
+        "Lei Jin",
+        "Yiding Ma",
+        "Xin Zhang",
+        "Chen Gao",
+        "Wei Wu",
+        "Yong Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-30T15:47:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.28391v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "world action model for contact-rich manipulation with mechanics-aware tactile prediction",
+      "llm_evidence_cn": "面向接触丰富操作的世界动作模型，融合力学感知触觉预测",
+      "llm_evidence": "面向接触丰富操作的世界动作模型，融合力学感知触觉预测",
+      "canonical_evidence": "面向接触丰富操作的世界动作模型，融合力学感知触觉预测",
+      "llm_tldr_en": "TacWAM extends world action models with mechanics-aware tactile futures, using a spatially aligned fusion tactile encoder to predict force, deformation, shear and slip while preventing tactile cues from becoming privileged action information.",
+      "llm_tldr_cn": "现有世界动作模型主要依赖视觉未来预测，难以监督接触丰富操作中的力、形变、剪切与滑移。TacWAM提出力学感知触觉预测方法，通过空间对齐融合触觉编码器在共享潜空间预测触觉未来，并避免触觉成为动作生成的特权信息。锚定引导机制使模型在生成动作的同时获得物理信息丰富的监督，为触觉-动作联合建模提供了新思路。",
+      "llm_tldr": "现有世界动作模型主要依赖视觉未来预测，难以监督接触丰富操作中的力、形变、剪切与滑移。TacWAM提出力学感知触觉预测方法，通过空间对齐融合触觉编码器在共享潜空间预测触觉未来，并避免触觉成为动作生成的特权信息。锚定引导机制使模型在生成动作的同时获得物理信息丰富的监督，为触觉-动作联合建模提供了新思路。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "embodied AI robot learning papers",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.28394v1",
+      "source": "arxiv",
+      "title": "Hand-Object Interaction in the Age of Large Foundation Models:Reconstruction, Generation, and Embodied Transfer",
+      "abstract": "Hand-object interaction (HOI) modeling remains challenging because it requires joint reasoning about hand articulation, object geometry, contact, semantics, and dynamics under severe visual uncertainty. Foundation models introduce transferable prior knowledge learned from large-scale cross-domain data, offering new ways to address these challenges beyond task-specific data and models. However, the rapidly growing literature remains fragmented, and existing studies typically describe these methods simply as ``using large models'' without systematically characterizing what knowledge is introduced, where it enters the HOI pipeline, or which HOI uncertainty it helps reduce. This survey presents the first systematic review of foundation-model priors for HOI. We organize the literature into six HOI tasks spanning reconstruction and generation. More importantly, we establish a taxonomy of eight foundation-model sub-priors grouped into geometric, semantic, and visual families. Geometric priors encompass shape retrieval, shape reconstruction, and spatial reconstruction; semantic priors include semantic grounding and language reasoning; and visual priors cover visual representation, image generation, and video generation. Based on this taxonomy, we systematically analyze how different priors are represented, injected, and adapted across HOI pipelines and tasks. Beyond how foundation models empower HOI, we further examine how HOI-derived knowledge is used in robot learning, including human-data pretraining, human-to-robot skill transfer, and HOI-to-robot data generation. Finally, we summarize datasets and evaluation protocols, and discuss limitations and future directions toward more generalizable HOI systems. To support long-term progress, we curate a live repository that continuously aggregates emerging methods and benchmarks.",
+      "authors": [
+        "Weiquan Lin",
+        "Yu Deng",
+        "Shiyang Liu",
+        "Luping Xiao",
+        "Xu Tang",
+        "Junzhi Yu",
+        "Jiaolong Yang",
+        "Lei Zhang",
+        "Xingyu Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-30T15:48:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.28394v1",
+      "tags": [
+        "keyword:embodied-ai",
+        "query:embodied-ai"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "systematic survey of foundation models for hand-object interaction reconstruction and embodied transfer",
+      "llm_evidence_cn": "基础模型在手物交互重建与具身迁移中的系统综述",
+      "llm_evidence": "基础模型在手物交互重建与具身迁移中的系统综述",
+      "canonical_evidence": "基础模型在手物交互重建与具身迁移中的系统综述",
+      "llm_tldr_en": "Systematic survey of how large foundation models contribute to hand-object interaction, characterizing what knowledge is introduced, where it enters the pipeline, and which uncertainties it reduces, including embodied transfer.",
+      "llm_tldr_cn": "手-物交互（HOI）建模需要联合推理手部姿态、物体几何、接触、语义与动态，视觉不确定性大。基础模型通过大规模跨域数据带来可迁移先验，但文献分散且缺少系统化分析。该综述首次系统梳理基础模型在HOI重建、生成和具身迁移中的作用，明确引入什么知识、在流程何处注入以及解决哪种不确定性。它有助于研究者理解基础模型在机器人感知与操控中的价值并规划后续方向。",
+      "llm_tldr": "手-物交互（HOI）建模需要联合推理手部姿态、物体几何、接触、语义与动态，视觉不确定性大。基础模型通过大规模跨域数据带来可迁移先验，但文献分散且缺少系统化分析。该综述首次系统梳理基础模型在HOI重建、生成和具身迁移中的作用，明确引入什么知识、在流程何处注入以及解决哪种不确定性。它有助于研究者理解基础模型在机器人感知与操控中的价值并规划后续方向。",
+      "llm_tags": [
+        "query:embodied-ai"
+      ],
+      "matched_query_tag": "query:embodied-ai",
+      "matched_query_text": "foundation models for robot perception and manipulation",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    }
+  ]
+}
