@@ -1,40 +1,83 @@
 {
-  "generated_at": "2026-08-02T20:06:29.056102+00:00",
-  "updated_date": "20260802",
+  "generated_at": "2026-08-03T21:26:15.640176+00:00",
+  "updated_date": "20260803",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260802",
+      "updated_date": "20260803",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2607.28443v1",
+          "id": "2607.29600v1",
           "source": "arxiv",
-          "title": "One Future, Every Robot: Label-Efficient Collective-State Prediction with Decentralized JEPA",
-          "abstract": "Can every robot in a swarm predict the same future collective state from only local observations and bandwidth-limited messages? We formulate this as decentralized shared-state prediction and introduce Collective-State JEPA (CS-JEPA), a recurrent joint-embedding predictive architecture whose output at every robot represents one common future token field. At deployment, each robot uses a 16-frame local history and one 64-float recurrent message per directed edge; there is no global pooling, target encoder, episode clock, or recorded future action. After pretraining without downstream collective labels, frozen representations are evaluated with ridge probes fitted on 6, 12, or 24 globally labeled episodes. Against raw-future reconstruction with the same receiver anchor and deployment capacity but 9,607 additional training-only parameters, a prospectively registered five-seed follow-up improves prediction-error and inter-robot-agreement label-budget AUC on in-distribution, ring, mutual-kNN, and unseen-size families up to 108 robots. Every effect favors CS-JEPA in 5/5 outer seeds. In a separate sealed eight-seed follow-up, matched action-conditioned predictors receive each candidate four-step plan before producing receiver-local predictive representations. CS-JEPA reduces branch-value MSE by 45.5% and improves within-context candidate-score Pearson correlation by 0.1291, with both effects favorable in 8/8 seeds, including at unseen N=32. These results support common-future JEPA targets as a label-efficient primitive for decentralized swarm prediction under topology and size shift, with additional evidence of planning-relevant value estimation.",
+          "title": "HAM-VLN: Harnessing Hierarchical Agentic Memory for Zero-Shot Vision-and-Language Navigation",
+          "abstract": "Vision-and-language navigation (VLN) enables robots to follow instructions in previously unseen environments. Recently, a training-free paradigm has emerged: the robot queries a multimodal LLM to understand its observations and plan the next action. However, long-horizon navigation based on either image streams or dense map inevitably introduces a growing memory and reasoning bottleneck. We present HAM-VLN, a decision-coupled, agent-authored memory that equips the robot with a persistent, depth-grounded world graph. In the same model call used to select the next action, HAM-VLN also records semantic and reflective information---including room type, objects, navigation progress, and failure notes. Recent waypoints remain verbatim within a bounded window, while older history re-enters the context only through retrieval scored by relevance, recency, and salience, together with one-hop topological expansion. This design requires no additional LLM calls beyond the per-waypoint decision. Compared to previous methods, HAM-VLN not only improves various navigation metrics but also reduces the context length by more than 65%. Specifically, HAM-VLN achieves 61.0% Success Rate (SR) on VLN-CE R2R, 52.7% SR on VLN-CE RxR, and 79.7% SR on HM3D-v2 ObjectNav without any training.",
           "authors": [
-            "Alan-Barsag Gazzaev",
-            "Alexey Garvilov",
-            "Sergey Muravyov"
+            "An Liu",
+            "Bingxi Liu",
+            "Hongyu Ding",
+            "Yixuan Jiang",
+            "Yaran Chen",
+            "Fulin Tang",
+            "Cong Leng",
+            "Hong Zhang",
+            "Jian Cheng"
           ],
           "primary_category": "cs.RO",
           "categories": [
             "cs.RO"
           ],
-          "published": "2026-07-30T16:16:08+00:00",
-          "link": "https://arxiv.org/pdf/2607.28443v1",
+          "published": "2026-07-31T16:32:38+00:00",
+          "link": "https://arxiv.org/pdf/2607.29600v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Label-efficient decentralized collective-state prediction for robot swarms via JEPA",
-          "llm_evidence_cn": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
-          "llm_evidence": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
-          "canonical_evidence": "基于JEPA的机器人集群标签高效去中心化集体状态预测",
-          "llm_tldr_en": "CS-JEPA is a recurrent joint-embedding predictive architecture where every robot in a swarm predicts a shared future collective-state token field from local observations and minimal messages, enabling label-efficient representation learning.",
-          "llm_tldr_cn": "针对机器人集群在仅局部观测和受限带宽条件下难以统一预测未来集体状态的问题，提出集体状态JEPA(CS-JEPA)。该架构是循环联合嵌入预测模型，每台机器人在部署时仅用16帧历史与每边一个64维消息即可输出共同的未来token场，无需全局汇聚或目标编码器。预训练不使用下游集体标签，冻结表征在6、12、24个全局标注序列的岭回归探测中表现高效。这为分布式机器人感知与预测提供了可扩展的自监督学习方案。",
-          "llm_tldr": "针对机器人集群在仅局部观测和受限带宽条件下难以统一预测未来集体状态的问题，提出集体状态JEPA(CS-JEPA)。该架构是循环联合嵌入预测模型，每台机器人在部署时仅用16帧历史与每边一个64维消息即可输出共同的未来token场，无需全局汇聚或目标编码器。预训练不使用下游集体标签，冻结表征在6、12、24个全局标注序列的岭回归探测中表现高效。这为分布式机器人感知与预测提供了可扩展的自监督学习方案。",
+          "llm_evidence_en": "multimodal LLM for robot action planning in vision-language navigation",
+          "llm_evidence_cn": "多模态大语言模型用于机器人视觉语言导航动作规划",
+          "llm_evidence": "多模态大语言模型用于机器人视觉语言导航动作规划",
+          "canonical_evidence": "多模态大语言模型用于机器人视觉语言导航动作规划",
+          "llm_tldr_en": "Decision-coupled persistent world graph memory reduces memory and reasoning bottlenecks in zero-shot VLN with multimodal LLMs.",
+          "llm_tldr_cn": "基于多模态大模型的视觉语言导航在长程任务中面临记忆与推理瓶颈。本文提出HAM-VLN，将决策与记忆耦合，在模型选择下一步动作的同时，把房间类型、物体、进度和失败记录等内容写入持久的深度世界图。该方法保持了最近路点的详细信息，减少了长程导航中的记忆负担，为训练免费的VLN智能体提供了简洁高效的记忆组织方案。",
+          "llm_tldr": "基于多模态大模型的视觉语言导航在长程任务中面临记忆与推理瓶颈。本文提出HAM-VLN，将决策与记忆耦合，在模型选择下一步动作的同时，把房间类型、物体、进度和失败记录等内容写入持久的深度世界图。该方法保持了最近路点的详细信息，减少了长程导航中的记忆负担，为训练免费的VLN智能体提供了简洁高效的记忆组织方案。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "vision language action model for robot",
+          "matched_requirement_id": "req-6",
+          "selection_source": "carryover_cache",
+          "paper_id": "2607.29600v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2607.29302v1",
+          "source": "arxiv",
+          "title": "BWM: A Low-Cost High-Fidelity World Simulator for Robot Learning",
+          "abstract": "Reliable robot learning requires a world simulator that can predict action consequences before execution on physical hardware, including risky and failure-prone outcomes. Existing physics simulators require substantial asset construction and calibration and still face a sim-to-real gap, while video generators often lack precise control over their responses to fine-grained robot actions. In this paper, we present the Boundless World Model (BWM), an open-source, low-cost, high-fidelity world simulator for robot manipulation. BWM is an action-conditioned world model that combines initial-environment guidance, dynamic visual history, and temporally aligned robot-action conditioning for stateful autoregressive prediction of future observations. We construct action-aligned training clips through trajectory replay, overlapping clip sampling, and initial-observation enhancement. BWM serves as a data engine that augments imitation-learning data with action-aligned rollouts, and as a policy evaluator for closed-loop assessment, risk anticipation, and policy ranking. Experiments on the WorldArena benchmark and physical robots demonstrate improved simulator fidelity and functional utility across the data-engine and policy-evaluator settings. BWM ranks first overall in the WorldArena Challenge across Track 1 and its two Track 2 applications. We release the BWM open-source ecosystem, including model checkpoints, training and inference code, and interfaces for data generation and policy evaluation.",
+          "authors": [
+            "BWM Team"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.CV"
+          ],
+          "published": "2026-07-31T11:18:17+00:00",
+          "link": "https://arxiv.org/pdf/2607.29302v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Action-conditioned world simulator for robot manipulation learning",
+          "llm_evidence_cn": "面向机器人操作学习的动作条件世界模拟器",
+          "llm_evidence": "面向机器人操作学习的动作条件世界模拟器",
+          "canonical_evidence": "面向机器人操作学习的动作条件世界模拟器",
+          "llm_tldr_en": "An open-source, low-cost, action-conditioned world simulator that predicts future observations for robot manipulation, addressing sim-to-real gaps without heavy physics simulation.",
+          "llm_tldr_cn": "可靠的机器人学习需要能够在真实硬件上执行前预测动作后果的世界模拟器。现有物理仿真器存在资产构建和标定成本高、sim-to-real差距大的问题，视频生成器又难以精确响应细粒度动作。BWM提出无边世界模型，基于初始环境引导、动态视觉历史和时序对齐的机器人动作条件，进行有状态的自回归未来观测预测。开源实现提供低成本高保真仿真方案，为机器人操作策略学习与迁移提供支撑。",
+          "llm_tldr": "可靠的机器人学习需要能够在真实硬件上执行前预测动作后果的世界模拟器。现有物理仿真器存在资产构建和标定成本高、sim-to-real差距大的问题，视频生成器又难以精确响应细粒度动作。BWM提出无边世界模型，基于初始环境引导、动态视觉历史和时序对齐的机器人动作条件，进行有状态的自回归未来观测预测。开源实现提供低成本高保真仿真方案，为机器人操作策略学习与迁移提供支撑。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -42,7 +85,7 @@
           "matched_query_text": "embodied AI robot learning papers",
           "matched_requirement_id": "req-7",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.28443v1",
+          "paper_id": "2607.29302v1",
           "carry_days": 1
         }
       ]
