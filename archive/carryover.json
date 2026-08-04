@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-08-03T21:26:15.640176+00:00",
-  "updated_date": "20260803",
+  "generated_at": "2026-08-04T21:53:18.519798+00:00",
+  "updated_date": "20260804",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260803",
+      "updated_date": "20260804",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2607.29600v1",
+          "id": "2608.01265v1",
           "source": "arxiv",
-          "title": "HAM-VLN: Harnessing Hierarchical Agentic Memory for Zero-Shot Vision-and-Language Navigation",
-          "abstract": "Vision-and-language navigation (VLN) enables robots to follow instructions in previously unseen environments. Recently, a training-free paradigm has emerged: the robot queries a multimodal LLM to understand its observations and plan the next action. However, long-horizon navigation based on either image streams or dense map inevitably introduces a growing memory and reasoning bottleneck. We present HAM-VLN, a decision-coupled, agent-authored memory that equips the robot with a persistent, depth-grounded world graph. In the same model call used to select the next action, HAM-VLN also records semantic and reflective information---including room type, objects, navigation progress, and failure notes. Recent waypoints remain verbatim within a bounded window, while older history re-enters the context only through retrieval scored by relevance, recency, and salience, together with one-hop topological expansion. This design requires no additional LLM calls beyond the per-waypoint decision. Compared to previous methods, HAM-VLN not only improves various navigation metrics but also reduces the context length by more than 65%. Specifically, HAM-VLN achieves 61.0% Success Rate (SR) on VLN-CE R2R, 52.7% SR on VLN-CE RxR, and 79.7% SR on HM3D-v2 ObjectNav without any training.",
+          "title": "Hermite Curves as Trajectory Priors for Vision-Language-Action Models",
+          "abstract": "Despite recent progress in Vision-Language-Action (VLA) models for robotic manipulation, the action chunk remains a weakly structured interface. Existing work typically flatten each chunk into per-timestep controls, relying on implicit data learning that manifests as jagged motion and boundary discontinuities during physical execution. To address these limitations, we introduce Hermite trajectory priors, parameterizing the chunk trajectory as a piecewise cubic Hermite curve defined by endpoint positions and velocities to explicitly enforce smoothness and continuity. We instantiate this fixed operator across discrete autoregressive and continuous generative paradigms via three variants: (1) Hermite Tokens, which predict quantized boundary variables autoregressively; (2) Hermite Scaffold, which decomposes clean actions into a base scaffold and residuals; and (3) Hermite Regularization, which applies the prior strictly as an auxiliary training objective. Across simulation benchmarks and real-robot platforms, Hermite Regularization achieves superior performance among these three variants, improving π0.5 baseline success rates from 95.9% to 98.7% on LIBERO, 85.7% to 90.9% on LIBERO-plus, and 63.4% to 90.0% across four real-robot tasks without additional inference overhead. Trajectory analyses reveal that explicitly structuring trajectory priors serves most effectively as a learning inductive bias rather than a runtime constraint.",
           "authors": [
-            "An Liu",
-            "Bingxi Liu",
-            "Hongyu Ding",
-            "Yixuan Jiang",
-            "Yaran Chen",
-            "Fulin Tang",
-            "Cong Leng",
-            "Hong Zhang",
-            "Jian Cheng"
+            "Qi Lv",
+            "Jianming Xing",
+            "Zhao Yang",
+            "Mingyuan Yao",
+            "Yinan Shi",
+            "Yawei Jueluo",
+            "Mike Zheng Shou",
+            "Xiang Deng"
           ],
           "primary_category": "cs.RO",
           "categories": [
-            "cs.RO"
+            "cs.RO",
+            "cs.CV"
           ],
-          "published": "2026-07-31T16:32:38+00:00",
-          "link": "https://arxiv.org/pdf/2607.29600v1",
+          "published": "2026-08-02T14:18:17+00:00",
+          "link": "https://arxiv.org/pdf/2608.01265v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "multimodal LLM for robot action planning in vision-language navigation",
-          "llm_evidence_cn": "多模态大语言模型用于机器人视觉语言导航动作规划",
-          "llm_evidence": "多模态大语言模型用于机器人视觉语言导航动作规划",
-          "canonical_evidence": "多模态大语言模型用于机器人视觉语言导航动作规划",
-          "llm_tldr_en": "Decision-coupled persistent world graph memory reduces memory and reasoning bottlenecks in zero-shot VLN with multimodal LLMs.",
-          "llm_tldr_cn": "基于多模态大模型的视觉语言导航在长程任务中面临记忆与推理瓶颈。本文提出HAM-VLN，将决策与记忆耦合，在模型选择下一步动作的同时，把房间类型、物体、进度和失败记录等内容写入持久的深度世界图。该方法保持了最近路点的详细信息，减少了长程导航中的记忆负担，为训练免费的VLN智能体提供了简洁高效的记忆组织方案。",
-          "llm_tldr": "基于多模态大模型的视觉语言导航在长程任务中面临记忆与推理瓶颈。本文提出HAM-VLN，将决策与记忆耦合，在模型选择下一步动作的同时，把房间类型、物体、进度和失败记录等内容写入持久的深度世界图。该方法保持了最近路点的详细信息，减少了长程导航中的记忆负担，为训练免费的VLN智能体提供了简洁高效的记忆组织方案。",
+          "llm_evidence_en": "Hermite trajectory priors improving action chunk structure in Vision-Language-Action models",
+          "llm_evidence_cn": "用Hermite轨迹先验改进VLA模型动作块结构与执行平滑性",
+          "llm_evidence": "用Hermite轨迹先验改进VLA模型动作块结构与执行平滑性",
+          "canonical_evidence": "用Hermite轨迹先验改进VLA模型动作块结构与执行平滑性",
+          "llm_tldr_en": "Proposes Hermite trajectory priors that parameterize action chunks as piecewise cubic Hermite curves, enforcing smooth and continuous robot motion across autoregressive and generative VLA variants.",
+          "llm_tldr_cn": "VLA模型的动作块仍是弱结构接口，将块展开为逐时间步控制会导致物理执行中的抖动和边界不连续。该文引入分段三次Hermite曲线作为轨迹先验，利用端点位置与速度显式约束平滑性，并在离散自回归与连续生成范式中实现Hermite Tokens等三种变体。实验显示该方法能改善VLA模型执行动作的平滑性与连续性。该工作通过结构化轨迹表示增强了VLA动作接口的表达质量。",
+          "llm_tldr": "VLA模型的动作块仍是弱结构接口，将块展开为逐时间步控制会导致物理执行中的抖动和边界不连续。该文引入分段三次Hermite曲线作为轨迹先验，利用端点位置与速度显式约束平滑性，并在离散自回归与连续生成范式中实现Hermite Tokens等三种变体。实验显示该方法能改善VLA模型执行动作的平滑性与连续性。该工作通过结构化轨迹表示增强了VLA动作接口的表达质量。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -48,36 +48,41 @@
           "matched_query_text": "vision language action model for robot",
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.29600v1",
+          "paper_id": "2608.01265v1",
           "carry_days": 1
         },
         {
-          "id": "2607.29302v1",
+          "id": "2608.01851v1",
           "source": "arxiv",
-          "title": "BWM: A Low-Cost High-Fidelity World Simulator for Robot Learning",
-          "abstract": "Reliable robot learning requires a world simulator that can predict action consequences before execution on physical hardware, including risky and failure-prone outcomes. Existing physics simulators require substantial asset construction and calibration and still face a sim-to-real gap, while video generators often lack precise control over their responses to fine-grained robot actions. In this paper, we present the Boundless World Model (BWM), an open-source, low-cost, high-fidelity world simulator for robot manipulation. BWM is an action-conditioned world model that combines initial-environment guidance, dynamic visual history, and temporally aligned robot-action conditioning for stateful autoregressive prediction of future observations. We construct action-aligned training clips through trajectory replay, overlapping clip sampling, and initial-observation enhancement. BWM serves as a data engine that augments imitation-learning data with action-aligned rollouts, and as a policy evaluator for closed-loop assessment, risk anticipation, and policy ranking. Experiments on the WorldArena benchmark and physical robots demonstrate improved simulator fidelity and functional utility across the data-engine and policy-evaluator settings. BWM ranks first overall in the WorldArena Challenge across Track 1 and its two Track 2 applications. We release the BWM open-source ecosystem, including model checkpoints, training and inference code, and interfaces for data generation and policy evaluation.",
+          "title": "Weights or Skills? A Survey of Robot-Learning Techniques: from Action-Predicting Weights to Robots that Write their Own Skills",
+          "abstract": "Robot learning is splitting into two bets: policies that bake competence into frozen weights (vision-language-action, or VLA, models), and agents that write and refine their own executable skills as code. This survey organises the field around that axis of weights versus skills. Its central analytical contribution is a deep-dive that arranges code-as-policy methods by their degree of self-improvement, from zero-shot program synthesis, through closed-loop self-repair and persistent skill memory, to the sparsely populated cell in which execution feedback, skill memory, and evolutionary search combine into one open-ended loop; only a few very recent systems (for example ASPIRE, ENPIRE, and RoboClaw) occupy that cell. We map the complementary \"skills\" pole, from unsupervised reinforcement-learning skill discovery to large-language-model skill libraries, and show that the word \"skill\" is used in at least five distinct senses, of which only the code sense self-improves without gradient updates. We then connect the taxonomy to the emerging skill economy: commercial robot-skill marketplaces now distribute one-tap skills across robots but ship only static playback, which surfaces open problems of adaptation, cross-embodiment portability, provenance, safety verification, composition, and standardisation. This is a deliberately focused survey. Rather than cataloguing the field exhaustively, it examines 77 representative systems across six technique families through one taxonomy and a set of contrast tables, and it supplies operational definitions of the self-improvement mechanisms together with a statement of what each family cannot do.",
           "authors": [
-            "BWM Team"
+            "Gaytri Jena",
+            "Kapil Wanaskar",
+            "Vinija Jain",
+            "Aman Chadha",
+            "Vasu Sharma",
+            "Amitava Das"
           ],
           "primary_category": "cs.RO",
           "categories": [
             "cs.RO",
-            "cs.CV"
+            "cs.AI"
           ],
-          "published": "2026-07-31T11:18:17+00:00",
-          "link": "https://arxiv.org/pdf/2607.29302v1",
+          "published": "2026-08-03T07:58:35+00:00",
+          "link": "https://arxiv.org/pdf/2608.01851v1",
           "tags": [
             "keyword:embodied-ai",
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Action-conditioned world simulator for robot manipulation learning",
-          "llm_evidence_cn": "面向机器人操作学习的动作条件世界模拟器",
-          "llm_evidence": "面向机器人操作学习的动作条件世界模拟器",
-          "canonical_evidence": "面向机器人操作学习的动作条件世界模拟器",
-          "llm_tldr_en": "An open-source, low-cost, action-conditioned world simulator that predicts future observations for robot manipulation, addressing sim-to-real gaps without heavy physics simulation.",
-          "llm_tldr_cn": "可靠的机器人学习需要能够在真实硬件上执行前预测动作后果的世界模拟器。现有物理仿真器存在资产构建和标定成本高、sim-to-real差距大的问题，视频生成器又难以精确响应细粒度动作。BWM提出无边世界模型，基于初始环境引导、动态视觉历史和时序对齐的机器人动作条件，进行有状态的自回归未来观测预测。开源实现提供低成本高保真仿真方案，为机器人操作策略学习与迁移提供支撑。",
-          "llm_tldr": "可靠的机器人学习需要能够在真实硬件上执行前预测动作后果的世界模拟器。现有物理仿真器存在资产构建和标定成本高、sim-to-real差距大的问题，视频生成器又难以精确响应细粒度动作。BWM提出无边世界模型，基于初始环境引导、动态视觉历史和时序对齐的机器人动作条件，进行有状态的自回归未来观测预测。开源实现提供低成本高保真仿真方案，为机器人操作策略学习与迁移提供支撑。",
+          "llm_evidence_en": "survey of robot-learning techniques covering VLA and code-as-policy",
+          "llm_evidence_cn": "机器人学习技术综述，涵盖VLA模型与代码即策略",
+          "llm_evidence": "机器人学习技术综述，涵盖VLA模型与代码即策略",
+          "canonical_evidence": "机器人学习技术综述，涵盖VLA模型与代码即策略",
+          "llm_tldr_en": "This survey organizes the field of robot learning around the axis of frozen-weight VLA models versus agents that write and refine their own executable skills as code, mapping the landscape and self-improvement degrees.",
+          "llm_tldr_cn": "机器人学习正分化为两条路线：将能力固化在权重中的视觉-语言-动作（VLA）模型，以及能够编写并迭代自身可执行技能（代码即策略）的智能体。本综述围绕“权重”与“技能”这一主轴组织领域研究，并深入分析代码即策略方法的不同自改进程度，从零样本程序合成、闭环自我修复、持久技能记忆，到结合执行反馈、技能记忆与进化搜索的开放循环系统。该综述为理解机器人学习的技术谱系与未来发展方向提供了系统性框架。",
+          "llm_tldr": "机器人学习正分化为两条路线：将能力固化在权重中的视觉-语言-动作（VLA）模型，以及能够编写并迭代自身可执行技能（代码即策略）的智能体。本综述围绕“权重”与“技能”这一主轴组织领域研究，并深入分析代码即策略方法的不同自改进程度，从零样本程序合成、闭环自我修复、持久技能记忆，到结合执行反馈、技能记忆与进化搜索的开放循环系统。该综述为理解机器人学习的技术谱系与未来发展方向提供了系统性框架。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -85,7 +90,134 @@
           "matched_query_text": "embodied AI robot learning papers",
           "matched_requirement_id": "req-7",
           "selection_source": "carryover_cache",
-          "paper_id": "2607.29302v1",
+          "paper_id": "2608.01851v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2608.01880v1",
+          "source": "arxiv",
+          "title": "World Action Models in Real Time: An Empirical Study of Smooth Execution via Asynchronous Deployment",
+          "abstract": "World Action Models generate fixed-horizon action chunks through iterative denoising, creating substantial inference latency that can cause pauses, stale actions, and discontinuities during robotic execution. We present an empirical study of asynchronous deployment strategies that overlap model inference with action execution to enable responsive and smooth control. We compare six strategies, including synchronous execution, pure asynchronous switching, post-hoc action blending, denoising-time blending, inference-time velocity guidance, and prefix-conditioned generation, on a 10 Hz bimanual robot. Evaluation combines offline trajectory analysis with online experiments across dynamic manipulation, precision-critical placement, and long-horizon tasks. Our results identify accurate temporal alignment between observations, predictions, and executed commands as a fundamental requirement. Alignment errors produce persistent chunk-boundary discontinuities that cannot be corrected through blending alone. With proper alignment, direct action weighting provides a simple and smooth baseline but sacrifices accuracy in precision-critical tasks. Inference-time velocity guidance fails to reliably constrain committed actions on our platform. In contrast, prefix-conditioned generation achieves the best overall balance between task performance, execution speed, and trajectory smoothness by learning consistent action continuations during training. These findings clarify the practical trade-offs among asynchronous deployment strategies and provide guidance for deploying high-latency World Action Models in real-time robotic systems.",
+          "authors": [
+            "Motubrain Team"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-08-03T08:24:36+00:00",
+          "link": "https://arxiv.org/pdf/2608.01880v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Action chunk generation via iterative denoising and smooth execution strategies",
+          "llm_evidence_cn": "通过迭代去噪生成动作分块并研究平滑执行策略",
+          "llm_evidence": "通过迭代去噪生成动作分块并研究平滑执行策略",
+          "canonical_evidence": "通过迭代去噪生成动作分块并研究平滑执行策略",
+          "llm_tldr_en": "Empirically compares six asynchronous deployment strategies for World Action Models that generate action chunks via iterative denoising, showing improved smoothness and responsiveness in bimanual robot control.",
+          "llm_tldr_cn": "世界-动作模型通过迭代去噪生成固定时域的动作分块，其推理延迟常导致机器人执行中的停顿和断点。论文在10Hz双臂机器人上比较六种异步部署策略，包括同步执行、纯异步切换、执行后混合、去噪时混合、推理时速度引导和前缀条件生成。结合离线轨迹分析与在线实验，证明异步部署能有效改善响应性和执行平滑性，为实时扩散型策略部署提供经验指导。",
+          "llm_tldr": "世界-动作模型通过迭代去噪生成固定时域的动作分块，其推理延迟常导致机器人执行中的停顿和断点。论文在10Hz双臂机器人上比较六种异步部署策略，包括同步执行、纯异步切换、执行后混合、去噪时混合、推理时速度引导和前缀条件生成。结合离线轨迹分析与在线实验，证明异步部署能有效改善响应性和执行平滑性，为实时扩散型策略部署提供经验指导。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "diffusion policy robotics",
+          "matched_requirement_id": "req-4",
+          "selection_source": "carryover_cache",
+          "paper_id": "2608.01880v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2608.01452v1",
+          "source": "arxiv",
+          "title": "DynamicManip: Enabling Dynamic Manipulation from a Single Static Demonstration",
+          "abstract": "Dynamic manipulation is a critical capability for robots operating in complex and dynamic environments, where robots must interact with objects that are moving or require rapid adjustments. However, learning models for dynamic manipulation tasks face two major challenges: (1) the combinatorial complexity of dynamic scenarios leads to substantial data requirements, and (2) rapid variations in dynamics require real-time and accurate policy execution. In this paper, we propose DynamicManip to address these challenges through an efficient data augmentation pipeline and a low-latency imitation policy. We first propose a static-to-dynamic augmentation pipeline that synthesizes diverse dynamic manipulation demonstrations from a single static demonstration. Second, we introduce a dynamic-aware adaptive policy that adjusts its inference frequency according to task dynamics, enabling responsive and effective dynamic manipulation. Third, we build a dynamic manipulation benchmark, which includes diverse dynamic tasks with an automatic evaluation system for scalable and consistent assessment. Extensive experiments in both simulation and the real world demonstrate that DynamicManip not only provides significant improvements in data efficiency but also achieves better performance in dynamic manipulation tasks, with a mean success rate 18.4 percentage points higher and policy-query latency 32.9% lower.",
+          "authors": [
+            "Haoran Liao",
+            "Pengyue Wang",
+            "Shuoyu Chen",
+            "Kehan Cheng",
+            "Xuhang Chen",
+            "Yuhao Lin",
+            "Mu Lin",
+            "Zhizhao Liang",
+            "Xiaoyi Fan",
+            "Chengyi Xing",
+            "Dan Niu",
+            "Yi-Lin Wei",
+            "Wei-Shi Zheng"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "published": "2026-08-02T19:23:54+00:00",
+          "link": "https://arxiv.org/pdf/2608.01452v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Data augmentation and low-latency imitation policy for dynamic manipulation from a single static demonstration",
+          "llm_evidence_cn": "从单个静态示范学习动态操作的数据增强与低延迟模仿策略",
+          "llm_evidence": "从单个静态示范学习动态操作的数据增强与低延迟模仿策略",
+          "canonical_evidence": "从单个静态示范学习动态操作的数据增强与低延迟模仿策略",
+          "llm_tldr_en": "Proposes a static-to-dynamic augmentation pipeline that synthesizes diverse dynamic manipulation demonstrations from a single static demo, plus a low-latency imitation policy, demonstrating real-time accurate execution with reduced data demands.",
+          "llm_tldr_cn": "动态操作要求机器人处理移动物体并快速调整，但学习动态操作面临数据需求大和实时执行难两大挑战。本文提出DynamicManip，通过静态到动态的数据增强管道从单个静态示范合成多种动态操作示范，并设计低延迟模仿策略实现实时准确执行。该方法降低了动态操作的数据门槛，同时保证了策略的低时延，为复杂动态场景下的机器人操作提供了高效解决方案。",
+          "llm_tldr": "动态操作要求机器人处理移动物体并快速调整，但学习动态操作面临数据需求大和实时执行难两大挑战。本文提出DynamicManip，通过静态到动态的数据增强管道从单个静态示范合成多种动态操作示范，并设计低延迟模仿策略实现实时准确执行。该方法降低了动态操作的数据门槛，同时保证了策略的低时延，为复杂动态场景下的机器人操作提供了高效解决方案。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2608.01452v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2608.02547v1",
+          "source": "arxiv",
+          "title": "Why Does Action Chunking Improve Behavioral Cloning Performance in Robotic Control?",
+          "abstract": "Action chunking---predicting and executing multiple actions instead of a single action---has proven to be a critical component for learning effective robotic control policies. However, our precise understanding of why action chunking improves performance has remained limited. In this work we seek to close this gap. Through rigorous experimental evaluations in both simulated and real-world settings, we show that existing hypotheses for the success of action chunking---temporal consistency, horizon reduction, and representation learning---fail to explain the success of action chunking. Instead, we find that action chunking benefits from greater non-Markovian expressivity and reduced compounding error compared to Markovian policies, but, in many settings of interest, these effects can be fully captured by delayed policies, which at each step predict a single action based on the observation $k$ steps in the past. We then show that there exists an additional benefit of action chunking that we refer to as implicit ensembling. In particular, by learning a diversity of temporal relationships (that is, $a_t | o_t, a_t | o_{t-1}, \\ldots$), action-chunked policies exhibit behavior matching that of a model ensemble, increasing their robustness and generalization ability over policies that only learn a single temporal relationship. Building on these insights, we show that in simulated and real-world robotic control settings, we can match the performance of action chunking without action chunking---by deploying an action chunking policy as an ensemble of policies with randomized delays. Furthermore, we propose a policy class that amplifies the benefits of action chunking by explicitly instantiating an ensemble, and which we show significantly improves over the performance of action chunking in many domains.",
+          "authors": [
+            "Filippo Lazzati",
+            "Kyle Stachowicz",
+            "William Chen",
+            "Alberto Maria Metelli",
+            "Andrew Wagenmaker",
+            "Sergey Levine"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-08-03T17:32:45+00:00",
+          "link": "https://arxiv.org/pdf/2608.02547v1",
+          "tags": [
+            "keyword:embodied-ai",
+            "query:embodied-ai"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Analyzes why action chunking improves behavioral cloning in robot control",
+          "llm_evidence_cn": "分析动作分块为何能提升机器人控制中的行为克隆性能",
+          "llm_evidence": "分析动作分块为何能提升机器人控制中的行为克隆性能",
+          "canonical_evidence": "分析动作分块为何能提升机器人控制中的行为克隆性能",
+          "llm_tldr_en": "Controlled experiments in sim and real show that common explanations for action chunking (temporal consistency, horizon reduction, representation learning) fail; benefits come from non-Markovian expressivity and reduced compounding error.",
+          "llm_tldr_cn": "动作分块是行为克隆提升机器人控制性能的关键技术，但原因不明。本文通过模拟和真机实验排除了时间一致性、视界缩减和表示学习等常见解释，指出其益处源于非马尔可夫表达能力的增强和复合误差的降低。这一发现深化了对机器人模仿学习机制的理解，有助于设计更有效的动作生成策略。",
+          "llm_tldr": "动作分块是行为克隆提升机器人控制性能的关键技术，但原因不明。本文通过模拟和真机实验排除了时间一致性、视界缩减和表示学习等常见解释，指出其益处源于非马尔可夫表达能力的增强和复合误差的降低。这一发现深化了对机器人模仿学习机制的理解，有助于设计更有效的动作生成策略。",
+          "llm_tags": [
+            "query:embodied-ai"
+          ],
+          "matched_query_tag": "query:embodied-ai",
+          "matched_query_text": "imitation learning robotic manipulation",
+          "matched_requirement_id": "req-3",
+          "selection_source": "carryover_cache",
+          "paper_id": "2608.02547v1",
           "carry_days": 1
         }
       ]
