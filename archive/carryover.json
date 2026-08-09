@@ -1,96 +1,12 @@
 {
-  "generated_at": "2026-08-08T20:52:12.452562+00:00",
-  "updated_date": "20260808",
+  "generated_at": "2026-08-09T20:30:16.036707+00:00",
+  "updated_date": "20260809",
   "carryover_days": 9,
   "tag_states": {
     "embodied-ai": {
-      "updated_date": "20260808",
+      "updated_date": "20260809",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2608.04042v1",
-          "source": "arxiv",
-          "title": "Kitchen Robotic Manipulation utilizing Foundation Models",
-          "abstract": "Deploying robots in everyday human environments requires perception systems that are both robust and adaptable to diverse, dynamic conditions. In this work, we present a modular perception pipeline for household manipulation tasks, with a focus on dishware handling in kitchen environments. The pipeline integrates open-vocabulary object detection, multi-view segmentation, instance-aware 3D reconstruction, and a 2D-3D feature fusion strategy for 6D pose estimation and grasp planning. Its modular design enables systematic substitution of multiple visual and geometric foundation models, allowing us to identify the best-performing configuration through extensive evaluation on a custom kitchen dataset. The best-performing configuration (LLMDet + SAMv2 + DINOv2 + GeoTransformer) achieves an ADI of 89.12\\% on the 20-scene kitchen benchmark with cluttered and occluded conditions. Furthermore, real-world demonstrations confirm that the best configuration can be deployed on physical robots without environment-specific retraining, successfully executing tasks such as sink-to-dishwasher transfer and cup stacking. It validates the adaptability and scalability of the pipeline and highlights its potential as a practical framework for household robotic systems. Our code and supplementary materials are available at https://raivlab.github.io/FM_kitchen .",
-          "authors": [
-            "Myung-Hwan Jeon",
-            "Sankalp Yamsani",
-            "Joohyung Kim"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-08-04T05:07:45+00:00",
-          "link": "https://arxiv.org/pdf/2608.04042v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Modular perception pipeline leverages foundation models for kitchen manipulation",
-          "llm_evidence_cn": "模块化感知流程利用基础模型完成厨房操作",
-          "llm_evidence": "模块化感知流程利用基础模型完成厨房操作",
-          "canonical_evidence": "模块化感知流程利用基础模型完成厨房操作",
-          "llm_tldr_en": "Presents a modular perception pipeline integrating open-vocabulary detection, segmentation, 3D reconstruction and 2D-3D fusion for kitchen manipulation, and identifies the best foundation model configuration.",
-          "llm_tldr_cn": "在家庭厨房环境中部署机器人需要鲁棒且灵活的感知系统。本文构建模块化感知流水线，集成开放词汇目标检测、多视角分割、实例级3D重建以及2D-3D特征融合，用于餐具的6D姿态估计与抓取规划。在自定义厨房数据集上系统评估多种基础模型组合，找出最优配置。该工作展示了基础模型在家庭操作中的组合应用潜力。",
-          "llm_tldr": "在家庭厨房环境中部署机器人需要鲁棒且灵活的感知系统。本文构建模块化感知流水线，集成开放词汇目标检测、多视角分割、实例级3D重建以及2D-3D特征融合，用于餐具的6D姿态估计与抓取规划。在自定义厨房数据集上系统评估多种基础模型组合，找出最优配置。该工作展示了基础模型在家庭操作中的组合应用潜力。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "foundation models for robot perception and manipulation",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.04042v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.03701v1",
-          "source": "arxiv",
-          "title": "LiLa-WAM: Lightweight Latent Reasoning World-Action Model for Robotic Manipulation",
-          "abstract": "World-action modeling has emerged as a promising paradigm for robotic control, as it empowers models to go beyond reacting to observations and anticipate how a scene will evolve. However, existing WAMs often incur substantial computational overhead. Pixel-space methods often allocate substantial capacity to visual details that may not be directly relevant to control, while some latent-space methods require multi-stage training to construct the reasoning space. The resulting training cost can make such methods difficult to train under modest computational budgets. In this work, we propose LiLa-WAM, a lightweight world-action model that reasons about the future in a compact latent space and can be trained end-to-end on a single 24GB GPU. Its core design is a compact latent reasoning space jointly shaped by future-state prediction and action generation, which keeps the model lightweight while remaining well aligned with control. For task specification, we further propose the Visual Transition Token(VTT), a language-free task representation that encodes each task as a direction in visual feature space. Experiments on RoboTwin~2.0, LIBERO, and real-robot tasks demonstrate LiLa-WAM's effectiveness, achieving 90.48\\% success across 50 RoboTwin tasks with single-GPU training.",
-          "authors": [
-            "Fan Yang",
-            "Yuting Su",
-            "Xiaobo Wang",
-            "Yuncheng You",
-            "Fugui Fan",
-            "Yuting Wu",
-            "Minghui Wu",
-            "Chenxu Zhao",
-            "JiaHong Ning",
-            "Peiguang Jing"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.AI"
-          ],
-          "published": "2026-08-04T14:06:15+00:00",
-          "link": "https://arxiv.org/pdf/2608.03701v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Lightweight latent world-action model for robotic manipulation, trainable end-to-end on a single GPU",
-          "llm_evidence_cn": "面向机器人操作的轻量级潜在世界-行动模型，可在单GPU上端到端训练",
-          "llm_evidence": "面向机器人操作的轻量级潜在世界-行动模型，可在单GPU上端到端训练",
-          "canonical_evidence": "面向机器人操作的轻量级潜在世界-行动模型，可在单GPU上端到端训练",
-          "llm_tldr_en": "LiLa-WAM proposes a lightweight world-action model that reasons about future scenes in a compact latent space, avoiding pixel-space overhead and multi-stage training, and enables end-to-end robot manipulation learning on a single 24GB GPU.",
-          "llm_tldr_cn": "现有的世界-行动模型（WAM）往往计算开销大，像素空间方法浪费容量在无关视觉细节，潜在空间方法又常需多阶段训练。LiLa-WAM在紧凑潜在空间中进行未来推理，支持端到端训练，且只需一张24GB GPU。实验验证其在机器人操作任务上能以轻量方式达到有竞争力的性能，降低了世界模型在具身智能中的使用门槛。",
-          "llm_tldr": "现有的世界-行动模型（WAM）往往计算开销大，像素空间方法浪费容量在无关视觉细节，潜在空间方法又常需多阶段训练。LiLa-WAM在紧凑潜在空间中进行未来推理，支持端到端训练，且只需一张24GB GPU。实验验证其在机器人操作任务上能以轻量方式达到有竞争力的性能，降低了世界模型在具身智能中的使用门槛。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI robot learning papers",
-          "matched_requirement_id": "req-7",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.03701v1",
-          "carry_days": 1
-        },
         {
           "id": "2608.05084v1",
           "source": "arxiv",
@@ -128,7 +44,7 @@
           "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
           "paper_id": "2608.05084v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2608.04309v1",
@@ -153,13 +69,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "LLM-based structured task planning for human-robot coordination",
-          "llm_evidence_cn": "基于LLM的结构化人机协作任务规划",
-          "llm_evidence": "基于LLM的结构化人机协作任务规划",
-          "canonical_evidence": "基于LLM的结构化人机协作任务规划",
-          "llm_tldr_en": "A structured LLM architecture with ToM inference and hierarchical planning enables zero-shot human-robot coordination under hidden goals, outperforming an offline MARL baseline in efficiency and trust.",
-          "llm_tldr_cn": "人机协作中双方对目标互不可见时，零样本协调非常困难。本文提出一种结构化LLM推理架构，基于Dec-POMDP将决策分解为心智理论推断、层次规划、对话解释、动作验证与反馈重规划。人类参与实验显示，该方法相比不带ToM的消融和离线多智能体RL策略，所需交互步数更少，信任度更高，为利用基础模型实现灵活的人机协作提供了可行路径。",
-          "llm_tldr": "人机协作中双方对目标互不可见时，零样本协调非常困难。本文提出一种结构化LLM推理架构，基于Dec-POMDP将决策分解为心智理论推断、层次规划、对话解释、动作验证与反馈重规划。人类参与实验显示，该方法相比不带ToM的消融和离线多智能体RL策略，所需交互步数更少，信任度更高，为利用基础模型实现灵活的人机协作提供了可行路径。",
+          "llm_evidence_en": "Structured LLM planning with Theory-of-Mind for human-robot coordination",
+          "llm_evidence_cn": "结构化LLM推理用于人机协作规划",
+          "llm_evidence": "结构化LLM推理用于人机协作规划",
+          "canonical_evidence": "结构化LLM推理用于人机协作规划",
+          "llm_tldr_en": "Presents a structured LLM architecture with Theory-of-Mind and hierarchical planning for zero-shot human-robot coordination, outperforming offline MARL in human trials.",
+          "llm_tldr_cn": "零样本人机协作需要理解隐藏目标并进行层次规划，现有方法难以适应。本文提出结构化LLM推理架构，结合行动条件的心理理论推断、层次规划、对话理解、动作验证和反馈重规划，并以Dec-POMDP为指导。与离线多智能体RL基线相比，该方法在人类参与实验中所需交互步骤更少且信任度更高。证明LLM推理可用于零样本协作规划。",
+          "llm_tldr": "零样本人机协作需要理解隐藏目标并进行层次规划，现有方法难以适应。本文提出结构化LLM推理架构，结合行动条件的心理理论推断、层次规划、对话理解、动作验证和反馈重规划，并以Dec-POMDP为指导。与离线多智能体RL基线相比，该方法在人类参与实验中所需交互步骤更少且信任度更高。证明LLM推理可用于零样本协作规划。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -195,13 +111,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Audit of task-vector negation in VLA policies for closed-loop robot control",
-          "llm_evidence_cn": "对VLA策略任务向量相消的闭环机器人控制审计",
-          "llm_evidence": "对VLA策略任务向量相消的闭环机器人控制审计",
-          "canonical_evidence": "对VLA策略任务向量相消的闭环机器人控制审计",
-          "llm_tldr_en": "This paper audits task-vector negation in VLA policies, finding three regimes across LIBERO-Goal skills and showing target suppression harms control retention.",
-          "llm_tldr_cn": "该研究系统审计了在多任务视觉-语言-动作（VLA）策略中对单个技能任务向量做相消的闭环效果。在LIBERO-Goal的十项技能上，相消操作产生目标-控制分离、抵抗和全局崩溃三种截然不同的结果；即使可抑制技能的目标成功率降至0%，平均控制保留率仅约52%，且每次编辑都会显著破坏至少一个无关控制。这揭示VLA策略中任务向量编辑的局部性脆弱，为安全修改策略模型提供了重要警示。",
-          "llm_tldr": "该研究系统审计了在多任务视觉-语言-动作（VLA）策略中对单个技能任务向量做相消的闭环效果。在LIBERO-Goal的十项技能上，相消操作产生目标-控制分离、抵抗和全局崩溃三种截然不同的结果；即使可抑制技能的目标成功率降至0%，平均控制保留率仅约52%，且每次编辑都会显著破坏至少一个无关控制。这揭示VLA策略中任务向量编辑的局部性脆弱，为安全修改策略模型提供了重要警示。",
+          "llm_evidence_en": "closed-loop target-and-control audit of task-vector negation in multitask VLA policies",
+          "llm_evidence_cn": "对多任务VLA策略中任务向量否定的闭环目标与控制审计",
+          "llm_evidence": "对多任务VLA策略中任务向量否定的闭环目标与控制审计",
+          "canonical_evidence": "对多任务VLA策略中任务向量否定的闭环目标与控制审计",
+          "llm_tldr_en": "Audits per-skill task-vector subtraction in multitask VLA policies over all LIBERO-Goal skills, finding five suppressible targets but only 52% control retention and fragility where every edit harms at least one unrelated control.",
+          "llm_tldr_cn": "任务向量运算可快速修改模型，但其在闭环机器人控制中的局部性仍未明确。本文对多任务VLA策略进行逐技能任务向量减法审计，覆盖全部LIBERO-Goal技能，发现目标抑制在五个技能上有效，两类技能全局崩溃，且基线归一化对照保持率平均仅52%。每个目标抑制编辑都会损害至少一个无关控制，说明任务向量编辑的局部性脆弱。该发现对模型编辑在机器人策略中的安全应用提出重要警示。",
+          "llm_tldr": "任务向量运算可快速修改模型，但其在闭环机器人控制中的局部性仍未明确。本文对多任务VLA策略进行逐技能任务向量减法审计，覆盖全部LIBERO-Goal技能，发现目标抑制在五个技能上有效，两类技能全局崩溃，且基线归一化对照保持率平均仅52%。每个目标抑制编辑都会损害至少一个无关控制，说明任务向量编辑的局部性脆弱。该发现对模型编辑在机器人策略中的安全应用提出重要警示。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -210,189 +126,6 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2608.04692v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.04768v1",
-          "source": "arxiv",
-          "title": "Embedding Large Language Models into Flow Controls: An Agentic Framework for Adaptive and Trustworthy Automated Cooking",
-          "abstract": "Automated cooking robots have traditionally relied on predefined procedures and rule-based control, ensuring stable execution but offering limited personalization, whereas recent large-model approaches support natural language interaction but often suffer from opaque decision making and unreliable execution in real kitchens. To address this challenge, this paper proposes an agentic framework that systematically decomposes personalized cooking requirements into structured and verifiable control programs rather than directly mapping language to actions. Multiple AI agents collaboratively transform user intents into canonical recipes, workflow programs with explicit flow control, and executable Python code grounded in an atomic action library. The system consists of three tightly coupled stages: offline recipe-to-code generation through multiple agents, online closed-loop execution with supervisory intervention enabled by multimodal perception, and post-run adaptation that updates user preference models for long-term personalization. Real-world experiments on a physical cooking platform demonstrate that the proposed framework achieves reliable task completion, transparent execution logic, and effective anomaly handling across diverse personalized scenarios, validating its practicality for trustworthy automated cooking in real environments.",
-          "authors": [
-            "Zihan Song",
-            "Hongwei Huang",
-            "Yueshuo Sun",
-            "Yonglin Tian",
-            "Fei-Yue Wang",
-            "Bai Li"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-08-05T12:33:12+00:00",
-          "link": "https://arxiv.org/pdf/2608.04768v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "LLM-based agentic task planning and control for automated cooking robots",
-          "llm_evidence_cn": "基于大语言模型的智能体任务规划与自动烹饪机器人控制",
-          "llm_evidence": "基于大语言模型的智能体任务规划与自动烹饪机器人控制",
-          "canonical_evidence": "基于大语言模型的智能体任务规划与自动烹饪机器人控制",
-          "llm_tldr_en": "This paper presents an agentic framework that decomposes personalized cooking needs into structured control programs using multiple AI agents, improving transparency and traceability over direct language-to-action mapping.",
-          "llm_tldr_cn": "自动烹饪机器人传统依赖预设程序和规则控制，缺乏个性化；而大模型直接映射语言到动作又不够透明和可靠。该文提出多智能体框架，将个性化烹饪需求系统分解为可验证的结构化控制程序，通过多个AI代理协作将用户意图转化为规范菜谱、流程控制工作流和可执行Python代码。该方法在保证执行稳定的同时支持自然语言交互，提升了任务规划的透明度和可追溯性，为可信机器人任务规划提供了新思路。",
-          "llm_tldr": "自动烹饪机器人传统依赖预设程序和规则控制，缺乏个性化；而大模型直接映射语言到动作又不够透明和可靠。该文提出多智能体框架，将个性化烹饪需求系统分解为可验证的结构化控制程序，通过多个AI代理协作将用户意图转化为规范菜谱、流程控制工作流和可执行Python代码。该方法在保证执行稳定的同时支持自然语言交互，提升了任务规划的透明度和可追溯性，为可信机器人任务规划提供了新思路。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "foundation model for robot task planning",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.04768v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.04404v1",
-          "source": "arxiv",
-          "title": "Faster-WAM: Efficient Inference-Time Future Conditioning for Robust World Action Models",
-          "abstract": "World Action Models (WAMs) improve robot manipulation by learning how the environment evolves beyond the current observation. However, existing approaches face a fundamental dilemma: Joint-WAMs preserve future-aware representations during inference but incur prohibitive computation costs, while efficient alternatives remove future modeling at inference time and may lose the robustness benefits of temporal reasoning. In this work, we revisit the role of future representations in WAMs and show that inference-time future conditioning is critical for generalization under distribution shifts. This observation motivates Faster-WAM, an efficient future-conditioning WAM that preserves future representations while avoiding expensive video-action interaction. Faster-WAM introduces a sparse future-conditioning framework that computes future representations once and selectively reuses them throughout action denoising. Specifically, we propose SparseMoT to replace ubiquitous layer-wise fusion with selective video-action interaction at a compact subset of network stages, and Interval KV-Fusion to aggregate multi-depth future representations without increasing attention complexity. Experiments demonstrate that Faster-WAM achieves a substantially better performance-efficiency trade-off than existing WAMs. On the out-of-distribution LIBERO-Plus benchmark, Faster-WAM improves success rate from 49.14% to 73.57% compared with Fast-WAM, while running 2.21$\\times$ faster than Joint-WAM. It further achieves state-of-the-art performance on LIBERO and RoboTwin 2.0, while demonstrating strong robustness in real-world manipulation.",
-          "authors": [
-            "Weiheng Zhao",
-            "Haoyi Jiang",
-            "Xin Shi",
-            "Liu Liu",
-            "Fan Huang",
-            "Zhizhong Su",
-            "Wei Sui",
-            "Xinggang Wang"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-08-05T03:18:58+00:00",
-          "link": "https://arxiv.org/pdf/2608.04404v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "robot manipulation world action model with inference-time future conditioning",
-          "llm_evidence_cn": "面向机器人操作的世界动作模型与推理期未来条件化",
-          "llm_evidence": "面向机器人操作的世界动作模型与推理期未来条件化",
-          "canonical_evidence": "面向机器人操作的世界动作模型与推理期未来条件化",
-          "llm_tldr_en": "Faster-WAM keeps future-aware representations in world action models for robot manipulation, avoiding costly video-action decoding; inference-time future conditioning is shown critical for robustness under distribution shifts.",
-          "llm_tldr_cn": "现有世界动作模型在机器人操作中要么推理开销大，要么因去除未来建模而鲁棒性下降。Faster-WAM重新审视未来表示的作用，提出在推理阶段保留未来条件表示且避免昂贵视频动作解码的高效架构。实验表明推理期未来条件化对分布偏移下的泛化至关重要，模型在保持时间推理鲁棒性的同时显著降低计算成本，为机器人操作世界模型的实际部署提供了可行方案。",
-          "llm_tldr": "现有世界动作模型在机器人操作中要么推理开销大，要么因去除未来建模而鲁棒性下降。Faster-WAM重新审视未来表示的作用，提出在推理阶段保留未来条件表示且避免昂贵视频动作解码的高效架构。实验表明推理期未来条件化对分布偏移下的泛化至关重要，模型在保持时间推理鲁棒性的同时显著降低计算成本，为机器人操作世界模型的实际部署提供了可行方案。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI robot learning papers",
-          "matched_requirement_id": "req-7",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.04404v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.04657v2",
-          "source": "arxiv",
-          "title": "MobileWAM: Bridging World Action Models to Mobile Manipulation with Chain-of-Foresight",
-          "abstract": "World action models (WAMs) built on video generation backbones are a rising recipe for robot learning, yet remain confined to tabletop manipulation. Mobile manipulation demands simultaneous locomotion and whole-body manipulation amid scene-scale dynamics, yet is still dominated by dynamics-blind visual encoders with hand-crafted coordination. We bridge this gap with MobileWAM, a mixture-of-transformers architecture that fuses a pretrained video diffusion transformer with a lightweight action expert through layerwise joint attention, translating internet-scale motion priors into whole-body control. To reconcile the heterogeneous dynamics of moving and manipulating, each feed-forward layer of the action expert becomes a three-expert mixture of shared, locomotion, and manipulation experts, softly routed by the motion intent in the action tokens. To densify supervision, we further propose Chain-of-Foresight (CoF): intermediate representations sequentially predict a chain of future latent chunks, each step conditioned on its predecessor. CoF pairs naturally with our decoupled video--action denoising scheme. At deployment, the WAM serves as a pure current-frame encoder; foresight acts only through gradients, so at inference the foresight chain and video generation are discarded, leaving only policy-level cost. MobileWAM surpasses state-of-the-art mobile manipulation policies on ManiSkill-HAB and fine-tunes to a real ARX Lift2 mobile manipulator across diverse tasks with strong generalization. Code will be released soon.",
-          "authors": [
-            "Zehua Fan",
-            "Junjie He",
-            "Wenxuan Song",
-            "Xi Wang",
-            "Wenqi Lyu",
-            "Linge Zhao",
-            "Fuhao Li",
-            "Zihan You",
-            "Yifei Yang",
-            "Kaiming Xu",
-            "Qi Jiang",
-            "Yue Jiang",
-            "Haoang Li",
-            "Cheng Chi",
-            "Feng Gao",
-            "Bailin Li",
-            "Yan Wang"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-08-05T10:12:37+00:00",
-          "link": "https://arxiv.org/pdf/2608.04657v2",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "uses video diffusion transformer fused with action expert for mobile manipulation",
-          "llm_evidence_cn": "将视频扩散Transformer与动作专家融合用于移动操控",
-          "llm_evidence": "将视频扩散Transformer与动作专家融合用于移动操控",
-          "canonical_evidence": "将视频扩散Transformer与动作专家融合用于移动操控",
-          "llm_tldr_en": "MobileWAM bridges world action models to mobile manipulation by fusing a pretrained video diffusion transformer with a lightweight action expert, enabling whole-body control with internet-scale motion priors.",
-          "llm_tldr_cn": "世界动作模型在视频生成骨干上构建，但主要局限于桌面操作，难以应对移动操控的全身协调与场景动态。MobileWAM采用混合Transformer架构，通过层间联合注意力融合预训练视频扩散Transformer与轻量动作专家，将互联网规模的运动先验迁移到全身控制。针对移动与操纵的异构动态，设计三专家混合前馈层，显著提升移动操控能力。",
-          "llm_tldr": "世界动作模型在视频生成骨干上构建，但主要局限于桌面操作，难以应对移动操控的全身协调与场景动态。MobileWAM采用混合Transformer架构，通过层间联合注意力融合预训练视频扩散Transformer与轻量动作专家，将互联网规模的运动先验迁移到全身控制。针对移动与操纵的异构动态，设计三专家混合前馈层，显著提升移动操控能力。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "diffusion policy robotics",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.04657v2",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.05970v1",
-          "source": "arxiv",
-          "title": "SkillMemo: Expert-guided Skill Memory Framework for Compositional Embodied Manipulation",
-          "abstract": "Embodied visuomotor models, including Diffusion Policy (DP) and Vision-Language-Action (VLA) models, have demonstrated promising performance on robotic manipulation benchmarks. However, their potential remains fundamentally constrained by the scarcity of large-scale embodied trajectory datasets, leading to insufficient compositional generalization in out-of-distribution (OOD) scenarios with limited capability to capture reusable skill structures. To address this limitation, we propose Skill-Based Memory (SkillMemo) framework that implicitly decomposes long-horizon demonstrations into latent atomic skills and integrates skill-level features into a dynamic episodic memory bank for solving compositional tasks. Specifically, we first introduce an expert-guided trajectory segmentation module built upon a Mixture-of-Experts (MoE) architecture, which implicitly partitions trajectories into distinct skill primitives represented by learned gating coefficients. We further design a skill-level episodic memory architecture that stores compact skill representations as retrievable key-value pairs. During inference, the memory bank retrieves the most relevant skill primitives which are subsequently fused with the model's current gating distribution, providing a robust contextual prior to refine action predictions. Extensive experiments on the simulation benchmark and real-world manipulation tasks demonstrate that SkillMemo consistently enhances both DP and VLA backbones, achieving state-of-the-art performance and outperforming $π_{0.5}$, while exhibiting strong compositional generalization to unseen task configurations.",
-          "authors": [
-            "Changyuan Wang",
-            "Chubin Zhang",
-            "Zhenyu Wu",
-            "Runhao Li",
-            "Angyuan Ma",
-            "Ke Chao",
-            "Yinan Liang",
-            "Xiuwei Xu",
-            "Ziwei Wang",
-            "Yansong Tang",
-            "Jiwen Lu"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.AI"
-          ],
-          "published": "2026-08-06T12:46:13+00:00",
-          "link": "https://arxiv.org/pdf/2608.05970v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Skill memory framework improves Diffusion Policy and VLA for compositional manipulation",
-          "llm_evidence_cn": "技能记忆框架提升扩散策略与VLA的组合操控表现",
-          "llm_evidence": "技能记忆框架提升扩散策略与VLA的组合操控表现",
-          "canonical_evidence": "技能记忆框架提升扩散策略与VLA的组合操控表现",
-          "llm_tldr_en": "SkillMemo decomposes demonstrations into latent atomic skills and stores skill features in an episodic memory, improving compositional generalization of DP and VLA manipulation models.",
-          "llm_tldr_cn": "具身轨迹数据稀缺导致扩散策略和VLA模型在分布外场景中组合泛化不足。SkillMemo框架将长时程演示隐式分解为潜在原子技能，并将技能级特征整合进动态情景记忆库，以支持组合式操控任务。实验表明该方法能提升组合式机器人操控的分布外表现，缓解大规模数据依赖。该研究为提升现有DP/VLA模型的可复用技能结构提供了新思路。",
-          "llm_tldr": "具身轨迹数据稀缺导致扩散策略和VLA模型在分布外场景中组合泛化不足。SkillMemo框架将长时程演示隐式分解为潜在原子技能，并将技能级特征整合进动态情景记忆库，以支持组合式操控任务。实验表明该方法能提升组合式机器人操控的分布外表现，缓解大规模数据依赖。该研究为提升现有DP/VLA模型的可复用技能结构提供了新思路。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "diffusion policy robotics",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.05970v1",
           "carry_days": 1
         },
         {
@@ -416,13 +149,13 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Preprocessing pipeline aligns viewpoints for manipulation policies using large 3D vision foundation models",
-          "llm_evidence_cn": "用大型3D视觉基础模型对齐视角，辅助操作策略",
-          "llm_evidence": "用大型3D视觉基础模型对齐视角，辅助操作策略",
-          "canonical_evidence": "用大型3D视觉基础模型对齐视角，辅助操作策略",
-          "llm_tldr_en": "ARGUS preprocesses robot camera views using large 3D vision models to align geometry into a canonical viewpoint, enabling policies to learn from viewpoint-diverse datasets and generalize.",
-          "llm_tldr_cn": "大型视觉运动策略常将场景几何与视角绑定，限制其利用多视角数据并泛化到新视角。ARGUS提出一种观察预处理流程，利用大型3D视觉模型将任意相机视角的图像对齐到规范视角后再送入策略，从而解耦几何与视角。实验显示该方法可改善从DROID、BridgeV2等多视角数据集的学习及跨视角泛化能力。这是一种轻量且通用的操作策略增强手段。",
-          "llm_tldr": "大型视觉运动策略常将场景几何与视角绑定，限制其利用多视角数据并泛化到新视角。ARGUS提出一种观察预处理流程，利用大型3D视觉模型将任意相机视角的图像对齐到规范视角后再送入策略，从而解耦几何与视角。实验显示该方法可改善从DROID、BridgeV2等多视角数据集的学习及跨视角泛化能力。这是一种轻量且通用的操作策略增强手段。",
+          "llm_evidence_en": "Large 3D vision models as foundation models to align observations for robot manipulation policies",
+          "llm_evidence_cn": "使用大型3D视觉基础模型对观测进行视角归一化，提升操控策略泛化",
+          "llm_evidence": "使用大型3D视觉基础模型对观测进行视角归一化，提升操控策略泛化",
+          "canonical_evidence": "使用大型3D视觉基础模型对观测进行视角归一化，提升操控策略泛化",
+          "llm_tldr_en": "ARGUS is an observation preprocessing pipeline that uses large 3D vision models to align arbitrary camera viewpoints to a canonical viewpoint, improving visuomotor policy learning and generalization across viewpoint-diverse robot datasets.",
+          "llm_tldr_cn": "针对操控策略常将场景几何与视角耦合、难以利用多视角数据泛化的问题，本文提出ARGUS观测预处理流程。该方法借助大型3D视觉基础模型，将任意相机视角的图像观测对齐到规范视角后再输入视觉运动策略，从而解耦几何与视角。实验表明该方法能有效利用DROID、BridgeV2等多视角数据集，提升操控策略跨视角的泛化能力，是基础模型赋能机器人感知与操控的典型范例。",
+          "llm_tldr": "针对操控策略常将场景几何与视角耦合、难以利用多视角数据泛化的问题，本文提出ARGUS观测预处理流程。该方法借助大型3D视觉基础模型，将任意相机视角的图像观测对齐到规范视角后再输入视觉运动策略，从而解耦几何与视角。实验表明该方法能有效利用DROID、BridgeV2等多视角数据集，提升操控策略跨视角的泛化能力，是基础模型赋能机器人感知与操控的典型范例。",
           "llm_tags": [
             "query:embodied-ai"
           ],
@@ -461,120 +194,21 @@
             "query:embodied-ai"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Embodied robot learning via interactive world models for robotic manipulation",
-          "llm_evidence_cn": "面向机器人操控的具身学习，构建通用可交互世界模型",
-          "llm_evidence": "面向机器人操控的具身学习，构建通用可交互世界模型",
-          "canonical_evidence": "面向机器人操控的具身学习，构建通用可交互世界模型",
-          "llm_tldr_en": "GeniWorld builds an interactive robotic world model from pretrained video generators, converting numerical actions to visual actions via URDF rendering, improving generalization and action controllability across unseen manipulation scenarios.",
-          "llm_tldr_cn": "通用机器人策略在未知环境下鲁棒性有限，真实环境扩展评估成本高。GeniWorld基于预训练视频生成模型，利用URDF渲染将数值动作转为视觉动作表示，构建可交互世界模型。它在多种未见过场景中展示出更强的泛化能力和动作可控性，为机器人操控学习提供可扩展的仿真评估与训练环境。",
-          "llm_tldr": "通用机器人策略在未知环境下鲁棒性有限，真实环境扩展评估成本高。GeniWorld基于预训练视频生成模型，利用URDF渲染将数值动作转为视觉动作表示，构建可交互世界模型。它在多种未见过场景中展示出更强的泛化能力和动作可控性，为机器人操控学习提供可扩展的仿真评估与训练环境。",
+          "llm_evidence_en": "interactive world model built on pretrained video generative models for manipulation generalization",
+          "llm_evidence_cn": "基于预训练视频生成模型构建交互世界模型，提升操控泛化",
+          "llm_evidence": "基于预训练视频生成模型构建交互世界模型，提升操控泛化",
+          "canonical_evidence": "基于预训练视频生成模型构建交互世界模型，提升操控泛化",
+          "llm_tldr_en": "GeniWorld builds an interactive world model on pretrained video generators, using URDF-rendered visual actions to enable robust robot manipulation in unseen scenarios.",
+          "llm_tldr_cn": "机器人策略在复杂未见过环境中的鲁棒性仍有限，而大规模真实世界数据获取昂贵。GeniWorld构建了一种可泛化的交互世界模型，基于预训练视频生成模型，通过URDF渲染将数值动作映射为视觉动作表征，实现空间上的动作控制。该方法在分布外场景中展现了鲁棒泛化能力，为降低机器人数据依赖提供了新思路。",
+          "llm_tldr": "机器人策略在复杂未见过环境中的鲁棒性仍有限，而大规模真实世界数据获取昂贵。GeniWorld构建了一种可泛化的交互世界模型，基于预训练视频生成模型，通过URDF渲染将数值动作映射为视觉动作表征，实现空间上的动作控制。该方法在分布外场景中展现了鲁棒泛化能力，为降低机器人数据依赖提供了新思路。",
           "llm_tags": [
             "query:embodied-ai"
           ],
           "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI robot learning papers",
-          "matched_requirement_id": "req-7",
+          "matched_query_text": "foundation models for robot perception and manipulation",
+          "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2608.06332v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.04196v1",
-          "source": "arxiv",
-          "title": "SiMDex: Mining Similar Egocentric Videos for Cross-Embodiment Dexterous Manipulation",
-          "abstract": "Recent years have witnessed an explosive trend of scaling ego-centric human videos for robot manipulation, yet it remains unclear which data actually benefits dexterous manipulation. We present SiMDex, a similarity-based data mining framework that casts human data selection for VLA post-training in dexterous manipulation as a recommendation problem. For each robot demonstration, SiMDex employs a three-layer recall-ranking-re-ranking pipeline to extract task-relevant subsets from a pool of ~32M egocentric human samples, operating in a morphology-agnostic action space that requires no changes to VLA architecture or training. Against a strong baseline trained with an equal amount of randomly sampled human data, SiMDex uses only ~1.49M mined samples (<5% of the pool) yet improves the overall success rate from 47.7% to 61.1%, showing that selective curation outperforms indiscriminate data mixing.",
-          "authors": [
-            "Nie Lin",
-            "Takehiko Ohkawa",
-            "Sijin Chen",
-            "Ruoshi Wen",
-            "Zhuohang Li",
-            "Liqun Huang",
-            "Zhengming Zhu",
-            "Yiming Bao",
-            "Yunfei Li",
-            "Minjie Cai",
-            "Xiao Ma",
-            "Wei Xu",
-            "Yoichi Sato"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV",
-            "cs.LG"
-          ],
-          "published": "2026-08-04T19:55:12+00:00",
-          "link": "https://arxiv.org/pdf/2608.04196v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "similarity-based data mining of egocentric human videos for VLA post-training in dexterous manipulation",
-          "llm_evidence_cn": "基于相似度的自我中心视频挖掘，用于灵巧操作VLA后训练",
-          "llm_evidence": "基于相似度的自我中心视频挖掘，用于灵巧操作VLA后训练",
-          "canonical_evidence": "基于相似度的自我中心视频挖掘，用于灵巧操作VLA后训练",
-          "llm_tldr_en": "SiMDex casts human video selection for VLA post-training as a recommendation problem, using recall-ranking-re-ranking to mine ~1.49M task-relevant ego samples, improving dexterous manipulation.",
-          "llm_tldr_cn": "大规模自我中心人类视频如何有效服务灵巧操作仍不清楚。SiMDex 将 VLA 后训练中的人类数据选择建模为推荐问题，通过三层召回-排序-重排管道从约 3200 万自我中心样本中挖掘任务相关子集。在形态无关动作空间下，仅用约 149 万挖掘样本即可超越随机采样等量数据的强基线。这为跨具身灵巧操作的数据利用提供了有效范本。",
-          "llm_tldr": "大规模自我中心人类视频如何有效服务灵巧操作仍不清楚。SiMDex 将 VLA 后训练中的人类数据选择建模为推荐问题，通过三层召回-排序-重排管道从约 3200 万自我中心样本中挖掘任务相关子集。在形态无关动作空间下，仅用约 149 万挖掘样本即可超越随机采样等量数据的强基线。这为跨具身灵巧操作的数据利用提供了有效范本。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "vision language action model for robot",
-          "matched_requirement_id": "req-6",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.04196v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2608.05799v1",
-          "source": "arxiv",
-          "title": "XEWorld: Can Action-Conditioned World Models Generalize to Unseen Robot Embodiments?",
-          "abstract": "Action-conditioned world models are promising learned simulators for robotic manipulation, yet evaluating them exclusively on training robots fails to reveal whether they capture physical dynamics or merely memorize visual patterns. To answer whether a model can faithfully render a robot it has never seen, we introduce XEWorld, a controlled cross-embodiment testbed for world models that isolates embodiments by evaluating held-out robots within physically identical scenes. Our systematic analysis uncovers a shared architectural bottleneck: current models act primarily as 2D visual pattern matchers whose generalization is governed by visual similarity rather than physical kinematic similarity. Driven by this limitation, they struggle to translate abstract numeric joint actions into coherent visual trajectories, and fail to predict dynamic visual changes from static initial observations. Consequently, successfully rendering an unseen embodiment zero-shot strictly requires heavily grounded cues, specifically pixel-space actions and explicit spatial-temporal alignment. Even when bypassing this zero-shot barrier via few-shot adaptation, the forced appearance recovery triggers catastrophic forgetting of seen embodiments. Together, these failures expose a critical inability to apply learned physical dynamics to novel visual appearances, highlighting that achieving true cross-embodiment generalization requires architectural innovations that decouple visual appearance from underlying physical dynamics.",
-          "authors": [
-            "Yixiang Chen",
-            "Jiabing Yang",
-            "Yuan Xu",
-            "Qisen Ma",
-            "Keji He",
-            "Peiyan Li",
-            "Kai Wang",
-            "Ziheng He",
-            "Xiangnan Wu",
-            "Jing Liu",
-            "Nianfeng Liu",
-            "Yan Huang",
-            "Liang Wang"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.CV"
-          ],
-          "published": "2026-08-06T09:35:33+00:00",
-          "link": "https://arxiv.org/pdf/2608.05799v1",
-          "tags": [
-            "keyword:embodied-ai",
-            "query:embodied-ai"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "cross-embodiment world model evaluation for robotic manipulation",
-          "llm_evidence_cn": "跨形态世界模型评估用于机器人操控",
-          "llm_evidence": "跨形态世界模型评估用于机器人操控",
-          "canonical_evidence": "跨形态世界模型评估用于机器人操控",
-          "llm_tldr_en": "XEWorld evaluates action-conditioned world models on held-out robot embodiments in identical scenes, revealing they act as 2D visual pattern matchers, limiting generalization to unseen robots.",
-          "llm_tldr_cn": "动作条件世界模型有潜力成为机器人操控的学习型模拟器，但仅用训练机器人评估会掩盖其是否真正理解物理动力学。为此构建XEWorld基准，在物理相同场景中评估未见过的机器人形态。系统分析发现，当前模型主要作为2D视觉模式匹配器，其泛化由视觉相似性而非运动学相似性主导，因而难以准确预测未见过机器人。该工作揭示了跨形态世界模型的结构性瓶颈，并为学习物理感知的世界模型提供了新方向。",
-          "llm_tldr": "动作条件世界模型有潜力成为机器人操控的学习型模拟器，但仅用训练机器人评估会掩盖其是否真正理解物理动力学。为此构建XEWorld基准，在物理相同场景中评估未见过的机器人形态。系统分析发现，当前模型主要作为2D视觉模式匹配器，其泛化由视觉相似性而非运动学相似性主导，因而难以准确预测未见过机器人。该工作揭示了跨形态世界模型的结构性瓶颈，并为学习物理感知的世界模型提供了新方向。",
-          "llm_tags": [
-            "query:embodied-ai"
-          ],
-          "matched_query_tag": "query:embodied-ai",
-          "matched_query_text": "embodied AI research",
-          "matched_requirement_id": "req-1",
-          "selection_source": "carryover_cache",
-          "paper_id": "2608.05799v1",
           "carry_days": 1
         }
       ]
