@@ -6,71 +6,101 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-10
-- 运行时间：2026-08-10 21:15:27 UTC
+- 最新运行日期：2026-08-12
+- 运行时间：2026-08-12 21:24:46 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
+- 本次总论文数：27
+- 精读区：16
 - 速读区：11
 
 ### 今日简报（AI）
-今日聚焦17篇论文，精读6篇，重点覆盖机器人场景几何对齐与自适应VLA推理框架。最值得关注：ARGUS利用大3D视觉模型解决视角变化下的场景几何对齐（9.0分），以及环境感知模型选择的快速自适应VLA推理（9.0分）。下一步可延伸探索视频世界模型与人形机器人运动控制的前沿结合。
-- 详情：[/202608/10/README](/202608/10/README)
+今日精读16篇、速读11篇，聚焦人形机器人操作与具身智能前沿。最值得关注《$ω$-0》的隐式预测世界模型与《Capek 0.5》的执行中心VLM，均为9.0高分。建议优先精读这两篇，并延伸速读中扩散策略与世界模型相关三篇。
+- 详情：[/202608/12/README](/202608/12/README)
 
 ### 精读区论文标签
-1. [ARGUS: Aligning Robot Scene Geometry Under Shifting Views with Large 3D Vision Models](/202608/10/2608.05579v1-argus-aligning-robot-scene-geometry-under-shifting-views-with-large-3d-vision-models)  
+1. [$ω$-0: A Latent Predictive World Action Model for Concurrent Humanoid Loco-Manipulation](/202608/12/2608.06375v2--0-a-latent-predictive-world-action-model-for-concurrent-humanoid-loco-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：用大型3D视觉模型统一视角，解决操作策略对视角的依赖
-2. [Fast and Accurate: An Adaptive VLA Inference Framework through Environment-aware Model Selection](/202608/10/2608.06434v1-fast-and-accurate-an-adaptive-vla-inference-framework-through-environment-aware-model-selection)  
+   evidence：用于人形机器人全身移动操控的语言条件世界动作模型
+2. [Capek 0.5: An Execution-Centric Vision-Language Model for Embodied Intelligence](/202608/12/2608.06756v1-capek-05-an-execution-centric-vision-language-model-for-embodied-intelligence)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向具身智能的自适应视觉-语言-动作模型推理
-3. [CrossTracer: Cross-Embodiment Navigation via VLA Model Reasoning and Trace Residuals Adapting](/202608/10/2608.06688v1-crosstracer-cross-embodiment-navigation-via-vla-model-reasoning-and-trace-residuals-adapting)  
+   evidence：面向具身智能的执行中心视觉语言模型
+3. [GWM-VLA: Geometry-Aware Latent World Modeling for Vision-Language-Action Learning](/202608/12/2608.07619v1-gwm-vla-geometry-aware-latent-world-modeling-for-vision-language-action-learning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：基于视觉-语言-动作模型的跨形态导航
-4. [AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models](/202608/10/2608.06729v1-atlasvla-persistent-world-ego-state-modeling-for-vision-language-action-models)  
+   evidence：用于VLA机器人操作的几何感知隐世界建模
+4. [LUCID: Latent-Skill Unified Control via Imagined Dynamics for Long-Horizon Humanoid Loco-Manipulation](/202608/12/2608.07746v1-lucid-latent-skill-unified-control-via-imagined-dynamics-for-long-horizon-humanoid-loco-manipulation)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：为VLA模型引入持久世界-自我状态与双记忆架构，克服部分可观测长程任务中的遗忘
-5. [Spatiotemporal Agility: Time-Constrained Reinforcement Learning for Vision-Guided Dynamic Quadrupedal Interception](/202608/10/2608.06907v1-spatiotemporal-agility-time-constrained-reinforcement-learning-for-vision-guided-dynamic-quadrupedal-interception)  
+   evidence：结合对抗模仿的分层模型强化学习，面向人形机器人移动操作。
+5. [GraphThink: Graph-Enhanced LLM Thinking for Long-Horizon Embodied Task Planning](/202608/12/2608.07905v1-graphthink-graph-enhanced-llm-thinking-for-long-horizon-embodied-task-planning)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：面向视觉引导四足拦截的时间受限强化学习
-6. [Learning Fault-Tolerant Locomotion with Adaptive Gait Timing](/202608/10/2608.07328v1-learning-fault-tolerant-locomotion-with-adaptive-gait-timing)  
+   evidence：图增强LLM规划，用任务图和场景图支持长程具身规划
+6. [Vid2WAM: Distilling Video Diffusion Priors into World Action Models](/202608/12/2608.08558v1-vid2wam-distilling-video-diffusion-priors-into-world-action-models)  
    标签：评分：9.0/10、query:embodied-ai
-   evidence：深度强化学习用于四足机器人故障容错运动
+   evidence：将视频扩散先验蒸馏进世界动作模型以支持语言条件下的机器人策略学习
+7. [SG-WAM: Text-Grounded and Spatial-aware Semantic Guidance for World-Action Models](/202608/12/2608.08839v1-sg-wam-text-grounded-and-spatial-aware-semantic-guidance-for-world-action-models)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：利用视觉语言模型作为语义规划器，增强世界动作模型对语言指令的遵循
+8. [SHRIMP: Iterative Refinement of Robot Task Plans](/202608/12/2608.08884v1-shrimp-iterative-refinement-of-robot-task-plans)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：基于大语言模型生成并细化分层任务计划，匹配基础模型任务规划需求
+9. [SpeedTuning: Speeding Up Policy Execution with Lightweight Reinforcement Learning](/202608/12/2608.09138v1-speedtuning-speeding-up-policy-execution-with-lightweight-reinforcement-learning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：使用强化学习为操作策略预测最优执行速度，加速机器人执行
+10. [SpeedTuning: Speeding Up Policy Execution with Lightweight Reinforcement Learning](/202608/12/2608.09138v2-speedtuning-speeding-up-policy-execution-with-lightweight-reinforcement-learning)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：轻量强化学习加速操控策略执行
+11. [JEPA-WAM: Learning Vision-Language-Action Policies with Joint-Embedding World Modeling](/202608/12/2608.09381v1-jepa-wam-learning-vision-language-action-policies-with-joint-embedding-world-modeling)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：基于联合嵌入世界建模的视觉-语言-动作策略学习
+12. [Efficient Real-World Online Reinforcement Learning for Robot Manipulation via Centralized Training and Critic Decomposition](/202608/12/2608.09762v1-efficient-real-world-online-reinforcement-learning-for-robot-manipulation-via-centralized-training-and-critic-decomposition)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：面向机器人操控的真实世界在线强化学习
+13. [SLIM-0.5B: Learning Action-Grounded Predictive Latents for Robot Manipulation](/202608/12/2608.09771v1-slim-05b-learning-action-grounded-predictive-latents-for-robot-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：面向机器人操作的紧凑视觉-语言-动作潜在策略
+14. [Real-World Cooperative Bimanual Dexterous Grasp of Large Objects from Single-View Observations](/202608/12/2608.10383v1-real-world-cooperative-bimanual-dexterous-grasp-of-large-objects-from-single-view-observations)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：基于去噪扩散概率模型从点云生成抓取构型，面向真实世界双臂灵巧操作。
+15. [Embodied Multimodal Grounding for Open-Vocabulary Mobile Manipulation via Semantic 3D Gaussian Splatting](/202608/12/2608.10756v1-embodied-multimodal-grounding-for-open-vocabulary-mobile-manipulation-via-semantic-3d-gaussian-splatting)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：基于扩散的视觉-语言-动作策略与3D语义grounding的移动操作
+16. [JEPA-WAM: Stage-Level Joint-Embedding Prediction for World-Action Models in Robot Manipulation](/202608/12/2608.10780v1-jepa-wam-stage-level-joint-embedding-prediction-for-world-action-models-in-robot-manipulation)  
+   标签：评分：9.0/10、query:embodied-ai
+   evidence：融合阶段级联合嵌入预测的通用视觉-语言-动作操作模型
 
 ### 速读区论文标签
-1. [MiniWorld: Democratizing the Training of Video World Models from Scratch](/202608/10/2608.01127v2-miniworld-democratizing-the-training-of-video-world-models-from-scratch)  
+1. [Learning When to Stop: Prefix-Optimal Dynamic Diffusion Policies for Continuous Control](/202608/12/2608.05084v1-learning-when-to-stop-prefix-optimal-dynamic-diffusion-policies-for-continuous-control)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：从零训练视频世界模型以支持具身AI与交互仿真
-2. [StableMimic: Smooth Human-Like Recovery for Humanoid Motion Tracking - Learning Beyond the Tracking Distribution for Structured Post-Fall Behavior](/202608/10/2608.02385v1-stablemimic-smooth-human-like-recovery-for-humanoid-motion-tracking---learning-beyond-the-tracking-distribution-for-structured-post-fall-behavior)  
+   evidence：通过前缀值函数实现扩散策略的自适应去噪步数，面向连续控制
+2. [Robot Learning from Human Demonstrations: Handwritten Alphabet Trajectories and Human-Likeness Evaluation](/202608/12/2608.06221v1-robot-learning-from-human-demonstrations-handwritten-alphabet-trajectories-and-human-likeness-evaluation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：人形机器人运动跟踪策略，学习超出跟踪分布的跌倒后恢复行为
-3. [Learning Context-Aware Motion Priors for Humanoid Control](/202608/10/2608.03234v1-learning-context-aware-motion-priors-for-humanoid-control)  
+   evidence：从人类演示中学习机器人运动技能
+3. [GeniWorld: A Generalizable Interactive World Model for Robotic Manipulation via Visual Actions](/202608/12/2608.06332v1-geniworld-a-generalizable-interactive-world-model-for-robotic-manipulation-via-visual-actions)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：面向人形机器人控制策略训练的情境自适应运动先验
-4. [Structured LLM Reasoning for Zero-Shot Human--Robot Coordination Under Hidden Goals](/202608/10/2608.04309v1-structured-llm-reasoning-for-zero-shot-human--robot-coordination-under-hidden-goals)  
+   evidence：通过视觉动作实现机器人操控的通用交互世界模型
+4. [Unordered Landmark Visual Navigation](/202608/12/2608.06833v1-unordered-landmark-visual-navigation)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：结构化 LLM 规划与心理理论用于零样本人机协同
-5. [Suppression Sticks, Locality Is Fragile: A Closed-Loop Target-and-Control Audit of Task-Vector Negation in VLA Policies](/202608/10/2608.04692v1-suppression-sticks-locality-is-fragile-a-closed-loop-target-and-control-audit-of-task-vector-negation-in-vla-policies)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：对视觉-语言-动作策略任务向量取反的闭环审计研究
-6. [Embedding Large Language Models into Flow Controls: An Agentic Framework for Adaptive and Trustworthy Automated Cooking](/202608/10/2608.04768v1-embedding-large-language-models-into-flow-controls-an-agentic-framework-for-adaptive-and-trustworthy-automated-cooking)  
-   标签：评分：8.0/10、query:embodied-ai
-   evidence：基于大语言模型的智能体框架将烹饪任务分解为可验证控制程序
-7. [Sampling-Based Visibility Task Planning](/202608/10/2608.01027v1-sampling-based-visibility-task-planning)  
+   evidence：无时间与里程计先验的具身AI导航
+5. [Search-Aided Joint Agent-Environment Reinforcement Learning for Robust Lifelong Multi-Agent Path Finding with Rotations](/202608/12/2608.05588v1-search-aided-joint-agent-environment-reinforcement-learning-for-robust-lifelong-multi-agent-path-finding-with-rotations)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向可见性工具的机器人任务与运动规划采样算法
-8. [MiniWorld: Democratizing the Training of Video World Models from Scratch](/202608/10/2608.01127v1-miniworld-democratizing-the-training-of-video-world-models-from-scratch)  
+   evidence：利用强化学习求解带旋转约束的终身多智能体路径规划
+6. [XEWorld: Can Action-Conditioned World Models Generalize to Unseen Robot Embodiments?](/202608/12/2608.05799v1-xeworld-can-action-conditioned-world-models-generalize-to-unseen-robot-embodiments)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向具身智能与交互仿真、从零训练视频世界模型的方法
-9. [ReBRAC-v2: The Return of the King](/202608/10/2608.01205v1-rebrac-v2-the-return-of-the-king)  
+   evidence：面向机器人操作的动作条件世界模型的跨本体评估
+7. [Is Forward Prediction Enough? Physical State Grounding for JEPA World Models](/202608/12/2608.06799v1-is-forward-prediction-enough-physical-state-grounding-for-jepa-world-models)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：基于正则化流actor的离线强化学习方法
-10. [Stochastic Multiple Shooting Trajectory Optimization via Sequential Local Policy Evaluation](/202608/10/2608.03978v1-stochastic-multiple-shooting-trajectory-optimization-via-sequential-local-policy-evaluation)  
+   evidence：为机器人控制学习建立物理状态接地世界模型，提升规划与策略性能
+8. [R2S-EGO: Dual-Proxy Refinement for Sparse-Capture Real-to-Sim](/202608/12/2608.06827v1-r2s-ego-dual-proxy-refinement-for-sparse-capture-real-to-sim)  
    标签：评分：7.0/10、query:embodied-ai
-   evidence：面向机器人的轨迹优化，属于具身智能决策与规划
-11. [Representation Handoffs for OpenArm-Based Laboratory Mobile Manipulation](/202608/10/2608.07154v1-representation-handoffs-for-openarm-based-laboratory-mobile-manipulation)  
+   evidence：面向具身智能仿真与迁移的实到仿真场景细化
+9. [CoCoNav: Conformal Control for Safe Robot Navigation in Crowds](/202608/12/2608.07751v1-coconav-conformal-control-for-safe-robot-navigation-in-crowds)  
    标签：评分：6.0/10、query:embodied-ai
-   evidence：具身智能移动操作原型系统的现场报告
+   evidence：人群中的安全机器人导航，属于具身智能任务
+10. [Compiling and Benchmarking Task-State Horizons for Embodied Agents](/202608/12/2608.08036v1-compiling-and-benchmarking-task-state-horizons-for-embodied-agents)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：针对长时域具身任务进行基准评测，属于具身智能研究
+11. [Particle-Based Conformal Prediction for Contact-Aware Uncertainty Calibration in Stratified Configuration Spaces](/202608/12/2608.09166v1-particle-based-conformal-prediction-for-contact-aware-uncertainty-calibration-in-stratified-configuration-spaces)  
+   标签：评分：6.0/10、query:embodied-ai
+   evidence：面向机器人杂乱环境导航与装配的接触感知不确定性校准
 
 
 <div class="dpr-home-promo-card">
