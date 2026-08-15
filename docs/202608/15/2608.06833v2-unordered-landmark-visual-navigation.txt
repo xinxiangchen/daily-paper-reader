@@ -1,0 +1,2862 @@
+Unordered Landmark Visual Navigation
+Hao Ren1, Junzhe Zhu1, Yihan Li1, Zetong Bi1, Le Zheng1, Zhi Li1,
+Yiqing Yuan1, Zhaoliang Wan2, Dizhe Zhang2, Lu Qi2, Hui Cheng1⋆
+1 Sun Yat-sen University, Guangzhou, China
+2 Insta360 Research, Shenzhen, China
+https://hren20.github.io/ulvn-website
+Abstract. Image-goal navigation is a fundamental capability for em-
+bodied AI, yet its practical deployment is strained by strong prior as-
+sumptions. Existing methods predominantly rely on temporally ordered
+video streams or auxiliary sensors (e.g., depth, LiDAR) to maintain spa-
+tial consistency. These sequential and multimodal dependencies severely
+restrict scalability, especially when deploying robots using crowd-sourced
+or pre-recorded unordered image collections. When temporal priors are
+removed, current methods struggle with severe perceptual aliasing, noisy
+associations, and catastrophic mapping failures. To address this under-
+explored challenge, we propose Unordered Landmark Visual Navigation
+(ULVN), a unified RGB-only framework free from temporal and odo-
+metric priors. ULVN systematically mitigates error accumulation by in-
+tegrating mapping, localization, and planning. Specifically, it constructs
+a robust 2D topological map directly from unstructured images via cali-
+brated geometric verification and maximum spanning forest refinement.
+For closed-loop execution, ULVN abandons sequential heuristics, utiliz-
+ing a graph-based belief propagation filter with entropy-adaptive fusion
+for global localization and dynamic subgoal planning. Extensive experi-
+ments in simulation and real-world deployments demonstrate that ULVN
+significantly outperforms state-of-the-art methods.
+Keywords: Visual Navigation · Topological Mapping · Visual Localiza-
+tion
+1
+Introduction
+Visual navigation [6,16,21,78] is a fundamental capability for autonomous agents,
+supporting applications from motion planning [17] to domestic robotics [35].
+From the perspective of cognitive science, human navigation relies primarily
+on visual observations to form a topological understanding of the environment,
+enabling route finding without requiring precise metric coordinates or expensive
+active sensors such as LiDAR [52,57]. Emulating this capability in embodied AI
+has therefore become a highly desirable objective [1,57,83]. Ideally, an embodied
+⋆Corresponding author: Hui Cheng (chengh9@mail.sysu.edu.cn).
+arXiv:2608.06833v2  [cs.RO]  10 Aug 2026
+
+
+2
+H. Ren et al.
+Unordered Images
+RGB-only Mapping, Planning and Navigation
+Goal Image
+Planning and Execution
+Deviation and Replanning
+Initial Location
+How to construct a reliable topological graph?
+(a) VGGT w/o Temporal Order 
+(b) VGGT w. Temporal Order
+Fig. 1: From unordered images to navigation. Our system, ULVN, automatically con-
+structs a topological representation purely from an unstructured set of RGB images.
+This enables closed-loop planning, execution, and replanning. In contrast, foundation
+models such as VGGT struggle to handle unordered images.
+agent should operate predominantly on RGB observations within a pre-built
+topological map [7,10,11,52,59,65,67], developing holistic spatial awareness and
+reliable goal-directed behavior.
+In contrast to this ideal, many existing visual navigation systems implic-
+itly rely on simplifying conditions that rarely hold in the wild. They often re-
+quire temporally ordered video streams, which provide strong sequential priors
+for graph construction and policy learning [65,80]. Absent this temporal struc-
+ture, such as when using an unordered photo collection from real estate listings,
+learned transitions often fail. Without sequential priors, disambiguating similar
+places is challenging, making topological connections noisy and action selec-
+tion unstable, which frequently causes oscillatory behavior. Furthermore, many
+systems depend on auxiliary sensors like depth or LiDAR to stabilize localiza-
+tion [19,26]. Relying solely on appearance complicates geometric verification, and
+even advanced reconstruction models struggle with pose estimation from sparse,
+disconnected observations [61,66,71]. Consequently, current success heavily de-
+pends on temporal continuity, auxiliary sensing, or both.
+Eliminating these assumptions presents two progressive challenges. First, re-
+moving temporal priors forces topological mapping to infer connectivity from
+appearance alone. This vulnerability to perceptual aliasing and spurious edges
+makes planning and localization fragile, as errors accumulate without sequen-
+tial updates to suppress ambiguity [7, 11, 39, 73]. Second, removing multimodal
+sensors alongside temporal priors compounds the difficulty. Without depth, Li-
+DAR, or odometry, resolving scale and viewpoint ambiguities becomes signifi-
+cantly harder, increasing cumulative drift and complicating closed-loop correc-
+tion using only RGB evidence [6,8,74,78] . These challenges motivate our central
+question: Can we build an RGB-only navigation framework that achieves reliable
+closed-loop navigation using only unordered images, without relying on odometry,
+depth, or temporal priors?
+To address this question, we introduce ULVN, an unordered landmark navi-
+gation framework designed from a unified system optimization perspective. This
+framework ensures that mapping, localization, and planning are co-designed
+for consistency and reliability. For topological mapping, ULVN employs a vi-
+
+
+Unordered Landmark Visual Navigation
+3
+sual place recognition and geometric verification scheme equipped with a one-
+shot, data-driven threshold calibration to enhance edge verification robustness.
+We further refine the graph by extracting a maximum spanning forest skele-
+ton and reinserting strong loop closures to yield a reliable topological structure
+from unordered images. For localization, we propose a global belief propaga-
+tion scheme that updates spatial probabilities through Bayesian estimation and
+entropy-based adaptive fusion, effectively mitigating localization drift under vi-
+sual ambiguity. Finally, ULVN utilizes this global belief state to plan paths across
+the graph and dynamically replans when deviations occur. We comprehensively
+validate ULVN in both simulated and real-world environments. The main con-
+tributions of this work are as follows:
+– A unified framework for unordered landmark visual navigation.
+We consider RGB-only navigation without temporal or multimodal priors,
+an important yet still underexplored setting, and provide a unified framework
+that integrates mapping, localization, and navigation to help control error
+accumulation.
+– A more reliable topological mapping from unordered RGB images.
+To obtain a high-quality topological map, ULVN adopts a two-stage scheme
+that calibrates VPR-based candidates retrieval and geometric verification
+using a one-shot threshold estimation and then refines the graph through an
+MSF skeleton with loop reinsertion.
+– Odometry-free global localization and navigation on 2D graphs.
+ULVN updates a global belief state through Bayesian estimation with entropy-
+based adaptive fusion to limit drift under visual ambiguity, and uses this
+belief to plan and re-plan paths on the topological graph.
+– Benchmark and comprehensive experimental validation. We publicly
+release the unordered landmark visual navigation dataset in simulation and
+real-world environments, together with data-collection pipelines, and evalua-
+tion metrics to support reproducible research. We provide ablation studies on
+error accumulation across these components and show that ULVN achieves
+stronger performance than existing methods.
+2
+Related Work
+Topological Map Construction. Early appearance-based visual navigation
+and SLAM used topological maps for efficiency and robustness, coupling visual
+place recognition (VPR) with probabilistic inference to mitigate perceptual alias-
+ing [11,39,81]. This line of work also indicated that image-only representations
+can serve as a scalable alternative to dense metric reconstructions [15, 27, 51]
+in many settings. A large fraction of recent RGB-only systems assumes tempo-
+rally ordered capture [47,58,63,64], effectively yielding a one-dimensional chain
+of landmarks [20, 49, 62, 65] and focusing on local planners [37, 48, 50, 69, 78].
+While practical, these designs rely on sequential structure and are incompati-
+ble with the bag-of-images setting where no temporal signal is available. When
+
+
+4
+H. Ren et al.
+sequences are absent, a 2D topological graph is typically built via VPR-based
+candidate retrieval followed by geometric verification [18,38]. Classical pipelines
+retrieve neighbors with local features and verify edges via epipolar or homog-
+raphy tests [54, 55], but are sensitive to hyperparameters, such as RANSAC
+inlier thresholds, which trade off edge precision and recall, ultimately affecting
+connectivity. Learned global descriptors improve retrieval invariance (viewpoint,
+illumination, season), yet descriptor similarity does not imply traversability; ver-
+ification remains essential. Recent robust estimators [2,46,60,72] mitigate, but
+do not remove, the reliance on thresholds and upper bounds across environ-
+ments [14].
+Localization and Planning on Topological Maps. Given a map, the agent
+must localize and plan a path. Many planners assume precise global informa-
+tion (e.g., depth or metric maps) [5,41], which is often unavailable in RGB-only
+scenarios. A popular alternative is to estimate a “temporal distance” between
+the current and goal views [28, 36, 42, 52, 57, 59]. However, this proxy may cor-
+relate poorly with geodesic distance [4, 32, 43], often presumes near-constant
+velocity [30, 40, 82], and is expensive to evaluate over many candidates [65],
+while requiring robot-specific trajectory data for training [57, 65, 76]. Recent
+work reframes subgoal selection as VPR-based localization [9, 65], improving
+efficiency and robustness, yet many models implicitly retain 1D-topology as-
+sumptions [26,65], which fail on general 2D graphs with intersections, branches,
+and loops. In contrast to such sequential assumptions, our approach localizes on
+2D graphs without odometry by using a topological transition model defined by
+graph adjacency.
+3
+Methodology
+To achieve image-goal navigation strictly from unordered RGB images, our
+framework, ULVN, adopts a purely topological approach, abandoning error-
+prone metric reconstruction and temporal heuristics. Assuming the provided
+image library contains sufficient visual overlap, ULVN systematically mitigates
+error accumulation through three tightly integrated modules: robust topological
+graph construction (RAVEL, Sec. 3.1), global state estimation (BPL, Sec. 3.2),
+and closed-loop visual planning (BASS, Sec. 3.3).
+Problem Definition and Notation. Let L = {Ii}N
+i=1 be an unordered set of
+collected images, Ig be the goal image, and It be the live observation at time
+t, with no odometry or temporal priors available. A global image encoder f(·)
+produces L2-normalized embeddings zr
+i = f(Ii), zg = f(Ig), and zt = f(It).
+ULVN constructs a directed, weighted graph:
+G = (V, E, W),
+V ⊆{1, . . . , N},
+W = {Wij}(i,j)∈E
+(1)
+Because metric distance is unavailable, we use visual overlap as a proxy for spa-
+tial proximity. Each edge (i, j) ∈E has an integer weight Wij ∈Z>0 representing
+the number of verified local feature inliers.
+
+
+Unordered Landmark Visual Navigation
+5
+Visual Landmark Graph Construction
+Unordered Images
+Belief Propagation Localization 
+Belief-Aware Subgoal Search
+Descriptor Extraction
+Current Belief
+Oh, I am at the location 
+indicated by   , my next 
+sub-goal image is    .
+Goal Image
+WARNING
+Automatic
+Replanning
+Navigation 
+Success!
+Observation
+Local
+Planner
+𝜋
+Action
+Closed-loop
+Planning
+BPL
+Observation
+Measure
+Predict
+Adaptive
+Fusion
+Global Retrieval 
+and Indexing
+0
+1
+1
+2
+2
+3
+3
+4
+Data-driven Calibration
+Edge Verification & Graph Assembly
+Edge 
+Candidate
+Edge 
+Verification
+Weighted 
+Adjacency
+Verification Parameter
+Pruning of Topology
+Dense Graph
+Pruned Skeleton Loop Reinsertion
+Transition Matrix & 
+Observation likelihood 
+Adjacency
+Matrix
+Node
+Descriptor
+Fig. 2: Overview of Unordered Landmark Visual Navigation. (left) build a cal-
+ibrated, pruned topology from feature retrieval over unordered images. (middle) embed
+the observation and update node belief with observation likelihoods and transition T
+via adaptive fusion. (right) pick the next landmark from the belief and plan in closed
+loop; belief shifts trigger automatic replanning to the goal.
+3.1
+Visual Landmark Graph Construction
+We introduce RAVEL (Robust Augmentation and VErification of Landmarks),
+a pipeline that transforms L into a weighted, directed visual graph. Unordered
+collections naturally produce dense, redundant candidate pairs that can cause
+memory bloat and degrade downstream planning. RAVEL mitigates this by ap-
+plying global retrieval for fast recall, followed by geometric verification as a
+high-precision bottleneck, and ultimately pruning the graph into a compact,
+structurally meaningful skeleton.
+Global Retrieval and Indexing. To avoid exhaustive pairwise matching,
+we first extract an L2-normalized global descriptor zr
+i = f(Ii) for each image
+using an image encoder f(·). While f(·) can be a general-purpose backbone (e.g.,
+ResNet, DINOv2), our experiments show that representations trained explicitly
+for Visual Place Recognition (VPR) yield the most robust retrieval candidates.
+All global descriptors are indexed using FAISS [13,29].
+To automatically calibrate verification thresholds, we select the first image
+q0 and retrieve its farthest valid neighbor qf = arg maxj∈NFAISS(q0) ∥zq0 −zj∥2
+2,
+explicitly excluding invalid index outputs. For each anchor q ∈{q0, qf}, we
+perform full feature matching against all retrieved images, yielding an inlier
+count cqj and anchor descriptor distance dqj for each pair. Applying k mean
+clustering to pooled inlier counts yields a cluster of highest-confidence Sh and a
+cluster of second-highest-confidence Sl. The inlier threshold τ is defined as:
+τ = 1
+2
+ min(Sh) + max(Sl)
+
+.
+(2)
+The global distance threshold is derived from Sh: dVPR = max(q,j)∈Sh ∥zq −zj∥2.
+
+
+6
+H. Ren et al.
+Local Geometric Verification and Graph Pruning. For every candidate
+pair where the global descriptor distance sij ≤dVPR, we perform local geometric
+verification using a deep matcher (e.g., LightGlue [34]) to obtain the precise inlier
+match count cij. The weighted adjacency matrix is updated as:
+Wij = Wji =
+(
+cij,
+cij > τ
+0,
+otherwise.
+(3)
+Raw graphs built from unordered collections are inherently dense and contain
+weak, redundant edges that not only cause memory bloat but also degrade the
+subsequent belief propagation by diffusing probability mass into noisy pathways.
+To extract a compact, reliable skeleton, we compute the Maximum Spanning For-
+est (MSF) F = (V, EMSF). By maximizing the total edge weight P
+(i,j)∈EMSF Wij,
+the MSF ensures the navigational backbone consists strictly of the strongest ge-
+ometric transitions, minimizing local execution failures.
+While the MSF effectively eliminates visual aliases, it destroys cyclic struc-
+tures essential for alternate routing and topological error correction. To re-
+cover these, we introduce data-driven Strong-Loop Reinsertion. Instead of brittle
+heuristics, we cluster all edge weights in G into k = 10 clusters via k-means. We
+define a dynamic threshold τadd as the minimum weight within the two highest-
+centroid clusters to ensure adaptability to different scenes. Reinserting excluded
+edges where Wij > τadd yields the final robust graph Gpruned, seamlessly balanc-
+ing structural reliability with critical topological redundancy.
+3.2
+Belief Propagation Localization
+Building upon the foundations of classical Bayesian filtering [68], we extend the
+1D sequential localization filters utilized in prior works [65, 73] to operate on
+arbitrary 2D spatial graphs with complex branching and loops. We introduce a
+Belief Propagation Localization (BPL) filter that maintains a belief distribution
+bt over all nodes vi ∈V via a recursive prediction-correction cycle.
+Topological Prediction Step. Let A be the binary adjacency matrix de-
+rived from Gpruned. To model the robot’s possible motion over multiple steps
+without odometry, we define a cumulative reachability matrix aggregating paths
+up to length K = 3:
+C =
+K
+X
+m=0
+Am,
+(4)
+where A0 = I. Row-normalizing C yields a stochastic transition matrix Tij =
+Cij/ P
+j′ Cij′. The predicted belief is ¯bt = bt−1 · T.
+Adaptive Observation Fusion. The observation likelihood is defined as
+L(vi|It) = exp(−λ · ∥zt −zr
+i ∥2
+2) with λ = 5. We introduce an entropy-adaptive
+fusion mechanism. We quantify uncertainty using the normalized Shannon en-
+tropy of the prior belief:
+Hn(bt−1) = −
+1
+log |V|
+X
+vi∈V
+bt−1(vi) log bt−1(vi).
+(5)
+
+
+Unordered Landmark Visual Navigation
+7
+To dynamically balance prediction and observation, we set the fusion weights
+directly from the entropy such that wp = 1 −Hn(bt−1) and wo = Hn(bt−1),
+ensuring they strictly sum to 1. The posterior belief is computed via a normalized
+weighted geometric mean:
+bt(vi) ∝¯bt(vi)wp · L(vi|It)wo.
+(6)
+The estimated location is the Maximum A Posteriori (MAP) node:
+ˆvt = arg maxvi bt(vi).
+3.3
+Belief-Aware Subgoal Search for Navigation
+With the graph constructed and the localization filter initialized, Belief-Aware
+Subgoal Search (BASS) plans and executes paths entirely from images.
+Task Initialization. A navigation task begins with a goal image Ig. Before
+planning, we must anchor the start and goal states on the graph G. We estab-
+lish the start node vs using the maximum-a-posteriori estimate of the initial
+global belief b0: vs = arg maxvi∈V b0(vi). The goal node vg maximizes descriptor
+similarity: vg = arg maxvi∈V(z⊤
+g zr
+i ).
+Topological Planning. We treat G as a weighted graph where edge weights
+Wij reflect visual overlap. Because a visual navigation path is only as robust as
+its weakest visual link, we define the confidence of a candidate path P on the
+graph G from vs to vg as its minimum edge weight:
+conf(P) =
+min
+(vi,vj)∈P Wij.
+(7)
+BASS extracts the widest path P∗= arg maxP conf(P) with the Dijkstra’s al-
+gorithm . This max-min objective guarantees that the chosen sequence of visual
+subgoals (vs, v1, . . . , vg) has the highest probability of successful image-to-image
+local control.
+Closed-Loop Vision-Only Execution. Our framework operates strictly
+without odometry. The robot follows P∗by sequentially passing the planned
+subgoals to an image-based local planner (e.g., a visual foundation model like
+ViNT [59] or a generic visual servoing policy). At each step, the local planner
+takes the observation It and the current topological subgoal image Isn and di-
+rectly outputs low-level velocity commands to drive the robot toward the target.
+During execution, BPL continuously updates the belief bt. A deviation is de-
+tected if the MAP node vt falls off the planned path P∗or if the graph distance
+from vt to the current subgoal exceeds Dthres = 3. Upon deviation, BASS dy-
+namically replans a new widest path from vt to vg. Navigation succeeds when
+the belief converges on the goal node with a probability exceeding 0.5.
+4
+Experiments
+4.1
+Experimental Settings
+Evaluation Scenes. We evaluate our method, ULVN, within the NVIDIA Isaac
+Sim simulator using the GRScenes dataset [70], a high-fidelity benchmark for
+
+
+8
+H. Ren et al.
+(a) 3D Occupancy
+(b) Obstacle Grid
+(c) ESDF
+(e) Gradient Flux
+(d) ESDF Gradient
+(h) Pruning Skeleton
+(g) Thin Skeleton
+(i) Sampled Points
+(f) Threshold Flux
+(a) 3D Occupancy
+(b) Obstacle Grid
+(c) ESDF
+(e) Gradient Flux
+(d) ESDF Gradient
+(h) Pruning Skeleton
+(g) Thin Skeleton
+(i) Sampled Points
+(f) Threshold Flux
+Fig. 3: The topological skeleton extraction in data collection pipeline. It starts with
+(a) a 3D occupancy map, which is projected into (b) a 2D binary obstacle grid. (c)
+A Euclidean Signed Distance Function (ESDF) and (d) its gradient. (e) The ESDF
+gradient flux is then calculated, (f) thresholded to isolate the medial axis, (g) thinned,
+(h) pruned to produce the clean topological skeleton, and finally (i) indicates the node
+of acquired images.
+general-purpose robotics. We utilize 10 distinct scenes, equally split between
+home and commercial environments. All scenes feature realistic physics and
+materials. We also employ the CARLA [12] simulator to specifically isolate and
+validate the RAVEL and BPL modules under varying perceptual conditions.
+Tasks and Metrics. We evaluate ULVN across three core capabilities: 1)
+Topomap Construction: We report Precision (P), Recall (R), F1-score (F1),
+and Accuracy (Acc.) of the generated graph edges evaluated against the ground-
+truth spatial connectivity (derived via Sec. 4.2). We also analyze the Pearson
+correlation (r) between global descriptor similarity and true geometric inliers
+to justify our retrieval design. 2) Localization: We report the localization Accu-
+racy (success rate of the MAP estimate correctly identifying the nearest topo-
+logical node) when localizing a continuous stream of noisy images against the
+pre-built, non-sequential graph. 3) Navigation: We adopt standard Habitat Ima-
+geNav metrics [53]: Success Rate (SR), Success weighted by Path Length (SPL),
+and average number of collisions.
+Baselines. We compare against strong state-of-the-art representations and sys-
+tems. For Topomap Construction, we evaluate ResNet-50 [23], DINOv2 [45],
+MegaLoc [3], ViNT [59], and PlaceNav [65]. Because ViNT and PlaceNav tradi-
+tionally rely on temporally ordered videos, we adapt them for unordered map-
+ping by using their temporal distance predictions or VPR retrieval scores as
+direct edge-weight proxies. For Localization, we compare against single-frame
+VPR (MegaLoc, PlaceNav), temporal distance (ViNT), and sequence smooth-
+
+
+Unordered Landmark Visual Navigation
+9
+(a) ResNet
+(b) DINOv2
+(c) ViNT
+(d) MegaLoc
+(e) LightGlue
+(f) LightGlue+RANSAC
+Fig. 4: Global Descriptors as Efficient Proxies for Geometric Verification.
+We compare pairwise similarity scores from various global descriptors: (a) ResNet,
+(b) DINOv2, (c) ViNT (temporal distance), and (d) MegaLoc (VPR-trained), against
+a ground-truth geometric consistency score from (f) LightGlue+RANSAC. Top row:
+Pairwise affinity matrices for an unordered image set. Bottom row: Correlation plots
+(with Pearson’s r) for each descriptor’s score (Y-axis) versus the ground truth (X-axis).
+The VPR-trained MegaLoc (d) demonstrates a strong linear correlation, validating it
+as an effective and efficient proxy for geometric verification.
+Table 1: Comparison of different retrieval baselines and our method on GRScenes.
+Method
+P
+R
+F1
+Acc.
+VGGT [71]
+0.1599
+0.1659
+0.1629
+0.9931
+PlaceNav top 2 [65] 0.5262
+0.7113
+0.6043
+0.9948
+PlaceNav top 5 [65] 0.2699
+0.7655
+0.3731
+0.9853
+ViNT top 2 [59]
+0.5201
+0.6775
+0.5815
+0.9946
+ViNT top 5 [59]
+0.2660 0.8246 0.3806
+0.9816
+RAVEL (Ours)
+0.7104 0.7656 0.7365 0.9970
+ing (JIST [4]). For Navigation, we evaluate the integration of our framework with
+visual local planners (ViNT, NoMaD) and compare with other SOTA methods.
+Implementation Details. Global descriptors are extracted using MegaLoc [3]
+with L2-normalization, and geometric verification is performed via LightGlue [34].
+During RAVEL calibration, if the high-confidence cluster Sh is valid (k = 2),
+τ and dVPR are dynamically set from its statistics; otherwise, we default to
+τdefault = 15 and dVPR,default = 1.7. The MSF is computed using Kruskal’s al-
+gorithm, with strong-loop reinsertion bounded by τadd = 1.5τ. For BPL, the
+observation likelihood scaling factor is λ = 10.
+4.2
+Data Collection and Ground Truth Pipeline
+To rigorously evaluate Topomap metrics, ground-truth spatial connectivity is
+required. As shown in Fig. 3, we developed an automated in-simulation pipeline
+that exports 3D scene occupancy and converts it into a 2D traversability grid
+based on the robot’s dimensions. Following [33], we use the Euclidean Signed
+Distance Field (ESDF) [44] to extract the topological skeleton of the traversable
+area. By applying non-maximum suppression along this skeleton, we sample
+sparse and spatially uniform nodes. The underlying skeletal structure provides
+
+
+10
+H. Ren et al.
+Table 2: Quantitative evaluation of topological graph construction on GRScenes. Ab-
+lations compare our RAVEL with a Top-k ANN retrieval baseline and the variant
+ablation of our method.
+Method
+P
+R
+F1
+Acc.
+Top-k ANN
+0.1245 0.9121 0.2156 0.9584
+RAVEL w/o (MSF, AVP τ) 0.3676 0.7177 0.4496 0.9898
+RAVEL w/o MSF
+0.6910 0.4220 0.5157 0.9956
+RAVEL (Ours)
+0.7104 0.7656 0.7365 0.9970
+Table 3: Robustness of RAVEL
+Method
+Precision
+Recall
+F1-Score
+Accuracy
+RAVEL+noise
+0.6703 (-5.64%)
+0.7072 (-7.63%) 0.6882 (-6.56%) 0.9963 (-0.07%)
+CosPlace top 2+noise 0.4592 (-12.73%) 0.6615 (-7.00%) 0.5420 (-10.29%)
+0.9936 (-0.12%)
+CosPlace top 5+noise 0.2192 (-18.78%) 0.7739 (+1.10%) 0.3416 (-8.44%)
+0.9826 (-0.27%)
+ViNT top 2+noise
+0.4197 (-19.30%) 0.6064 (-10.49%) 0.4961 (-15.70%)
+0.9913 (-0.33%)
+ViNT top 5+noise
+0.2065 (-22.36%) 0.7976 (-3.27%) 0.3281 (-18.43%)
+0.9769 (-0.48%)
+the absolute ground-truth connectivity matrix used to evaluate the precision
+and recall of RAVEL’s generated graphs. Further details are provided in the
+Appendix.
+4.3
+Evaluation of RAVEL
+Global Descriptors as Proxies for Geometric Verification. We first as-
+sess the viability of using global descriptors as a fast-recall proxy for costly geo-
+metric verification. Using CARLA data, we analyze the Pearson correlation (r)
+between descriptor similarity and the ground-truth geometric score (LightGlue
++ RANSAC inliers). As shown in Figure 4, general-purpose features like ResNet
+(a) and DINOv2 (b) exhibit weak, non-linear correlations, leading to severe per-
+ceptual aliasing and false-positive retrievals. Similarly, ViNT’s temporal distance
+(c) fails to reliably map to geometric overlap in unordered settings. Conversely,
+the VPR-trained MegaLoc (d) demonstrates a strong, tightly-clustered linear
+correlation with geometric reality. This confirms that VPR is strictly necessary
+for the initial retrieval stage to filter candidates effectively without discarding
+valid topological neighbors.
+Mapping Performance Evaluation. Table 1 and Table 2 detail the graph con-
+struction performance across 10 GRScenes. Retrieval-only baselines (CosPlace,
+ViNT) highlight a fundamental tension: increasing the Top-k threshold boosts
+recall but decimates precision, yielding poor F1 scores. This indicates that raw
+appearance similarity cannot substitute for structural verification.
+Our ablation (Table 2) reveals the mechanics of our solution. The adaptive-
+threshold variant (Ours w/o MSF) achieves high precision by pruning weak
+visual matches, but suffers from low recall because purely local edge rejection
+fragments the graph. Applying the MSF resolves this. By shifting the objective
+from isolated edge evaluation to global structural coherence, the MSF recon-
+structs a unified skeleton. This allows RAVEL to aggressively filter false pos-
+
+
+Unordered Landmark Visual Navigation
+11
+Table 4: Quantitative comparison of global localization under Global and Difficult
+Path scenarios.
+Scenario Metric Ours MegaLoc [3] ViNT [59] JIST [4]
+All
+Nodes
+976
+976
+976
+976
+Success
+932
+889
+845
+829
+Fail
+44
+87
+131
+147
+Acc.(%) 95.49
+91.09
+86.58
+84.94
+Difficult
+Path
+Nodes
+383
+383
+383
+383
+Success
+360
+341
+270
+315
+Fail
+23
+42
+113
+68
+Acc.(%) 93.99
+89.03
+70.50
+82.25
+Table 5: Comparison of localization accuracy of different methods under different
+conditions. Results are reported as mean ± standard deviation across four datasets.
+Condition
+Localization Accuracy
+MegaLoc [3]
+JIST [4]
+ViNT [59]
+BPL (Ours)
+Rotation
+0.913 ± 0.104
+0.722 ± 0.066
+0.895 ± 0.044
+0.966 ± 0.020
+Rot + Gauss
+0.743 ± 0.088
+0.452 ± 0.177
+0.885 ± 0.045
+0.914 ± 0.038
+Rot + Poisson
+0.717 ± 0.114
+0.445 ± 0.176
+0.888 ± 0.037
+0.896 ± 0.036
+Rot + Crop
+0.855 ± 0.151
+0.525 ± 0.076
+0.640 ± 0.096
+0.945 ± 0.027
+Average
+0.807 ± 0.133
+0.536 ± 0.167
+0.827 ± 0.124
+0.930 ± 0.040
+itives while maintaining high recall, ultimately achieving the highest F1-score
+and demonstrating robust generalization across diverse scenes.
+Robustness to Visual Perturbations. To evaluate the robustness of our
+graph construction against real-world sensor imperfections, we introduce a +noise
+setting (Table 3). We apply a suite of random visual perturbations to the images
+prior to mapping. This includes lighting variations (random brightness scaling
+∈[0.75, 1.25], RGB color shifting ±5%, contrast adjustments ∈[0.85, 1.15], and
+low-light Gaussian noise with σ ∈[3, 10] triggered when brightness drops be-
+low 0.9) and directional motion blur (random kernel lengths ∈{3, 5, 7, 9, 11} at
+angles ∈{0◦, 45◦, 90◦, 135◦}).
+As shown in Table 3, purely retrieval-based methods with VPR (CosPlace)
+and temporal distance (ViNT) are highly sensitive to these pixel-level pertur-
+bations, suffering massive drops in precision and F1-score. This confirms that
+appearance-based distances alone degrade rapidly under environmental noise.
+In contrast, RAVEL demonstrates remarkable resilience, experiencing only a
+6.56% drop in F1-score. While the noise inevitably reduces the raw number
+of local feature inliers, RAVEL’s geometric verification and the MSF’s global
+structural constraints successfully prevent the corrupted images from forming
+spurious edges, thereby preserving a high accuracy and structural integrity.
+4.4
+Evaluation of BPL
+To evaluate localization, we simulate robot motion by collecting continuous im-
+age streams along random trajectories in GRScenes. Crucially, these test images
+
+
+12
+H. Ren et al.
+Table 6: Ablation Study for Belief Propagation Localization
+k
+1
+2
+3
+4
+5
+1
+Adaptive Fusion
+✓
+✓
+✓
+✓
+✓
+✗
+Acc. (%)
+95.49 94.47 93.65 92.42 92.73 90.57
+are captured at novel poses distinct from the reference nodes in the topologi-
+cal graph. We introduce a Difficult Path subset, characterized by long routes,
+large-angle turns, and low start-to-goal visual overlap.
+Comparison with Other Paradigms. As shown in Table 4, BPL delivers
+the highest accuracy. While baselines degrade noticeably on complex routes,
+BPL’s performance remains stable. 1D temporal-distance methods like ViNT fail
+significantly on challenging paths with intersections or loops. BPL’s robustness
+stems from its graph-derived transition matrix, which seamlessly diffuses belief
+over multi-hop neighborhoods, allowing probability mass to branch at junctions
+and reconverge during loop closures.
+Ablation for BPL. Table 6 analyzes BPL’s internal mechanisms. Modifying
+the propagation depth (k) shows that performance is relatively stable, peak-
+ing around 2–3 hops; excessive diffusion over-smooths the belief and slightly
+increases errors. More importantly, disabling the entropy-adaptive fusion causes
+a severe accuracy drop from 0.9549 to 0.9057. This proves that while structural
+diffusion is helpful, dynamically weighting the prediction and observation based
+on current uncertainty is the critical factor for resolving visual ambiguity.
+Robustness to Perceptual Degradation. To evaluate the resilience of BPL
+against real-world sensor noise and viewpoint shifts during live execution, we test
+localization accuracy under severe image perturbations (Table 5). We use contin-
+uous trajectories from each of four diverse datasets: RECON [56], SCAND [31],
+GoStanford [25], and SACSoN [24]. The live query images are subjected to four
+degradation conditions: pure angular viewpoint shift (Rotation), and rotation
+compounded with Gaussian noise, Poisson noise, or random structural cropping.
+As shown in Table 5, BPL achieves the highest and most stable localiza-
+tion accuracy (averaging 0.930 ± 0.040) across all degradation conditions. While
+pure VPR (MegaLoc), sequence smoothing (JIST), and temporal models (ViNT)
+exhibit severe vulnerability to compounded pixel noise or structural occlusions,
+BPL consistently maintains an accuracy above 0.89. This resilience validates our
+entropy-adaptive fusion design: when severe perceptual degradation flattens the
+observation likelihood, the filter dynamically shifts its reliance to the topologi-
+cal prediction, leveraging the multi-hop spatial prior to coast through temporary
+visual disruptions without losing track.
+4.5
+Evaluation of BASS
+We evaluate BASS on random trajectories across GRScenes. Figures 5 and 7(a-
+d) demonstrate our closed-loop execution: the robot smoothly tracks subgoals in
+simple layouts, and dynamically replans recovery routes when BPL detects phys-
+ical deviations exceeding Dthres in complex topologies. Furthermore, we compare
+
+
+Unordered Landmark Visual Navigation
+13
+(a)
+(d)
+(c)
+(b)
+Fig. 5: BASS navigation in easy (a,c) and
+hard (b,d) tasks. Green: start; red: goal;
+blue: executed trajectory.
+(a) Overview
+(b) Initial Planning
+(c) Replanning
+(d) Kidnappd issue resolved  
+Fig. 6: Real-world case. (a) Overview. (b)
+Initial plan. (c) Replanning after devia-
+tion. (d) Kidnapped-robot case resolved
+via relocalization and replanning. Green:
+planned path; red: observed deviation; or-
+ange: replanned path.
+Table 7: Comparison of Different Algorithms on GRScenes. "-A" means retraining
+with only the action head loss function. "w. dtemp" denotes that localization with
+temporal distance instead of BPL.
+Method
+SR (%) Avg. Colli. Avg. SPL
+Uni-Navid [77]
+32.0
+1.96
+0.2391
+UniGoal [75]
+61.6
+0.88
+0.3176
+ULVN+VINT-A [59]
+31.0
+1.13
+0.812
+ULVN+NoMaD-A [62]
+54.3
+0.94
+0.7458
+ULVN+ViNT w. dtemp [59]
+59.6
+0.88
+0.7752
+ULVN+ViNT [59]
+68.1
+0.76
+0.8398
+ULVN+NoMaD [62]
+71.9
+0.42
+0.7978
+ULVN against Uni-Navid, a state-of-the-art end-to-end model (Fig. 7e). While
+Uni-Navid’s purely reactive, egocentric navigation suffers severe trajectory oscil-
+lations, ULVN executes a smooth, efficient trajectory guided by its topological
+graph. This confirms that lightweight structural memory is crucial for mitigating
+the myopic planning inherent in purely reactive methods.
+Table 7 quantitatively compares our framework against end-to-end baselines
+and ablates local planner integrations. ULVN significantly outpaces purely re-
+active models like Uni-Navid and UniGoal, achieving a peak Success Rate (SR)
+of 71.9% with NoMaD and maintaining a substantially higher SPL. We also
+ablate the temporal distance loss during the local planner’s training (denoted
+as -A). Removing this loss severely degrades performance, particularly for the
+regression-based ViNT, whereas the generative NoMaD is comparatively more
+robust. This reveals that temporal distance acts as a crucial auxiliary training
+signal. However, replacing our BPL filter with temporal-distance-based local-
+ization during execution (ULVN+ViNT w. dtemp) reduces SR to 59.6%, proving
+that while temporal distance benefits local control training, our VPR-based BPL
+is strictly necessary for reliable global localization.
+We observe a clear performance gap between localization accuracy (∼95%)
+and navigation Success Rate (∼71%). This gap is primarily due to the physical
+
+
+14
+H. Ren et al.
+(a) Initial Belief
+(b) Execution as Planning 
+(d) Deviation and Replanning
+(c) Complex Intersection
+(e) Comparing with Uni-Navid
+Fig. 7: Visualization of replanning and comparison with Uni-Navid.
+limitations of the local planners. Specifically, limited obstacle perception and
+oscillatory trajectory generation, which can occasionally cause the robot to fail
+despite possessing the correct topological subgoal.
+4.6
+Real-world Evaluation
+To validate sim-to-real transfer, we deployed ULVN on a Diablo wheeled robot
+equipped with an Azure Kinect camera and NVIDIA Jetson Orin. Figure 6 il-
+lustrates a representative trial. The initial planned route required a right turn,
+but physical disturbances caused the robot to drift off-path. Because BPL con-
+tinuously tracks the observation against the graph, the entropy-adaptive filter
+concentrates belief on an off-route node. Once the topological distance between
+the MAP node and the target subgoal exceeded our deviation threshold, BASS
+successfully triggered a real-time replanning event, issuing new subgoals that
+safely guided the robot to the destination. This confirms the framework’s prac-
+tical viability for robust, odometry-free physical deployment.
+5
+Conclusion
+We present ULVN, an image-goal navigation framework operating entirely from
+unordered RGB image collections, eliminating the need for odometry or tempo-
+ral priors. To resolve severe perceptual aliasing, our RAVEL pipeline constructs
+a robust topological skeleton by reconciling local geometric verification with
+global structural coherence. On this graph, our Belief Propagation Localization
+(BPL) filter employs entropy-adaptive fusion to maintain reliable tracking de-
+spite severe visual noise, structural occlusions, and complex loops. Supported
+by this state estimation, our Belief-Aware Subgoal Search (BASS) enables con-
+sistent closed-loop execution with dynamic drift recovery. Extensive sim-to-real
+evaluations demonstrate that our mapping-then-navigating paradigm is highly
+resilient to perceptual degradation and overcomes the myopic trajectory oscilla-
+tions inherent in purely reactive end-to-end models. Ultimately, ULVN validates
+lightweight topological memory as a highly scalable, robust solution for general-
+izable navigation in unstructured environments.
+
+
+Unordered Landmark Visual Navigation
+15
+Acknowledgement.
+This work was supported by the National Natural Science Foundation of China
+(U22A2095).
+References
+1. Anderson, P., Chang, A., Chaplot, D.S., Dosovitskiy, A., Gupta, S., Koltun, V.,
+Kosecka, J., Malik, J., Mottaghi, R., Savva, M., et al.: On evaluation of embodied
+navigation agents. arXiv preprint arXiv:1807.06757 (2018)
+2. Barath, D., Mishkin, D., Cavalli, L., Sarlin, P.E., Hruby, P., Pollefeys, M.: Stere-
+oglue: Robust estimation with single-point solvers. In: European Conference on
+Computer Vision. pp. 421–441. Springer (2024)
+3. Berton, G., Masone, C.: Megaloc: One retrieval to place them all. In: Proceedings
+of the Computer Vision and Pattern Recognition Conference. pp. 2861–2867 (2025)
+4. Berton, G., Trivigno, G., Caputo, B., Masone, C.: Jist: Joint image and sequence
+training for sequential visual place recognition. IEEE Robotics and Automation
+Letters 9(2), 1310–1317 (2023)
+5. Blochliger, F., Fehr, M., Dymczyk, M., Schneider, T., Siegwart, R.: Topomap:
+Topological mapping and navigation based on visual slam maps. In: 2018 IEEE
+International Conference on Robotics and Automation (ICRA). pp. 3818–3825.
+IEEE (2018)
+6. Bonin-Font, F., Ortiz, A., Oliver, G.: Visual navigation for mobile robots: A survey.
+Journal of intelligent and robotic systems 53, 263–296 (2008)
+7. Booij, O., Terwijn, B., Zivkovic, Z., Krose, B.: Navigation using an appearance
+based topological map. In: Proceedings 2007 IEEE International Conference on
+Robotics and Automation. pp. 3927–3932. IEEE (2007)
+8. Cadena, C., Carlone, L., Carrillo, H., Latif, Y., Scaramuzza, D., Neira, J., Reid, I.,
+Leonard, J.J.: Past, present, and future of simultaneous localization and mapping:
+Toward the robust-perception age. IEEE Transactions on robotics 32(6), 1309–
+1332 (2016)
+9. Claxton, O., Malone, C., Carson, H., Ford, J.J., Bolton, G., Shames, I., Milford, M.:
+Improving visual place recognition based robot navigation by verifying localization
+estimates. IEEE Robotics and Automation Letters (2024)
+10. Cui, X., Liu, Q., Liu, Z., Wang, H.: Frontier-enhanced topological memory with
+improved exploration awareness for embodied visual navigation. In: European Con-
+ference on Computer Vision. pp. 296–313. Springer (2024)
+11. Cummins, M., Newman, P.: Fab-map: Probabilistic localization and mapping in the
+space of appearance. The International journal of robotics research 27(6), 647–665
+(2008)
+12. Dosovitskiy, A., Ros, G., Codevilla, F., Lopez, A., Koltun, V.: Carla: An open
+urban driving simulator. In: Conference on robot learning. pp. 1–16. PMLR (2017)
+13. Douze, M., Guzhva, A., Deng, C., Johnson, J., Szilvasy, G., Mazaré, P.E., Lomeli,
+M., Hosseini, L., Jégou, H.: The faiss library. IEEE Transactions on Big Data
+(2025)
+14. Edstedt, J.: Less biased noise scale estimation for threshold-robust ransac. In: Pro-
+ceedings of the Computer Vision and Pattern Recognition Conference. pp. 2811–
+2820 (2025)
+
+
+16
+H. Ren et al.
+15. Fan, S., Liu, R., Wang, W., Yang, Y.: Navigation instruction generation with bev
+perception and large language models. In: European Conference on Computer Vi-
+sion. pp. 368–387. Springer (2024)
+16. Furgale, P., Barfoot, T.D.: Visual teach and repeat for long-range rover autonomy.
+Journal of field robotics 27(5), 534–560 (2010)
+17. Gao, C., Liu, S., Chen, J., Wang, L., Wu, Q., Li, B., Tian, Q.: Room-object entity
+prompting and reasoning for embodied referring expression. IEEE Transactions on
+Pattern Analysis and Machine Intelligence 46(2), 994–1010 (2023)
+18. Garg, S., Fischer, T., Milford, M.: Where is your place, visual place recognition?
+In: Proceedings of the Thirtieth International Joint Conference on Artificial In-
+telligence (IJCAI-21). pp. 4416–4425. International Joint Conferences on Artificial
+Intelligence (2021)
+19. Garg, S., Rana, K., Hosseinzadeh, M., Mares, L., Sünderhauf, N., Dayoub, F., Reid,
+I.: Robohop: Segment-based topological map representation for open-world visual
+navigation. In: 2024 IEEE International Conference on Robotics and Automation
+(ICRA). pp. 4090–4097. IEEE (2024)
+20. Gode, S., et al.: Flownav: Learning efficient navigation policies via conditional flow
+matching. arXiv (2024)
+21. Gornet, J., Thomson, M.: Automated construction of cognitive maps with visual
+predictive coding. Nature Machine Intelligence 6(7), 820–833 (2024)
+22. Guo, Z., Hall, R.W.: Parallel thinning with two-subiteration algorithms. Commu-
+nications of the ACM 32(3), 359–373 (1989)
+23. He, K., Zhang, X., Ren, S., Sun, J.: Deep residual learning for image recognition. In:
+Proceedings of the IEEE conference on computer vision and pattern recognition.
+pp. 770–778 (2016)
+24. Hirose, N., Shah, D., Sridhar, A., Levine, S.: Sacson: Scalable autonomous control
+for social navigation. IEEE Robotics and Automation Letters (2023)
+25. Hirose, N., Xia, F., Martín-Martín, R., Sadeghian, A., Savarese, S.: Deep visual
+mpc-policy learning for navigation. IEEE Robotics and Automation Letters 4(4),
+3184–3191 (2019)
+26. Hossain, J., Faridee, A.Z., Roy, N., Freeman, J., Gregory, T., Trout, T.: Toponav:
+Topological navigation for efficient exploration in sparse reward environments.
+In: 2024 IEEE/RSJ International Conference on Intelligent Robots and Systems
+(IROS). pp. 693–700. IEEE (2024)
+27. Irschara, A., Zach, C., Frahm, J.M., Bischof, H.: From structure-from-motion point
+clouds to fast location recognition. In: 2009 IEEE Conference on Computer Vision
+and Pattern Recognition. pp. 2599–2606. IEEE (2009)
+28. Jiang, Y., Liu, Q., Yang, Y., Ma, X., Zhong, D., Hu, H., Yang, J., Liang, B., XU, B.,
+Zhang, C., et al.: Episodic novelty through temporal distance. In: The Thirteenth
+International Conference on Learning Representations (2025)
+29. Johnson, J., Douze, M., Jégou, H.: Billion-scale similarity search with gpus. IEEE
+Transactions on Big Data 7(3), 535–547 (2019)
+30. Kamila, S., Hasanuzzaman, M., Ekbal, A., Bhattacharyya, P.: Measuring tem-
+poral distance focus from tweets and investigating its association with psycho-
+demographic attributes. IEEE Transactions on Affective Computing 13(2), 1086–
+1097 (2020)
+31. Karnan, H., Nair, A., Xiao, X., Warnell, G., Pirk, S., Toshev, A., Hart, J., Biswas,
+J., Stone, P.: Socially compliant navigation dataset (scand): A large-scale dataset
+of demonstrations for social navigation. IEEE Robotics and Automation Letters
+(2022)
+
+
+Unordered Landmark Visual Navigation
+17
+32. Li, H., Peng, G., Zhang, J., Wen, M., Ma, Y., Wang, D.: Casevpr: Correlation-
+aware sequential embedding for sequence-to-frame visual place recognition. IEEE
+Robotics and Automation Letters (2025)
+33. Li, Z., Zheng, K., Yuan, Y., Huang, J., Zhang, X., Wu, J., Cheng, H.: Learn-
+ing to explore efficiently: Heterogeneous topological graphs and lightweight global
+reasoning for robotic exploration. IEEE Robotics and Automation Letters (2025)
+34. Lindenberger, P., Sarlin, P.E., Pollefeys, M.: Lightglue: Local feature matching at
+light speed. In: Proceedings of the IEEE/CVF international conference on com-
+puter vision. pp. 17627–17638 (2023)
+35. Liu, P., Orru, Y., Paxton, C., Shafiullah, N.M.M., Pinto, L.: Ok-robot: What re-
+ally matters in integrating open-knowledge models for robotics. Proceedings of
+Robotics: Science and Systems (RSS) (2024)
+36. Ma, Y.J., Sodhani, S., Jayaraman, D., Bastani, O., Kumar, V., Zhang, A.: Vip:
+Towards universal visual reward and representation via value-implicit pre-training.
+arXiv preprint arXiv:2210.00030 (2022)
+37. Majumdar, A., Aggarwal, G., Devnani, B., Hoffman, J., Batra, D.: Zson: Zero-
+shot object-goal navigation using multimodal goal embeddings. Advances in Neural
+Information Processing Systems 35, 32340–32352 (2022)
+38. Miao, J., Jiang, K., Wen, T., Wang, Y., Jia, P., Wijaya, B., Zhao, X., Cheng, Q.,
+Xiao, Z., Huang, J., Zhong, Z., Yang, D.: A survey on monocular re-localization:
+From the perspective of scene map representation. IEEE Transactions on Intelligent
+Vehicles 10(4), 2519–2550 (2025)
+39. Milford, M.J., Wyeth, G.F.: Seqslam: Visual route-based navigation for sunny sum-
+mer days and stormy winter nights. In: 2012 IEEE international conference on
+robotics and automation. pp. 1643–1649. IEEE (2012)
+40. Montano-Oliván, L., Placed, J.A., Montano, L., Lázaro, M.T.: G-loc: Tightly-
+coupled graph localization with prior topo-metric information. IEEE Robotics and
+Automation Letters (2024)
+41. Muravyev, K., Melekhin, A., Yudin, D., Yakovlev, K.: Prism-topomap: online topo-
+logical mapping with place recognition and scan matching. IEEE Robotics and
+Automation Letters (2025)
+42. Myers, V., Zheng, C., Dragan, A., Levine, S., Eysenbach, B.: Learning tempo-
+ral distances: Contrastive successor features can provide a metric structure for
+decision-making. In: International Conference on Machine Learning. pp. 37076–
+37096. PMLR (2024)
+43. Neubert, P., Schubert, S., Protzel, P.: A neurologically inspired sequence processing
+model for mobile robot place recognition. IEEE Robotics and Automation Letters
+4(4), 3200–3207 (2019)
+44. Noël, T., Lehuger, A., Marchand, E., Chaumette, F.: Skeleton disk-graph roadmap:
+A sparse deterministic roadmap for safe 2d navigation and exploration. IEEE
+Robotics and Automation Letters 9(1), 555–562 (2023)
+45. Oquab, M., Darcet, T., Moutakanni, T., Vo, H., Szafraniec, M., Khalidov, V.,
+Fernandez, P., Haziza, D., Massa, F., El-Nouby, A., et al.: Dinov2: Learning robust
+visual features without supervision. arXiv preprint arXiv:2304.07193 (2023)
+46. Piedade, V., Miraldo, P.: Bansac: A dynamic bayesian network for adaptive sample
+consensus. In: Proceedings of the IEEE/CVF International Conference on Com-
+puter Vision. pp. 3738–3747 (2023)
+47. Ren, H., Bi, Z., Zeng, Y., Wan, Z., Qi, L., Cheng, H.: Strnet: Visual navigation with
+spatio-temporal representation through dynamic graph aggregation. In: Proceed-
+ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.
+pp. 42464–42473 (2026)
+
+
+18
+H. Ren et al.
+48. Ren, H., Bi, Z., Zeng, Y., Zheng, L., Li, Z., Wan, Z., Qi, L., Cheng, H.: Fisher-
+preserving guidance: Training-free manifold constraints for safe diffusion control.
+arXiv preprint arXiv:2605.29937 (2026)
+49. Ren, H., Zeng, Y., Bi, Z., Wan, Z., Huang, J., Cheng, H.: Prior does matter: Visual
+navigation via denoising diffusion bridge models. In: Proceedings of the Computer
+Vision and Pattern Recognition Conference. pp. 12100–12110 (2025)
+50. Roth, P., Nubert, J., Yang, F., Mittal, M., Hutter, M.: Viplanner: Visual semantic
+imperative learning for local navigation. In: 2024 IEEE International Conference
+on Robotics and Automation (ICRA). pp. 5243–5249. IEEE (2024)
+51. Sattler, T., Leibe, B., Kobbelt, L.: Efficient & effective prioritized matching for
+large-scale image-based localization. IEEE transactions on pattern analysis and
+machine intelligence 39(9), 1744–1756 (2016)
+52. Savinov, N., Dosovitskiy, A., Koltun, V.: Semi-parametric topological memory for
+navigation. In: International Conference on Learning Representations (2018)
+53. Savva, M., Kadian, A., Maksymets, O., Zhao, Y., Wijmans, E., Jain, B., Straub, J.,
+Liu, J., Koltun, V., Malik, J., et al.: Habitat: A platform for embodied ai research.
+In: Proceedings of the IEEE/CVF international conference on computer vision.
+pp. 9339–9347 (2019)
+54. Schonberger, J.L., Frahm, J.M.: Structure-from-motion revisited. In: Proceedings
+of the IEEE conference on computer vision and pattern recognition. pp. 4104–4113
+(2016)
+55. Schönberger, J.L., Zheng, E., Frahm, J.M., Pollefeys, M.: Pixelwise view selection
+for unstructured multi-view stereo. In: European conference on computer vision.
+pp. 501–518. Springer (2016)
+56. Shah, D., Eysenbach, B., Kahn, G., Rhinehart, N., Levine, S.: Rapid exploration for
+open-world navigation with latent goal models. arXiv preprint arXiv:2104.05859
+(2021)
+57. Shah, D., Eysenbach, B., Kahn, G., Rhinehart, N., Levine, S.: Ving: Learning
+open-world navigation with visual goals. In: 2021 IEEE International Conference
+on Robotics and Automation (ICRA). pp. 13215–13222. IEEE (2021)
+58. Shah, D., Sridhar, A., Bhorkar, A., Hirose, N., Levine, S.: Gnm: A general naviga-
+tion model to drive any robot. In: 2023 IEEE International Conference on Robotics
+and Automation (ICRA). pp. 7226–7233. IEEE (2023)
+59. Shah, D., Sridhar, A., Dashora, N., Stachowicz, K., Black, K., Hirose, N., Levine,
+S.: Vint: A foundation model for visual navigation. arXiv preprint arXiv:2306.14846
+(2023)
+60. Shi, P., Yan, S., Xiao, Y., Liu, X., Zhang, Y., Li, J.: Ransac back to sota: A
+two-stage consensus filtering for real-time 3d registration. IEEE Robotics and Au-
+tomation Letters 9(12), 11881–11888 (2024)
+61. Song, M., Zhang, D., Ren, H., Zhang, R., Du, B., Yang, M.H., Qi, L.: Unisharp:
+Universal sharp monocular view synthesis. arXiv preprint arXiv:2606.07514 (2026)
+62. Sridhar, A., Shah, D., Glossop, C., Levine, S.: Nomad: Goal masked diffusion poli-
+cies for navigation and exploration. In: 2024 IEEE International Conference on
+Robotics and Automation (ICRA). pp. 63–70. IEEE (2024)
+63. Sun, X., Liu, L., Zhi, H., Qiu, R., Liang, J.: Prioritized semantic learning for
+zero-shot instance navigation. In: European Conference on Computer Vision. pp.
+161–178. Springer (2024)
+64. Suomela, L., Arachchige, S.K., Torres, G.F., Edelman, H., Kämäräinen, J.K.: Syn-
+thetic vs. real training data for visual navigation. arXiv preprint arXiv:2509.11791
+(2025)
+
+
+Unordered Landmark Visual Navigation
+19
+65. Suomela, L., Kalliola, J., Edelman, H., Kämäräinen, J.K.: Placenav: Topological
+navigation through place recognition. In: 2024 IEEE International Conference on
+Robotics and Automation (ICRA). pp. 5205–5213. IEEE (2024)
+66. Thoma, J., Paudel, D.P., Chhatkuli, A., Probst, T., Gool, L.V.: Mapping, localiza-
+tion and path planning for image-based navigation using visual features and map.
+In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition. pp. 7383–7391 (2019)
+67. Thrun, S.: Learning metric-topological maps for indoor mobile robot navigation.
+Artificial intelligence 99(1), 21–71 (1998)
+68. Thrun, S.: Probabilistic robotics. Communications of the ACM 45(3), 52–57 (2002)
+69. Wan, Z., Bi, Z., Zhou, Z., Ren, H., Zeng, Y., Li, Y., Qi, L., Yang, X., Yang,
+M.H., Cheng, H.: Rapid hand: A robust, affordable, perception-integrated, dex-
+terous manipulation platform for generalist robot autonomy. arXiv preprint
+arXiv:2506.07490 (2025)
+70. Wang, H., Chen, J., Huang, W., Ben, Q., Wang, T., Mi, B., Huang, T., Zhao, S.,
+Chen, Y., Yang, S., et al.: Grutopia: Dream general robots in a city at scale. arXiv
+preprint arXiv:2407.10943 (2024)
+71. Wang, J., Chen, M., Karaev, N., Vedaldi, A., Rupprecht, C., Novotny, D.: Vggt:
+Visual geometry grounded transformer. In: Proceedings of the Computer Vision
+and Pattern Recognition Conference. pp. 5294–5306 (2025)
+72. Wei, T., Patel, Y., Shekhovtsov, A., Matas, J., Barath, D.: Generalized differ-
+entiable ransac. In: Proceedings of the IEEE/CVF International Conference on
+Computer Vision. pp. 17649–17660 (2023)
+73. Xu, M., Fischer, T., Sünderhauf, N., Milford, M.: Probabilistic appearance-
+invariant topometric localization with new place awareness. IEEE Robotics and
+Automation Letters 6(4), 6985–6992 (2021)
+74. Yasuda, Y.D., Martins, L.E.G., Cappabianco, F.A.: Autonomous visual naviga-
+tion for mobile robots: A systematic literature review. ACM Computing Surveys
+(CSUR) 53(1), 1–34 (2020)
+75. Yin, H., Xu, X., Zhao, L., Wang, Z., Zhou, J., Lu, J.: Unigoal: Towards universal
+zero-shot goal-oriented navigation. In: Proceedings of the Computer Vision and
+Pattern Recognition Conference. pp. 19057–19066 (2025)
+76. Zeng, Y., Ren, H., Wang, S., Huang, J., Cheng, H.: Navidiffusor: Cost-guided
+diffusion model for visual navigation. arXiv preprint (2025)
+77. Zhang, J., Wang, K., Wang, S., Li, M., Liu, H., Wei, S., Wang, Z., Zhang, Z., Wang,
+H.: Uni-navid: A video-based vision-language-action model for unifying embodied
+navigation tasks. arXiv preprint arXiv:2412.06224 (2024)
+78. Zhang, T., Hu, X., Xiao, J., Zhang, G.: A survey of visual navigation: From geome-
+try to embodied ai. Engineering Applications of Artificial Intelligence 114, 105036
+(2022)
+79. Zhang, T.Y., Suen, C.Y.: A fast parallel algorithm for thinning digital patterns.
+Communications of the ACM 27(3), 236–239 (1984)
+80. Zhang, W., Hara, Y., Nakamura, S.: Topological mapping and navigation using a
+monocular camera based on anyloc. In: 2025 IEEE 21st International Conference
+on Automation Science and Engineering (CASE). pp. 3077–3083. IEEE (2025)
+81. Zhang, X., Wang, L., Su, Y.: Visual place recognition: A survey from deep learning
+perspective. Pattern Recognition 113, 107760 (2021)
+82. Zhao, J., Zhang, F., Cai, Y., Tian, G., Mu, W., Ye, C., Feng, T.: Learning sequence
+descriptor based on spatio-temporal attention for visual place recognition. IEEE
+Robotics and Automation Letters 9(3), 2351–2358 (2024)
+
+
+20
+H. Ren et al.
+83. Zhu, Y., Mottaghi, R., Kolve, E., Lim, J.J., Gupta, A., Fei-Fei, L., Farhadi, A.:
+Target-driven visual navigation in indoor scenes using deep reinforcement learning.
+In: 2017 IEEE international conference on robotics and automation (ICRA). pp.
+3357–3364. IEEE (2017)
+
+
+Unordered Landmark Visual Navigation
+21
+A
+Appendix Overview
+This supplementary material provides comprehensive implementation details,
+mathematical derivations, and extended experimental analysis to support the
+main paper. The content is organized as follows:
+– Section B: Data Collection Details. We elaborate on the pipeline used
+to generate the ground-truth topological graphs and the unordered image
+dataset from simulation environments.
+– Section C: RAVEL Extended Algorithmic Details. We provide an in-
+depth explanation of the Robust Augmentation and VErification of Land-
+marks (RAVEL) framework, including the data-driven threshold calibration
+and the structural pruning mechanisms.
+– Section D: Belief Propagation Localization (BPL) Derivation. This
+section offers the mathematical formulation behind our localization module,
+detailing the graph-based transition model and the entropy-based adaptive
+fusion strategy.
+– Section E: Belief-Aware Subgoal Search (BASS) Details. We describe
+the complete workflow of our navigation policy, specifically focusing on the
+dynamic subgoal selection and the deviation-triggered replanning logic.
+– Section F: Extended Experimental Results. We present additional
+quantitative ablation studies on graph construction and localization robust-
+ness, alongside qualitative visualizations of navigation trajectories in com-
+plex scenarios.
+B
+Data Collection Details
+This section provides an expanded and more detailed description of the acquired
+dataset and the data acquisition pipeline used to construct both the unordered
+landmark library and the corresponding ground-truth topological structures for
+ULVN. While the main paper introduces each step in a concise manner, here we
+aim to offer a clearer narrative explaining why each transformation is necessary,
+how the intermediate representations are constructed, and how they ultimately
+contribute to the reliable evaluation of mapping, localization, and navigation.
+The entire pipeline converts a raw simulated scene into a sparse skeleton graph
+and a set of camera observations, which together form the reference topology.
+B.1
+Acquired Dataset Information
+The dataset construction utilized a spatial discretization strategy based on the
+skeletal structure of the environment. Sampling nodes were systematically gen-
+erated from the skeleton map and stored as directional pose vectors [x, y, yaw],
+which subsequently guided the image acquisition process. The data collection
+spanned ten distinct environments, divided equally into five Home and five Com-
+mercial settings to ensure environmental diversity. Specifically, the image distri-
+bution for the residential scenarios Home 0, 1, 2, 3, and 4 comprises 540, 226,
+
+
+22
+H. Ren et al.
+332, 216, and 342 frames, respectively. Correspondingly, the commercial scenar-
+ios Commercial 0, 1, 2, 3, and 4 contributed 474, 398, 298, 388, and 380 frames,
+respectively. In total, the dataset consists of 3,594 high-resolution images with
+dimensions of 1920 × 1080 pixels, providing a dense and high-quality visual rep-
+resentation for topological graph construction.
+B.2
+Data Collection Pipeline Details
+Our pipeline roughly follows a sequence of stages: extracting a 3D occupancy
+grid, compressing it to a 2D traversability map, computing an ESDF, detecting
+medial-axis regions, generating a thinned skeleton, sampling topological nodes,
+building a connectivity graph, and finally capturing RGB images at node loca-
+tions. Below, we describe these stages.
+3D Occupancy Extraction. We begin by exporting a voxelized 3D occupancy
+grid from the simulator. Each voxel in this grid is recorded as
+O(x, y, z) ∈{0, 1},
+(8)
+where an occupied voxel corresponds to any static object or structural element
+in the scene. Since the robot operates on a ground plane and its sensors only
+perceive a limited vertical band, we restrict our attention to a height slice
+z ∈[zmin, zmax],
+(9)
+using values determined by the robot design:
+zmin = 0.2 m,
+zmax = 1.2 m.
+(10)
+The voxel resolution (e.g., 0.05 m) defines the fidelity of this representation. This
+3D occupancy map serves as the geometric foundation from which all down-
+stream topological structures are derived.
+2D Traversability Projection. To produce a representation compatible with
+planar navigation, we collapse the selected height slice into a 2D grid:
+G(x, y) =
+max
+z∈[zmin,zmax] O(x, y, z).
+(11)
+A cell is considered blocked if any voxel in the vertical interval is occupied,
+ensuring conservative treatment of overhanging obstacles. The resulting 2D dis-
+crete map uses a resolution of 0.05 m. This representation encodes whether each
+position on the floor plane is traversable, and it forms the basis for distance
+computation and skeleton extraction.
+ESDF Computation. To reason about free-space geometry in a continuous
+and navigation-friendly manner, we compute an Euclidean Signed Distance Field
+(ESDF) on the obstacle map. For each cell:
+ESDF(x, y) =
+(
++d(x, y),
+G(x, y) = 0,
+−d(x, y),
+G(x, y) = 1,
+(12)
+
+
+Unordered Landmark Visual Navigation
+23
+where d(x, y) is the Euclidean distance to the nearest obstacle cell. This com-
+putation is performed using the Euclidean distance transform algorithm (im-
+plemented via scipy.ndimage). The ESDF not only supports robust free-space
+queries but also reveals geometric structures that guide the extraction of medial-
+axis curves.
+Gradients and Flux for Medial-Axis Detection. To identify points lying
+near the centers of corridors or open regions, we compute the ESDF gradient:
+∇ESDF(x, y) =
+∂ESDF
+∂x
+, ∂ESDF
+∂y
+
+,
+(13)
+using finite difference for stability. We then evaluate the gradient flux,
+F(x, y) = −∇·
+ ∇ESDF(x, y)
+∥∇ESDF(x, y)∥
+
+,
+(14)
+which highlights locations where distance gradients converge—a characteristic
+of topological “centerlines.” Applying a threshold
+F(x, y) > τflux,
+τflux = −0.01,
+(15)
+yields a coarse medial-axis mask that roughly traces the connectivity of the
+navigable space.
+Skeleton Extraction and Thinning. The raw medial-axis mask tends to be
+thick and noisy. To obtain a clean, 1-pixel-wide topological skeleton, we apply
+several refinement steps: connected-component filtering, morphological thinning
+(e.g., Zhang–Suen [79] or Guo–Hall [22]), and pruning of insignificant branches.
+In particular, any branch shorter than
+Lmin = 15 px
+(16)
+is removed to avoid spurious nodes and tiny sub-branches that do not mean-
+ingfully reflect environment structure. The thinned skeleton is a compact curve
+network representing the core topology of the navigable region.
+Sampling Topological Nodes. To convert the skeleton into a graph represen-
+tation, we sample nodes along its curves. Uniform sampling with step size
+s = 0.5 m
+(17)
+provides consistent spatial coverage. Because thinning may still produce localized
+clusters, we apply Non-Maximum Suppression (NMS) with radius
+rNMS = 0.5 m,
+(18)
+which ensures that nodes are well distributed and non-redundant. We increase
+sampling density around junctions (skeleton points with degree ≥3), since these
+locations are crucial for representing branching structure in the environment.
+
+
+24
+H. Ren et al.
+Algorithm 1 Data Collection Pipeline: Skeleton Extraction
+Require: 3D Simulator Environment, Height thresholds [zmin, zmax]
+Ensure: Skeleton Map SGT
+1: Phase 1: Environmental Voxelization
+2: Initialize 3D occupancy grid O
+3: for each voxel v = (x, y, z) in environment do
+4:
+O[x, y, z] ←1 if obstacle else 0
+5: Phase 2: 2D Projection
+6: Initialize 2D grid G2D
+7: for each cell (x, y) do
+8:
+G2D[x, y] ←maxz∈[zmin,zmax] O[x, y, z]
+▷Flatten 3D map
+9: Phase 3: ESDF Computation
+10: Compute Euclidean distance field d(x, y) for G2D
+11: for each cell (x, y) do
+12:
+if G2D[x, y] = 1 then
+13:
+ESDF[x, y] ←−d(x, y)
+▷Negative inside obstacles
+14:
+else
+15:
+ESDF[x, y] ←d(x, y)
+▷Positive in free space
+16: Phase 4: Medial-Axis Detection
+17: for each cell (x, y) in ESDF do
+18:
+Compute gradient g ←∇ESDF[x, y]
+19:
+Compute flux F(x, y) based on g divergence
+20:
+if F(x, y) > τflux then
+21:
+Sraw[x, y] ←1
+▷Mark as candidate skeleton
+22: Phase 5: Pruning and Thinning
+23: S ←MorphologicalThinning(Sraw)
+▷Thin to 1-pixel width
+24: for each branch b ∈S do
+25:
+if Length(b) < Lmin then
+26:
+Remove branch b from S
+▷Prune short artifacts
+27: return S
+Graph Connectivity Recovery. Once node positions {vi} are established,
+edges are inferred by examining local connectivity along the skeleton. Two nodes
+are connected if they lie on the same skeleton branch and their geodesic separa-
+tion is smaller than a threshold:
+d(vi, vj) < dmax,
+dmax = 1 m.
+(19)
+This process yields the ground-truth topological graph
+GGT = (V, E),
+(20)
+which encodes the essential navigational structure. Edges may optionally store
+geometric lengths or other metadata used during evaluation.
+RGB Image Capture and Camera Orientation. To pair topological loca-
+tions with visual observations, we place the robot’s virtual camera at each node
+
+
+Unordered Landmark Visual Navigation
+25
+Algorithm 2 Data Collection Pipeline: Image Capture & Node Sampling
+Require: Skeleton Map S, Node Spacing s, Max Edge Distance dmax
+Ensure: Topological Graph GGT, Image Dataset I
+1: Phase 1: Node Sampling on Skeleton
+2: Vsampled ←∅
+3: for each path segment in S do
+4:
+Sample nodes at regular interval s
+5:
+Vsampled ←Vsampled ∪{sampled nodes}
+6: V ←NonMaxSuppression(Vsampled, rnms)
+▷Remove duplicate nodes
+7: Phase 2: Graph Connectivity
+8: E ←∅
+9: for each pair vi, vj ∈V do
+10:
+if dist(vi, vj) < dmax and LineOfSight(vi, vj) then
+11:
+E ←E ∪{(vi, vj)}
+▷Connect navigable nodes
+12: GGT ←(V, E)
+13: Phase 3: Image Acquisition & Orientation
+14: Initialize dataset I ←∅
+15: for each node vi ∈V do
+16:
+// Orientation via PCA or Gradient
+17:
+gi ←∇ESDF(vi)
+18:
+θi ←ComputePrincipalDirection(gi)
+19:
+Move agent to position vi with orientation θi
+20:
+Capture image Ii
+21:
+Add (Ii, vi, θi) to I
+22: return Image set I with poses
+vi and capture RGB images. In addition to the node positions, our pipeline also
+computes a set of canonical viewing orientations at each node by exploiting the
+local geometry of the ESDF and its medial-axis skeleton.
+For each sampled node position pi = (xi, yi) on the skeleton, we first map it
+back to the underlying ESDF grid and query the local ESDF gradient
+∇ESDF(xi, yi) =
+ gx(xi, yi), gy(xi, yi)
+
+.
+(21)
+The gradient direction
+θgrad = atan2
+ gy(xi, yi), gx(xi, yi)
+
+(22)
+points from the skeleton centerline toward nearby obstacles or free-space bound-
+aries. To align the camera with the corridor direction, we define a local tangent
+orientation as a 90◦rotation of this gradient:
+θtan = θgrad + π
+2 ,
+(23)
+which points along the medial axis and thus approximates the direction of travel.
+Around this tangent direction we generate a discrete set of headings by adding
+a fixed angular offset:
+θi,k = θtan + k ∆θ,
+k = 0, . . . , K −1,
+(24)
+
+
+26
+H. Ren et al.
+where ∆θ is the angular interval (e.g., ∆θ = 60◦so that K = 6 views are uni-
+formly spaced over 360◦). In practice, the positions and their associated headings
+are stored as
+[xi, yi, θi,0, θi,1, . . . , θi,K−1],
+(25)
+and the simulator places the camera at (xi, yi) while yawing it to each θi,k in
+turn to render multiple views per node. The camera model, its image resolution
+1920 × 1080, and field of view 121.04◦× 35.20◦(horizontal × vertical) follow the
+robot configuration used in our experiments. The resulting unordered collection
+of images
+L = {Ii,k}k=0,...,K−1
+i=1,...,N
+(26)
+constitutes the sole visual input to ULVN and is used to evaluate the mapping
+and localization components. In practice, we sample 2 images for every node.
+Summary. Overall, this pipeline transforms raw simulation data into a topolog-
+ically meaningful graph and a corresponding set of camera observations. Impor-
+tantly, these ground-truth structures are used exclusively for evaluation: ULVN
+itself receives only unordered RGB images without metric priors, odometry, or
+temporal information. By standardizing the topology generation process, our
+dataset ensures fair comparisons across diverse environments and provides a ro-
+bust foundation for assessing the performance of topological mapping and navi-
+gation systems. All parameters were fixed across all environments and chosen to
+match the robot footprint / corridor width scale; Section F reports robustness
+to key graph-construction hyperparameters.
+C
+RAVEL: Extended Algorithmic Details
+In this section, we provide an expanded explanation of RAVEL, our Robust
+Augmentation and VErification of Landmarks pipeline. The main paper in-
+troduces RAVEL at a conceptual level; here we offer greater detail, including
+motivation, design principles, and algorithmic steps. Our aim is to clarify how
+RAVEL transforms a noisy set of unordered RGB images into a structurally
+reliable visual topological graph.
+Constructing a graph purely from RGB images without temporal or metric
+priors is inherently challenging. Direct appearance-based retrieval often intro-
+duces false positives when visually similar but spatially distant locations match.
+Conversely, strict geometric thresholds may eliminate valid edges, fragmenting
+the topology. RAVEL addresses these issues by calibrating the verification pro-
+cess to the statistics of the environment and then enforcing global structural
+consistency through principled pruning and loop reinsertion. The following sec-
+tions describe these components.
+Global Retrieval and Candidate Generation. Given an unordered image
+library L = {I1, . . . , IN}, each image is first mapped to a global descriptor:
+zi = f(Ii),
+zi ∈RD.
+(27)
+
+
+Unordered Landmark Visual Navigation
+27
+Descriptors are L2-normalized and indexed using FAISS. Their purpose is not
+to make final decisions about graph connectivity, but to provide an efficient way
+to shortlist potentially related images. For each image, we retrieve all neighbors
+within a descriptor distance threshold dVPR, which will be determined automati-
+cally in the calibration stage. This retrieval expands the search space only where
+warranted by descriptor similarity, thereby reducing the number of expensive
+geometric verifications.
+Motivation for Data-Driven Calibration. The performance of geometric
+verification depends critically on two quantities: the inlier threshold τ defining
+whether two images share a geometrically valid relation, and the descriptor cut-
+off dVPR for candidate retrieval. In classical pipelines, these thresholds are fixed
+constants that must be manually tuned for each environment. However, illu-
+mination, viewpoint, texture distribution, and scene layout vary widely across
+environments, making universal fixed thresholds unstable.
+RAVEL therefore performs a one-shot calibration by probing the matching
+statistics of the scene itself. This yields thresholds that automatically adapt to
+the difficulty and texture richness of the environment.
+Anchor-Based Probing and Score Collection. To estimate meaningful
+thresholds, we select two anchor images: a base anchor q0 and its farthest de-
+scriptor neighbor
+qf = arg max
+j
+∥zq0 −zj∥2.
+(28)
+These anchors collectively span both visually similar and visually diverse regions
+of the environment. For each anchor, we exhaustively match it with all images
+in L, obtaining pairs of measurements:
+(cqj, dqj) = (inlier count via LightGlue+RANSAC, ∥zq −zj∥2).
+(29)
+These samples reflect the scene’s own distribution of match quality.
+Cluster-Based Threshold Derivation. RAVEL pools the inlier counts of
+both anchors and performs two-means clustering. The high-confidence cluster
+Sh represents strong geometric matches, while Sl includes weaker or spurious
+ones. We define the inlier threshold as a midpoint between the lowest strong
+match and the highest weak match:
+τ = 1
+2 (min(Sh) + max(Sl)) .
+(30)
+Likewise, the descriptor threshold is chosen as the largest descriptor distance
+among strong matches:
+dVPR =
+max
+(q,j)∈Sh dqj.
+(31)
+This calibration technique reliably separates meaningful relations from noise
+without any environment-specific hyperparameter tuning.
+
+
+28
+H. Ren et al.
+Geometric Verification and Graph Assembly. For every candidate pair
+(i, j) retrieved by the calibrated descriptor threshold, we perform geometric ver-
+ification. LightGlue extracts local features and produces correspondences, fol-
+lowed by a RANSAC-based test (e.g., homography or essential matrix consis-
+tency). The resulting inlier count cij determines whether an edge is formed:
+Wij = Wji =
+(
+cij,
+cij > τ,
+0,
+otherwise.
+(32)
+This yields an initially dense graph that may contain cycles, shortcuts, and
+occasional false positives–a typical outcome when geometric signals are noisy or
+repetitive textures exist.
+Need for Structural Pruning. Local verification alone cannot guarantee a
+coherent global structure. For example, highly textured regions may produce
+many strong-but-spurious connections, forming cycles that do not correspond to
+true spatial traversability. Conversely, strict local cuts may omit edges that are
+important for maintaining connectivity. To resolve these conflicts, RAVEL uses
+a Maximum Spanning Forest (MSF) to form a global structural backbone.
+Maximum Spanning Forest (MSF). We compute an MSF using Kruskal’s
+algorithm. The MSF:
+– retains the strongest verified edges,
+– eliminates all cycles,
+– ensures connectivity within each component,
+– promotes global structural coherence.
+Intuitively, this process finds the minimum number of edges needed to connect
+the graph while preserving only the most reliable relations.
+Loop Reinsertion. Real environments often contain genuine loops—for in-
+stance, rectangular corridors or circular paths. Since MSF removes all cycles,
+RAVEL reintroduces only those edges whose geometric support is exceptionally
+strong. An edge (i, j) is restored if
+Wij > τadd,
+τadd = 1.5 τ.
+(33)
+By reinserting only highly confident loops, RAVEL strikes a balance between
+topological sparsity and representational completeness.
+Discussion and Remaining Challenges. RAVEL significantly improves edge
+precision and global coherence relative to retrieval-only or naive verification
+pipelines. Nevertheless, extremely texture-poor environments or large open ar-
+eas may still introduce ambiguity. These cases reflect fundamental limitations
+of monocular imagery rather than the algorithm itself. Despite such challenges,
+RAVEL consistently provides a stable foundation for the localization and navi-
+gation modules described in the main paper.
+
+
+Unordered Landmark Visual Navigation
+29
+Algorithm 3 RAVEL Graph Construction
+Require: Unordered image set I = {I1, . . . , IN}
+Ensure: Topological Graph G = (V, E, W)
+1: Phase 1: Initialization & Feature Extraction
+2: Compute global descriptors Z = {zi | zi = f(Ii)}
+3: Build FAISS index using Z for efficient retrieval
+4: Phase 2: Parameter Estimation
+5: Select anchors q0 (random) and qf (farthest neighbor of q0)
+6: for q ∈{q0, qf} do
+7:
+Compute geometric inliers cqj for all j
+▷Using LightGlue + RANSAC
+8:
+Record descriptor distances dqj
+9: Cluster inlier statistics into sets Shigh and Slow
+10: Derive verification threshold τ and retrieval radius dVPR
+11: Phase 3: Dense Graph Construction
+12: Initialize adjacency matrix W ←0N×N
+13: for each image i ∈{1, . . . , N} do
+14:
+Retrieve candidates Ci ←{j | ∥zi −zj∥≤dVPR}
+▷FAISS Radius Search
+15:
+for each j ∈Ci do
+16:
+cij ←GeometricVerify(Ii, Ij)
+17:
+if cij > τ then
+18:
+Wij ←cij
+▷Edge weight is inlier count
+19: Phase 4: Topology Refinement
+20: TMSF ←MaximumSpanningForest(W)
+▷Ensures global connectivity
+21: Efinal ←TMSF ∪{(i, j) | Wij > τadd}
+▷Re-insert strong loop closures
+22: Construct final graph G = (V, Efinal, W)
+23: return G
+D
+Belief Propagation Localization: Additional Derivation
+This section provides a deeper understanding of the belief propagation (BP) lo-
+calization method used in ULVN. While the main paper outlines the basic prin-
+ciples of BP localization, here we extend the derivation by discussing the under-
+lying mathematical framework, explaining the topological transition model, and
+providing insights into how belief propagation is performed. We also describe the
+adaptive fusion process that combines predicted beliefs with new observations.
+Motivation for Belief Propagation Localization. The goal of localiza-
+tion is to estimate the robot’s position within the topological graph. This is done
+by maintaining a belief distribution over all the possible nodes, which represents
+the probability of the robot being at each location. Traditional localization meth-
+ods often rely on sequential filtering (such as Kalman filters) that depend heavily
+on temporal priors. However, our method has no direct temporal or odometric
+information about robot movement. As a result, we must rely on the topology
+of the environment and adaptively update our belief based on new observations.
+The belief propagation method that we propose solves this problem by prop-
+agating the belief across the graph structure and incorporating new observations
+through an iterative process. It does not assume sequential data or odometry,
+
+
+30
+H. Ren et al.
+Algorithm 4 Belief Propagation Localization Update
+Require: Current Observation It, Previous Belief bt−1, Transition Matrix T, Node
+Descriptors Z = {z1, . . . , zN}
+Ensure: Updated Belief State bt
+1: 1. Belief Prediction (Transition)
+2: ¯bt ←bt−1 · T
+▷Propagate belief via graph topology
+3: 2. Observation Likelihood Estimation
+4: Extract feature vector zt ←f(It)
+5: for each node vi ∈V do
+6:
+di ←∥zt −zi∥2
+2
+▷Euclidean distance
+7:
+L(vi|It) ←exp (−λ · di)
+▷Compute Likelihood
+8: 3. Adaptive Weight Calculation
+9: ηt ←−P
+i ¯bt(vi) log ¯bt(vi)
+log N
+▷Normalized entropy
+10: Compute wp(ηt) using Eq. (32)
+11: wo(ηt) ←1 −wp(ηt)
+12: 4. Fusion and Update
+13: for each node vi ∈V do
+14:
+bt(vi) ←¯bt(vi)wp · L(vi|It)wo
+▷Adaptive Fusion
+15: 5. Normalization
+16: η ←P
+j bt(vj)
+17: bt ←bt/η
+▷Ensure P bt = 1
+18: return bt
+and instead relies on the spatial relationships encoded in the topological graph
+to update the belief at each step.
+Graph Representation of Localization. Our localization approach works on
+a topological graph G = (V, E), where V represents the set of nodes (locations in
+the environment), and E represents the edges (connections between locations).
+Each node vi ∈V corresponds to a unique landmark (or a set of landmarks),
+and the edges E represent the navigability between these landmarks.
+Let the belief state bt ∈RN represent the probability distribution over the
+N nodes at time step t. This belief is initially uniform or initialized based on
+the first retrieval, and is updated by combining prior knowledge from the graph
+and new observations from the robot’s sensors.
+Belief Prediction via Multi-Step Transition. The belief prediction step uti-
+lizes a transition matrix T derived from the graph’s adjacency matrix A. Unlike
+simple Markov models that only consider immediate neighbors, our implemen-
+tation accounts for reachability up to K steps (where K = 3 in our experiments)
+to model the potential motion of the robot between updates.
+We construct a cumulative reachability matrix by summing powers of the
+adjacency matrix:
+C =
+K
+X
+k=0
+Ak,
+(34)
+
+
+Unordered Landmark Visual Navigation
+31
+where A0 = I (identity matrix). The transition matrix T is obtained by row-
+normalizing C to ensure stochasticity:
+Tij =
+Cij
+P
+j Cij
+.
+(35)
+To predict the robot’s belief state at time t, we propagate the previous posterior
+belief bt−1 through this transition model:
+¯bt = bt−1 · T.
+(36)
+Here, ¯bt represents the prior belief at time t before accounting for the current
+observation. This formulation effectively diffuses the probability mass to the
+topological neighborhood of the previous estimate.
+Adaptive Fusion of Belief and Observation. Once the belief has been prop-
+agated, we fuse it with the current visual observation It.
+1. Observation Likelihood: We compute the likelihood L(vi|It) based on the
+Euclidean distance d(zt, zi) between the query embedding zt and the node em-
+beddings zi. To handle varying dynamic ranges in feature space, we calculate an
+adaptive scaling factor λ:
+λ =
+ln(δ)
+q0.975(d) −q0.025(d),
+(37)
+where d is the vector of distances between zt and all nodes, and q denotes the
+quantile function. The likelihood is then modeled as:
+L(vi|It) ∝exp (−λ · d(zt, zi)) .
+(38)
+2. Entropy-based Weighting: A core contribution of our method is the adap-
+tive weighting of prediction versus observation based on the uncertainty of the
+current belief. We quantify uncertainty using the normalized Shannon entropy
+η of the belief distribution:
+η(b) = −P
+i b(vi) ln(b(vi))
+ln(N)
+.
+(39)
+We define a prediction weight wp and an observation weight wo using a piecewise
+linear function based on η. When entropy is low (high confidence), we rely more
+on the motion prediction; when entropy is high (high uncertainty), we rely more
+on the current observation to relocalize.
+Specifically, the prediction weight wp is calculated as:
+wp(η) =
+
+
+
+
+
+0.6
+if η < 0.3
+0.6 −0.75(η −0.3)
+if 0.3 ≤η ≤0.7
+0.3
+if η > 0.7
+(40)
+The observation weight is set complementarily as wo(η) = 1.0 −wp(η).
+
+
+32
+H. Ren et al.
+Algorithm 5 Belief-Aware Subgoal Search (BASS)
+Require: Topological Map G = (V, E), Target Image Igoal, Look-ahead window ∆
+Ensure: Robot trajectory to goal
+1: Phase 1: Initialization
+2: Initialize belief b0 using BPL given initial observation
+3: vgoal ←argmaxv∈V P(v | Igoal)
+▷Goal Identification
+4: vcurr ←argmaxv∈V b0(v)
+5: P ←GlobalPlan(G, vcurr, vgoal)
+▷Compute global path P = {v0, . . . , vgoal}
+6: Phase 2: Navigation Loop
+7: while robot has not reached vgoal do
+8:
+Obtain current observation ot
+9:
+bt ←BPL(bt−1, ot)
+▷Update Belief State
+10:
+// Deviation Check and Replanning
+11:
+pon_path ←maxv∈P bt(v)
+12:
+if pon_path < τthreshold or IsDeviated(bt, P) then
+13:
+vcurr ←argmaxv∈V bt(v)
+14:
+P ←GlobalPlan(G, vcurr, vgoal)
+▷Replan path
+15:
+// Path-Dependent Subgoal Selection
+16:
+k∗←argmaxk{bt(vk) | vk ∈P}
+▷Locate index on path
+17:
+vsub ←Pmin(k∗+∆,|P |)
+▷Look-ahead selection
+18:
+// Closed-Loop Execution
+19:
+at ←LocalPlanner(vsub, bt)
+20:
+Execute action at
+3. Geometric Fusion Update: Finally, the updated posterior belief bt is com-
+puted via the geometric weighted average of the prior belief and the likelihood:
+bt(vi) ∝¯bt(vi)wp · L(vi|It)wo.
+(41)
+This multiplicative fusion (equivalent to a weighted sum in log-space) is sharper
+than additive fusion and effectively suppresses nodes that are not supported by
+both the transition model and the visual evidence.
+Summary. Belief propagation localization provides an elegant solution for es-
+timating the robot’s position in a topological map without relying on tempo-
+ral or odometric data. By combining multi-step topological propagation with
+entropy-aware adaptive fusion, the system can effectively handle uncertainties.
+The dynamic weights wp and wo ensure that the system holds its course when
+confident but remains responsive to new visual evidence when the location is
+ambiguous.
+E
+Belief-Aware Subgoal Search Details
+This section provides a detailed explanation of the Belief-Aware Subgoal Search
+(BASS) algorithm, which plays a critical role in ULVN for visual navigation.
+BASS integrates belief propagation and path planning to enable efficient navi-
+gation in uncertain environments, where the robot’s belief state is continuously
+
+
+Unordered Landmark Visual Navigation
+33
+updated as it moves. While the main paper introduces BASS at a high level, this
+section delves into the algorithmic details, providing a step-by-step explanation
+of its operation and the underlying motivations.
+Motivation for BASS. In environments where a robot must navigate based
+on visual cues and an uncertain belief state, a simple approach to path planning
+is not sufficient. Traditional methods typically focus on planning from the robot’s
+current state to a goal, assuming a known map and precise position. However,
+in visual navigation, where the robot’s belief about its position is uncertain and
+constantly evolving, we need a more robust approach that considers both the
+belief state and the goal in the context of topological navigation.
+BASS addresses this challenge by introducing the concept of belief-aware
+subgoal search. Instead of rigidly following a sequence of nodes, BASS dynam-
+ically identifies immediate subgoals from a global plan that correspond to the
+robot’s current belief. This ensures that the robot targets a reachable, forward-
+looking waypoint on the path, or detects when it has deviated sufficiently to
+require replanning.
+The BASS Planning and Execution Process. The BASS algorithm oper-
+ates on the topological map constructed by ULVN. The process is divided into
+global path planning and dynamic subgoal selection:
+1. Initial Localization: The robot’s belief is first updated using the Belief
+Propagation Localization (BPL) module to determine the initial probability dis-
+tribution over the topological graph.
+2. Goal Identification: The goal is represented by a target image, and the
+robot’s belief state is updated to reflect the most likely node that corresponds
+to the goal. This goal node serves as the destination for the navigation task.
+3. Global Path Planning: Before selecting immediate subgoals, a global topo-
+logical path P = {v0, v1, . . . , vgoal} is computed from the most likely starting
+node to the goal node. This path consists of a sequence of visual landmarks
+(nodes) connected by traversable edges.
+4. Dynamic Subgoal Selection: As the robot navigates, BASS uses the current
+belief state to determine the robot’s progress along the path P. It selects a "look-
+ahead" node on the path as the immediate subgoal to drive efficient movement.
+5. Deviation Check and Replanning: Crucially, BASS continuously verifies
+if the robot’s current belief state is consistent with the nodes contained in the
+global path P. If the robot localizes itself off the path, the system triggers a
+replanning procedure.
+Path-Dependent Subgoal Selection Mechanism. The core of BASS is the
+mechanism for selecting the immediate target image (subgoal) given the global
+plan P and the current belief bt. Unlike information-seeking exploration, this
+process focuses on efficient path traversal.
+1. Localization on Path: Let the global path be defined as a sequence of nodes
+P. At time step t, the robot estimates its location index k on the path such that
+the belief bt(vk) is maximized among all nodes in P.
+k∗= argmaxk bt(vk),
+where vk ∈P
+(42)
+
+
+34
+H. Ren et al.
+2. Look-Ahead Selection: Once the robot’s current location index k∗on the
+path is identified, BASS selects a downstream node as the immediate subgoal to
+encourage forward progress. The subgoal vsub is chosen as:
+vsub = vk∗+∆,
+(43)
+where ∆represents a look-ahead window. This ensures the robot moves towards
+a future waypoint rather than trying to converge on a location it is already
+passing.
+Closed-Loop Navigation and Replanning. Once the subgoals are selected,
+the robot navigates towards them using a local planner. However, because visual
+navigation often involves uncertainty in both localization and movement, the
+robot may deviate from the planned path. In such cases, BASS enables closed-
+loop navigation by continuously updating the belief state and adjusting the path.
+1. Path Execution: The robot follows the path from its current location to
+the selected subgoal. This path is planned using a local planner that takes into
+account both the belief state and the topological graph. As the robot moves, its
+belief about its position is updated using the BPL module.
+2. Deviation Detection: If the robot deviates significantly from the planned
+path, BASS triggers a replanning mechanism. This deviation is detected by com-
+paring the robot’s current belief state with the expected belief based on the
+planned path. If the belief state shows that the robot is no longer on the correct
+path, a new subgoal is selected, and the robot is reoriented towards it.
+3. Replanning and Adaptation: If a deviation occurs or if new information is
+obtained (e.g., through visual observations), the belief state is updated, and the
+path to the goal is recomputed. This iterative process continues until the robot
+reaches the final goal or the belief state converges.
+Computational Complexity and Performance. The computational com-
+plexity of the BASS algorithm is influenced by the size of the topological graph
+and the number of subgoals selected. The time complexity for selecting a subgoal
+involves evaluating all candidate nodes, which requires calculating the expected
+information gain and belief entropy for each node. This process is O(N), where
+N is the number of nodes in the graph.
+Once the subgoal is selected, the path planning step is performed using a
+graph search algorithm (e.g., Dijkstra or A*), which has a time complexity of
+O(E log N), where E is the number of edges in the graph. Overall, the complexity
+of BASS is primarily dominated by the belief propagation and path search steps.
+Summary. The Belief-Aware Subgoal Search (BASS) algorithm provides a ro-
+bust framework for visual navigation by incorporating belief updates and adap-
+tive path planning. By selecting intermediate subgoals based on the robot’s belief
+state, BASS ensures that the robot always moves towards the most informative
+locations in the environment. This approach is particularly useful in scenarios
+where the robot’s position is uncertain, and it enables efficient navigation in com-
+plex, dynamic environments. BASS’s closed-loop capabilities allow the robot to
+
+
+Unordered Landmark Visual Navigation
+35
+recover from deviations and continue to the goal, making it a powerful tool for
+real-world deployment in visual navigation tasks.
+F
+Extended Experimental Results
+Table 8: Detailed comparison evaluation of different topological graph construction
+methods on the GRScenes dataset.
+Method
+Precision
+Recall
+F1
+Accuracy
+Commercial
+PlaceNav top 2 [65] 0.5078 ± 0.0453 0.6803 ± 0.0604 0.5682 ± 0.0477 0.9943 ± 0.0011
+PlaceNav top 5 [65] 0.2324 ± 0.0262 0.7878 ± 0.0479 0.3587 ± 0.0265 0.9857 ± 0.0022
+ViNT top 2 [59]
+0.5291 ± 0.0724 0.6839 ± 0.1021 0.5962 ± 0.0701 0.9951 ± 0.0013
+ViNT top 5 [59]
+0.2823 ± 0.1686 0.8239 ± 0.0410 0.3882 ± 0.1522 0.9862 ± 0.0059
+RAVEL (Ours)
+0.7012 ± 0.0886 0.7687 ± 0.0599 0.7328 ± 0.0756 0.9972 ± 0.0011
+Home
+PlaceNav top 2 [65] 0.5446 ± 0.0390 0.7224 ± 0.0690 0.6203 ± 0.0478 0.9946 ± 0.0018
+PlaceNav top 5 [65] 0.3075 ± 0.1192 0.8032 ± 0.0590 0.4149 ± 0.0491 0.9850 ± 0.0060
+ViNT top 2 [59]
+0.4752 ± 0.1361 0.6910 ± 0.1406 0.6062 ± 0.0857 0.9935 ± 0.0022
+ViNT top 5 [59]
+0.1502 ± 0.0714 0.8281 ± 0.0672 0.3289 ± 0.1095 0.9761 ± 0.0094
+RAVEL (Ours)
+0.7196 ± 0.1291 0.7625 ± 0.1217 0.7402 ± 0.1252 0.9967 ± 0.0016
+All (Home + Commercial)
+PlaceNav top 2 [65] 0.5262 ± 0.0503 0.7113 ± 0.0805 0.6043 ± 0.0606 0.9948 ± 0.0014
+PlaceNav top 5 [65] 0.2699 ± 0.0915 0.7655 ± 0.1584 0.3731 ± 0.0244 0.9853 ± 0.0052
+ViNT top 2 [59]
+0.5201 ± 0.0718 0.6775 ± 0.1252 0.5815 ± 0.0724 0.9946 ± 0.0015
+ViNT top 5 [59]
+0.2660 ± 0.1540 0.8246 ± 0.0560 0.3806 ± 0.1329 0.9816 ± 0.0108
+RAVEL (Ours)
+0.7104 ± 0.1048 0.7656 ± 0.0905 0.7365 ± 0.0976 0.9970 ± 0.0013
+This section presents additional experimental results to complement the find-
+ings in the main paper.
+We provide more detailed results to complement the experiments in the main
+text. Additionally, we conduct a sensitivity analysis on the adaptive parame-
+ters τ and dVPR in RAVEL to demonstrate the robustness of the Anchor selec-
+tion strategy and the overall effectiveness of the method. We also analyze the
+structural properties of the constructed topological graphs by reporting met-
+rics such as the number of connected components, average shortest path length,
+and graph diameter. Visual comparisons of the topological graphs obtained by
+different methods are also provided. Considering that most existing methods
+rely on temporal sequences, we validate our global localization algorithm, BPL,
+across multiple datasets that including a mount of temporal sequences. To simu-
+late variations in position, orientation, and motion blur that occur during robot
+movement, we apply techniques such as image cropping, viewpoint modification,
+and noise injection. These tests further verify the effectiveness and generaliza-
+tion capability of our approach. Finally, we present visualizations of selected
+
+
+36
+H. Ren et al.
+Table 9: Detailed quantitative evaluation of topological graph construction on the
+GRScenes dataset.
+Scenes
+Metric
+Top-k ANN
+Ours w/o (MSF, AVP τ) Ours w/o MSF
+Ours
+Home
+P
+0.1537 ± 0.0551
+0.4625 ± 0.1459
+0.7198 ± 0.1075 0.7196 ± 0.1291
+R
+0.8898 ± 0.1095
+0.6177 ± 0.1604
+0.3521 ± 0.0492
+0.7625 ± 0.1217
+F1
+0.2598 ± 0.0835
+0.5070 ± 0.0754
+0.4705 ± 0.0564 0.7402 ± 0.1252
+Acc.
+0.9673 ± 0.0106
+0.9929 ± 0.0020
+0.9951 ± 0.0016 0.9967 ± 0.0016
+Commercial
+P
+0.0953 ± 0.0341
+0.2728 ± 0.1145
+0.6621 ± 0.1202 0.7012 ± 0.0886
+R
+0.9343 ± 0.0274
+0.8177 ± 0.0978
+0.4920 ± 0.0981
+0.7687 ± 0.0599
+F1
+0.1713 ± 0.0554
+0.3922 ± 0.0967
+0.5609 ± 0.0984 0.7328 ± 0.0756
+Acc.
+0.9496 ± 0.0220
+0.9868 ± 0.0050
+0.9962 ± 0.0011 0.9972 ± 0.0011
+All
+P
+0.1245 ± 0.0530
+0.3676 ± 0.1590
+0.6910 ± 0.1117 0.7104 ± 0.1048
+R
+0.9121 ± 0.0788
+0.7177 ± 0.1637
+0.4220 ± 0.1039
+0.7656 ± 0.0905
+F1
+0.2156 ± 0.0815
+0.4496 ± 0.1017
+0.5157 ± 0.0894 0.7365 ± 0.0976
+Acc.
+0.9584 ± 0.0188
+0.9898 ± 0.0048
+0.9956 ± 0.0014 0.9970 ± 0.0013
+navigation trajectories to illustrate the system performance, with a particular
+focus on demonstrating the efficacy of the replanning mechanism.
+F.1
+Experimental Details
+To evaluate the system’s performance rigorously, we conducted separate experi-
+mental trials for global localization and autonomous navigation using randomly
+selected trajectories within the mapped environments. For the localization exper-
+iments, the testing protocol involved traversing random paths across all scenes to
+assess position estimation accuracy. Specifically, to ensure statistical significance,
+five distinct paths were generated for each of the environments. The navigation
+evaluation followed a similar randomized path generation strategy with slight
+adjustments to accommodate scene-specific complexities.
+F.2
+Extended Experiments
+Evaluation Metrics and Experimental Setup. For the extended experi-
+ments, we evaluate ULVN across multiple tasks to comprehensively assess its
+performance. The core tasks include:
+1. Topological Mapping:
+We validate the robustness of the one-shot calibration mechanism in RAVEL
+through a sensitivity analysis. Additionally, we statistically evaluate the proper-
+ties of the constructed topological graphs across multiple dimensions, including
+the number of connected components, average shortest path length, and graph
+diameter.
+2. Localization:
+We conducted simulated global localization experiments on time-series nav-
+igation datasets. For each image within a clip, we applied image processing
+techniques, including cropping, viewpoint modification, and noise injection, to
+simulate variations in position, orientation, and motion blur encountered during
+
+
+Unordered Landmark Visual Navigation
+37
+Table 10: Comparison of localization accuracy of different methods on different
+datasets.
+Dataset
+Condition
+Localization Accuracy
+MegaLoc [3]
+JIST [4]
+ViNT [59]
+BPL (Ours)
+GoStanford [25]
+Rotation
+0.9930
+0.8047
+0.9302
+0.9891
+Rot + Gauss
+0.8674
+0.3395
+0.9295
+0.9559
+Rot + Poisson
+0.8488
+0.3209
+0.9226
+0.9412
+Rot + Crop
+0.9884
+0.6209
+0.6140
+0.9853
+RECON [56]
+Rotation
+0.7597
+0.7394
+0.9306
+0.9429
+Rot + Gauss
+0.7022
+0.7039
+0.9069
+0.9375
+Rot + Poisson
+0.6362
+0.6937
+0.9120
+0.9062
+Rot + Crop
+0.6379
+0.5262
+0.7733
+0.9301
+SACSoN [24]
+Rotation
+0.9507
+0.6494
+0.8410
+0.9565
+Rot + Gauss
+0.6669
+0.3172
+0.8267
+0.8862
+Rot + Poisson
+0.6089
+0.3188
+0.8410
+0.8556
+Rot + Crop
+0.9006
+0.4356
+0.5437
+0.9394
+SCAND [31]
+Rotation
+0.9471
+0.6960
+0.8784
+0.9753
+Rot + Gauss
+0.7364
+0.4486
+0.8753
+0.8772
+Rot + Poisson
+0.7746
+0.4481
+0.8768
+0.8827
+Rot + Crop
+0.8920
+0.5183
+0.6305
+0.9259
+Average
+Overall
+0.8069
+0.5363
+0.8270
+0.9304
+robot motion. The processed images were treated as robot observations, while
+the original images served as the node images in the topological graph. We per-
+formed global localization for each image and reported the resulting accuracy.
+These experiments were conducted on the RECON [56], SCAND [31], GoStan-
+ford [25], and SACSoN [24] datasets.
+3. Navigation:
+We present visualizations of navigation paths in selected scenes. Additionally,
+we provide ablation studies for the navigation method, including experiments on
+the replanning mechanism and global localization.
+Detailed Results of Topological Mapping Performance. The detailed
+data of different topological graph construction methods comparison are pre-
+sented in Table 8. A granular examination of the sub-categories reveals that
+the proposed RAVEL method maintains superior performance stability across
+diverse environmental contexts. In the Commercial settings, RAVEL achieves a
+dominant Precision of 0.7012 and an F1 score of 0.7328, significantly outpacing
+the closest competitors. This performance advantage is even more pronounced
+in the Home scenarios, where RAVEL reaches a Precision of 0.7196 and an F1
+score of 0.7402. Notably, while baseline methods such as ViNT top 5 experience
+a drastic reduction in Precision when transitioning from Commercial (0.2823) to
+Home (0.1502) environments, RAVEL exhibits remarkable consistency. This sug-
+gests that the proposed approach is far more robust to the structural variability
+and visual clutter variations that distinguish residential layouts from commercial
+spaces.Regarding statistical variance, the standard deviations reported in the ta-
+ble provide insight into the reliability of the graph construction. While methods
+like ViNT top 5 achieve the highest Recall values, their high standard deviations
+
+
+38
+H. Ren et al.
+in Precision (up to ±0.1686 in Commercial settings) and extremely low mean
+Precision scores indicate a reliance on generating excessive false positives, result-
+ing in unstable topological graphs. Conversely, RAVEL demonstrates a balanced
+trade-off. Although its standard deviation for Precision in Home scenes is higher
+than in Commercial scenes, reflecting the inherent irregularity of residential en-
+vironments, the method consistently achieves the highest Accuracy with tight
+error bounds. This low variance in overall Accuracy confirms that RAVEL offers
+the most reliable and generalized solution for topological mapping, effectively
+mitigating the extreme fluctuations observed in heuristic-based baselines.
+100
+100
+200
+200
+300
+300
+400
+400
+500
+500
+Match Threshold (τ)
+100
+200
+300
+400
+500
+Match Threshold (τ)
+0.000
+0.000
+0.001
+0.001
+0.002
+0.002
+0.003
+0.003
+0.004
+0.004
+0.005
+0.005
+0.006
+0.006
+0.007
+0.007
+Density
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+Density
+μ=205.40
+σ2=4498.28
+Range=490.00
+μ=205.40
+σ2=4498.28
+Range=490.00
+Distribution of Match Thresholds
+100
+200
+300
+400
+500
+Match Threshold (τ)
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+Density
+μ=205.40
+σ2=4498.28
+Range=490.00
+Distribution of Match Thresholds
+1.0
+1.0
+1.2
+1.2
+1.4
+1.4
+1.6
+1.6
+1.8
+1.8
+VPR L2 Distance Threshold (dvpr)
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance Threshold (dvpr)
+0
+1
+2
+3
+4
+5
+Density
+0
+1
+2
+3
+4
+5
+Density
+μ=1.680
+σ2=0.0225
+Range=0.935
+μ=1.680
+σ2=0.0225
+Range=0.935
+Distribution of VPR Distances
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance Threshold (dvpr)
+0
+1
+2
+3
+4
+5
+Density
+μ=1.680
+σ2=0.0225
+Range=0.935
+Distribution of VPR Distances
+100
+200
+300
+400
+500
+Match Threshold (τ)
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+Density
+μ=205.40
+σ2=4498.28
+Range=490.00
+Distribution of Match Thresholds
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance Threshold (dvpr)
+0
+1
+2
+3
+4
+5
+Density
+μ=1.680
+σ2=0.0225
+Range=0.935
+Distribution of VPR Distances
+100
+200
+300
+400
+500
+Match Threshold (τ)
+0.000
+0.001
+0.002
+0.003
+0.004
+0.005
+0.006
+0.007
+Density
+μ=205.40
+σ2=4498.28
+Range=490.00
+Distribution of Match Thresholds
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance Threshold (dvpr)
+0
+1
+2
+3
+4
+5
+Density
+μ=1.680
+σ2=0.0225
+Range=0.935
+Distribution of VPR Distances
+Fig. 8: Distribution of adaptive thresholds in RAVEL on the GRScenes dataset.
+Based on the detailed ablation results presented in Table 9, the analysis fo-
+cuses on the specific contributions of individual modules across different scene
+categories and the statistical stability of the proposed method. The scenario-
+specific breakdown reveals that the impact of the Minimum Spanning Tree
+(MSF) strategy is particularly pronounced in unstructured environments. In
+Home settings, removing the MSF component causes a drastic reduction in Re-
+call, dropping from 0.7625 to 0.3521. This sharp decline indicates that in resi-
+dential layouts, which often feature irregular pathways and visual occlusions, the
+MSF mechanism is critical for maintaining graph connectivity and preventing
+the fragmentation of the topological map. Conversely, in Commercial environ-
+ments, the absence of both the MSF and the Adaptive Verification Parameter
+(AVP) leads to a significant deterioration in Precision to 0.2728. This suggests
+that in commercial spaces characterized by repetitive textures and similar visual
+features, the adaptive pruning and structural constraints are essential for filter-
+ing out false positive connections that simple nearest-neighbor approaches fail
+to distinguish.Regarding experimental stability, the standard deviations provide
+insight into the robustness of the method against environmental variance. The
+data shows that Home scenes generally induce higher performance variability
+compared to Commercial scenes, as evidenced by the higher standard deviation
+in Precision for the full method in Home settings (±0.1291) versus Commercial
+
+
+Unordered Landmark Visual Navigation
+39
+200
+200
+400
+400
+600
+600
+800
+800
+1000
+1000
+1200
+1200
+Edge Weight (wij)
+200
+400
+600
+800
+1000
+1200
+Edge Weight (wij)
+0.00000
+0.00000
+0.00025
+0.00025
+0.00050
+0.00050
+0.00075
+0.00075
+0.00100
+0.00100
+0.00125
+0.00125
+0.00150
+0.00150
+0.00175
+0.00175
+0.00200
+0.00200
+Density
+0.00000
+0.00025
+0.00050
+0.00075
+0.00100
+0.00125
+0.00150
+0.00175
+0.00200
+Density
+μ=684.190
+σ2=40364.263
+Nedges=956
+μ=684.190
+σ2=40364.263
+Nedges=956
+Distribution of Edge Weights in Adjacency Matrix
+200
+400
+600
+800
+1000
+1200
+Edge Weight (wij)
+0.00000
+0.00025
+0.00050
+0.00075
+0.00100
+0.00125
+0.00150
+0.00175
+0.00200
+Density
+μ=684.190
+σ2=40364.263
+Nedges=956
+Distribution of Edge Weights in Adjacency Matrix
+200
+400
+600
+800
+1000
+1200
+Edge Weight (wij)
+0.00000
+0.00025
+0.00050
+0.00075
+0.00100
+0.00125
+0.00150
+0.00175
+0.00200
+Density
+μ=684.190
+σ2=40364.263
+Nedges=956
+Distribution of Edge Weights in Adjacency Matrix
+200
+400
+600
+800
+1000
+1200
+Edge Weight (wij)
+0.00000
+0.00025
+0.00050
+0.00075
+0.00100
+0.00125
+0.00150
+0.00175
+0.00200
+Density
+μ=684.190
+σ2=40364.263
+Nedges=956
+Distribution of Edge Weights in Adjacency Matrix
+Fig. 9: Distribution of edge weights on the GRScenes dataset.
+settings (±0.0886). This disparity reflects the inherent diversity and complex-
+ity of residential interiors. Despite this challenge, the proposed method achieves
+a remarkably low standard deviation for Accuracy across both sub-categories,
+ranging from ±0.0011 to ±0.0016. This consistency demonstrates that the full
+model effectively mitigates the instability observed in the ablation variants and
+the baseline Top-k ANN, offering a reliable topological construction regardless
+of the specific scene characteristics.
+Adaptive Parameter Sensitivity Analysis. Based on the provided method
+description and the statistical visualizations from the GRScenes dataset, the
+following analysis validates the rationality and effectiveness of the proposed data-
+driven calibration strategy.
+Validation of Adaptive Thresholding Necessity. The distribution of match
+thresholds (τ) presented in Figure 8 (Left) and the sensitivity analysis in Fig-
+ure 10 provide strong empirical evidence for the necessity of an adaptive approach
+over fixed parameters. The match threshold τ exhibits a significant spread with
+a range of 490.00 and a standard deviation of approximately 4498 (variance),
+resulting in a broad Gaussian-like distribution centered around µ = 205.40. This
+high variance indicates that the optimal separation point between inliers and
+outliers fluctuates drastically depending on the specific visual distinctiveness of
+the scene. Furthermore, Figure 10 illustrates that τ is not static but varies dy-
+namically across query indices, reacting to the specific appearance properties of
+the anchor pairs (q0, qf). A fixed manual threshold would inevitably fail to cap-
+
+
+40
+H. Ren et al.
+0
+100
+100
+200
+200
+300
+300
+400
+400
+Query Index
+0
+100
+200
+300
+400
+Query Index
+100
+100
+200
+200
+300
+300
+400
+400
+500
+500
+Match Threshold (τ)
+100
+200
+300
+400
+500
+Match Threshold (τ)
+Match Threshold (τ)
+VPR Distance (dvpr)
+Match Threshold (τ)
+VPR Distance (dvpr)
+0
+100
+200
+300
+400
+Query Index
+100
+200
+300
+400
+500
+Match Threshold (τ)
+Match Threshold (τ)
+VPR Distance (dvpr)
+1.0
+1.0
+1.2
+1.2
+1.4
+1.4
+1.6
+1.6
+1.8
+1.8
+VPR L2 Distance (dvpr)
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance (dvpr)
+Parameter Sensitivity across Dataset Indices
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance (dvpr)
+Parameter Sensitivity across Dataset Indices
+0
+100
+200
+300
+400
+Query Index
+100
+200
+300
+400
+500
+Match Threshold (τ)
+Match Threshold (τ)
+VPR Distance (dvpr)
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance (dvpr)
+Parameter Sensitivity across Dataset Indices
+0
+100
+200
+300
+400
+Query Index
+100
+200
+300
+400
+500
+Match Threshold (τ)
+Match Threshold (τ)
+VPR Distance (dvpr)
+1.0
+1.2
+1.4
+1.6
+1.8
+VPR L2 Distance (dvpr)
+Parameter Sensitivity across Dataset Indices
+Fig. 10: Sensitivity analysis of anchor selection across dataset indices.
+ture this heterogeneity, leading to either false negatives in texture-poor regions
+or false positives in repetitive environments. The proposed method, by deriving
+τ from the clustering of pooled match counts, effectively centers the threshold
+for each specific context, ensuring robust feature matching performance.
+Effectiveness of Distance-Based Candidate Selection. The distribution of VPR
+distances (dVPR) in Figure 8 (Right) demonstrates the efficacy of the cluster-
+based estimation in defining a valid search radius. The distribution is heavily
+skewed towards higher distance values (µ = 1.68), with a tight concentration
+near the upper bound of the range (0.935). This statistical behavior aligns with
+the method’s design, where dVPR is determined by the maximum distance within
+the highest-confidence cluster (Sh). By adapting this boundary, the system maxi-
+mizes the retrieval of potential loop closure candidates without imposing an arbi-
+trary "top-k" limit. The clear peak in the distribution suggests that the method
+consistently identifies a "geometric horizon" for verification, successfully distin-
+guishing between the embedding space of valid neighbors and that of unrelated
+locations.
+Robustness of Graph Connectivity. The ultimate validation of the calibra-
+tion strategy is reflected in the distribution of edge weights shown in Figure 9.
+The resulting adjacency matrix weights follow a well-formed normal distribution
+with a high mean (µ = 684.19) and substantial density in the 500 −900 range.
+This indicates that the calibrated thresholds (τ and dVPR) successfully filter
+out low-confidence noise while preserving strong connections. The absence of a
+significant low-weight tail or bimodal fragmentation suggests that the K-Means
+clustering logic effectively separates the high-confidence cluster (Sh) from the
+
+
+Unordered Landmark Visual Navigation
+41
+noise (Sl). Consequently, the generated topological graph maintains high struc-
+tural integrity, characterized by strong, verifiable edges rather than weak, am-
+biguous links. This confirms that the one-shot calibration mechanism functions
+as an effective filter, translating raw visual data into a high-quality topological
+representation.
+Qualitative Analysis of Topological Graph Construction. To qualita-
+tively assess the structural integrity and navigability of the generated maps, we
+visualized the topological graphs constructed by different methods across three
+distinct scenes. Figure 13 presents a comparative view that contrasts the pro-
+posed RAVEL framework against feature-based, temporal-learning-based, and
+global-retrieval-based baselines, using a manually verified graph as the Refer-
+ence ground truth.
+The visual comparison reveals significant disparities in graph quality, di-
+rectly highlighting the limitations of heuristic edge filtering. The Top-k ANN
+approach, which relies solely on the density of LightGlue feature matches, ex-
+hibits severe over-connection. As observed in row (a), it generates a chaotic
+network of edges that frequently penetrate obstacles and walls, particularly in
+the texture-repetitive environment of Scene 1. This confirms that relying on raw
+matching counts without rigorous geometric verification fails to distinguish ad-
+jacent nodes from visually similar but spatially distant locations. Similarly, the
+ViNT and PlaceNav methods, while slightly more structured, still suffer from
+substantial noise. In the open layout of Scene 2 and the multi-room layout of
+Scene 3, these baselines frequently establish spurious links between disjoint ar-
+eas, resulting in a "spiderweb" structure that violates the physical constraints
+of the environment.
+In contrast, the proposed RAVEL method produces a topological structure
+that aligns closely with the Reference ground truth. This superior performance is
+attributable to two specific components of the RAVEL pipeline. First, the data-
+driven calibration effectively determines an adaptive inlier threshold τ, which rig-
+orously filters out the weak geometric matches that cause "wall-crossing" edges
+in the Top-k ANN baseline. Second, and most critically, the two-stage pruning
+strategy ensures structural cleanliness. By extracting the Maximum Spanning
+Forest (MSF), RAVEL creates a strong, acyclic skeletal backbone that elimi-
+nates the redundant noise seen in Scene 2. Subsequently, the strong-loop rein-
+sertion mechanism selectively restores only the high-confidence cycles necessary
+for connectivity. This combination allows RAVEL to respect room separation in
+Scene 3 while maintaining valid traversability through doorways, resulting in a
+sparse, geometrically consistent, and topologically faithful graph.
+Localization Performance. To evaluate the robustness of the proposed system
+under realistic navigation challenges, we conducted simulated global localization
+experiments across multiple time-series datasets. By systematically applying im-
+age processing perturbations such as viewpoint modifications and noise injection,
+we mimicked the sensory imperfections encountered during active robot motion.
+Table 10 presents the quantitative comparison of localization accuracy under
+
+
+42
+H. Ren et al.
+Deviation and Replanning Path
+Deviation and Replanning Path
+Initial Planned Path
+Initial Planned Path
+Fig. 11: Examples of navigation visualization in the home scenario.
+Initial Planned Path
+Initial Planned Path
+Deviation and Replanning Path
+Deviation and Replanning Path
+Fig. 12: Examples of navigation visualization in the commercial scenario.
+these varying conditions, offering insights into the stability of different topolog-
+ical localization methods.
+The results demonstrate that the proposed BPL method achieves superior
+generalization across all evaluated benchmarks, yielding the highest overall aver-
+age accuracy of 0.9304. This performance significantly outperforms the compet-
+ing baselines, particularly in scenarios involving complex visual degradations.
+A critical limitation observed in baseline methods, specifically MegaLoc, is a
+marked sensitivity to high-frequency noise. While MegaLoc performs competi-
+tively in clean rotation scenarios on the GoStanford dataset, its accuracy deteri-
+orates rapidly when Gaussian or Poisson noise is introduced, dropping by nearly
+30% in datasets such as SACSoN and SCAND. In contrast, BPL exhibits excep-
+tional resilience to these signal corruptions. The method maintains consistently
+high accuracy levels even under "Rot + Gauss" and "Rot + Poisson" conditions,
+suggesting that its feature representation is effective at suppressing sensor noise
+while retaining structurally relevant topological information.
+Furthermore, the "Rot + Crop" condition serves as a stress test for partial
+observability and drastic viewpoint shifts. In this regime, methods like ViNT and
+JIST experience substantial performance degradation, particularly on the SAC-
+SoN and SCAND datasets where ViNT’s accuracy falls significantly. The pro-
+posed BPL framework, however, consistently achieves accuracy exceeding 0.92
+in these occlusion-heavy settings. This indicates that BPL successfully leverages
+global context to localize the agent even when significant portions of the vi-
+sual field are missing or altered. Consequently, these findings confirm that BPL
+provides a reliable localization solution that is not only accurate in ideal condi-
+tions but remains robust against the unpredictable visual variations inherent in
+real-world robotic navigation.
+
+
+Unordered Landmark Visual Navigation
+43
+Navigation Performance. To qualitatively evaluate the practical applicabil-
+ity of the constructed topological graphs, we visualized the navigation process
+within realistic simulation environments. This evaluation encompasses the full
+navigation pipeline, ranging from graph construction using unordered images to
+start-goal localization and path planning executed by a local planner. A partic-
+ular focus is placed on the system’s dynamic response to execution errors, where
+the Belief Propagation Localization (BPL) module identifies deviations from
+the optimal trajectory and triggers topological replanning to ensure successful
+navigation.
+Figures 11 and 12 illustrate the navigation performance in Home and Com-
+mercial settings, respectively. In both scenarios, the blue trajectories represent
+the initial optimal paths computed on the topological graph, while the orange
+trajectories depict instances where the agent deviates from the intended route
+due to control noise or local obstacle avoidance. The visual data presented in
+the "Deviation and Replanning" rows highlights that during these excursions,
+the robot encounters viewpoints that differ significantly from the initial plan.
+Despite these visual discrepancies, the BPL module successfully detects the mis-
+match between the expected and actual states, prompting the system to generate
+a new topological path.
+The successful recovery in both distinct environments demonstrates the ro-
+bustness of the proposed framework. In the clutter-heavy Home scenario, the
+robot effectively navigates around central obstacles after deviating, proving that
+the constructed graph maintains sufficient connectivity even in narrow, irregular
+spaces. Similarly, in the texture-repetitive Commercial scenario, the system cor-
+rects a significant lateral drift, indicating that the localization module is resilient
+to the perceptual aliasing common in large open halls. These results confirm
+that the topological graphs constructed from unordered images provide a reli-
+able spatial representation that, when coupled with BPL, allows for autonomous
+self-correction and consistent goal achievement under imperfect execution con-
+ditions.
+Summary of Experimental Results. In this section, we have provided ex-
+tended experimental results to evaluate the performance of ULVN across map-
+ping, localization, and navigation tasks. ULVN outperforms baseline methods
+in all tasks, demonstrating its robustness and effectiveness in constructing re-
+liable topological maps, localizing within those maps, and navigating through
+complex environments. The results from both simulated and real-world environ-
+ments showcase the practical potential of ULVN for autonomous navigation in
+unstructured spaces.
+
+
+44
+H. Ren et al.
+(a) Top-k ANN
+(b) ViNT
+(c) PlaceNav
+(d) RAVEL (Ours)
+(e) Reference
+(1) Scene 1
+(2) Scene 2
+(3) Scene 3
+Fig. 13: A visualization diagram of topological graphs constructed from unordered
+images.

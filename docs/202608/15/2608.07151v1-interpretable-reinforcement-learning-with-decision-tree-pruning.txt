@@ -1,0 +1,903 @@
+(Under revision) manuscript No.
+(will be inserted by the editor)
+Interpretable reinforcement learning with decision-tree
+pruning
+Mark Ringer · Michel Tokic
+Received: 4th May 2026 / Accepted: Under revision
+Abstract Reinforcement learning policies are difficult
+to inspect, but interpreting them is a prerequisite for
+trustworthiness. Converting a trained policy into ex-
+plicit decision-tree rules improves transparency and
+the resulting artifacts often remain too complex for
+human understanding. We present a pruning process
+that simplifies such rule-based policies while preserv-
+ing task performance and making edits to the policy
+auditable. The process defines a small set of structural
+and usage-aware operators and evaluates candidate ed-
+its by re-executing the policy to measure return and in-
+terpretability proxies. This exposes an transformation
+process from complex to compact policy structures. We
+investigate this approach on classic control and Mu-
+JoCo benchmarks, where pruning traces reveal consis-
+tent interpretability improvements while maintaining
+high performance.
+Keywords Interpretable RL · Decision-Tree · Pruning
+1 Introduction
+Reinforcement learning has reached, and in some cases
+exceeded, human-level performance in control and games
+[Silver et al., 2017, Vinyals et al., 2019], but the result-
+ing policies are often hard to inspect [Henderson et al.,
+M. Ringer
+Faculty of Mathematics, Informatics and Statistics,
+Ludwig-Maximilians-University Munich, Munich, Germany,
+mark.leon.ringer@gmail.com
+M. Tokic
+Siemens AG, Data & Artificial Intelligence, Otto-Hahn-
+Ring 6, 81739 Munich, Germany
+and
+Faculty of Mathematics, Informatics and Statistics,
+Ludwig-Maximilians-University Munich, Munich, Germany,
+michel@tokic.com
+2018, Zahavy et al., 2016]. In settings where verification
+and accountability are required [Doshi-Velez and Kim,
+2017, Lipton, 2017], intransparent policies, e.g. repre-
+sented as neural networks, are typically not an option.
+Program-extracted policies address part of this gap by
+transforming trained neural network actors into explicit
+decision trees [Verma et al., 2019, Bastani et al., 2019,
+Delfosse et al., 2023]. These artifacts are executable and
+analyzable, but they often remain too large for reliable
+human understanding. Interpretable policies must be
+compact enough to read and simulate, not only explicit
+in form.
+This paper studies pruning as a principled, post-
+hoc simplification operator on already interpretable,
+program-extracted policies. We treat simplification as
+a controlled edit process: apply a candidate operator,
+re-execute the policy to measure task return and inter-
+pretability proxies, and accept the edit only if it passes
+a non-inferiority test. Each accepted edit is recorded,
+yielding an auditable trail that ties structural changes
+to measured effects. Interpretability is thus a property
+of the transformation trajectory as well as of the final
+program.
+2 Method
+This sections details the transformation process from
+common RL policies represented as neural networks,
+particularly we used the actor network from stable-
+baselines3 [Raffin et al., 2021], into decision trees using
+the transformation method proposed by Kohler et al.
+[2024]. We then employ a lightweight benchmark to
+evaluate the obtained policies, inspired by Kohler et al.
+[2025]. The same benchmark is reused to assess our
+pruned policies under identical conditions.
+arXiv:2608.07151v1  [cs.LG]  7 Aug 2026
+
+
+2
+Mark Ringer, Michel Tokic
+2.1 Distilling neural network actors into decision-tree
+rules
+The first step of the process is to transform a neural net-
+work policy into a decision tree as described in [Kohler
+et al., 2024]. Here, the teacher policy, in our case a neu-
+ral network actor from from stable baselines, is used to
+generate a large corpus of environment specific state-
+action pairs. These pairs are then used to fit a scikit
+DecisionTreeClassifier [Pedregosa et al., 2011], called
+the learner.
+2.2 Improving Interpretability
+In general, the interpretability of decision trees can be
+improved through pruning strategies. A common way to
+quantify interpretability is by measuring the number of
+resulting leaf nodes.
+Leaf-node-based interpretability proxy We use the num-
+ber of leaf nodes as a proxy for interpretability. This
+measure captures the complexity of a given function
+while remaining invariant to syntactic variations.
+Pruning strategies In extending [Kohler et al., 2025],
+our objective is to advance interpretability by focus-
+ing exclusively on Python policy trees and developing
+a structured pruning framework. Decision trees have
+consistently been found to be more interpretable than
+neural policies in human-subject studies [Freitas, 2014,
+Lipton, 2017], primarily because their hierarchical and
+rule-based structure aligns with human reasoning. While
+Kohler’s framework treated trees and MLPs as equally
+valid policy classes, we deliberately restrict our investi-
+gation to tree-based policies to maximize interpretabil-
+ity and enable direct structural analysis.
+To enhance interpretability in decision trees, we ap-
+ply systematic pruning to distilled policies. Each tree
+is iteratively reduced using one of the following three
+strategies defined in Sec. 2.3:
+– Max-depth pruning
+– Max-impurity pruning
+– Decision-tree Adaptive Constrained Pruning
+Each structural pruning step is followed by a subtree
+collapsing pass in order to remove residual redundancies
+and compress the tree further.
+Visual inspection of consecutive trees makes it possi-
+ble to track which branches are pruned, whether these
+changes affects decision logic, and how they correlate
+with benchmark performance. By linking each pruning
+step to its corresponding performance measurement, we
+gain fine-grained insight into the trade-off between sim-
+plicity and reward.
+The resulting policies are not only quantitatively
+interpretable, according to Kohler’s proxies of smaller
+size, but also qualitatively transparent, as their struc-
+tural evolution can be directly observed. In contrast to
+Kohler’s approach, which yields compact policies through
+direct training, our method makes the simplification
+process itself explicit, revealing how complex trees are
+incrementally transformed into minimal forms. This trans-
+parency enhances the interpretability of both the final
+policies and the underlying transformation.
+2.3 Description of Pruning Algorithms
+We chose pruning algorithms to optimize the initial pol-
+icy in terms of interpretability. Max-depth plus subtree
+collapsing is a structure-only cut followed by determin-
+istic redundancy cleanup. Max-impurity plus subtree
+collapsing adds local data statistics (node purity) to
+make targeted reductions. Decision-tree Adaptive Con-
+strained Pruning (DACP) incorporates runtime usage,
+in form of node visit counts, with reward guards.
+Subtree collapsing We simplify the decision trees by re-
+cursively collapsing decision nodes into leaf nodes if
+both childern are leafs and contain the same action
+[Loh, 2011]. We use this method to support the other
+strategies but don’t treat it as a complete strategy.
+The behavior of forming subtrees with identical actions
+could occur because the distilling algorithm used in
+[Kohler et al., 2024] does not punish unnecessary splits,
+or later during pruning when alternative actions are re-
+moved. This operation does not alter the predictions
+of the model but simplifies the tree considerably. By
+eliminating such uniform subtrees, the resulting model
+becomes smaller, easier to interpret, and more efficient
+to evaluate, while maintaining identical predictive be-
+havior.
+2.3.1 Max-Depth Pruning
+Max-depth pruning restricts the maximum depth of the
+decision tree to a predefined limit. During training or
+post-processing, any node that would extend beyond
+this depth is replaced by a leaf node. The leaf repre-
+sents the majority class of the samples that fall into it,
+effectively summarizing the deeper part of the tree. This
+approach prevents the model from growing overly com-
+plex and helps control overfitting by enforcing a global
+constraint on tree size and depth [Song and Lu, 2015].
+In our case, we prune the tree in steps by reducing the
+
+
+Interpretable reinforcement learning with decision-tree pruning
+3
+max depth in discrete steps. We always prune the orig-
+inal tree, the steps are saved to produce a trajectory to
+find an optimal policy. After each max depth pruning
+step, uniform pruning is applied.
+2.3.2 Max-Impurity Pruning
+Max-impurity pruning reduces the tree’s complexity by
+halting further splits once a node becomes sufficiently
+homogeneous with respect to its class distribution. The
+impurity of a node is computed from the distribution
+of classes using the following metric based on the Gini
+index,
+Max-Impurity = 1 −
+K
+X
+k=1
+p2
+k,
+where pk denotes the proportion of samples belonging
+to class k in that node and K denotes the set of classes
+[Loh, 2011]. Nodes with low impurity, meaning that one
+class dominates the samples within them, are consid-
+ered pure enough and are converted into leaf nodes.
+This pruning strategy prevents unnecessary splits in al-
+ready homogeneous regions of the data, thereby simpli-
+fying the tree and often improving its generalization
+performance. After max-impur ity pruning we apply
+uniform pruning to simplify the tree.
+2.3.3 Decision-tree Adaptive Constrained Pruning
+This pruning method, algorithm 1 in the appendix, is
+inspired by the A* Algorithm [Hart et al., 1968], Cost-
+Complexity Pruning [Loh, 2011] and Critical Value Prun-
+ing [Mingers, 1987] and based on the assumption that
+nodes that are less important for the performance of a
+given policy tree are visited less often than more critical
+nodes. The idea of heuristic pruning has previously been
+explored for different problems, for example in [Feldotto
+et al., 2022] heuristic network pruning, where a simi-
+lar concept for neural networks is explored. A similar
+method is also used by humans do to limit cognitive re-
+sources if tasked with evaluating probabilistic planning
+tasks [Sass et al., 2025].
+Following the intuition that this is also applicable
+for RL policies in the form of decision trees, a given
+policy π can be pruned by counting, for each node n,
+how often it is visited Ci = (ci,1, ci,2, ..., ci,N) and re-
+moving the k nodes with the lowest visit count. This
+process can be repeated incrementally until the desired
+policy size is achieved. Obtaining the visit counts is
+accomplished by by using a counters(π) function that
+runs the policy and collects for each node how often it
+was visited.
+However, a challenge with this approach is, that
+some nodes with a low visit count (ci) are actually cru-
+cial to maintain a high reward. Therefore, it is neces-
+sary to ensure that the reward doesn’t decrease too fast
+by comparing the performance measured as cumulative
+reward Ri of the pruned policy πi to the performance
+Ri−1 of its predecessor πi−1. To formalize this, we de-
+fine two parameters where RBase is the average reward
+of the original policy.:
+– tolerance factor δ ∈(0, 1) which controls the maxi-
+mum allowed reward decrease per iteration
+∆= |RBase| × δ
+– stability factor ϕ ∈(0, 1 −δ), which determines the
+absolute minimum reward that is considered accept-
+able
+Φ = RBase −|RBase| × (1 −ϕ)
+where ∆is the maximum absolute decrease in reward
+that is still accepted and Φ is the minimal reward that
+is still accepted. To prevent the required reward from
+increasing beyond a reasonable level, we also defined a
+ceiling value Γ as:
+Γ = RBase −∆.
+Using these definitions, the minimum acceptable reward
+for each iteration i is given by
+Rmin,i = min(max(Ri−1 −∆, Φ), Γ).
+(1)
+A pruning step can only be considered successful if the
+resulting policy πi achieves a reward Ri ≥Rmin,i.
+Determining the reward of a policy requires a reli-
+able benchmarking:
+Ri = benchmark(πi).
+This process is computationally expensive, and there-
+fore it is necessary to minimize the number of benchmark
+calls.
+Therefore, the pruning is performed on a batches
+of k candidate nodes. To allow divide and conquer, k
+fulfills k ∈{2m | m ∈N0}. If the pruning for a batch is
+rejected, the candidate nodes are split in half and the
+pruning is recursively repeated. In this way, only those
+nodes of a batch whose removal causes Ri < Rmin,i are
+not removed.
+If |π′| = |π|, we assume all nodes in the batch are
+essential and treat them as failed. Otherwise, we add all
+newly failed nodes to the failed list, clean the tree by
+using our collaps function as described in section 2.3,
+collect new counters and recalculate the batch size if
+there were any failed nodes.
+If its no longer possible to remove candidates, we
+start trying to remove nodes that failed in previous
+
+
+4
+Mark Ringer, Michel Tokic
+steps. After we cannot remove any node anymore with-
+out the reward falling below the threshold, the algo-
+rithm terminates.
+3 Results
+3.1 Distilling Policies
+We configured the pruning algorithm to allow a maxi-
+mum number of up to 1024 leaf nodes. For simple tasks
+like CartPole, a much smaller tree would have been suf-
+ficient, nonetheless the tree grows to a much larger of
+leaf nodes if allowed. For more complex tasks such as
+Walker2D a larger number of leaf nodes could still yield
+improved performance, but to have a comparable start-
+ing state we decided to allow all trees to grow up to
+the same maximum size. Notably, the policy trees for
+MountainCar never increased in number of leaf nodes
+beyond 340 for any configured max leaf nodes, up to
+2048.
+Table 1 shows the performance of the distilled poli-
+cies compared to their respective teachers. It can be
+observed that for most environments the performance
+of learner and teacher is similar. For complex tasks such
+as HalfCheetah and Walker2D, the episodic reward of
+the learner is much lower, probably due to the limited
+number of leaf nodes in the initial policy transformation
+process (neural network →decision tree). Another note-
+worthy observation is that for LunarLander the teacher
+performed much worse than the learner. This could pos-
+sibly be due to an overfitted teacher, reducing complex-
+ity turned out to generalize better.
+3.1.1 Solved thresholds
+Whenever possible, we use the solved thresholds pro-
+vided by the gymnasium library Towers et al. [2024].
+Since gymnasium does not provide solved thresholds
+for Pendulum and Walker2d, we defined them as -200
+for Pendulum and 1500 for Walker2d. For Pendulum,
+the optimal reward is 0 since the reward is calculated
+using
+r = −
+
+θ2 + 0.1 × ˙θ2 + 0.001 × torque2
+.
+where θ is the pendulums angle, normalized between
+[−π, π] while torque represents the action space of the
+environment Towers et al. [2024]. A near-optimal per-
+formance where only small deviations from upright po-
+sition occur could be defined by accumulating on aver-
+age no more than -1 reward per time step. For a episode
+length of 200, we therefore define the solved threshold
+as -200. For Walker2d 1500 is derived from the decom-
+posed reward structure:
+– healthy reward: Every timestep that the Walker2d
+is alive, +1 as reward.
+– forward reward: A reward for moving forward, de-
+pending on the velocity.
+– ctrl cost: A negative reward for taking large actions.
+Towers et al. [2024]. To achieve an average reward of
+1500 or higher, constant locomotion in the target di-
+rection with and average of 0.5 in rewards is required.
+Therefore, a reward of 1500 implies constant and stable
+locomotion in the right direction. Since the theoretical
+reward for movement has no upper bound, this thresh-
+old should be taken with caution.
+3.1.2 Observations
+The following observations can be derived from Fig-
+ure 1, which summarizes the reward–size trade-offs across
+all evaluated environments.
+– General downward trend. Across most environ-
+ments, we observe a broadly monotonic decrease
+in reward as pruning progresses, reflecting the ex-
+pected trade-off between interpretability and per-
+formance.
+– Reward drop-off point. For all pruning algorithms
+and most environments, a distinct drop-off point
+emerges after which further pruning leads to a sharp
+decline in reward.
+– Occasional reward improvements. In a few cases,
+such as Acrobot-v1 (see Figure 1), pruning tem-
+porarily improves reward despite increasing inter-
+pretability, sometimes even above the original per-
+formance. This behavior could occur because of over-
+fitted trees; If the overfitting branches are removed,
+the trees ability to generalize improves.
+– Small deviations between pruning algorithms.
+While all pruning strategies follow a similar overall
+trend, minor deviations appear in the intermediate
+pruning stages. This leads to the conclusion that the
+complexity of a given environment influences prun-
+ability.
+In general, we observe that DACP performs superior
+over most environments leading to the conclusion, that
+for reinforcement learning tasks, structural pruning is
+not sufficient and backtracking algorithms that use mid-
+pruning reward based evaluation are beneficial.
+3.2 Limitations
+This work is limited by several factors. First, due to
+computational constrains, we decided to only distill poli-
+cies to a max tree size of 1024. For decision trees that
+
+
+Interpretable reinforcement learning with decision-tree pruning
+5
+Algorithm
+Agent Version (Teacher)
+Learner Reward
+Teacher Reward
+PPO
+ppo-Acrobot-v1
+-86 ± 44
+-84 ± 25
+PPO
+ppo-CartPole-v1
+488 ± 59
+500 ± 0
+SAC
+sac-HalfCheetah-v3
+5023 ± 356
+8898 ± 124
+PPO
+ppo-LunarLander-v2
+233 ± 58
+149± 34
+SAC
+sac-LunarLanderContinuous-v2
+236 ± 96
+262 ± 64
+DQN
+dqn-MountainCar-v0
+-102 ± 11
+-101 ± 10
+SAC
+sac-MountainCarContinuous-v0
+94 ± 2
+94 ± 2
+PPO
+ppo-Pendulum-v1
+-207 ± 212
+-174 ± 107
+TD3
+td3-Swimmer-v3
+355 ± 2
+355 ± 2
+SAC
+sac-Walker2d-v3
+1815 ± 1061
+3917 ± 401
+Table 1: Performance comparision of original (Teacher) and distilled (Learner) policies. Note: The term ”Learner” refers to
+the policy after transforming the neural network Teacher policy into the initial decision tree using approach of Kohler et al.
+[2024], which will be further optimized as depicted in Fig. 1.
+2
+8
+32
+64
+128
+256
+512
+1024
+450
+300
+150
+0
+Acrobot
+2
+8
+32
+64
+128
+256
+512
+1024
+0
+150
+300
+450
+CartPole
+2
+8
+32
+64
+128
+256
+512
+1024
+0
+2500
+5000
+7500
+HalfCheetah
+2
+8
+32
+64
+128
+256
+512
+1024
+750
+500
+250
+0
+250
+LunarLander
+2
+8
+32
+64
+128
+256
+512
+1024
+750
+500
+250
+0
+250
+LunarLanderContinuous
+2
+8
+32
+64
+128
+256
+210
+180
+150
+120
+90
+MountainCar
+2
+8
+32
+64
+128
+256
+512
+1024
+40
+0
+40
+80
+MountainCarContinuous
+2
+8
+32
+64
+128
+256
+512
+1024
+1500
+1000
+500
+0
+Pendulum
+2
+8
+32
+64
+128
+256
+512
+1024
+0
+100
+200
+300
+Swimmer
+2
+8
+32
+64
+128
+256
+512
+1024
+0
+1500
+3000
+4500
+Walker2d
+Average Reward (asinh scale)
+Policy Size (leaf nodes, x^0.4 scale)
+adaptive_constrained
+max_depth
+max_impurity
+Teacher
+Random
+Solved
+Fig. 1: Performance of pruned policies, policy size (leaf nodes) against episodic reward. The teacher threshold marks the
+performance of the original model, the solved threshold marks the performance at which the environment is considered to
+be solved and the random threshold shows the performance of an agent taking a random action. For both the environments
+Pendulum and Walker2d there is no official solved threshold, so we defined solved for Pendulum as -200 and for Walker2d as
+1500.
+are grown to a significantly larger or smaller size, prun-
+ing results may differ. Another limitation is the question
+wether or not the number of leaf nodes is a sufficient
+metric for interpretability; the actual contents might
+impact the interpretability significantly [Freitas, 2014].
+For example, a larger tree could be perceived as more
+readable than a smaller one because of clearly under-
+standable attributes [Freitas, 2014].
+3.3 Future Work
+Future research could focus on validating interpretabil-
+ity through user studies to better understand which
+metrics truly correlate with human understanding, in-
+cluding those not examined in this work. In addition,
+the effects of other pruning strategies could be explored,
+for example by combining different strategies. Finally,
+pruned and visualized policies could be applied in crit-
+ical environments where human verification and trans-
+parency are necessary.
+4 Conclusion
+In this work, we introduce a modern framework for dis-
+tilling and pruning reinforcement learning policies with
+the goal of improving interpretability for humans. We
+build upon the works of Kohler et al. [2025] by using
+
+
+6
+Mark Ringer, Michel Tokic
+Cart PolePolicy Decision Tree
+Pole Angular Velocity
+<= 0.01294954540207982
+Pole Angular Velocity
+<= -0.06824247911572456
+True
+Pole Angular Velocity
+<= 0.06843433901667595
+False
+return
+Left
+True
+Pole Angle
+<= -0.0021369809983298182
+False
+Cart Velocity
+<= 0.11782633885741234
+True
+return
+Left
+True
+return
+Right
+False
+return
+Left
+True
+return
+Right
+False
+Pole Angle
+<= -8.786035687080584e-05
+True
+return
+Right
+False
+Cart Velocity
+<= 0.0034374564420431852
+True
+return
+Left
+True
+return
+Right
+False
+return
+Left
+True
+return
+Right
+False
+Fig. 2: Last step of pruning the CartPole policy with DACP
+with a fixed batch size of 4. Here, the gray branches will be
+removed in the next iterative step, reducing the policy from
+eight to six leaf nodes while maintaining the performance (cf.
+Fig. 1, adaptive constrained in CartPole-v1).
+Leaves
+Reward
+Teacher %
+1024
+236.5 ± 95.5
+89.8%
+887
+226.9 ± 96.2
+86.2%
+769
+230.6 ± 110.2
+87.6%
+713
+218.1 ± 120.1
+82.8%
+654
+219.0 ± 125.5
+83.2%
+. . .
+. . .
+. . .
+126
+163.5 ± 149.8
+62.1%
+121
+136.8 ± 157.8
+51.9%
+120
+154.6 ± 146.3
+58.7%
+117
+149.0 ± 162.1
+56.6%
+116
+137.9 ± 164.4
+52.4%
+. . .
+. . .
+. . .
+33
+194.1 ± 119.0
+73.7%
+32
+206.4 ± 91.0
+78.4%
+31
+168.2 ± 157.2
+63.9%
+30
+182.1 ± 135.5
+69.2%
+29
+185.3 ± 130.5
+70.4%
+Table 2: Selected DACP steps for LunarLanderContinuous-
+v3
+their distilling algorithm. We introduce a similar bench-
+mark, adding the policy size in the form of leaf nodes
+as a metric, provide a way of visualizing policy trees
+to improve readability by humans, and explore the ef-
+fects of pruning to gain interpretability. Our pruning
+experiments show, that simplification can improve in-
+terpretability for reinforcement learning policies with-
+out immediate reward loss, though a trade-off emerges
+once complexity is reduced too far. In some cases, prun-
+ing even improved performance by reducing overfitting.
+Crucially, our method makes the simplification process
+itself transparent, which is an advantage over directly
+training smaller models. This study nevertheless faces
+limitations. Interpretability was measured only through
+proxies, leaving open the question of how well these
+align with actual human cognitive accessibility. While
+our leaf-node-based proxy and visualizations try to cap-
+ture interpretability, controlled user studies remain nec-
+essary to validate the true impact of pruning. Overall,
+pruning offers a promising step toward reinforcement
+learning policies that are both effective and understand-
+able.
+Conflict of Interest
+The authors have no conflicts of interest to declare that
+are relevant to the content of this article.
+References
+O. Bastani, Y. Pu, and A. Solar-Lezama.
+Verifi-
+able reinforcement learning via policy extraction.
+arXiv:1805.08328, 2019.
+Q. Delfosse, H. Shindo, D. S. Dhami, and K. Kersting.
+Interpretable and explainable logical policies via neu-
+rally guided symbolic abstraction. In Proceedings of
+the 37th International Conference on Neural Infor-
+mation Processing Systems, 2023.
+F. Doshi-Velez and B. Kim. Towards a rigorous science
+of interpretable machine learning. arXiv:1702.08608,
+2017.
+B. Feldotto, H. Lengenfelder, F. R¨ohrbein, and A. C.
+Knoll. Network layer analysis for a rl-based robotic
+reaching task.
+Frontiers in Robotics and AI, 9:
+799644, 2022.
+A. A. Freitas. Comprehensible classification models: a
+position paper. SIGKDD Explor. Newsl., 15(1):1–10,
+2014.
+P. E. Hart, N. J. Nilsson, and B. Raphael. A formal
+basis for the heuristic determination of minimum cost
+paths. IEEE Transactions on Systems Science and
+Cybernetics, 4(2):100–107, 1968.
+P. Henderson, R. Islam, P. Bachman, J. Pineau, D. Pre-
+cup, and D. Meger. Deep reinforcement learning that
+matters. Proceedings of the AAAI Conference on Ar-
+tificial Intelligence, 32(1), 2018.
+H. Kohler, Q. Delfosse, R. Akrour, K. Kersting, and
+P. Preux. Interpretable and editable programmatic
+tree policies for reinforcement learning. In 7th Euro-
+pean Workshop on Reinforcement Learning, 2024.
+H. Kohler, Q. Delfosse, W. Radji, R. Akrour, and
+P.
+Preux.
+Evaluating
+interpretable
+reinforce-
+ment learning by distilling policies into programs.
+arXiv:2503.08322, 2025.
+Z. C. Lipton.
+The mythos of model interpretability.
+arXiv:1606.03490, 2017.
+
+
+Interpretable reinforcement learning with decision-tree pruning
+7
+W.-Y. Loh. Classification and regression trees. Wiley
+Interdisciplinary Reviews: Data Mining and Knowl-
+edge Discovery, 1:14 – 23, 2011.
+J. Mingers. Expert systems—rule induction with statis-
+tical data. The Journal of the Operational Research
+Society, 38, 1987.
+F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel,
+B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer,
+R. Weiss, V. Dubourg, J. Vanderplas, A. Passos,
+D. Cournapeau, M. Brucher, M. Perrot, and E. Duch-
+esnay.
+Scikit-learn: Machine learning in Python.
+Journal of Machine Learning Research, 12:2825–
+2830, 2011.
+A. Raffin, A. Hill, A. Gleave, A. Kanervisto, M. Ernes-
+tus, and N. Dormann.
+Stable-baselines3: Reliable
+reinforcement learning implementations. Journal of
+Machine Learning Research, 22(268):1–8, 2021.
+S. H. Sass, L. G¨onner, S. Schw¨obel, S. Fr¨olich,
+F. Gl¨ockner, S. J. Kiebel, S. C. Li, and M. N. Smolka.
+Heuristic pruning of decision trees at low probabili-
+ties and probability discounting in sequential plan-
+ning in young and older adults. Scientific Reports,
+15(1):16260, 2025.
+D. Silver, J. Schrittwieser, K. Simonyan, I. Antonoglou,
+A. Huang, A. Guez, T. Hubert, L. Baker, M. Lai,
+A. Bolton, Y. Chen, T. Lillicrap, F. Hui, L. Sifre,
+G. Driessche, T. Graepel, and D. Hassabis. Mastering
+the game of go without human knowledge. Nature,
+550:354–359, 2017.
+Y.-Y. Song and Y. Lu. Decision tree methods: appli-
+cations for classification and prediction.
+Shanghai
+archives of psychiatry, 27:130–5, 2015.
+M. Towers, J. K. Terry, A. Kwiatkowski, J. Balis,
+A. Kanervisto, and A. Gleave. Gymnasium: A stan-
+dard interface for reinforcement learning environ-
+ments. arXiv:2407.17032, 2024.
+A. Verma, V. Murali, R. Singh, P. Kohli, and S. Chaud-
+huri. Programmatically interpretable reinforcement
+learning. arXiv:1804.02477, 2019.
+O. Vinyals, I. Babuschkin, W. Czarnecki, M. Math-
+ieu, A. Dudzik, J. Chung, D. Choi, R. Powell,
+T. Ewalds, P. Georgiev, J. Oh, D. Horgan, M. Kroiss,
+I. Danihelka, A. Huang, L. Sifre, T. Cai, J. Agapiou,
+M. Jaderberg, and D. Silver. Grandmaster level in
+starcraft ii using multi-agent reinforcement learning.
+Nature, 575:350–354, 2019.
+T. Zahavy, N. Ben-Zrihem, and S. Mannor. Graying
+the black box: Understanding dqns. In M. F. Balcan
+and K. Q. Weinberger, editors, Proceedings of The
+33rd International Conference on Machine Learning,
+pages 1899–1908, 2016.
+5 Appendix
+Algorithm 1: DACP (high-level)
+Input: Policy π, tolerance: 0 ≤δ ≤1, stability
+0 ≤α ≤1
+Output: Pruned policy π′
+RLast ←RBase ←benchmark(π) ;
+reset ←False;
+F ←∅;
+k ←
+p
+|π|, rounded down to power of two;
+while true do
+C ←counters(π);
+Rmin ←
+min
+ Rbase −|Rbase|(1 −α), Rlast −|Rbase|δ
+
+;
+N ←k least visited nodes from C \ F;
+if N = ∅then
+if reset then
+break;
+F ←∅;
+reset ←True;
+k ←
+p
+|π|, rounded down to power of two;
+continue;
+(π′, R′, Fnew, ok) ←
+PruneBatch(π, N, RLast, Rmin);
+if |π| = |π′| then
+F ←F ∪N;
+continue;
+else
+F ←F ∪Fnew;
+π ←π′;
+RLast ←R′;
+reset ←False;
+π ←collaps(π′);
+if not ok then
+k ←
+p
+|π| −|F|, rounded down to power
+of two;
+return π;
+
+
+8
+Mark Ringer, Michel Tokic
+Algorithm 2: PruneBatch
+Input: Policy π, candidate nodes N, last reward R,
+minimum reward Rmin
+Output: New policy π′, new reward R′, failed nodes
+F, success flag ok
+π′ ←remove N from π;
+R′ ←benchmark(π′);
+if R′ ≥Rmin then
+return π′, R′, ∅, True;
+if N = ∅then
+return π, R, ∅, False;
+if |N| = 1 then
+return π, R, N, False;
+NL, NR ←split(N);
+(πL, −, FL, −) ←PruneBatch(π, NL, R, Rmin);
+(πR, RR, FR, −) ←PruneBatch(πL, NR, R, Rmin);
+return πR, RR, FL ∪FR, False;

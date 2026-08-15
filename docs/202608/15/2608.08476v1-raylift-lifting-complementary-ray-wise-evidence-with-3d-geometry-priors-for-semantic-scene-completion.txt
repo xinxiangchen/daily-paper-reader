@@ -1,0 +1,1399 @@
+RayLift: Lifting Complementary Ray-Wise Evidence with 3D Geometry Priors for
+Semantic Scene Completion
+Meng Wang∗, Hongxia Yu∗, Wenzhe He, Xingdong Song, Huilong Pi, Jiapeng Zhang, Ruihui Li
+College of Computer Science and Electronic Engineering,Hunan University,Changsha,China
+{willem,yhx20252025,hewenzhe,songxingdong,phl880217,zhangjp,liruihui}@hnu.edu.cn
+Abstract
+Camera-based 3D semantic scene completion (SSC) provides
+comprehensive scene understanding for autonomous driving
+and robotics. However, existing methods often treat stereo
+depth estimates as deterministic geometric constraints, caus-
+ing depth uncertainty and local correspondence errors to prop-
+agate directly into voxel representations. To address this issue,
+we propose RayLift, a framework that uses stereo geometry
+as a metric reference while incorporating complementary ray
+evidence to recover reliable 3D structures adaptively. RayLift
+first employs a Complementary Context Encoder that extracts
+geometry-aware priors from a frozen 3D vision foundation
+model, thereby enriching the scene context. It then introduces
+a Depth Ray Evidence Lifter module that jointly models geo-
+metric dissimilarity, depth confidence, and spatial uncertainty
+to adaptively sample and weight candidate surface locations
+along each camera ray. Finally, a Semantic-Aware Voxel In-
+tegrator injects the resulting ray evidence into voxel features
+by explicitly modeling their spatial support. Extensive experi-
+ments on SemanticKITTI and SSCBench-KITTI-360 demon-
+strate that RayLift achieves competitive performance and con-
+sistently outperforms existing methods.
+Introduction
+Semantic scene completion (SSC) reconstructs the geometry
+and semantic labels of an entire 3D scene from partial obser-
+vations. This capability is essential for autonomous driving,
+robotics, and embodied intelligence, where an agent must
+reason about both visible and occluded space. Early SSC
+systems relied primarily on range sensors (Song et al. 2017;
+Behley et al. 2019). Camera-based SSC has since emerged as
+a practical alternative because RGB cameras are inexpensive
+and widely deployed (Cao and De Charette 2022; Li et al.
+2023b). However, images provide only two-dimensional ap-
+pearance cues, so camera-based methods must establish reli-
+able correspondences between image content and 3D voxels
+before performing scene-level reasoning.
+Existing camera-based SSC methods commonly extract
+image features, estimate depth, and lift the features into a
+3D voxel representation (Cao and De Charette 2022; Philion
+and Fidler 2020; Li et al. 2023b). Stereo systems strengthen
+this pipeline by providing metric depth from cross-view cor-
+respondence (Li et al. 2023b). Most methods nevertheless
+reduce the stereo prediction to a single depth value and treat
+the resulting surface as a deterministic geometric constraint
+∗These authors contributed equally.
+                        
+             
+                                
+                              
+                              
+                     
+                    
+                     
+            
+                     
+                         
+Figure 1: Motivation of RayLift. This figure illustrates how
+exploiting complementary depth cues can improve overall
+depth quality in an idealized setting. The green and blue
+points on the left indicate locations where 3DVFM depth and
+stereo depth are more accurate respectively. The yellow and
+orange points below represent stereo-depth errors corrected
+to different degrees. Our method is built upon this local
+complementarity between the two depth sources.
+for feature lifting or voxel-query initialization. This design
+is effective when correspondence is reliable, but local errors
+remain common near object boundaries, weakly textured sur-
+faces, and other ambiguous regions (Scharstein and Szeliski
+2002). An erroneous depth can then place coherent image
+evidence at the wrong 3D locations and displace the recon-
+structed structure in the voxel grid.
+Subsequent voxel networks can partially absorb such er-
+rors through contextual reasoning, but they rarely revisit the
+spatial location assigned during lifting. They also lack ex-
+plicit alternative surface evidence when the stereo estimate is
+unreliable. Consequently, local correspondence errors prop-
+agate into the voxel representation before scene-level reason-
+ing begins, where they are difficult to correct and can limit
+both geometric completion and semantic prediction.
+Prior work addresses depth ambiguity mainly by modeling
+predictive uncertainty or by augmenting stereo features with
+additional geometric cues (Li et al. 2023b). These cues typi-
+cally reweight image features or support downstream reason-
+ing, rather than forming localized 3D evidence that can chal-
+lenge an unreliable stereo surface. Recent 3D vision founda-
+tion models offer a complementary opportunity (Wang et al.
+2025a). Their pretrained representations encode transferable
+arXiv:2608.08476v1  [cs.CV]  9 Aug 2026
+
+
+scene structure, while their monocular depth predictions pro-
+vide an alternative geometric hypothesis. The central ques-
+tion is therefore how to convert these heterogeneous priors
+into spatially localized evidence without discarding the met-
+ric reference supplied by stereo geometry.
+Motivated by this question, we propose RayLift, a camera-
+based SSC framework that retains stereo geometry as a metric
+reference while converting complementary visual geometry
+priors into ray-wise voxel evidence. RayLift operates at three
+levels. First, the Complementary Context Encoder adapts
+multi-level geometry-aware features from a frozen 3D vision
+foundation model and combines them with task-specific im-
+age features. Second, the Depth Ray Evidence Lifter aligns
+the stereo surface and the foundation-model surface along
+each camera ray. It models their geometric discrepancy, depth
+confidence, and spatial uncertainty to sample candidate lo-
+cations and assign evidence weights adaptively. Third, the
+Semantic-Aware Voxel Integrator injects the resulting evi-
+dence into the voxel representation according to its spatial
+support. This design preserves reliable stereo geometry while
+providing localized alternatives where deterministic lifting is
+uncertain.
+We evaluate RayLift on SemanticKITTI and SSCBench-
+KITTI-360 under matched experimental settings. The con-
+sistent improvements in occupancy IoU and semantic mIoU
+indicate that localized ray evidence benefits geometric com-
+pletion without sacrificing semantic discrimination. Com-
+ponent analyses further isolate the roles of geometry-aware
+context, ray-wise evidence construction, and voxel integra-
+tion.
+Our main contributions are summarized as follows:
+• We introduce RayLift, a camera-based SSC framework
+that treats stereo depth as a metric reference rather than
+a deterministic constraint and converts complementary
+geometry priors into localized ray-wise voxel evidence.
+• We design a Depth Ray Evidence Lifter that jointly mod-
+els geometric discrepancy, depth confidence, and spatial
+uncertainty to sample candidate surface locations and as-
+sign their evidence weights adaptively.
+• We develop a Complementary Context Encoder and a
+Semantic-Aware Voxel Integrator that respectively con-
+struct geometry-aware scene context and inject ray evi-
+dence into voxels according to its spatial support.
+• Extensive
+experiments
+on
+SemanticKITTI
+and
+SSCBench-KITTI-360
+demonstrate
+that
+RayLift
+achieves
+competitive
+performance
+and
+consistently
+outperforms existing methods.
+Related Work
+3D Vision Foundation Models
+3D vision foundation models learned transferable geomet-
+ric representations from large-scale visual data. Classical
+reconstruction pipelines relied heavily on multi-view ge-
+ometry and iterative optimization (Schonberger and Frahm
+2016), whereas recent feed-forward models directly in-
+ferred scene geometry and camera parameters from images.
+DUSt3R (Wang et al. 2024a) and MASt3R (Leroy, Cabon,
+and Revaud 2024) were representative approaches that in-
+ferred coupled scene representations from image pairs and
+demonstrated the potential of end-to-end learned reconstruc-
+tion. VGGT (Wang et al. 2025a) extended this paradigm
+to joint multi-view processing and produced transferable
+geometry-aware features.
+This line of research expanded toward increasingly general
+geometric perception. The Depth Anything family learned
+robust monocular depth representations at scale (Lin et al.
+2025; Yang et al. 2024). Subsequent variants explored metric
+depth estimation, camera pose estimation, and feed-forward
+3D reconstruction. MapAnything (Keetha et al. 2026) fo-
+cused on constructing general spatial maps from visual obser-
+vations and illustrated the potential of foundation models for
+map-level geometric reasoning. MoGe-2 (Wang et al. 2026b)
+predicted dense 3D geometric cues from monocular images
+and provided a new representation for downstream metric and
+structure-aware scene understanding. More recently, VGGT-
+Omega (Wang et al. 2026a) further increased model capac-
+ity and training diversity, strengthening the transferability
+of VGGT-style geometric representations to downstream 3D
+perception tasks.
+Camera-Based 3D Semantic Scene Completion
+Camera-based SSC constructed dense 3D voxel represen-
+tations from RGB images without direct 3D measurements.
+MonoScene (Cao and De Charette 2022) established an early
+camera-only framework by projecting image features into
+voxel space. Subsequent methods developed more effective
+3D representations. TPVFormer (Huang et al. 2023) used
+tri-perspective features to reduce dense voxel computation,
+while VoxFormer (Li et al. 2023c) followed a sparse-to-dense
+prediction pipeline. OccFormer (Zhang, Zhu, and Du 2023)
+combined lift-splat-shoot with Transformer-based 3D rea-
+soning. Together, these methods integrated image-feature
+lifting, 3D spatial representation, and geometry–semantic
+reasoning into unified SSC pipelines.
+Later studies improved this pipeline from several com-
+plementary
+directions.
+BRGScene
+(Li
+et
+al.
+2023a),
+DepthSSC (Yao et al. 2025), and CGFormer (Yu et al.
+2024) strengthened the alignment and interaction among
+image features, depth geometry, and voxel representations.
+HASSC (Wang et al. 2024b) focused learning on ambigu-
+ous voxels, while IAMSSC (Xiao et al. 2024) and Sym-
+phonies (Jiang et al. 2023) introduced instance-level features
+or queries to facilitate 2D–3D interaction. VLScene (Wang
+et al. 2025b) transferred knowledge from vision–language
+models, whereas SGFormer (Guo et al. 2025) incorporated
+satellite observations when available. Ocean (Wang et al.
+2026c) further improved instance-aware geometric and se-
+mantic reasoning. VoxDet (Li, Yu, and Alahi 2026) reformu-
+lated SSC as dense 3D detection to explicitly model instance
+locations and semantic categories during voxel prediction.
+Methodology
+Givenastereo imagepair,the 2Dimageencoderproducesim-
+age features Fimg, while the stereo depth estimator provides
+metric depth Ds. The visual geometry model additionally
+
+
+                
+       
+                            
+          
+           
+     
+                                
+         
+       
+         
+            
+      
+                  
+       
+         
+           
+       
+                  
+ 
+        
+                  
+   
+                  
+                        
+   
+                   
+                     
+           
+               
+                                  
+       
+       
+            
+                       
+ 
+             
+             
+               
+ 
+Figure 2: Overall architecture of RayLift. (a) The Complementary Context Encoder extracts multi-level geometry-aware features
+and fuses them with task-specific image features to construct a scene-context representation. (b) The Depth Ray Evidence Lifter
+aligns the surfaces estimated by stereo vision and the 3D geometry model within ray-grid cells, encodes their uncertainty and
+geometric relationship, samples weighted feature points, and maps them into ray-wise voxel evidence. (c) The Semantic-Aware
+Voxel Integrator fuses the ray evidence with the voxel representation and forwards the result to the prediction head.
+supplies multi-level geometry-aware features Fvfm, a depth
+prediction, and its confidence. The Complementary Context
+Encoder (CoCE) adapts and fuses Fimg and Fvfm to con-
+struct the geometry-enhanced image context C. Following
+the existing depth-modeling pathway, C is lifted according
+to the depth probability distribution Pd and processed to
+obtain the initial scene voxel representation V0. The Depth
+Ray Evidence Lifter (DREL) organizes C, Pd, Ds, and the
+visual-geometry depth and confidence along camera rays. It
+then samples contextual features and projects them into 3D
+space to construct complementary ray-wise voxel evidence
+V1. Finally, the Semantic-Aware Voxel Integrator (SAVI) in-
+tegrates V1 with V0 before passing the unified representation
+to the prediction head. Figure 2 illustrates the overall archi-
+tecture of RayLift.
+Complementary Context Encoder
+The 2D-to-3D lifting process assigns image context to 3D
+locations according to the predicted depth distribution. Be-
+cause the subsequent ray-wise evidence construction eval-
+uates candidate surface locations along camera rays, we
+complement the task-specific image context with structural
+cues learned through reconstruction pretraining. We employ
+the pretrained VGGT-Ω(Wang et al. 2026a) model to pro-
+vide multi-level geometry-aware features, dense depth pre-
+dictions, and confidence estimates for the subsequent stages.
+We consider two feature sources within VGGT-Ω: the DI-
+NOv3 backbone and the geometry aggregator (Siméoni et al.
+2025). We evaluate both variants using the same architecture
+and optimization settings to isolate the effect of the feature
+source. The intermediate features of the geometry aggrega-
+tor contain richer geometry-aware information and are better
+suited to RayLift than the general-purpose visual features
+produced by the backbone. We therefore extract features from
+multiple depths of the geometry aggregator, retaining local
+structure from shallower layers and scene-level relationships
+from deeper layers. The selected patch features are projected
+into a common feature space, spatially aligned with the 2D
+image features, and aggregated along the channel dimension
+to form the multi-level geometric representation.
+Geometry-Aware Prior Fusion.
+The subsequent ray-
+evidence construction samples contextual features at can-
+didate surface locations. These samples should preserve the
+task-specific semantic information in Fimg while incorpo-
+rating the structural cues associated with the geometry pre-
+dictions in Fvfm. We therefore fuse the two representations
+before lifting them into 3D space. After spatial and channel
+alignment, a lightweight modulation network jointly pro-
+cesses the two features and predicts a position- and channel-
+dependent weight ω. This adaptive weighting controls how
+much geometry-aware information is introduced at each fea-
+ture location and channel. The modulated geometric feature
+is injected into the image context as a residual increment
+scaled by a fixed factor α. The resulting context is
+C = Hc(ρ(Fimg) + αω ⊙Fvfm; η) ,
+(1)
+where ρ(·) transforms the 2D image feature, Hc denotes
+the context-generation head modulated by camera parame-
+ters η, and ⊙represents element-wise multiplication. The
+
+
+context C is subsequently lifted into 3D space according to
+the depth probability distribution using a standard 2D-to-3D
+view transformation. The lifted features are further processed
+through voxel aggregation and image–voxel interaction to
+obtain the initial scene voxel representation V0.
+Depth Ray Evidence Lifter
+We construct
+V0
+using a
+standard 2D-to-3D
+lifting
+scheme (Philion and Fidler 2020). The image context is pro-
+jected into a 3D frustum according to the depth probability
+distribution, and voxel pooling subsequently maps the frus-
+tum features onto a 3D voxel grid. This pathway represents
+depth uncertainty through the probability distribution along
+each camera ray. However, the stereo and visual-geometry
+depths define two distinct candidate surfaces. Incorporat-
+ing them only through a shared depth distribution does not
+explicitly preserve their relative displacement or individual
+reliability. Moreover, depth regression or weighted averag-
+ing may place the resulting surface estimate between the two
+candidates, weakening their geometric distinction.
+To retain the relationship between the stereo and visual-
+geometry surfaces, we construct an independent ray-evidence
+pathway. Camera rays provide a common geometric coordi-
+nate along which the two depth estimates can be aligned and
+compared. Their relative positions characterize geometric
+disagreement, while the associated confidence indicates the
+reliability of the visual-geometry estimate. DREL uses these
+cues to sample locations near the candidate surfaces. Each
+sample is assigned a context feature produced by CoCE and
+a write weight that determines its contribution to the voxel
+representation. The samples are then back-projected and ag-
+gregated into localized ray-wise voxel evidence V1, which
+complements the initial representation V0.
+Before constructing the ray cells, we calibrate the visual-
+geometry depth to the metric scale. The input depth maps
+have a resolution of H × W, whereas the context and depth
+probability distribution produced by CoCE have a resolution
+of H/8 × W/8. We therefore define each 8 × 8 image region
+as a ray cell corresponding to one spatial location in the con-
+text and depth probability maps. We also evaluate a denser
+ray-cell partition. Although smaller cells increase the spatial
+coverage of the resulting 3D evidence, they do not improve
+prediction accuracy, as shown in the ablation study.
+Each ray cell requires representative stereo depth, visual-
+geometry depth, and confidence values. We select the pixel
+with the minimum valid stereo depth and sample the visual-
+geometry depth and confidence at the same pixel location.
+This operation preserves the frontmost visible surface when
+a cell spans multiple depth layers or a depth discontinuity. It
+also provides a consistent image location at which the two
+candidate surfaces can be compared.
+Ray Geometry Descriptor.
+We represent each ray cell r
+using the geometric descriptor
+qr = [hr, δr, |δr|, cr, vr, er] .
+(2)
+Here, hr denotes the normalized entropy of the depth proba-
+bility distribution Pr(d). A small hr indicates that the prob-
+ability mass is concentrated within a narrow depth interval,
+whereas a large value indicates a more dispersed distribution
+along the ray. The signed log-depth discrepancy δr encodes
+the relative front-to-back ordering of the visual-geometry
+and stereo surfaces. Its logarithmic form expresses the dis-
+crepancy relative to scene depth, reducing the dependence
+of its magnitude on the absolute range. The corresponding
+absolute value |δr| measures the separation between the two
+candidate surfaces independently of direction.
+The relative confidence cr is obtained by log-transforming
+the raw visual-geometry confidence and normalizing it over
+the valid ray cells. It therefore indicates the reliability of the
+visual-geometry surface relative to other candidate surfaces.
+The binary indicator vr records whether the candidate depths
+are valid, preventing an invalid candidate pair from being
+interpreted as two geometrically consistent surfaces.
+The final component er measures the relative variation
+between the maximum and minimum valid stereo depths
+within the current 8 × 8 cell:
+er = dmax
+r
+−dmin
+r
+dmin
+r
++ ϵ
+,
+(3)
+where dmin
+r
+and dmax
+r
+denote the minimum and maximum fi-
+nite positive stereo depths within the cell, ϵ is a small constant
+for numerical stability. A small er indicates limited depth
+variation around the representative surface. In contrast, a
+large value suggests that the cell may contain foreground and
+background surfaces, an object or occlusion boundary, or a
+thin structure. The descriptor qr therefore allows the network
+to distinguish locally stable regions from depth discontinu-
+ities and adjust the sampling range and evidence weights
+accordingly.See supplementary materials for mathematical
+definitions and details of all parameters.
+Ray-to-Voxel Evidence Construction.
+The stereo depth
+and scale-corrected visual-geometry depth define two can-
+didate surfaces along each ray. Sampling only at these fixed
+surfaces provides limited tolerance to local depth errors and
+voxel discretization. Conversely, increasing the number of
+samples indiscriminately introduces redundant points and
+may distribute evidence far from both candidate surfaces.
+We therefore retain one sample at each surface and place one
+additional sample behind it, yielding K = 4 samples per ray:
+Dr = {ds
+r, ds
+r + 0.5ℓr, dg
+r, dg
+r + 0.5ℓr} ,
+(4)
+where ds
+r and dg
+r denote the stereo and scale-corrected
+visual-geometry depths, respectively. The range ℓr remains
+ray-adaptive and is learned end-to-end.
+To construct a voxel representation V1 that can be inte-
+grated with V0, each sample encodes its 3D position, feature
+content, and write strength. First, the sampled depth is back-
+projected using its image location and the camera parame-
+ters, producing the 3D position xr,k. Second, a lightweight
+feature encoder maps the corresponding context feature to
+the ray feature fr,k. A learnable sample-position embedding
+is added to distinguish the two candidate surfaces and their
+neighboring samples. Finally, the initial write strength pre-
+dicted from the context and ray descriptor is adjusted accord-
+ing to depth validity and visual-geometry confidence. This
+
+
+operation produces the final weight bωr,k. The k-th sample on
+ray r is therefore represented as
+sr,k = (xr,k, fr,k, bωr,k),
+dr,k ∈Dr, k = 1, . . . , K. (5)
+We distribute each sample feature to its neighboring vox-
+els through trilinear projection. Contributions to the same
+voxel are aggregated according to bωr,k. A lightweight 3D
+convolutional encoder then organizes the discrete samples
+within their local voxel neighborhoods, producing the ray-
+wise voxel evidence V1 and its validity mask M. Both are
+passed to SAVI, which integrates V1 with the initial voxel
+representation V0.
+Semantic-Aware Voxel Integrator
+DREL constructs V1 only near the candidate surfaces,
+whereas the initial voxel representation V0 covers the com-
+plete 3D scene. Although both representations occupy the
+same voxel grid, they differ in spatial support, semantic re-
+sponse, and feature magnitude. Direct addition cannot ex-
+plicitly account for these differences when determining how
+ray evidence should update each voxel. We therefore intro-
+duce SAVI to integrate the two representations selectively.
+SAVI restricts V1 to the locations indicated by M, adjusts
+its local contribution according to the semantic weight A in-
+ferred from V0, and aligns the feature magnitudes within the
+valid region. It also clips extreme updates to prevent individ-
+ual ray samples from dominating the fused representation.
+The overall integration is formulated as:
+eV = V0 + clip (γA ⊙M ⊙V1, −κr0, κr0) ,
+(6)
+where γ controls the magnitude of V1 relative to V0, r0 is
+the root-mean-square magnitude of V0 over the supported
+voxels, and κ controls the clipping range. Voxels outside M
+remain unchanged, while the supported voxels receive scale-
+controlled ray evidence. The integrated representation eV is
+subsequently passed to the prediction head for voxel-wise
+occupancy and semantic prediction.
+For semantic guidance, Ray evidence confirms geometric
+validity for a voxel, yet the update weight assigned to this
+voxel should not be uniform. To address this, SAVI lever-
+ages semantic activations from V0 to modulate the weight
+of contributions sourced from V1. Voxels with prominent
+occupied-class activations preserve a larger share of ray ev-
+idence. By contrast, voxels predicted as free space receive
+weaker updates, which mitigates adverse effects induced by
+projection errors.
+For feature-scale alignment, V0 and V1 stem from distinct
+processing branches and may have different feature magni-
+tudes. SAVI controls the root-mean-square magnitude of V1
+relative to V0 over valid spatial regions and clips extreme
+residual responses. This design prevents locally large ray
+features from dominating the voxel representation.
+We retain the training objective of the SSC framework (Li,
+Yu, and Alahi 2026). The SSC loss optimizes CoCE and the
+learnable components of DREL, while SAVI introduces no
+additional parameters or supervision.
+Experiments
+We evaluate RayLift on SemanticKITTI (Behley et al. 2019)
+and SSCBench-KITTI-360 (Li et al. 2023b). Additional im-
+plementation details and more experiment results are pro-
+vided in the supplementary material.
+Quantitative Results
+SemanticKITTI Hidden-Test Results.
+Table 1 reports the
+results on the SemanticKITTI hidden test set, where RayLift
+achieves the best overall performance. RayLift with VGGT-
+Ω(Wang et al. 2026a) obtains 48.38% IoU and 18.54%
+mIoU, surpassing the reproduced VoxDet (Li, Yu, and Alahi
+2026) result by 1.10 and 0.54 percentage points, respec-
+tively. RayLift with MoGe-2 (Wang et al. 2026b) obtains
+48.00% IoU and 18.71% mIoU, corresponding to gains of
+0.72 and 0.71 percentage points. RayLift also achieves the
+highest accuracy across a broad range of semantic categories,
+demonstrating stable and effective improvements.
+SSCBench-KITTI-360 Results.
+Table 2 presents the
+results on SSCBench-KITTI-360, where RayLift again
+achieves the best overall performance. RayLift equipped with
+VGGT-Omega and MoGe-2 achieves consistent improve-
+ments on both metrics. The consistent gains on both datasets
+further demonstrate the effectiveness and generalization abil-
+ity of RayLift.
+Ablation Studies
+Overall Component Ablation.
+Table 3 decomposes the
+contribution of each core component, with VoxDet serving
+as setting (a). In setting (b), introducing CoCE improves IoU
+from 47.5281% to 47.8740% and mIoU from 18.7840% to
+18.9462%. Even without DREL, features from the visual ge-
+ometry model provide the scene context with richer prior in-
+formation, demonstrating the effectiveness of CoCE. Adding
+DREL further improves occupancy IoU, indicating that local-
+ized ray evidence benefits geometric completion. SAVI sub-
+sequently increases mIoU while preserving the occupancy
+performance, showing that controlled voxel integration con-
+verts this evidence into stronger semantic predictions.
+CoCE Ablation.
+To select a suitable feature-extraction lo-
+cation in the visual foundation model, Table 4 compares
+multi-level features extracted from the DINOv3 (Siméoni
+et al. 2025) backbone and the geometry aggregator under the
+same model architecture, fusion scheme, and training setting.
+This controlled setup ensures a fair comparison between the
+two feature sources. Although the DINOv3 backbone pro-
+vides more general 2D object information, the intermediate
+features from the geometry aggregator yield higher IoU and
+mIoU and more readily form effective 3D semantic features
+in our framework.
+DREL Ablation.
+Table 5 provides a detailed analysis of
+ray-evidence construction. Retaining only the stereo surface
+removes the relative position, geometric discrepancy, and
+confidence information provided by the second candidate
+surface. Both IoU and mIoU decrease, and mIoU falls be-
+low the result obtained with CoCE alone, showing that the
+discrepancy between the two candidate surfaces is important
+
+
+Method
+IoU mIoU
+road
+sidewalk
+parking
+other-grnd.
+building
+car
+truck
+bicycle
+motorcycle
+other-veh.
+vegetation
+trunk
+terrain
+person
+bicyclist
+motorcyclist
+fence
+pole
+traf.-sign
+MonoScene
+34.16 11.08 54.7 27.1 24.8 5.7 14.4 18.8 3.3 0.5 0.7 4.4 14.9 2.4 19.5 1.0 1.4 0.4 11.1 3.3 2.1
+VoxFormer
+43.21 13.41 54.1 26.9 25.1 7.3 23.5 21.7 3.6 1.9 1.6 4.1 24.4 8.1 24.2 1.6 1.1 0.0 13.1 6.6 5.7
+OccFormer
+34.53 12.32 55.9 30.3 31.5 6.5 15.7 21.6 1.2 1.5 1.7 3.2 16.8 3.9 21.3 2.2 1.1 0.2 11.9 3.8 3.7
+Symphonies
+42.19 15.04 58.4 29.3 26.9 11.7 24.7 23.6 3.2 3.6 2.6 5.6 24.2 10.0 23.1 3.2 1.9 2.0 16.1 7.7 8.0
+CGFormer
+44.41 16.63 64.3 34.2 34.1 12.1 25.8 26.1 4.3 3.7 1.3 2.7 24.5 11.2 29.3 1.7 3.6 0.4 18.7 8.7 9.3
+VLScene
+45.14 17.52 64.7 34.7 32.4 13.1 27.3 26.1 6.5 4.2 3.8 8.3 26.4 10.0 29.4 2.8 5.1 0.9 20.0 8.9 8.4
+Ocean
+45.62 17.40 65.1 34.9 33.7 12.8 25.4 26.8 5.2 4.9 1.9 5.6 26.9 11.6 30.7 2.3 2.2 1.7 20.8 8.7 9.5
+VoxDet†
+47.28 18.00 64.0 35.3 35.1 12.9 28.8 26.5 5.2 5.1 3.9 4.2 29.6 12.4 32.0 2.9 3.6 0.6 22.0 8.5 9.6
+RayLift (VGGT-Ω) 48.38 18.54 65.3 35.7 33.0 13.0 28.7 27.1 6.2 5.7 5.5 4.2 30.8 12.8 32.1 3.0 6.5 1.3 22.9 8.8 9.7
+RayLift (MoGe-2) 48.00 18.71 65.5 35.9 34.7 14.7 29.0 27.1 7.2 5.7 4.4 6.7 30.2 12.7 31.4 3.0 3.5 1.0 23.0 9.3 10.5
+Table 1: Quantitative results on SemanticKITTI hidden test set. Best values in bold. † denotes results reproduced using the
+official code implementation.
+Method
+IoU mIoU
+car
+bicycle
+motorcycle
+truck
+other-veh.
+person
+road
+parking
+sidewalk
+other-grnd.
+building
+fence
+vegetation
+terrain
+pole
+traf.-sign
+other-struct.
+other-obj.
+MonoScene
+37.87 12.31 19.3 0.4 0.6 8.0
+2.0 0.9 48.4 11.4 28.1 3.3 32.9 3.5 26.2 16.8 6.9
+5.7
+4.2
+3.1
+VoxFormer
+38.76 11.91 17.8 1.2 0.9 4.6
+2.1 1.6 47.0 9.7 27.2 2.9 31.2 5.0 29.0 14.7 6.5
+6.9
+3.8
+2.4
+OccFormer
+40.27 13.81 22.6 0.7 0.3 9.9
+3.8 2.8 54.3 13.4 31.5 3.6 36.4 4.8 31.0 19.5 7.8
+8.5
+7.0
+4.6
+Symphonies
+44.12 18.58 30.0 1.9 5.9 25.1 12.1 8.2 54.9 13.8 32.8 6.9 35.1 8.6 38.3 11.5 14.0 9.6 14.4 11.3
+CGFormer
+48.07 20.05 29.9 3.4 4.0 17.6 6.8 6.6 63.9 17.2 40.7 5.5 42.7 8.2 38.8 24.9 16.2 17.5 10.2 6.8
+VLScene
+46.08 19.10 29.0 4.7 7.7 18.3 7.6 7.4 60.1 17.4 39.0 6.0 42.1 9.6 36.5 24.8 17.0 18.8 10.5 6.5
+Ocean
+48.19 20.28 29.3 3.7 4.6 15.1 7.7 6.8 63.7 17.0 40.9 5.0 43.7 8.9 39.2 24.7 16.7 19.2 10.8 8.3
+VoxDet†
+48.32 20.87 29.8 4.9 7.0 17.5 8.1 7.5 62.8 18.3 40.6 5.8 43.7 9.9 38.8 23.5 17.3 20.8 11.2 8.3
+RayLift (VGGT-Ω) 48.54 21.47 29.7 4.6 8.9 22.0 10.0 7.8 62.8 18.3 40.8 5.5 44.2 10.5 39.1 24.6 17.4 19.7 11.8 8.9
+RayLift (MoGe-2) 48.82 21.47 29.8 4.9 8.9 20.2 9.6 7.5 62.9 18.8 40.7 5.6 44.3 10.5 39.3 24.5 17.6 19.6 12.1 9.5
+Table 2: Quantitative results on the SSCBench-KITTI-360 test set. Best values in bold. † denotes results reproduced using the
+official code implementation.
+Setting
+CoCE
+DREL
+SAVI
+IoU
+mIoU
+(a)
+47.5281
+18.7840
+(b)
+✓
+47.8740
+18.9462
+(c)
+✓
+✓
+48.0343
+18.9579
+(d)
+✓
+✓
+✓
+47.9753
+19.5366
+Table 3: Ablation study of full modules.
+Context representation
+IoU
+mIoU
+DINOv3-2D
+47.7609
+19.2172
+Multi-level geometry features
+47.9753
+19.5366
+Table 4: Ablation study of context representation schemes.
+DREL configuration
+IoU
+mIoU
+Full DREL (8 × 8)
+47.9753
+19.5366
+Stereo surface cues only
+47.8408
+18.9270
+Surface samples only
+48.0758
+18.7936
+4 × 4 ray cell
+47.9868
+19.3671
+w/o voxel reliability weighting
+47.9516
+19.0594
+Table 5: Ablation study of DREL module.
+Geometry source
+IoU
+mIoU
+VGGT-Ω
+47.9753
+19.5366
+MapAnything
+48.0418
+18.4048
+Depth Anything 3
+48.1069
+18.9784
+MoGe-2
+47.9372
+19.6312
+Table 6: Ablation study of 3D visual geometry models.
+to RayLift. In the surface-only setting, we remove the neigh-
+boring sample added to each candidate surface. The results
+show that these two neighboring samples provide useful local
+context and depth-error information that cannot be retained
+by the exact surface samples alone. A denser 4 × 4 ray grid
+does not yield a further gain over the default 8 × 8 setting,
+indicating that greater ray density does not necessarily im-
+prove accuracy; the 8×8 cells provide a more suitable balance
+among spatial coverage, context alignment, and evidence pu-
+rity. Finally, DREL maps the density of ray evidence received
+by each voxel to a voxel-level reliability value, which records
+how much evidence remains after all samples are aggregated
+
+
+Ground Truth
+RayLift（Ours）
+CGFormer
+VoxDet
+RGB Image
+Figure 3: Qualitative comparisons on the SemanticKITTI validation set.
+            
+             
+      
+       
+         
+Figure 4: Visualization of prediction corrections on SemanticKITTI. Green indicates semantic corrections in regions previously
+predicted as occupied, while cyan indicates corrections where occupied voxels were previously predicted as empty.
+and further adjusts the voxel write strength. Removing this
+reliability weighting decreases mIoU to 19.0594%, confirm-
+ing the necessity of this adjustment.
+3D Vision Model Ablation.
+To compare the effects of
+different 3D visual foundation models, Table 6 evaluates
+four models by extracting geometric features and monocular
+depth predictions from comparable network locations. All
+variants use the same RayLift architecture, parameter set-
+tings, and dataset. VGGT-Ω, Depth Anything 3, and MoGe-
+2 all improve mIoU over the original VoxDet setting, with
+MoGe-2 achieving the highest mIoU. All four models im-
+prove occupancy IoU; Depth Anything 3 achieves the high-
+est IoU but a comparatively lower mIoU, whereas VGGT-Ω
+provides a better balance between the two metrics. These
+results demonstrate that RayLift can effectively use feature
+and depth priors from different visual geometry models.
+Qualitative Visualization
+Figure 3 compares RayLift with CGFormer (Yu et al. 2024)
+and VoxDet on the SemanticKITTI validation set. For dis-
+tant objects, RayLift correctly recognizes their semantic cat-
+egories and recovers their structures; for occluded objects, it
+reconstructs portions hidden from view. Figure 4 further vi-
+sualizes the improved regions from a bird’s-eye view. RayLift
+corrects scene structures omitted or misclassified by VoxDet
+and refines vegetation, terrain, and road boundaries.
+Conclusion
+We presented RayLift, a camera-based SSC framework that
+uses stereo geometry as a metric reference and converts
+complementary visual geometry priors into localized ray-
+wise voxel evidence. RayLift constructs geometry-enhanced
+scene context, organizes candidate surfaces and their reliabil-
+ity along camera rays, and integrates the resulting evidence
+into the voxel representation before prediction. Experiments
+on SemanticKITTI and SSCBench-KITTI-360 demonstrate
+consistent improvements in occupancy IoU and semantic
+mIoU under matched evaluation settings.
+
+
+References
+Behley, J.; Garbade, M.; Milioto, A.; Quenzel, J.; Behnke,
+S.; Stachniss, C.; and Gall, J. 2019. Semantickitti: A dataset
+for semantic scene understanding of lidar sequences. In 2019
+IEEE/CVF International Conference on Computer Vision
+(ICCV), 9296–9306. Ieee.
+Cao, A.-Q.; and De Charette, R. 2022. Monoscene: Monoc-
+ular 3d semantic scene completion. In Proceedings of the
+IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, 3991–4001.
+Guo, X.; Hu, J.; Hu, J.; Bao, H.; and Zhang, G. 2025. Sg-
+former: Satellite-ground fusion for 3d semantic scene com-
+pletion. In Proceedings of the IEEE/CVF Conference on
+Computer Vision and Pattern Recognition, 11929–11938.
+Huang, Y.; Zheng, W.; Zhang, Y.; Zhou, J.; and Lu, J. 2023.
+Tri-perspective view for vision-based 3d semantic occupancy
+prediction. In Proceedings of the IEEE/CVF conference on
+computer vision and pattern recognition, 9223–9232.
+Jiang, H.; Cheng, T.; Gao, N.; Zhang, H.; Lin, T.; Liu,
+W.; and Wang, X. 2023. Symphonize 3d semantic scene
+completion with contextual instance queries. arXiv preprint
+arXiv:2306.15670.
+Keetha, N. V.; Müller, N.; Schönberger, J.; Porzi, L.; Zhang,
+Y.; Fischer, T.; Knapitsch, A.; Zauss, D.; Weber, E.; Antunes,
+N.; et al. 2026. Mapanything: Universal feed-forward metric
+3d reconstruction. In Thirteenth International Conference
+on 3D Vision.
+Leroy, V.; Cabon, Y.; and Revaud, J. 2024. Grounding image
+matching in 3d with mast3r. In European conference on
+computer vision, 71–91. Springer.
+Li, B.; Sun, Y.; Liang, Z.; Du, D.; Zhang, Z.; Wang, X.;
+Wang, Y.; Jin, X.; and Zeng, W. 2023a. Bridging stereo
+geometry and BEV representation with reliable mutual in-
+teraction for semantic scene completion.
+arXiv preprint
+arXiv:2303.13959.
+Li, W.; Yu, Z.; and Alahi, A. 2026.
+Voxdet: Rethinking
+3d semantic scene completion as dense object detection.
+Advances in Neural Information Processing Systems, 38:
+81004–81038.
+Li, Y.; Li, S.; Liu, X.; Gong, M.; Li, K.; Chen, N.; Wang, Z.;
+Li, Z.; Jiang, T.; Yu, F.; et al. 2023b. SSCBench: Monocular
+3D semantic scene completion benchmark in street views.
+Li, Y.; Yu, Z.; Choy, C.; Xiao, C.; Alvarez, J. M.; Fidler, S.;
+Feng, C.; and Anandkumar, A. 2023c. Voxformer: Sparse
+voxel transformer for camera-based 3d semantic scene com-
+pletion.
+In Proceedings of the IEEE/CVF conference on
+computer vision and pattern recognition, 9087–9098.
+Lin, H.; Chen, S.; Liew, J.; Chen, D. Y.; Li, Z.; Shi, G.; Feng,
+J.; and Kang, B. 2025. Depth anything 3: Recovering the vi-
+sual space from any views. arXiv preprint arXiv:2511.10647.
+Philion, J.; and Fidler, S. 2020. Lift, splat, shoot: Encoding
+images from arbitrary camera rigs by implicitly unprojecting
+to 3d. In European conference on computer vision, 194–210.
+Springer.
+Scharstein, D.; and Szeliski, R. 2002. A taxonomy and evalu-
+ation of dense two-frame stereo correspondence algorithms.
+International journal of computer vision, 47(1): 7–42.
+Schonberger, J. L.; and Frahm, J.-M. 2016. Structure-From-
+Motion Revisited. In Proceedings of the IEEE Conference
+on Computer Vision and Pattern Recognition (CVPR).
+Shamsafar, F.; Woerz, S.; Rahim, R.; and Zell, A. 2022. Mo-
+bilestereonet: Towards lightweight deep networks for stereo
+matching. In Proceedings of the ieee/cvf winter conference
+on applications of computer vision, 2417–2426.
+Siméoni, O.; Vo, H. V.; Seitzer, M.; Baldassarre, F.; Oquab,
+M.; Jose, C.; Khalidov, V.; Szafraniec, M.; Yi, S.; Ra-
+mamonjisoa, M.; et al. 2025.
+Dinov3.
+arXiv preprint
+arXiv:2508.10104.
+Song, S.; Yu, F.; Zeng, A.; Chang, A. X.; Savva, M.; and
+Funkhouser, T. 2017. Semantic Scene Completion From a
+Single Depth Image. In Proceedings of the IEEE Conference
+on Computer Vision and Pattern Recognition (CVPR).
+Wang, J.; Chen, M.; Karaev, N.; Vedaldi, A.; Rupprecht, C.;
+and Novotny, D. 2025a. Vggt: Visual geometry grounded
+transformer. In Proceedings of the Computer Vision and
+Pattern Recognition Conference, 5294–5306.
+Wang, J.; Chen, M.; Zhang, S.; Karaev, N.; Schönberger,
+J.; Labatut, P.; Bojanowski, P.; Novotny, D.; Vedaldi, A.;
+and Rupprecht, C. 2026a.
+VGGT-Ω.
+arXiv preprint
+arXiv:2605.15195.
+Wang, M.; Pi, H.; Li, R.; Qin, Y.; Tang, Z.; and Li, K. 2025b.
+VLScene: Vision-language guidance distillation for camera-
+based 3D semantic scene completion.
+In Proceedings of
+the AAAI Conference on Artificial Intelligence, volume 39,
+7808–7816.
+Wang, R.; Xu, S.; Dong, Y.; Deng, Y.; Xiang, J.; Lv, Z.; Sun,
+G.; Tong, X.; and Yang, J. 2026b. Moge-2: Accurate monocu-
+lar geometry with metric scale and sharp details. Advances in
+Neural Information Processing Systems, 38: 35928–35959.
+Wang, S.; Leroy, V.; Cabon, Y.; Chidlovskii, B.; and Revaud,
+J. 2024a. Dust3r: Geometric 3d vision made easy. In Pro-
+ceedings of the IEEE/CVF conference on computer vision
+and pattern recognition, 20697–20709.
+Wang, S.; Yu, J.; Li, W.; Liu, W.; Liu, X.; Chen, J.; and Zhu,
+J. 2024b. Not all voxels are equal: Hardness-aware semantic
+scene completion with self-distillation. In Proceedings of
+the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, 14792–14801.
+Wang, W.; Cui, Y.; Lin, X.; Li, Z.; and Fang, Z. 2026c. To-
+wards 3D object-centric feature learning for semantic scene
+completion. In Proceedings of the AAAI Conference on Ar-
+tificial Intelligence, volume 40, 10136–10144.
+Wen, B.; Dewan, S.; and Birchfield, S. 2025.
+Fast-
+FoundationStereo: Real-Time Zero-Shot Stereo Matching.
+arXiv preprint arXiv:2512.11130.
+Xiao, H.; Xu, H.; Kang, W.; and Li, Y. 2024. Instance-aware
+monocular 3d semantic scene completion. IEEE Transac-
+tions on Intelligent Transportation Systems, 25(7): 6543–
+6554.
+Yang, L.; Kang, B.; Huang, Z.; Xu, X.; Feng, J.; and Zhao, H.
+2024. Depth anything: Unleashing the power of large-scale
+unlabeled data. In Proceedings of the IEEE/CVF conference
+on computer vision and pattern recognition, 10371–10381.
+
+
+Yao, J.; Zhang, J.; Pan, X.; Wu, T.; and Xiao, C. 2025.
+DepthSSC: Monocular 3D semantic scene completion via
+depth-spatial alignment and voxel adaptation.
+In 2025
+IEEE/CVF Winter Conference on Applications of Computer
+Vision (WACV), 2154–2163. IEEE.
+Yu, Z.; Zhang, R.; Ying, J.; Yu, J.; Hu, X.; Luo, L.; Cao,
+S.-Y.; and Shen, H.-L. 2024. Context and geometry aware
+voxel transformer for semantic scene completion. Advances
+in Neural Information Processing Systems, 37: 1531–1555.
+Zhang, Y.; Zhu, Z.; and Du, D. 2023. Occformer: Dual-
+path transformer for vision-based 3d semantic occupancy
+prediction. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, 9433–9443.
+
+
+Appendix/Supplemental Material
+This appendix provides additional implementation details
+and more comprehensive experimental results.
+Experimental Setup
+Datasets.
+We evaluate RayLift on two widely used pub-
+lic benchmarks, SemanticKITTI (Behley et al. 2019) and
+SSCBench-KITTI-360 (Li et al. 2023b). SemanticKITTI
+contains images at a resolution of 1226×370 and comprises
+22 sequences (00–21). Sequences 00–07, 09, and 10 are used
+for training, sequence 08 for validation, and sequences 11–21
+for online evaluation on the hidden test server. The bench-
+mark defines 20 labels, including 19 semantic classes and
+one empty class. SSCBench-KITTI-360 contains images at
+a resolution of 1408 × 376 and comprises nine sequences,
+of which seven are used for training, one for validation, and
+one for final testing. Each voxel is assigned one of 19 labels,
+including 18 semantic classes and one empty class.
+For both datasets, the observed frustum extends 51.2 m
+forward, 25.6 m to either side, and 6.4 m vertically. The final
+scene prediction has a voxel resolution of 256 × 256 × 32,
+with a voxel size of 0.2 m.
+Evaluation Metrics.
+Following established practice, we
+evaluate geometric completion and semantic completion us-
+ing intersection over union (IoU) and mean intersection over
+union (mIoU), respectively. IoU measures occupied-voxel re-
+construction, whereas mIoU measures voxel-wise semantic
+prediction.
+Implementation Details
+Complementary Context Encoder
+The input images are
+resized to 384 × 1280 on SemanticKITTI and 384 × 1408
+on SSCBench-KITTI-360, and the camera projection trans-
+formations are updated accordingly to match the CoCE in-
+put size. CoCE extracts image features and visual-geometry
+depth from the left image and obtains stereo depth from the
+stereo pair. We use VGGT-Ωas the 3D vision foundation
+model and extract its intermediate geometry-aggregator fea-
+tures and predicted depth offline. Four feature layers are used.
+For each layer, VGGT-Ωproduces features at a spatial stride
+of 1/14; these features are normalized, mapped through a
+fixed projection, and interpolated to one-eighth of the input-
+image resolution. The four layers are then concatenated along
+the channel dimension to obtain the visual-geometry feature
+F vfm, which has the same spatial size and number of chan-
+nels as the 2D image feature.
+Depth Ray Evidence Lifter
+Because depth predicted by
+the 3D vision foundation model is not necessarily metric, it
+cannot be directly combined with stereo depth to construct
+ray evidence. We therefore calibrate its scale on a per-frame
+basis using stereo depth. For pixels at which both estimates
+are finite and positive, we compute the ratio between stereo
+depth and visual-geometry depth. After discarding the lowest
+and highest 5% of the ratio distribution, the median of the
+remaining ratios is used as the scale factor. Calibration is
+performed only when a frame contains at least 100 valid
+overlapping pixels.
+Let r denote a ray cell. The definitions and interpretations
+of the descriptor components are given in Table 1.
+After ray sampling, each sample is represented by a 3D po-
+sition xr,k, a context feature fr,k, and a write weight bωr,k. We
+integrate these samples into the voxel grid. Valid samples are
+mapped to the 128×128×16 internal feature grid of the pre-
+diction head, which covers x ∈[0, 51.2), y ∈[−25.6, 25.6),
+and z ∈[−2, 4.4) m, with a voxel size of 0.4 m. According to
+its continuous coordinate and distance to neighboring voxel
+centers, each sample is assigned to at most eight neighboring
+voxels, with contributions determined jointly by trilinear in-
+terpolation coefficients and the sample write weight. When
+multiple samples fall into the same voxel, their features are
+aggregated with these weights while the accumulated evi-
+dence weight ρ is recorded. The aggregated feature is nor-
+malized by ρ so that its magnitude does not grow directly with
+the number of samples. For samples near the grid boundary,
+contributions outside the scene range are discarded and the
+remaining valid contributions are retained. Samples that lie
+entirely outside the scene or have invalid depth produce no
+voxel evidence, and voxels that receive no valid sample re-
+main zero. After aggregation, each voxel contains a voxel
+feature and ρ. We map ρ to a voxel-level weight and use
+a threshold of 0.01 to obtain the valid-position mask M,
+which distinguishes voxels that actually receive ray evidence
+from uncovered regions. The voxel feature and ρ are then
+concatenated along the channel dimension and processed
+by a lightweight 3D convolutional encoder, which organizes
+discrete features from different rays and candidate surfaces
+within valid voxels. The encoded result is restricted by M,
+modulated by the voxel weight, and globally scaled to pro-
+duce the local ray-wise voxel evidence V1.
+Semantic-Aware Voxel Integrator
+We compute the se-
+mantic weight A and global scaling coefficient γ as follows.
+The existing semantic transformation of the prediction head
+maps V0 to the pre-integration semantic response Z0. For
+voxel v, the non-empty response difference is defined as
+mv = max
+c>0 Z0
+v,c −Z0
+v,0.
+(1)
+When mv is large, the voxel already contains a clear non-
+empty scene response, allowing the ray evidence to further
+refine its surface structure or semantic feature. When mv is
+small, the location is more likely to represent free space, and
+the write strength is therefore reduced. The semantic weight
+is defined as
+A = max
+
+amin, σ
+mv + τ
+T
+
+,
+(2)
+where τ controls the response center, T controls the smooth-
+ness of the weight transition, and amin retains a minimum
+update strength for voxels with valid ray support. We set
+these values to 0.75, 0.35, and 0.02, respectively.
+For the global scaling coefficient γ, the root-mean-square
+magnitudes of V1 and V0 over the region indicated by M are
+defined as
+r1 =
+sP
+v Mv∥V1,v∥2
+2
+Cvox
+P
+v Mv
+, r0 =
+sP
+v Mv∥V0,v∥2
+2
+Cvox
+P
+v Mv
+.
+(3)
+
+
+Formula
+Related Definition
+Interpretation
+hr = −
+1
+log Nd
+Nd
+X
+j=1
+Pr(j) log(Pr(j))
+Pr(j) denotes the probability of ray cell
+r in the j-th depth interval, and Nd is the
+number of depth intervals.
+Depth-distribution entropy. A smaller hr in-
+dicates a concentrated probability distribution
+and a more definite depth location from the
+original lifting path; a larger hr indicates that
+the probability is dispersed along the ray and
+that the surface location is more uncertain.
+δr = clip
+
+log dg
+r
+dsr
+, −2, 2
+
+ds
+r and dg
+r denote the stereo depth and
+scale-corrected visual-geometry depth,
+respectively.
+Signed depth discrepancy. When δr > 0, the
+visual-geometry surface is behind the stereo
+surface; when δr < 0, it is in front of the stereo
+surface; δr = 0 indicates that the two surfaces
+are close or that the candidate pair is invalid.
+∥δr∥= abs(δr)
+The absolute value of δr.
+Unsigned depth discrepancy. A small value in-
+dicates that the two surfaces are close, whereas
+a large value indicates a clear geometric dis-
+crepancy between them.
+¯cg
+r = log(1 + max(cg
+r, 0)) ,
+cr = clip
+ 
+¯cg
+r −µc
+p
+max(σ2c, 10−6)
+, −5, 5
+!
+cg
+r denotes the raw visual-geometry con-
+fidence, while µc and σ2
+c are its mean and
+variance over the valid ray cells in the cur-
+rent image.
+Relative confidence. cr > 0 indicates that the
+candidate surface has higher confidence than
+other valid ray-cell locations in the current im-
+age.
+vr =
+(
+1,
+ds
+r, dg
+r ∈[2, 58), ¯cg
+r > 0,
+0,
+otherwise.
+ds
+r and dg
+r denote the stereo depth and
+scale-corrected visual-geometry depth,
+respectively; the valid depth range is
+[2, 58) m.
+vr is a binary indicator of whether the stereo
+depth, visual-geometry depth, and confidence
+jointly form a valid candidate-surface pair.
+er = clip
+
+dmax
+r
+−dmin
+r
+max(dmin
+r
+, 10−3), 0, 2
+
+dmax
+r
+and dmin
+r
+denote the maximum and
+minimum depth values within the ray cell,
+respectively.
+Within-cell depth variation. A smaller er indi-
+cates a relatively smooth surface within the cell,
+whereas a larger er indicates greater depth vari-
+ation and may correspond to an object bound-
+ary.
+Table 1: Formulas, related definitions, and interpretations of the ray geometry descriptor components.
+The global scaling coefficient for the ray update is then
+γ = clip
+0.1r0
+r1
+, 0, 1
+
+.
+(4)
+This design attenuates the auxiliary ray features only when
+they are excessively strong, without actively amplifying weak
+ray responses. Ultimately, the effective contribution of the ray
+evidence is jointly controlled by the ray-support mask Mv,
+the voxel-wise semantic weight Av, and the global scaling
+coefficient γ. Specifically, Mv determines which voxels can
+receive auxiliary evidence, Av adjusts the relative update
+strength of each supported voxel according to its local se-
+mantic state, and γ constrains the overall magnitude of the
+ray branch relative to the original voxel representation.
+Training
+Configuration
+RayLift
+is
+trained
+on
+two
+NVIDIA A6000 GPUs with a batch size of two per GPU
+and a total batch size of four. We use AdamW with a weight
+decay of 0.01. On SemanticKITTI, the initial learning rate is
+3 × 10−4 and the model is trained for 25,000 iterations; on
+SSCBench-KITTI-360, the initial learning rate is 2 × 10−4
+and the model is trained for 27,000 iterations. The OneCy-
+cle schedule linearly increases the learning rate to its preset
+peak during the first 5% of the training steps and applies co-
+sine decay thereafter. Gradients are clipped with a maximum
+norm of 20. All formal experiments are initialized from the
+same pretrained weights.
+Quantitative Results
+SemanticKITTI Validation Results. Table 2 reports addi-
+tional quantitative results on the SemanticKITTI validation
+set. RayLift achieves the best IoU and mIoU among the listed
+methods.
+Stereo Depth Source. Table 3 compares two stereo
+models
+used
+to
+provide
+the
+metric
+reference
+for
+RayLift,
+MSNet
+(Shamsafar
+et
+al.
+2022)
+and
+Fast-
+FoundationStereo (Wen, Dewan, and Birchfield 2025). Com-
+pared with MSNet, Fast-FoundationStereo improves valida-
+tion IoU and mIoU by 0.27 and 0.21 percentage points, re-
+spectively. On the hidden test set, however, MSNet achieves
+0.60 points higher IoU and 0.44 points higher mIoU. Both
+depth sources therefore support the construction of effective
+ray evidence, indicating that RayLift is not tied to a particu-
+lar stereo estimator. The reversal between the validation and
+hidden-test rankings further shows that cross-sequence gen-
+eralization is not determined solely by the accuracy of the
+stereo reference.
+Geometry Integration Strategy. As shown in Table 4, ex-
+plicitly retaining the candidate surfaces provided by different
+
+
+Method
+IoU mIoU
+road
+sidewalk
+parking
+other-grnd.
+building
+car
+truck
+bicycle
+motorcycle
+other-veh.
+vegetation
+trunk
+terrain
+person
+bicyclist
+motorcyclist
+fence
+pole
+traf.-sign
+MonoScene
+36.86 11.08 56.52 26.72 14.27 0.46 14.09 23.26 6.98 0.61 0.45 1.48 17.89 2.81 29.64 1.86 1.20 0.00 5.84 4.14 2.25
+VoxFormer
+44.15 13.35 53.57 26.52 19.69 0.42 19.54 26.54 7.26 1.28 0.56 7.81 26.10 6.10 33.06 1.93 1.97 0.00 7.31 9.15 4.94
+OccFormer
+36.50 13.46 58.85 26.88 19.61 0.31 14.40 25.09 25.53 0.81 1.19 8.52 19.63 3.93 32.62 2.78 2.82 0.00 5.61 4.26 2.86
+Symphonize
+41.92 14.89 56.37 27.58 15.28 0.95 21.64 28.68 20.44 2.54 2.82 13.89 25.72 6.60 30.87 3.52 2.24 0.00 8.40 9.57 5.76
+CGFormer
+45.99 16.87 65.51 32.31 20.82 0.16 23.52 34.32 19.44 4.61 2.71 7.67 26.93 8.83 39.54 2.38 4.08 0.00 9.20 10.67 7.84
+VLScene
+44.69 17.83 63.10 31.10 24.40 0.20 24.90 33.40 30.70 1.80 3.60 18.30 26.00 8.10 35.30 4.30 2.60 0.00 12.10 11.90 6.30
+Ocean
+46.40 17.39 66.1 34.3 21.9 0.1 23.4 34.0 19.3 3.2 2.0 15.3 28.1 8.9 40.0 3.7 1.2 0.0 10.3 10.8 7.8
+VoxDet†
+47.53 18.78 66.0 35.6 23.3 0.2 26.6 34.4 25.5 4.1 5.3 14.6 29.7 10.2 41.3 4.3 3.2 0.0 11.1 12.8 8.8
+RayLift (VGGT-Ω) 47.98 19.54 66.3 34.5 22.3 0.2 26.8 34.7 33.7 6.3 7.6 14.2 29.4 10.6 41.9 4.3 4.8 0.0 12.3 12.6 8.7
+RayLift (MoGe-2) 47.94 19.63 66.6 34.4 21.4 0.1 26.5 34.7 34.5 5.6 4.8 19.3 29.2 10.0 42.1 4.8 3.3 0.0 13.4 13.2 9.1
+Table 2: Quantitative results on the SemanticKITTI validation set. The best overall and class-wise results are shown in bold. †
+denotes our reproduction under the same experimental setting as RayLift.
+Stereo reference
+Validation
+Hidden test
+IoU
+mIoU
+IoU
+mIoU
+MSNet
+47.98
+19.54
+48.38
+18.54
+Fast-FoundationStereo
+48.25
+19.75
+47.78
+18.10
+Table 3: Effect of the stereo-depth source on SemanticKITTI.
+Validation results are taken at each model’s best-mIoU check-
+point, while hidden-test results are obtained from the online
+evaluation server. All values are percentages.
+Method
+IoU
+mIoU
+Modify Depth Probability Distribution
+47.8333 19.0373
+RayLift
+47.9753 19.5366
+Table 4: Comparison of geometry-prior integration strategies
+on the SemanticKITTI validation set. All values are percent-
+ages.
+depth sources as local ray-wise voxel evidence achieves bet-
+ter semantic completion performance than calibrating the
+additional geometry and directly integrating it into the LSS
+depth distribution. This result supports our motivation for
+preserving heterogeneous depth predictions as distinct sur-
+face hypotheses rather than collapsing them into a single
+lifting distribution.
+Qualitative Results
+Following the qualitative results in the main paper, Figures 2
+and 3 provide further comparisons on the SemanticKITTI
+validation set. Figure 2 shows that RayLift produces more
+continuous scene layouts and preserves finer scene structures
+than the compared methods, particularly near road bound-
+aries, roadside objects, and vegetation–terrain transitions.
+Figure 3 further visualizes the regions corrected by RayLift
+relative to VoxDet. These corrections are concentrated near
+observed surfaces and structural boundaries. Green denotes
+semantic-class corrections in voxels previously predicted as
+occupied, whereas cyan denotes occupied voxels recovered
+from previous free-space predictions.
+Figure 1: Failure Cases.
+Model Limitations
+RayLift currently processes each stereo pair independently
+and constructs ray evidence from a single frame. It therefore
+does not exploit temporal continuity or observations accu-
+mulated across adjacent frames, which could provide addi-
+tional geometric evidence for surfaces that are temporarily
+occluded, weakly textured, or poorly matched by stereo esti-
+mation, as illustrated by the failure cases in Figure 1. Future
+work will explore spatially aligning image features and ray
+evidence across frames to stabilize candidate surfaces and
+recover more complete voxel structures. Such an extension
+must also account for ego-motion and dynamic objects to
+prevent outdated evidence from being propagated to incor-
+rect spatial locations.
+
+
+Ground Truth
+RayLift（Ours）
+CGFormer
+VoxDet
+RGB Image
+Figure 2: Additional qualitative comparisons on the SemanticKITTI validation set. From left to right: input RGB image,
+CGFormer, VoxDet, RayLift, and ground truth.
+
+
+Ground Truth
+RayLift（Ours）
+VoxDet
+Changes
+RGB Image
+Figure 3: Additional qualitative visualization of the corrected regions on the SemanticKITTI validation set. From left to right:
+input RGB image, ground truth, VoxDet, RayLift, and corrected regions. Green denotes corrected semantic labels in previously
+occupied voxels, while cyan denotes occupied voxels recovered from previous free-space predictions.

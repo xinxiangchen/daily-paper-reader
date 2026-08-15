@@ -1,0 +1,3335 @@
+LINGJING: A SIMULATION TESTBED FOR MULTI-AGENT
+EMBODIED TASKS IN OPEN-ENDED CITIES
+Xiaohe Li, Yiru Wang, Junhao Fan, Mingyuan Liu, Jie Huang, Kaixin Zhang, Jiahao Li
+the Key Laboratory of Target
+Cognition and Application Technology
+Aerospace Information Research Institute
+Chinese Academy of Sciences
+lixiaohe@aircas.ac.cn
+Chen Qian
+School of Artificial Intelligence
+Shanghai Jiaotong University
+qianc@sjtu.edu.cn
+Zide Fan
+the Key Laboratory of Target
+Cognition and Application Technology
+Aerospace Information Research Institute
+Chinese Academy of Sciences
+fanzd@aircas.ac.cn
+August 11, 2026
+ABSTRACT
+Urban embodied intelligence requires coordination among heterogeneous agents (e.g., UAVs, ground
+robots, and autonomous vehicles) in dynamic cities. Simulators therefore provide a scalable foun-
+dation for developing and evaluating such coordination. Existing platforms nevertheless isolate
+different embodiments and decouple them from task design and evaluation. We present Lingjing,
+a simulation platform for heterogeneous multi-agent embodied intelligence in open-ended urban
+environments. Lingjing reconstructs and renders evolving cities from geographic data, synchronizes
+multiple physics engines, and exposes shared physical and structured urban state to agents. Its
+Gym-like interface supports user-defined ReAct agents and single- or multi-agent natural-language
+missions with configurable star or broadcast communication and resource constraints. Each episode
+becomes an attribution-ready replay that links agent trajectories and communication to relation-graph
+changes, resource consumption, and engine-based evaluations for systematic diagnosis. We evaluate
+twelve vision-language models on nine urban tasks under a shared engine-in-the-loop protocol.
+Controlled studies further examine communication, scalability, robustness, and failure provenance.
+Results expose persistent bottlenecks in grounding and long-horizon execution. They also show
+task-dependent coordination trade-offs and diminishing returns from added capacity, while heavier
+workloads further reduce success. Lingjing provides a unified testbed that enables reproducible
+end-to-end evaluation and systematic failure diagnosis in urban multi-agent embodied intelligence.
+1
+Introduction
+Multimodal large language models (MLLMs) [1, 13, 24, 5] have accelerated the development of embodied agents,
+supporting tasks such as vision-language navigation (VLN), complex manipulation, and environmental inspection.
+Increasingly, the object of study is shifting from a single robot [20, 42] operating in a static room toward coordinated
+operation across an entire city [11, 39]. City-scale applications such as delivery, infrastructure inspection, and emergency
+response require heterogeneous mobile and fixed assets to coordinate across urban blocks. The challenge extends
+beyond perception and low-level control. For example, agents may need to adapt to traffic and weather disruptions
+under limited communication and resource budgets while accounting for how their decisions affect one another and the
+city.
+arXiv:2608.08045v1  [cs.AI]  8 Aug 2026
+
+
+A PREPRINT - AUGUST 11, 2026
+AirSim
+CARLA
+MuJoCo
+Unreal
+UAV
+Vehicle
+Robot
+Vessel
+Command
+Vision
+Status
+Environment
+Physics Models
+Temporal Evolution
+Multi-Agent
+Interaction
+Uncertainty & 
+Noise
+Scalability
+Data & Services
+Scene Library
+(3D Assets / Maps)
+ModelZoo
+(Pretrained Models)
+Knowledge Base
+(Ontology/Rules)
+API& SDK
+(REST/gRPC)
+Monitoring 
+&Visualization
+Discrete
+Time Sim.
+Analysis & Evaluation
+Metrics
+Visuallzation
+Report
+Adapter
+Simulators
+Agents
+Perceive
+Act
+Communicate
+Step: Simulation Advance
+Think
+Urban Physics Engine
+Figure 1: Overview of Lingjing. Its Urban Physics Engine integrates multiple simulators into a shared, evolving city en-
+vironment for evaluating MLLM-driven heterogeneous agents across perception, reasoning, action, and communication.
+Training and evaluating embodied intelligence directly in real cities is costly, slow, and safety-critical. Synchronized
+data from heterogeneous agents are difficult to collect, and urban incidents cannot be replayed to identify which agent,
+message, or missing dependency caused a failure. Simulation therefore provides more than a substitute for deployment.
+It offers the experimental control needed to replay episodes, isolate individual factors, and trace long-horizon failures
+across perception, communication, planning, and execution.
+Existing simulators support indoor interaction, driving, and open-ended language agents [30, 19, 36]. Recent urban
+systems extend this landscape to video cognition and embodied question answering [49, 50, 17], as well as textual or
+population-scale city-agent simulation [40, 41]. Yet these directions typically isolate perception, a single embodiment
+class, or population-level behavior. Integrated support remains limited for heterogeneous agents that perceive rendered
+urban scenes through their sensors and execute coordinated actions in a shared city-scale environment, with synchronized
+physics and episode-level traces of model-driven decisions and execution.
+We present Lingjing, a simulation platform for heterogeneous multi-agent embodied intelligence in dynamic cities.
+Figure 1 illustrates its city-scale environment and agent loop across perception, reasoning, action, and communication.
+Lingjing unifies three capabilities.
+First, Lingjing provides a realistic, evolving urban substrate grounded in streamed geographic data, extending beyond
+fixed scene boundaries and coupling high-fidelity 3D environments with structured, queryable state. It represents
+residential, industrial, commercial, campus, logistics, and coastal districts together with dynamic traffic, weather,
+communication coverage, resource budgets, and mission events. The environment supports UAVs, ground robots,
+autonomous vehicles, fixed infrastructure, and optional wide-area sensing, while integrating AirSim [31], CARLA [8],
+MuJoCo [35], and maritime simulation under shared physics rules.
+2
+
+
+A PREPRINT - AUGUST 11, 2026
+Domain
+Platforms
+State
+Evolution
+State
+Representation
+Agent
+Types
+Communication
+Relation
+Evidence
+Failure
+Attribution
+Indoor
+Habitat, iGibson
+Static/local
+RGB-D, semantics,
+objects
+Indoor agents
+None
+State logs
+None
+Physics
+OmniGibson, Isaac Sim,
+Genesis
+Static/local
+Poses, physics
+states
+Robots
+Task-specific
+State logs
+Basic
+Driving
+CARLA, MetaDrive
+Domain-specific
+RGB-D/LiDAR,
+road/traffic
+Vehicles,
+pedestrians
+Environment-mediated
+Event traces
+Basic
+Minecraft
+MineDojo, Voyager
+Static/local
+Game, inventory
+Minecraft agents
+None
+State logs
+None
+Social
+Generative Agents,
+MindCraft, Project Sid
+Domain-specific
+Dialogue, memory,
+context
+Language/social
+agents
+Peer-to-peer
+dialogue
+Event traces
+Basic
+Open-world
+SimWorld
+Mission-coupled
+Observations,
+scene graph
+Humans, robots,
+vehicles
+Broadcast/shared
+Event traces
+Basic
+Urban
+embodied
+MetaUrban, EmbodiedCity,
+COL, CARLA-Air,
+UrbanVideo-Bench, CityEQA
+Domain/mission
+Rendered/video,
+GPS/map
+Robots, UAVs,
+vehicles
+Environment-mediated
+Frames/events
+Basic
+Urban
+population
+UGI, OpenCity, CitySim,
+MobileCity, CAMS
+Daily/mobility
+Text, schedules,
+trajectories
+Human/LLM agents
+Not central
+Aggregate traces
+None
+Urban
+Multi-agent
+Lingjing (Ours)
+Mission-coupled RGB-D,
+city/task, relation
+UAVs/UGVs,vehicles,
+ships
+Star/Broadcast
+Typed relations
+End-to-end
+Table 1: Comparison of Lingjing with representative embodied simulators. State evolution denotes temporal scope
+rather than physics fidelity: static/local, domain-specific, or mission-coupled. Relation evidence comprises state logs,
+event traces, or typed task relations (information handoff, cooperation, competition, guidance, and dependency). Failure
+attribution is absent (None), diagnostic only (Basic), or links outcomes to agents, actions, messages, and task relations
+(End-to-end). Environment-mediated communication uses shared world state.
+Second, a Gym-like interface exposes user-defined ReAct [43] agents that couple observation, reasoning, and control
+to translate free-form language into executable actions. Natural-language missions specify roles, observation chan-
+nels, communication links, and action spaces, allowing rule-based and model-based policies under star or broadcast
+communication to share one interaction contract.
+Third, Lingjing defines complex urban embodied tasks across search, navigation, command, and coordination while
+making each run accountable through attribution-oriented records. Each replayable episode captures structured state,
+visual observations, actions, inter-agent messages, relation-graph updates, token and cost traces, and evaluation signals.
+These records support visual-attention inspection, reasoning and communication analysis, context-drift diagnosis, cost
+and communication accounting, relation-level metrics, and causal interventions on recurring failure patterns.
+Across nine urban tasks covering navigation, inspection, delivery, emergency response, and replanning, we evaluate five
+commercial and seven open-source vision-language backbones. We compare backbone performance, communication
+modes, and costs, trace subtask error propagation, and test scalability and robustness across workload, sensing, and
+appearance variations to assess model capability, coordination efficiency, and failure modes.
+This work makes three contributions.
+• We introduce Lingjing, a dynamic multi-engine urban platform with a common interface for heterogeneous
+embodied agents, structured communication, and engine-based adjudication, providing a controlled testbed for
+studying and evaluating coordination across representative urban missions.
+• We provide a framework for user-defined urban embodied tasks, instantiated with nine navigation, inspection,
+delivery, emergency-response, and replanning tasks, with replayable traces for attributing failures across
+perception, localization, handoff, coordination, and execution.
+• We conduct extensive experiments with twelve commercial and open-weight backbones, revealing current
+performance gaps and providing practical guidance for improving urban embodied agents.
+2
+Related Work
+Embodied and Urban Simulation.
+Table 1 situates Lingjing among representative systems. Indoor and physics
+platforms support navigation and interaction [30, 32, 19, 12, 15], while driving and outdoor simulators extend embodied
+evaluation to traffic and city settings [8, 21, 39, 11]. Open-ended environments add language-guided skills and social
+behavior in game or Unreal worlds [10, 36, 29, 38, 4, 44]. UrbanVideo-Bench evaluates urban Video-LLM cogni-
+tion [49]. CityEQA studies active embodied question answering through a Planner, Manager, and Actor hierarchy [50],
+while Sentinel and AirCopBench address cooperative spatial reasoning and multi-drone perception [23, 47]. These
+systems advance urban perception but usually focus on one embodiment or task family. Platforms for population
+3
+
+
+A PREPRINT - AUGUST 11, 2026
+Algorithm 1 Kernel-simulation step.
+Require: actions/messages (U, M); W = (B, S, G, E, R)
+1: if reset is requested then
+▷scene control
+2:
+dispatch S and await all engines’ READY
+3:
+(U, M) ←(∅, ∅)
+4: end if
+5: Ia ←∅for each active agent a
+6: for all ma ∈M do
+▷communication
+7:
+validate and route ma via B
+▷coordinator/all peers
+8: end for
+9: for all ua ∈U do
+▷command routing
+10:
+validate and dispatch ua to its engine
+11: end for
+12: advance one tick and collect O, receipts, and T
+13: G ←UPDATE(G, T, O, receipts)
+14: V ←ADJUDICATE(G, T, S)
+15: (r, d) ←EVALUATE(E, G, V)
+16: R.LOG(G, T, O, I, U, M, V, r, d)
+17: return O, I, V, r, d
+simulation pursue a different goal. UGI links CityGPT agents to a textual city simulator and knowledge graph [40].
+OpenCity scales daily activity simulation to 10,000 agents [41]. CitySim models individual and aggregate behavior
+with tens of thousands of agents [6], while MobileCity evaluates multimodal mobility over 4,000 agents [45]. CAMS
+uses geospatially informed CityGPT agents to generate mobility trajectories [9]. These platforms emphasize scalable
+behavioral simulation rather than rendered closed-loop action. A broader taxonomy appears in [22]. Lingjing instead
+provides a shared rendered city for heterogeneous embodied agents, enabling coordinated and traceable physical
+execution.
+Long-Horizon Embodied Task Benchmarks.
+Long-horizon tasks require agents to maintain goals, track intermediate
+states and dependencies, and recover across extended action sequences. ALFRED [33] and TEACh [28] study
+multi-step household instruction following and dialog-guided task completion. CALVIN [25], RoboCerebra [16],
+and VLABench [48] evaluate language-conditioned manipulation, high-level reasoning, and long-horizon execution,
+while BEHAVIOR and BEHAVIOR-1K [34, 19] cover diverse activities with realistic physical interactions. Most
+benchmarks, however, retain single-agent execution in bounded environments with predefined tasks, limiting evaluation
+of heterogeneous role organization, cross-agent dependencies, joint-plan adaptation under evolving conditions, and
+failure diagnosis across agents and decisions.
+3
+The Lingjing Platform
+Lingjing comprises an urban physics engine, shared infrastructure, and a framework for heterogeneous embodied agents,
+supporting mission execution and evaluation (Fig. 2).
+Urban Physics Engine.
+Urban missions require heterogeneous agents to act in one evolving city, yet domain-specific
+simulators model only fragments of this setting. To our knowledge, Lingjing is the first city-scale platform to couple
+heterogeneous embodied agents across multiple specialized physics engines within a single rendered execution loop. It
+anchors AirSim [31], CARLA [8], and MuJoCo [35] to a common Cesium geodetic frame [7] with Unreal rendering,
+then maps their observations, commands, and state transitions into a shared spatiotemporal state at every kernel tick.
+Changes produced by one backend therefore become part of the world observed by all agents. This cross-engine closed
+loop combines realistic urban geometry with evolving traffic, weather, and mission conditions, while exposing rendered
+observations (e.g., RGB, depth, and semantic views) alongside structured road graphs and city state for reproducible
+evaluation.
+Infrastructure
+The shared infrastructure turns multi-engine execution into engine-grounded, replayable evidence.
+The kernel manages scenario transitions and routes validated actions and messages through a common bus (Algorithm 1).
+Its adjudicator derives events and outcomes directly from synchronized engine state, while pluggable evaluators use
+them for online termination. A task-indexed recorder aligns each decision with its observations, messages, relation
+4
+
+
+A PREPRINT - AUGUST 11, 2026
+Scene Loading
+3D Assets
+Entity Control
+Unreal Engine
+Zone
+Scene
+Weather
+Geographic Platform
+Sensor Simulation
+Collision Resolution
+Physical Simulation
+AirSim
+Carla
+MuJoCo
+Time-driven Sim.
+LLM/VLM 
+Main View
+Main View
+Top View
+MultiModal
+Observation
+MessageBus
+Generic Agent
+Perceive
+ReAct Policy
+{
+ fire_visible:√
+ confidence：0.87
+ aligned：√
+ offset_px：(12,-8)
+ next_action:move
+ reason:fire ahead
+}
+{
+ thought:...
+ physical：
+ -uav_1→(x,y)
+ -uav_2→(x,y)
+messages: [...]
+}
+Parse action
+normalization / 
+verification
+Process inbox
+MessageBus
+UAV-1
+UAV-2
+UAV-N
+TRUCK
+CMD
+ed
+Context
+HARNESS
+(Authoritative State)
+PER-AGENT OBSERVATION
+Claimed
+Searched
+Found Fires
+Extinguished
+UAVs
+Truck State
+Attempts
+Role
+Task
+Observation
+Context
+Inbox
+LLM CALL
+Act & Update State
+Slice
+Action
+Commercial models
+Open-source models
+Adjudicator
+Context
+Task/Map
+Subgoals Success criteria Constraints
+on_reset
+on_step
+on_done
+JUDGMENT
+Rule-based
+criteria
+Metric
+calculation
+Pass/Fail
+decision
+Verdict
+ & Metrics
+Success
+Failure
+·TSR 
+ (success)
+·Sub-SR
+ (per-subgoal)
+·SPL
+·Detection
+·Safety
+Agent-state
+ed
+History
+Round t
+Round t+1
+Round T
+Observation
+Action
+Outgoing
+Observation
+Action
+Outgoing
+Observation
+Action
+Outgoing
+Message Bus
+Inboxes
+{agent→deque}
+Subscribers
+History
+(Global audit)
+Step Record
+ObsView
+Step
+Actions
+Per-agent Obs
+Inbox sizes
+Self
+(pose/cargo/status/sensors)
+Global
+(pose/cargo/status/sensors)
+Fleet Status
+Step, Subscribers
+Trajectory/EvalStepInput
+step
+observation
+action
+next obs
+info
+scenario
+interaction
+Evaluation
+Offline Rescore
+Replay Trajectory × ALTERNATE evaluator
+Metric Aggregators
+Per-(model,task)Sub-
+SR/detection%/DeliveryAccuracy+token
+Sweep Drivers
+Task × Model grid, Budgets
+Curation & Tuning
+Prompt Optimize
+Command Routing
+Command
+Routing
+UAV Action
+Car Action
+Dog Action
+Image / Vision
+Scenario Command
+LJ-ENGINE_AIRSIM（UAV）
+LJ-ENGINE_CARLA（car）
+LJ-ENGINE_MUJOCO（robot）
+LJ-ENGINE_IMAGE（vision）
+LJ-ENGINE_SIM (ship/plane/satellite)
+Ack（executionCompleted / reachTargetPoint / isReady）
+Figure 2: Lingjing’s three-layer architecture: an urban physics engine, shared infrastructure, and heterogeneous ReAct
+agents.
+updates, and resulting world transition. This provenance enables subtask and communication analysis as well as failure
+attribution in the following experiments.
+Agent Framework
+The agent framework defines a policy-independent contract between embodiment and coordination.
+Through a Gym-like reset/step interface, scenarios specify capabilities, resource limits, roles, and communication
+relations (Appendix A.1 and A.2). Each ReAct agent connects a dynamically configurable MLLM to a common
+perception, reasoning, and action loop. The model grounds visual and structured observations, reasons over task
+commitments, and issues physical actions or messages, providing the basis for embodied task execution and the shared
+scaffold for MLLM evaluation (§5). Because roles and communication relations remain separate from embodiment, the
+same asset can act alone or join a UAV and UGV team without changing its interface. The contract supports both rule
+and model policies under star or broadcast coordination (§5.3).
+Runtime Loop
+The runtime closes the perception-action loop through deterministic ticks that place every engine and
+agent on one execution timeline. At tick t, the kernel executes (Ut, Mt), advances the engines, adjudicates events, and
+records the transition. The agent runtime consumes (Ot, It) and returns (Ut+1, Mt+1), with pending requests retained
+across ticks. In the appendix, Algorithm 1 formalizes this decision-to-outcome boundary for the default runtime and
+task orchestrators.
+5
+
+
+A PREPRINT - AUGUST 11, 2026
+Prompt (Commander)
+The central sea-rescue commander observes 
+the idle UAV, all UAV positions, the remaining 
+unsearched cells, and the current found 
+/rescued status. It assigns the given idle UAV a 
+useful next search cell so the team keeps 
+covering the rescue area efficiently, and every 
+UAV stays busy. Drowning people are 
+discovered through UAV photos, and the boat 
+later performs pickup after targets are found.
+Prompt (UAV)
+Each UAV acts as a decentralized team 
+member. It reasons from its own position, 
+peer positions, unsearched cells, already 
+claimed cells, and recent broadcast messages, 
+then chooses one nearby unsearched cell 
+that peers have not just claimed. The goal is 
+to reduce overlap and find drowning people 
+faster through local coordination.
+Prompt (Dispatcher)
+The central logistics dispatcher sees the road 
+and coordinate context, all vehicle positions 
+and cargo levels, the remaining demand at each 
+delivery point, and the list of idle cars. It jointly 
+schedules every idle vehicle in one response, 
+deciding whether each car should deliver to a 
+demand point or return to the depot to reload, 
+while minimizing travel and avoiding 
+unnecessary overlap.
+Prompt (Vehicle)
+Each delivery vehicle acts in a leaderless team. 
+Using its own state, the current claimed points, 
+remaining-demand view, fleet-cargo cues, and 
+inbox messages, it first negotiates by 
+broadcasting a claim to a suitable nearby 
+unclaimed point, then executes its claimed 
+delivery. When cargo becomes low, it returns 
+to the depot to reload and continues the 
+delivery task.
+Figure 3: Representative star and broadcast coordination in sea rescue and city-logistics dispatch. Star assigns work
+through a commander or dispatcher, whereas broadcast agents coordinate through peer messages and shared task state.
+ID
+Scenario
+Assets
+Coord.
+Tags
+VDN Visual dog navigation
+UGV
+single
+L,N,V
+BI
+Bridge fracture inspection
+UAV
+single
+L,N,P,V
+LD
+Last-mile delivery
+UAV+CAR+UGV star
+L,N,P,V,C
+IDF
+Industrial dog firefighting
+UGVs
+broadcast
+L,N,P,V,C
+UPR
+UAV-guided pipeline repair
+UAV+UGV
+star
+L,N,P,V,C
+UFR
+UAV–fire-truck response
+UAVs+CAR
+star, broadcast L,N,P,V,C
+CR
+Congestion-aware replanning UAV+CAR
+star
+N,P,V,C
+SSR
+Sea search and rescue
+UAVs+USV
+star, broadcast L,N,P,V,C
+CD
+City-logistics dispatch
+CARs
+star, broadcast N,P,C
+Table 2: Nine urban tasks. CAR denotes a CARLA vehicle. L/N/P/V/C denote localization, navigation, planning, visual
+perception, and coordination.
+4
+Urban Missions and Agent Coordination
+Each Lingjing mission is declared in a scenario file dispatched at reset. It specifies the environment, assets and initial
+states, natural-language goal, high-level perceive–decide–act workflow, and coordination relations, decoupling mission
+design from policies and task-specific solvers. Seeded selection reproducibly varies active assets and targets while
+preserving the layout, enabling controlled team-size and workload sweeps. Targets remain hidden from agents, and
+engine state adjudicates success. Appendix A.5 provides an example.
+Geographic Reconstruction
+An L11 global imagery layer supports the reconstructed scenes in Ordos, Inner Mongolia,
+and Shanghai, with selected task regions refined to L18. BIGEMAP provides the imagery and building and road
+vectors.1 The vectors drive ArcGIS CityEngine2 rules that sample configurable building heights and assign facade
+textures. Models are exported in WGS84 and rendered with automatic LOD4 optimization. We plan to release the
+scenes, task templates, and seed mappings.
+Evaluation Tasks.
+To evaluate embodied agents in Lingjing, we instantiate nine urban tasks (Table 2), spanning
+single-agent perception and navigation as well as heterogeneous missions involving hidden-target localization, cross-
+embodiment handoffs, and long-horizon coordination. UFR, SSR, and CD support both star and broadcast agent
+communication modes for controlled comparisons, while capability tags summarize the primary requirements of each
+task.
+Inter-Agent Coordination Relations.
+Multi-agent scenarios use star routing through a coordinator or broadcast
+over a shared bus with fixed per-agent policies, enabling controlled comparisons in §5.3. Scenario specifications
+and traces label information handoff (evidence transfer), cooperation (complementary work), competition (resource
+contention), guidance (directed assignment), and dependency (prerequisite). These labels describe task structure rather
+than separate experimental factors (Fig. 3). The long-horizon last-mile delivery task illustrates how several relations
+compose. Cooperation links UAV route inspection, vehicle transport, and robot-dog final delivery. Information handoff
+carries UAV congestion evidence to the CARLA routing stage before vehicle execution. After the vehicle reaches the
+1https://www.bigemap.com/
+2https://www.esri.com/en-us/arcgis/products/arcgis-cityengine
+6
+
+
+A PREPRINT - AUGUST 11, 2026
+stop node, the UAV provides guidance by generating dog waypoints from its top-down view. Dependencies therefore
+order route inspection before vehicle execution and vehicle arrival before dog deployment. The recorded chain links
+route inspection, endpoint grounding, waypoint selection, legal traversal, and target recognition, exposing how upstream
+errors block terminal delivery in the provenance and staged-intervention analysis (Appendix B.7).
+5
+Experiments
+Backbone
+VDN BI LD IDF UPR UFRs
+UFRb
+CR SSRs
+SSRb
+CDs
+CDb
+Avg
+Commercial models
+GPT-5.5 [27]
+72
+40
+48
+79
+47
+63
+67
+74
+79
+84
+90
+78
+66
+GPT-5.4 [26]
+66
+34
+43
+86
+42
+58
+64
+80
+75
+82
+86
+74
+63
+Gemini-3.1-Pro [13]
+64
+37
+52
+81
+44
+61
+70
+69
+83
+87
+80
+69
+64
+Kimi-K2.5 [18]
+51
+23
+36
+54
+28
+47
+41
+61
+46
+58
+60
+45
+45
+Qwen3-VL-Flash [5]
+39
+25
+31
+46
+50
+38
+47
+52
+49
+55
+51
+44
+43
+Open-source models
+Qwen3-VL-2B [5]
+38
+16
+27
+29
+18
+30
+27
+46
+35
+33
+34
+36
+30
+Qwen3-VL-4B [5]
+44
+24
+25
+38
+26
+33
+41
+45
+40
+44
+47
+35
+36
+Qwen3-VL-8B [5]
+48
+31
+37
+49
+29
+46
+50
+56
+45
+59
+55
+48
+45
+InternVL3.5-8B [37]
+43
+28
+30
+47
+23
+41
+36
+53
+44
+47
+52
+39
+39
+Pixtral-12B [2]
+52
+21
+35
+40
+27
+34
+40
+47
+38
+50
+46
+42
+39
+MiniCPM-V-4.5 [46]
+34
+22
+21
+33
+20
+32
+29
+39
+34
+32
+40
+31
+30
+Gemma-3-4B [14]
+30
+17
+23
+26
+16
+25
+31
+42
+29
+35
+32
+27
+27
+Table 3: Engine-adjudicated TSR (%) on nine tasks. Superscripts s and b denote star
+and broadcast. Avg averages modes within UFR, SSR, and CD before the nine-task
+mean. Bold and underlined values are the best and second-best.
+Task
+Metric Star Broadcast
+Logistics (CD) TSR
+62
+48
+Msg
+6
+38
+KB
+0.7
+1.9
+Rnd
+4
+12
+Gap
+10
+22
+Rep
+14
+20
+Fire (UFR)
+TSR
+55
+60
+Msg
+6
+61
+KB
+0.5
+3.0
+Rnd
+5
+9
+Gap
+13
+15
+Rep
+17
+11
+Sea (SSR)
+TSR
+58
+74
+Msg
+5
+9
+KB
+0.4
+0.7
+Rnd
+5
+8
+Gap
+16
+11
+Rep
+23
+9
+Table
+4:
+Communica-
+tion modes on matched
+instances
+with
+fixed
+qwen3.7-plus. Bold marks
+the better mode.
+5.1
+Experimental Setup
+Backbones. We evaluate twelve multimodal backbones in one scaffold: five commercial models (GPT-5.5 [27],
+GPT-5.4 [26], Gemini-3.1-Pro [13], Kimi-K2.5 [18], and Qwen3-VL-Flash [5]) and seven open-weight models (Qwen3-
+VL-2B/4B/8B [5], InternVL3.5-8B [37], MiniCPM-V-4.5 [46], Gemma-3-4B [14], and Pixtral-12B [2]). Per task,
+all share observation encoding, prompt, action schema, and communication interface without specific fine-tuning.
+Superscripts s and b denote star and broadcast. Each diagnostic states its backbone, while scaffold analyses use
+qwen3.7-plus [3] to balance performance and cost.
+Metrics. Task success rate (TSR) is the percentage of episodes satisfying all engine-adjudicated terminal conditions
+within budget. Adjudication uses engine proximity and events, not model self-reports, with geometry- and motion-based
+acceptance regions fixed across backbones and communication modes. Intermediate detections only unlock later
+stages. Avg is the unweighted mean TSR across tasks, and subtask completion rate (SCR) measures partial progress
+in multi-target or multi-stage missions. Other metrics are defined at first use. Appendices A.3 and B.1 give all task
+conditions and definitions.
+Implementation Details. Open-source models use vLLM in bfloat16 with a 16K context on four NVIDIA A800 GPUs,
+while commercial models use provider endpoints. Within each task, all models share the prompt and 2048-token output
+limit, use provider-specific near-greedy decoding, and perform both visual analysis and action selection. Unless stated
+otherwise, each model and diagnostic condition uses 100 matched seeded instances from fixed templates and initial
+poses, with seeds also controlling entity subsets, while larger-sample studies report their sizes explicitly. Agents receive
+visual and structured observations, history, messages, and coarse search regions but not hidden-target coordinates, then
+emit physical actions and optional messages. Fixed time and step budgets bound each episode. Vision timeouts count as
+no detections, while infrastructure failures are tracked separately. Additional communication, intervention, appearance,
+component, and prompt analyses appear in Appendix B.
+5.2
+Main Results
+Table 3 shows GPT-5.5 leading with an Avg of 66, followed by Gemini-3.1-Pro at 64 and GPT-5.4 at 63. Across
+the twelve task-mode columns, GPT-5.5 leads five, Gemini-3.1-Pro four, GPT-5.4 two, and Qwen3-VL-Flash one.
+Qwen3-VL-8B is the strongest open-source model at 45, tying Kimi-K2.5 and exceeding its 2B and 4B variants by
+15 and 9 points, although task-level scaling is not monotonic. BI, UPR, and LD remain hardest, with best TSRs of
+40, 50, and 52, exposing bottlenecks in localization, constrained planning, and multi-stage execution beyond visual
+7
+
+
+A PREPRINT - AUGUST 11, 2026
+≈ 6 messages / episode
+Hub
+car1
+car2
+car3
+car4
+car5
+R1
+R2
+R3
+R4
+hub splits del-001: 250 kg -> car1 200 kg + car2 50 kg
+converges in 4 rounds
+5 links
+msgs
+BROADCAST  —  negotiation storm, then parallel run
+≈ 38 messages / episode
+car1
+car2
+car3
+car4
+car5
+NEGOTIATION  —  all-to-all claiming (~12 rounds)
+PARALLEL EXECUTION
+R1
+R12
+claimed 4/20
+claimed 11/20
+claimed 17/20
+claimed 20/20
+conflict: car2 & car5 both claim del-007
+(resolved only by R7)
+each completion → status_update broadcast to all
+10 links
+del-001  250 kg  —  UNCLAIMED  (> 200 kg cap, no splitter)
+msgs
+assignment (hub→car)
+status report (car→hub)
+broadcast (car→all)
+claim conflict
+execution leg
+STAR  —  centralized dispatch loop
+(a) Execution process and communication traces.
+Star
+13 / 20 delivered
+del-001 (250 kg): split-delivered 
+across car1+car2
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+Broadcast
+del-001 (250 kg): UNFILLED 
+(no vehicle could split it)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+(a)  Mission completion
+ 10 / 20 delivered
+Success (SR)
+62%
+48%
+(↑ better)
+Messages
+6
+38
+(↓ better)
+Bytes
+0.7KB
+1.9KB
+(↓ better)
+Conv.
+rounds
+4
+12
+(↓ better)
+Assign.
+gap
+10%
+22%
+(↓ better)
+Repeat
+target
+14%
+20%
+(↓ better)
+Star
+Broadcast
+(b)  Efficiency and communication cost (Star wins)
+Verdict — Star is Pareto-dominant
+Fewer messages (6 vs 38) and higher success (62% vs 48%)
+better
+messages / episode  (cost →)
+success %
+Star
+Broadcast
+(b) Task result analysis.
+Figure 4: City-logistics comparison with fixed qwen3.7-plus. Top: representative traces, where star splits the 250 kg
+order del-001 and broadcast leaves it unassigned. Bottom: matched-instance outcomes, where star increases TSR and
+reduces all reported coordination measures.
+8
+
+
+A PREPRINT - AUGUST 11, 2026
+recognition. Broadcast outperforms star for 8/12 UFR and 10/12 SSR backbones, whereas star wins 11/12 CD
+comparisons. Routing gains therefore depend on task structure rather than message reach alone. Next, Section 5.3
+analyzes communication cost.
+5.3
+Communication Modes and Cost
+Det. Loc. Hand.Exec.
+40
+60
+80
+100
+Success (%)
+88
+60
+52
+45
+85
+66
+60
+55
+96
+82
+78
+74
+(a) Stage success
+1-F1 MissLocErr ECE
+0.0
+0.5
+1.0
+Norm. error
+0.59
+0.74
+0.25
+0.69
+0.24
+0.38
+0.27
+0.08
+0.55
+0.71
+1.00
+0.52
+(b) Perception errors
+UPR
+UFR
+SSR
+Figure 5: Subtask provenance and perception diagnosis. (a) Cumulative stage success. (b) 1 −F1, miss rate, normalized
+LocErr, and ECE, where higher is worse.
+With qwen3.7-plus and matched instances fixed, only routing varies: star uses a coordinator, whereas broadcast reaches
+all peers (Table 4). TSR is task success rate, while Msg, KB, and Rnd report message count, payload in kilobytes,
+and convergence rounds. Assignment gap (Gap) is the percentage deviation from the reference-optimal assignment,
+while repeated-target rate (Rep) is the percentage of target assignments or visits that are duplicates. Lower values are
+better for all five coordination measures. In CD, the top panel of Fig. 4 shows star splitting the 250 kg order while
+broadcast leaves it unassigned. The bottom panel shows TSR rising from 48 to 62, messages falling from 38 to 6, and
+the assignment gap narrowing from 22% to 10%. Supplementary sea-rescue traces and matched-instance results appear
+in the appendix B.2. UFR shows a weaker trade-off: broadcast adds five TSR points but increases messages from 6 to
+61. Thus, star favors structured allocation, whereas broadcast benefits rapid discovery sharing at higher communication
+cost.
+5.4
+Subtask Provenance
+With fixed qwen3.7-plus across 100 episodes per mission, we reconstruct cumulative provenance chains for UAV-guided
+pipeline repair (UPR), UAV–fire-truck response (UFR), and sea search and rescue (SSR). The recorder parses each
+model text output and aligns its reported target and coordinates with engine-tracked ground truth at the same timestamp.
+Det. requires at least one matched positive report for every target, Loc. additionally requires one reported coordinate
+per target within its task-specific acceptance region, Hand. a successful transfer to the downstream executor, and
+Exec. engine-confirmed sealing, extinguishing, or rescue. Since each stage includes all predecessors, panel (a) reports
+cumulative attrition. Panel (b) aggregates the same aligned calls. F1 is the harmonic mean of frame-level precision and
+recall, miss rate the share of all aligned frames containing a missed target, and ECE the ten-bin weighted confidence–
+accuracy gap. These metrics characterize detection, while LocErr characterizes localization as the median Euclidean
+world-coordinate error over matched true-positive reports, normalized by the largest mission value. Figure 5 identifies
+Det.-to-Loc. grounding as the largest single-stage loss at 28, 19, and 14 points for UPR, UFR, and SSR. The cumulative
+Loc.-to-Exec. losses, spanning handoff and execution, are 15, 11, and 8 points. Despite per-frame miss rates of 74% for
+UPR and 71% for SSR, repeated observations raise cumulative detection to 88% and 96%. UFR achieves the best F1
+(0.76) and ECE (0.08), while UPR has the worst ECE (0.69). At the default SSR altitude of 100 m, its maximum LocErr
+of 190 m appears as 1.00 after normalization. Overall, repeated sensing improves detection coverage, but localization
+remains the main bottleneck. Appendix B.7 further analyzes staged error interventions for the last-mile delivery task.
+5.5
+Scaling and Robustness
+Scaling uses GPT-5.5 and Qwen3-VL-8B with 100 matched episodes per point. Under broadcast, SSR sweeps UAVs
+from 1 to 3 with three victims, UFR fires from 2 to 6 with five UAVs, and CD under star delivery points from 5 to 20
+with five vehicles. Shared seeds select targets and recompute ground truth and terminal criteria. Figure 6 (top) shows
+9
+
+
+A PREPRINT - AUGUST 11, 2026
+1
+3
+2
+UAVs
+20
+40
+60
+80
+100
+TSR (%)
+56
+75
+84
+31
+48
+59
+(a) SSR
+2
+4
+6
+Fires
+87
+76
+67
+69
+60
+50
+(b) UFR
+5
+10
+20
+Delivery points
+97
+93
+90
+74
+64
+55
+(c) CD
+GPT-5.5
+Qwen3-VL-8B
+(a) Team-size and workload sweeps.
+60
+100
+140
+Altitude (m)
+60
+80
+100
+Coverage (%)
+(a) SSR altitude
+Coverage
+LocErr (m)
+2×2
+0.1
+3×3
+0.2
+4×4
+0.4
+Grid resolution / cell overlap
+60
+80
+100
+Coverage (%)
+(b) SSR search parameters
+Grid res.
+Cell overlap
+Tight
+25 / 0 / 10
+Default
+50 / 3 / 20
+Loose
+75 / 6 / 30
+Maximum allowed count (LD / CR / UPR)
+20
+40
+60
+80
+Success (%)
+18.5
+26.5
+32
+41
+70
+72
+33
+45
+49.5
+(c) Task-specific control limits
+LD moves
+CR replans
+UPR guidance
+112
+190
+286
+(b) Sensing and control-budget sweeps.
+Figure 6: Scaling and robustness analyses. Top: team-size and workload sweeps over SSR UAV count, UFR fire count,
+and CD delivery-point count. Bottom: robustness sweeps over SSR sensing settings and LD, CR, and UPR control
+budgets.
+diminishing capacity returns and workload degradation. Adding a second SSR UAV raises TSR by 19/17 points and a
+third by 9/11 for GPT-5.5/Qwen3-VL-8B. From lowest to highest workload, UFR falls by 20/19 points and CD by
+7/19. GPT-5.5 leads throughout, while Qwen3-VL-8B is more sensitive to CD load.
+Fixing qwen3.7-plus, we run 200 matched episodes per point to reduce variance and sweep SSR altitude
+(60/100/140 m), grid resolution (2×2/3×3/4×4), overlap (0.1/0.2/0.4), and control budgets for LD moves (25/50/75),
+CR replans (0/3/6), and UPR guidance (10/20/30). Success is cumulative S4 legal-edge arrival for LD and engine-
+adjudicated destination arrival or leak sealing for CR/UPR, with other settings fixed. Figure 6 (bottom) shows a
+coverage-precision trade-off and diminishing budget returns. Altitude 60 →140 m raises coverage 64% →90% but
+LocErr 112 →286 m. Grid and overlap yield coverage 63% →82% →91% and 74% →82% →89%, respectively.
+Tight-to-default budgets add 8.0/29/12 points for LD/CR/UPR, versus 5.5/2/4.5 from default-to-loose. Defaults
+capture most available gains.
+10
+
+
+A PREPRINT - AUGUST 11, 2026
+6
+Conclusion
+We introduce Lingjing, a dynamic urban platform unifying multiple physics engines and heterogeneous agents with star
+and broadcast communication, engine-based evaluation, and replayable diagnostic traces. Across nine tasks and twelve
+multimodal backbones, grounding and long-horizon execution remain bottlenecks, coordination gains depend on task
+structure, added capacity has diminishing returns, and heavier workloads reduce success. Lingjing provides a controlled
+testbed for evaluating and diagnosing heterogeneous multi-agent embodied intelligence in cities.
+References
+[1] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia Leoni Aleman, Diogo
+Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et al. Gpt-4 technical report, 2024.
+[2] Pravesh Agrawal, Szymon Antoniak, Emma Bou Hanna, Baptiste Bout, Devendra Chaplot, Jessica Chudnovsky,
+Diogo Costa, Baudouin De Monicault, Saurabh Garg, Theophile Gervet, et al. Pixtral 12b, 2024.
+[3] Alibaba Cloud.
+Qwen3.7-Plus:
+Model specifications and pricing.
+https://help.aliyun.com/zh/
+model-studio/getting-started/models, 2026. Alibaba Cloud Model Studio documentation; model ID:
+qwen3.7-plus; accessed: 2026-07-27.
+[4] Altera.AL, Andrew Ahn, Nic Becker, Stephanie Carroll, Nico Christie, Manuel Cortes, Arda Demirci, Melissa Du,
+Frankie Li, Shuying Luo, Peter Y Wang, Mathew Willows, Feitong Yang, and Guangyu Robert Yang. Project sid:
+Many-agent simulations toward ai civilization, 2024.
+[5] Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding,
+Chang Gao, Chunjiang Ge, et al. Qwen3-vl technical report, 2025.
+[6] Nicolas Bougie and Narimasa Watanabe. Citysim: Modeling urban behaviors and city dynamics with large-scale
+llm-driven agent simulation, 2025.
+[7] Cesium GS, Inc. Cesium for Unreal. https://cesium.com/platform/cesium-for-unreal/, 2026. Geospa-
+tial plugin for Unreal Engine, accessed: 2026-07-18.
+[8] Alexey Dosovitskiy, German Ros, Felipe Codevilla, Antonio Lopez, and Vladlen Koltun. Carla: An open urban
+driving simulator. In Conference on robot learning, pages 1–16. PMLR, 2017.
+[9] Yuwei Du, Jie Feng, Jian Yuan, and Yong Li. Cams: A citygpt-powered agentic framework for urban human
+mobility simulation, 2025.
+[10] Linxi Fan, Guanzhi Wang, Yunfan Jiang, Ajay Mandlekar, Yuncong Yang, Haoyi Zhu, Andrew Tang, De-An
+Huang, Yuke Zhu, and Anima Anandkumar. Minedojo: Building open-ended embodied agents with internet-scale
+knowledge. Advances in Neural Information Processing Systems, 35:18343–18362, 2022.
+[11] Chen Gao, Baining Zhao, Weichen Zhang, Jinzhu Mao, Jun Zhang, Zhiheng Zheng, Fanhang Man, Jianjie Fang,
+Zile Zhou, Jinqiang Cui, et al. Embodiedcity: A benchmark platform for embodied agent in real-world city
+environment, 2024.
+[12] Sicong Gao, Maurice Pagnucco, Tomasz Bednarz, and Yang Song. Nvidia isaac sim: Enabling scalable, gpu-
+accelerated simulation for robotics, 2026.
+[13] Gemini Team, Rohan Anil, Sebastian Borgeaud, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut, Johan Schalkwyk,
+Andrew M Dai, Anja Hauth, Katie Millican, et al. Gemini: A family of highly capable multimodal models, 2025.
+[14] Gemma Team. Gemma 3 technical report, 2025.
+[15] Genesis Authors. Genesis Documentation. https://genesis-world.readthedocs.io/en/latest/, 2026.
+Accessed: 2026-07-28.
+[16] Songhao Han, Boxiang Qiu, Yue Liao, Siyuan Huang, Chen Gao, Shuicheng Yan, and Si Liu. Robocerebra:
+A large-scale benchmark for long-horizon robotic manipulation evaluation. Advances in Neural Information
+Processing Systems, 38, 2026.
+[17] Xiangyu Han, Mengyu Yang, Jiaqi Li, Bowen Chang, Ziyu Chen, Hexu Zhao, Rahul Kumar Agrawal, Anthony
+Rodriguez, Fiona Hua, Marco Pavone, Chen Feng, and Yiming Li. Wildcity: A real-world city-scale testbed for
+rendering, simulation, and spatial intelligence, 2026.
+[18] Kimi Team, Tongtong Bai, Yifan Bai, Yiping Bao, SH Cai, Yuan Cao, Y Charles, HS Che, Cheng Chen, Guanduo
+Chen, et al. Kimi k2.5: Visual agentic intelligence, 2026.
+11
+
+
+A PREPRINT - AUGUST 11, 2026
+[19] Chengshu Li, Ruohan Zhang, Josiah Wong, Cem Gokmen, Sanjana Srivastava, Roberto Martín-Martín, Chen
+Wang, Gabrael Levine, Michael Lingelbach, Jiankai Sun, et al. Behavior-1k: A benchmark for embodied ai with
+1,000 everyday activities and realistic simulation. In Conference on Robot Learning, pages 80–93. PMLR, 2023.
+[20] Manling Li, Shiyu Zhao, Qineng Wang, Kangrui Wang, Yu Zhou, Sanjana Srivastava, Cem Gokmen, Tony Lee,
+Li Erran Li, Ruohan Zhang, et al. Embodied agent interface: Benchmarking llms for embodied decision making.
+In The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track, 2024.
+[21] Quanyi Li, Zhenghao Peng, Lan Feng, Qihang Zhang, Zhenghai Xue, and Bolei Zhou. Metadrive: Composing
+diverse driving scenarios for generalizable reinforcement learning. IEEE transactions on pattern analysis and
+machine intelligence, 45(3):3461–3475, 2022.
+[22] Zhuo Li, Weiran Wu, Yunlong Guo, Jian Sun, and Qing-Long Han. Embodied multi-agent systems: A review.
+IEEE/CAA Journal of Automatica Sinica, 12(6):1095–1116, 2025.
+[23] Xiangye Lin, Hongxin Zhang, Ruxi Deng, Qinhong Zhou, and Chuang Gan. Sentinel: Embodied cooperative
+spatial reasoning and planning, 2026.
+[24] Aixin Liu, Bei Feng, Bing Xue, Bingxuan Wang, Bochao Wu, Chengda Lu, Chenggang Zhao, Chengqi Deng,
+Chenyu Zhang, Chong Ruan, et al. Deepseek-v3 technical report, 2025.
+[25] Oier Mees, Lukas Hermann, Erick Rosete-Beas, and Wolfram Burgard. Calvin: A benchmark for language-
+conditioned policy learning for long-horizon robot manipulation tasks. IEEE Robotics and Automation Letters,
+7(3):7327–7334, 2022.
+[26] OpenAI. GPT-5.4 model. https://developers.openai.com/api/docs/models/gpt-5.4, 2026. OpenAI
+API documentation, accessed: 2026-07-16.
+[27] OpenAI. GPT-5.5 model. https://developers.openai.com/api/docs/models/gpt-5.5, 2026. OpenAI
+API documentation, accessed: 2026-07-16.
+[28] Aishwarya Padmakumar, Jesse Thomason, Ayush Shrivastava, Patrick Lange, Anjali Narayan-Chen, Spandana
+Gella, Robinson Piramuthu, Gokhan Tur, and Dilek Hakkani-Tur. Teach: Task-driven embodied agents that chat.
+In Proceedings of the AAAI Conference on Artificial Intelligence, volume 36, pages 2017–2025, 2022.
+[29] Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Meredith Ringel Morris, Percy Liang, and Michael S Bernstein.
+Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th annual acm symposium
+on user interface software and technology, pages 1–22, 2023.
+[30] Manolis Savva, Abhishek Kadian, Oleksandr Maksymets, Yili Zhao, Erik Wijmans, Bhavana Jain, Julian Straub,
+Jia Liu, Vladlen Koltun, Jitendra Malik, et al. Habitat: A platform for embodied ai research. In Proceedings of the
+IEEE/CVF international conference on computer vision, pages 9339–9347, 2019.
+[31] Shital Shah, Debadeepta Dey, Chris Lovett, and Ashish Kapoor. Airsim: High-fidelity visual and physical
+simulation for autonomous vehicles. In Field and service robotics: Results of the 11th international conference,
+pages 621–635. Springer, 2017.
+[32] Bokui Shen, Fei Xia, Chengshu Li, Roberto Martín-Martín, Linxi Fan, Guanzhi Wang, Claudia Pérez-D’Arpino,
+Shyamal Buch, Sanjana Srivastava, Lyne P. Tchapmi, Kent Vainio, Josiah Wong, Li Fei-Fei, and Silvio Savarese.
+iGibson 1.0: A simulation environment for interactive tasks in large realistic scenes. In Proceedings of the
+IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2021.
+[33] Mohit Shridhar, Jesse Thomason, Daniel Gordon, Yonatan Bisk, Winson Han, Roozbeh Mottaghi, Luke Zettle-
+moyer, and Dieter Fox. Alfred: A benchmark for interpreting grounded instructions for everyday tasks. In
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 10740–10749, 2020.
+[34] Sanjana Srivastava, Chengshu Li, Michael Lingelbach, Roberto Martín-Martín, Fei Xia, Kent Elliott Vainio, Zheng
+Lian, Cem Gokmen, Shyamal Buch, Karen Liu, et al. Behavior: Benchmark for everyday household activities in
+virtual, interactive, and ecological environments. In Conference on robot learning, pages 477–490. PMLR, 2022.
+[35] Emanuel Todorov, Tom Erez, and Yuval Tassa. Mujoco: A physics engine for model-based control. In 2012
+IEEE/RSJ international conference on intelligent robots and systems, pages 5026–5033. IEEE, 2012.
+[36] Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and Anima Anand-
+kumar. Voyager: An open-ended embodied agent with large language models. arXiv preprint arXiv:2305.16291,
+2023.
+[37] Weiyun Wang, Zhangwei Gao, Lixin Gu, Hengjun Pu, Long Cui, Xingguang Wei, Zhaoyang Liu, Linglin Jing,
+Shenglong Ye, Jie Shao, et al. Internvl3.5: Advancing open-source multimodal models in versatility, reasoning,
+and efficiency, 2025.
+12
+
+
+A PREPRINT - AUGUST 11, 2026
+[38] Isadora White, Kolby Nottingham, Ayush Maniar, Max Robinson, Hansen Lillemark, Mehul Maheshwari, Lianhui
+Qin, and Prithviraj Ammanabrolu. Collaborating action by action: A multi-agent llm framework for embodied
+reasoning, 2025.
+[39] Wayne Wu, Honglin He, Jack He, Yiran Wang, Chenda Duan, Zhizheng Liu, Quanyi Li, and Bolei Zhou.
+Metaurban: An embodied AI simulation platform for urban micromobility. In International Conference on
+Learning Representations, 2025.
+[40] Fengli Xu, Jun Zhang, Chen Gao, Jie Feng, and Yong Li. Urban generative intelligence (ugi): A foundational
+platform for agents in embodied city environment, 2023.
+[41] Yuwei Yan, Qingbin Zeng, Zhiheng Zheng, Jingzhe Yuan, Jie Feng, Jun Zhang, Fengli Xu, and Yong Li. Opencity:
+A scalable platform to simulate urban activities with massive llm agents, 2024.
+[42] Rui Yang, Hanyang Chen, Junyu Zhang, Mark Zhao, Cheng Qian, Kangrui Wang, Qineng Wang, Teja Venkat
+Koripella, Marziyeh Movahedi, Manling Li, et al. Embodiedbench: Comprehensive benchmarking multi-modal
+large language models for vision-driven embodied agents. In Forty-second International Conference on Machine
+Learning, 2025.
+[43] Shunyu Yao, Jeffrey Zhao, Dian Yu, Izhak Shafran, Karthik R Narasimhan, and Yuan Cao. React: Synergizing
+reasoning and acting in language models. In NeurIPS 2022 Foundation Models for Decision Making Workshop,
+2022.
+[44] Xiaokang Ye, Jiawei Ren, Yan Zhuang, Xuhong He, Yiming Liang, Yiqing Yang, Mrinaal Dogra, Xianrui Zhong,
+Eric Liu, Kevin Benavente, et al. Simworld: An open-ended simulator for agents in physical and social worlds. In
+The Thirty-ninth Annual Conference on Neural Information Processing Systems, 2025.
+[45] Xiaotong Ye, Nicolas Bougie, Toshihiko Yamasaki, and Narimasa Watanabe. Mobilecity: An efficient framework
+for large-scale urban behavior simulation, 2026.
+[46] Tianyu Yu, Zefan Wang, Chongyi Wang, Fuwei Huang, Wenshuo Ma, Zhihui He, Tianchi Cai, Weize Chen,
+Yuxiang Huang, Ranchi Zhao, et al. Minicpm-v 4.5: Cooking efficient mllms via architecture, data, and training
+recipe. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages
+11704–11715, 2026.
+[47] Jirong Zha, Yuxuan Fan, Tianyu Zhang, Geng Chen, Yingfeng Chen, Chen Gao, and Xinlei Chen. Aircopbench:
+A benchmark for multi-drone collaborative embodied perception and reasoning. In Proceedings of the AAAI
+Conference on Artificial Intelligence, volume 40, pages 1507–1515, 2026.
+[48] Shiduo Zhang, Zhe Xu, Peiju Liu, Xiaopeng Yu, Yuan Li, Qinghui Gao, Zhaoye Fei, Zhangyue Yin, Zuxuan Wu,
+Yu-Gang Jiang, et al. Vlabench: A large-scale benchmark for language-conditioned robotics manipulation with
+long-horizon reasoning tasks. In Proceedings of the IEEE/CVF International Conference on Computer Vision,
+pages 11142–11152, 2025.
+[49] Baining Zhao, Jianjie Fang, Zichao Dai, Ziyou Wang, Jirong Zha, Weichen Zhang, Chen Gao, Yue Wang, Jinqiang
+Cui, Xinlei Chen, et al. Urbanvideo-bench: Benchmarking vision-language models on embodied intelligence
+with video data in urban spaces. In Proceedings of the 63rd Annual Meeting of the Association for Computational
+Linguistics (Volume 1: Long Papers), pages 32400–32423, 2025.
+[50] Yong Zhao, Kai Xu, Zhengqiu Zhu, Yue Hu, Zhiheng Zheng, Yingfeng Chen, Yatai Ji, Chen Gao, Yong Li, and
+Jincai Huang. Cityeqa: A hierarchical llm agent on embodied question answering benchmark in city space. In
+Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, pages 12476–12491,
+2025.
+13
+
+
+A PREPRINT - AUGUST 11, 2026
+A
+Lingjing Specification Details
+A.1
+Asset Interfaces
+Table R1 summarizes the observations and commands exposed to policies. Assets exchange structured messages
+through the shared bus, and takePhoto requests a camera observation. Command coordinates (x, y, z) use the shared
+world frame, where x and y are planar axes and z is elevation.
+Asset (engine) ObservationsInterface commands
+UAV (AirSim) top-
+down/front
+RGB, depth
+takeoff,
+setDestination(x, y, z),
+forward/backward/left/
+right/up/down,
+stop,
+takePhoto
+Autonomous
+vehicle
+(CARLA)
+front RGB,
+telemetry
+setDestination(x, y),
+forward/left/right/stop
+Quadruped
+robot
+(Mu-
+JoCo)
+front RGB
+forward/left/right/stop,
+takePhoto
+Surface vessel
+(time-driven)
+position
+telemetry
+moveTo(x, y)
+Table R1: Supported assets, observations, and policy-facing commands.
+14
+
+
+A PREPRINT - AUGUST 11, 2026
+A.2
+Task Profiles and Illustrations
+VDN: Visual dog navigation
+Task introduction. The robot dog starts outside a residential community and must enter the compound, search from its egocentric
+front camera, and reach the target white building where pedestrians stand or walk in front of the facade. The episode tests whether
+one ground agent can use a reference image and the current front view together: the policy must match facade color, height,
+pedestrian context, and local layout while avoiding large blind moves. The action space contains forward, left, right, and
+stop. Forward commands are clipped to a short step and turns are kept within a bounded angle, so success depends on repeated
+visual grounding rather than a single long jump.
+Prompt.
+You are the navigation policy for one robot dog in a residential community.
+Inputs are the target-building reference
+image, the current front-view image, pose history, and recent actions.
+First compare the reference and current view:
+main facade color, height, windows, entrances, pedestrian presence, sidewalk objects, and nearby landmarks.
+Then
+estimate whether the target is left, right, ahead, behind, or not visible, and note obstacles that constrain motion.
+Return exactly one command from forward(distance 5 to 25 m), left(degrees 1 to 90), right(degrees 1 to 90), or stop.
+Use short forward moves when uncertain.
+The engine registers success when the dog enters the configured target region.
+Use stop once the matched facade is close, centered, and visually consistent with the reference.
+Simulation-engine view.
+15
+
+
+A PREPRINT - AUGUST 11, 2026
+LD: Last-mile delivery
+Task introduction. A UAV, autonomous vehicle, and robot dog complete a staged delivery. CARLA first returns a candidate
+vehicle route. The UAV inspects its waypoints with top-down images and reports congestion for replanning. The vehicle executes
+only a verified route to the stop node. The dog is then deployed, follows waypoints generated from the UAV view, and uses its
+front camera to confirm the target house. The task couples route inspection, evidence handoff, vehicle transport, aerial guidance,
+and final visual navigation.
+Prompt.
+You coordinate a UAV, delivery vehicle, and robot dog.
+Inputs include the candidate route, UAV route images, blockage
+history, vehicle state, dog pose, and target-house observations.
+Inspect route waypoints in order.
+If congestion is
+detected, report the blocked waypoint and request replanning.
+Otherwise, verify the route before vehicle execution.
+After vehicle arrival, generate dog waypoints from the UAV view and use the dog’s front image to confirm the target
+house.
+Return the current stage, evidence, and next executable command.
+Declare completion only after engine-confirmed
+final delivery.
+Simulation-engine view.
+16
+
+
+A PREPRINT - AUGUST 11, 2026
+BI: Bridge fracture inspection
+Task introduction. The UAV climbs to an inspection altitude, follows the bridge deck from land toward open water, and checks
+each span for a fracture, interruption, or collapse. The bridge may leave the top-down frame as the UAV advances, so the policy
+must recover the structure from front-view evidence instead of drifting inland or stopping on an intact section. The objective is
+complete coverage of the bridge until the damaged span is found. Success requires an engine-confirmed inspection within the
+fractured region.
+Prompt.
+You are a UAV inspector following a bridge from land toward open water.
+Inputs are the current top-down image, optional
+front-view image, pose, previous span status, and inspection direction.
+Identify the bridge deck axis, piers, deck
+edges, lane markings, shadows, and water boundary.
+For each step, decide whether the current span is intact, partially
+interrupted, collapsed, or out of view.
+Continue along the bridge when spans are intact.
+If the deck leaves the
+top-down frame, use the front view to turn back toward the bridge or sea side, not inland.
+Report fracture_found only
+when a discontinuity or collapsed span is visually clear.
+Otherwise return continue_inspection.
+Simulation-engine view.
+17
+
+
+A PREPRINT - AUGUST 11, 2026
+UFR: UAV and fire-truck response
+Task introduction. Five UAVs patrol assigned urban search areas to detect hidden building fires, while one fire truck acts as
+the shared extinguishing resource. The agents do not receive the true fire coordinates. Each UAV captures top-down images,
+uses the vision model to determine whether a fire exists in its area, and shares the candidate location through the configured
+communication mode. The truck is then routed to confirmed fires one by one, and the episode ends only after the simulator emits
+extinguishing events for all fires. This task measures multi-UAV area assignment, hidden-target detection, dispatch arbitration,
+and contention for a single ground resource.
+Prompt.
+You are the coordinator for a multi-UAV and single-fire-truck response team.
+Inputs are UAV search areas, current UAV
+images, fire-detection messages, estimated coordinates, truck status, extinguished-fire records, and outstanding targets.
+For each UAV, decide whether it should continue patrol, refine a detection, or report a confirmed fire.
+Merge duplicate
+detections by area and coordinate, reject reports without smoke or flame evidence, and maintain the set of unresolved
+fires.
+Dispatch the only fire truck to one confirmed unresolved fire at a time, prioritizing confidence, distance, and
+whether another fire is already being handled.
+Return UAV assignments, selected truck target, evidence summary, and
+completion status.
+Simulation-engine view.
+18
+
+
+A PREPRINT - AUGUST 11, 2026
+SSR: Sea search and rescue
+Task introduction. Multiple UAVs search a large sea region for people in the water, while one lifeboat or unmanned surface
+vessel performs physical rescue. UAVs select unsearched grid cells, capture top-down images, identify valid human targets,
+and hover above detections. A found-person message transfers the UAV coordinate to the rescue boat, which navigates to each
+reported location and completes the rescue according to engine events. The difficulty is not only perception but also shared state:
+agents must avoid duplicate cell searches, preserve the list of found and rescued people, and schedule a single boat under many
+possible reports.
+Prompt.
+You are the coordinator for a sea search-and-rescue team with several UAVs and one rescue boat.
+Inputs are the search
+grid, UAV positions, top-down images, previously searched cells, found-person reports, boat position, assigned targets,
+and engine rescue events.
+Allocate UAVs to uncovered cells to maximize coverage and avoid duplicate searches.
+In each
+UAV image, look for human bodies, life vests, small floating objects, or wake patterns.
+Reject waves or debris unless
+human evidence is clear.
+When a person is detected, send a report with coordinate, cell id, confidence, and whether the
+UAV should hover.
+Dispatch the single boat to one unresolved valid target at a time and update searched, found,
+assigned, and rescued sets after every event.
+Simulation-engine view.
+19
+
+
+A PREPRINT - AUGUST 11, 2026
+CD: City-logistics dispatch
+Task introduction. Five delivery vehicles leave a warehouse to serve twenty delivery points under a 200 kg payload limit per
+vehicle. Most orders require 100 kg, but one large order requires 250 kg and therefore cannot be completed by a single loaded
+vehicle in one trip. Delivered quantities are updated after each route execution and replans until every demand is satisfied. The
+task asks the policy to reason over capacity, route order, reloads, split deliveries, and the communication needed to keep vehicles
+from duplicating work or starving a large order.
+Prompt.
+You are the planner for a five-vehicle urban delivery fleet.
+Inputs are vehicle locations, remaining payload, warehouse
+access, road-cost estimates, completed stops, and residual demand at twenty delivery points.
+Each vehicle can carry at
+most 200 kg.
+Build feasible routes that never exceed capacity, avoid assigning the same demand twice, and prefer
+compact routes that reduce travel and idle time.
+For normal 100 kg orders, assign one loaded visit when possible.
+For
+the 250 kg order, explicitly split the demand across multiple vehicles or trips and record the remaining quantity after
+each execution.
+Return per-vehicle route, loaded weight, serviced demand, reload decision, and replan trigger until all
+points are complete.
+Simulation-engine view.
+20
+
+
+A PREPRINT - AUGUST 11, 2026
+IDF: Industrial dog firefighting
+Task introduction. Three Go2 robot dogs start from different entrances inside a closed industrial factory area. Each dog
+repeatedly requests a front-view image, uses the vision policy to detect flames, smoke, or glowing hot regions, and then executes
+one short action: turn left, turn right, move forward by at most 10 meters, or stop. Fire-source coordinates are hidden from
+the dogs and are used only by the engine for rendering and adjudication. When a dog gets close enough to a fire source, the
+simulator emits the extinguishing judgment. The task evaluates front-view fire grounding, decentralized search, short-horizon
+motion control, and progress sharing among multiple ground agents.
+Prompt.
+You are a robot-dog fire-search controller in an industrial factory.
+Inputs are the dog front-view image, current dog
+state, known searchable factory region, recent actions, and engine adjudication events.
+Decide whether active fire is
+visible from flame, smoke, red-hot regions, or glare.
+If no fire is visible, prefer left or right rotations to scan a
+new direction.
+Use a short forward step only after scanning.
+If fire is visible but off-center, turn toward it.
+Move
+forward only when the fire is roughly centered and reduce the step near the source.
+Stop only when the dog is right
+next to the fire and wait for the engine extinguishing report.
+Simulation-engine view.
+21
+
+
+A PREPRINT - AUGUST 11, 2026
+UPR: UAV-guided pipeline repair
+Task introduction. A UAV and a repair dog operate in an outdoor industrial pipeline area. The UAV takes off, flies to the known
+pipeline-area center, and searches only inside the provided boundary. The true leak coordinate is hidden. The UAV must infer
+spraying water, mist, or wet stains from top-down or oblique imagery, adjusting altitude within a safe band when the evidence is
+too coarse or the field of view is too narrow. After a leak is found, the UAV keeps both the leak and the repair dog in view and
+issues the dog one-step commands until the engine confirms sealing. The task tests aerial localization, altitude-aware inspection,
+and cross-agent guidance where the ground dog executes but does not perceive.
+Prompt.
+You are the UAV controller for industrial pipeline-leak inspection and repair.
+Inputs are the UAV top-down image,
+current altitude, safe altitude band, pipeline search boundary, repair-dog pose when available, and engine repair events.
+First search the pipeline area for spraying water, mist, or wet ground.
+Use down to inspect suspected evidence more
+closely and up to recover wider coverage, never leaving the safe altitude band or the search boundary.
+When a leak is
+confidently visible, switch to guidance:
+keep the dog visible, turn or move it toward the leak with forward, left, or
+right commands, and declare success only after the engine reports that the leak is sealed.
+Simulation-engine view.
+22
+
+
+A PREPRINT - AUGUST 11, 2026
+CR: Congestion-aware replanning
+Task introduction. A route is requested for the autonomous vehicle, and CARLA returns its waypoints. A UAV visits each
+waypoint in order and checks a top-down image for traffic congestion. On detection, it reports the exact waypoint via trafficJam.
+CARLA replans, and the UAV reinspects the complete new route. The vehicle remains stationary until every waypoint on one
+route is verified clear, then follows that route to the destination.
+Prompt.
+You coordinate UAV route inspection and vehicle replanning.
+Inputs are the vehicle start and destination,
+CARLA-reported waypoints, UAV top-down images, replanning history, and vehicle state.
+Inspect all waypoints in order.
+If a waypoint is congested, send trafficJam with its reported coordinates, request a new route, and restart inspection.
+Keep the vehicle stationary until one complete route is clear, then issue the move command.
+Declare success only when
+the engine confirms destination arrival.
+Simulation-engine view.
+A.3
+Task Success Adjudication
+TSR is the simulator’s binary episode outcome. Let dxy(a, b) denote Euclidean distance between planar world positions
+a and b. An entity argument denotes its engine-reported XY position. All thresholds are inclusive. For BI, UPR, UFR,
+and SSR, detection (Det.), localization (Loc.), handoff (Hand.), and execution (Exec.) are recorded as separate events.
+Episode success requires every task terminal condition within the budget.
+For visual detection adjudication, each positive model report contains a target class and a normalized image box
+b = (xmin, ymin, xmax, ymax), where 0 ≤xmin < xmax ≤1 and 0 ≤ymin < ymax ≤1. At the same capture
+timestamp, the engine provides the visible target’s ground-truth box b∗. The intersection over union IoU(b, b∗) is the
+intersection area divided by the union area. A same-class report is a true positive when IoU(b, b∗) ≥0.5. An unmatched
+report is a false positive, and an unmatched visible target is a false negative. A target with no visible pixels is not
+evaluated in that frame. The Det. stage succeeds when every required target has at least one true-positive report during
+23
+
+
+A PREPRINT - AUGUST 11, 2026
+the episode. The Loc. stage additionally requires a reported world position bp inside the task-specific acceptance region
+of the engine ground truth p∗.
+The benchmark uses task-specific inclusive radii. Extinguishing and leak handling use 2 to 5 m. Aerial localization of
+bridge damage, fire, and congestion uses 25 m. Visual navigation, road-vehicle response, and delivery use 30 m. Vessel
+rescue and warehouse entry use 50 m. LD uses the target-house region in each scenario instance. Table R2 gives the
+resulting checks.
+Algorithm 1 Operational expansion of the kernel step and enclosing agent loop.
+Require: agents A and policies {πa}, world W = (B, S, G, E, R) (B is the message bus, S is the reset specification, G is the shared state registry, E is the
+evaluators, and R is the recorder), limits K. For more notation explanations, see Table R4.
+1: t ←0
+Reset branch of Algorithm 1
+2: for all q ∈Neng in parallel do
+3:
+dispatch RESET(S) to q
+4: end for
+5: reset barrier: for at most Kengine, await one READY(0) and initial state from every q
+6: if the reset barrier expires or any engine rejects S then
+7:
+R.LOG(infrastructure abort, S, partial replies)
+8:
+return partial trace with reason INFRASTRUCTURE-ABORT
+9: end if
+10: U0, M0, bU0, c
+M0 ←∅and I0 ←{Ia
+0 = ∅: a ∈A}
+11: CM
+0 , CU
+0 ←∅
+12: (Oraw
+0
+, CE
+0 , T0) ←ASSEMBLEBOUNDARY(0)
+13: C0 ←CM
+0
+∪CU
+0 ∪CE
+0
+14: G ←UPDATE(G, T0, Oraw
+0
+, C0)
+15: O0 ←PROJECTVISIBLE(G, Oraw
+0
+, T0, S)
+16: V0 ←ADJUDICATE(G, T0, S)
+17: (r0, d0) ←EVALUATE(E, G, V0)
+18: R.LOG(0, G, T0, O0, I0, U0, M0, bU0, c
+M0, C0, V0, r0, d0)
+19: publish boundary output (O0, I0, V0, r0, d0)
+20: while t < Ktick and not dt do
+Agent-runtime phase following the main-paper Runtime Loop
+21:
+freeze (Ot, It) and start a policy barrier for every active a ∈A
+22:
+for all a ∈A in parallel do
+23:
+(ua
+t+1, ma
+t+1) ←πa.ACT(oa
+t , Ia
+t )
+24:
+end for
+25:
+policy barrier: await all calls for at most Kmodel
+26:
+replace each missing or malformed return by (no-op, ∅), log the reason, and discard any later return for tick t
+27:
+Ut+1 ←{ua
+t+1 : a ∈A} and Mt+1 ←{ma
+t+1 : a ∈A}
+▷main-paper pending inputs
+Kernel-simulation phase expanding the communication and return steps of Algorithm 1
+28:
+Ia
+t+1 ←∅for every a ∈A
+▷main-paper inbox initialization
+29:
+(c
+Mt+1, CM
+t+1) ←VALIDATEANDEXPAND(Mt+1, S, t + 1)
+30:
+( bUt+1, CU
+t+1) ←VALIDATEANDRESOLVE(Ut+1, G, S, t + 1)
+31:
+B.STAGE(c
+Mt+1, t + 1)
+32:
+dispatch bUt+1 and request ADVANCETO(t + 1) from every engine
+33:
+engine barrier: for at most Kengine, await one coherent boundary state from every engine
+34:
+within the same barrier, await an admission receipt for every command in bUt+1
+35:
+if every engine supplies state but an admission receipt is missing then
+36:
+mark the missing action receipt as TIMED-OUT for boundary t + 1
+37:
+retain any previously admitted long-running request
+38:
+end if
+39:
+if an engine disconnects or does not supply a coherent boundary state then
+40:
+R.LOG(infrastructure abort, S, t + 1)
+41:
+return partial trace with reason INFRASTRUCTURE-ABORT
+42:
+end if
+43:
+B.COMMIT(c
+Mt+1, t + 1) and t ←t + 1
+44:
+(Oraw
+t
+, CE
+t , Tt) ←ASSEMBLEBOUNDARY(t)
+45:
+Ct ←CM
+t
+∪CU
+t ∪CE
+t
+▷main-paper receipts
+46:
+Ia
+t ←DELIVEREDTO(a, c
+Mt) ∪VISIBLERECEIPTSFOR(a, Ct) for every a
+47:
+It ←{Ia
+t : a ∈A}
+▷aggregate I logged and returned in Algorithm 1
+48:
+G ←UPDATE(G, Tt, Oraw
+t
+, Ct)
+49:
+Ot ←PROJECTVISIBLE(G, Oraw
+t
+, Tt, S)
+50:
+Vt ←ADJUDICATE(G, Tt, S)
+51:
+(rt, dt) ←EVALUATE(E, G, Vt)
+52:
+R.LOG(t, G, Tt, Ot, It, Ut, Mt, bUt, c
+Mt, Ct, Vt, rt, dt)
+53:
+publish boundary output (Ot, It, Vt, rt, dt)
+54: end while
+55: return R’s trace and TERMINATIONREASON(E, G, t, K, dt)
+24
+
+
+A PREPRINT - AUGUST 11, 2026
+Listing R1 Original sea-rescue scenario object. Descriptive strings are translated into English. Structure, identifiers,
+and coordinates match the source file.
+{
+"commandType": "resetScenario",
+"taskId": "multiagentstasks_test_001",
+"scenario": {
+"commandType": "resetScenario",
+"sceneName": "UAV tracks vessel for person rescue",
+"collaborationType": "Multi-UAV image collection",
+"sceneRegion": "Multi-UAV initial area",
+"equipmentList": {
+"droneEntityList": [
+{"equipmentCode": "UAV-MA-001", "name": "drone1",
+"data": {"X": 30660.0, "Y": 62020.0, "Z": 112.0}, "raw": 0.0,
+"sensorType": "RGB/TopDown/MultiAgentPhoto"},
+{"equipmentCode": "UAV-MA-002", "name": "drone2",
+"data": {"X": 31000.0, "Y": 59010.0, "Z": 112.0}, "raw": 0.0,
+"sensorType": "RGB/TopDown/MultiAgentPhoto"},
+{"equipmentCode": "UAV-MA-003", "name": "drone3",
+"data": {"X": 27870.0, "Y": 59010.0, "Z": 112.0}, "raw": 0.0,
+"sensorType": "RGB/TopDown/MultiAgentPhoto"}
+],
+"unmannedDogEntityList": [], "autoVehicleEntityList": [],
+"satelliteEntityList": [],
+"shipEntityList": [
+{"equipmentCode": "Ship-001", "name": "Lifeboat", "side": "red",
+"data": {"X": 1240.0, "Y": 135180.0, "Z": -350.0},
+"heading": 30.0}
+],
+"planeEntityList": []
+},
+"taskMatrix": [
+{
+"taskLevel": "System",
+"task_id": "MULTIAGENTS_UAV_PHOTO_COLLECTION_001",
+"goal": "UAV tracks vessel for person rescue",
+"initial_state": {
+"weather": "Clear", "uav_count": 3,
+"rescuePersonPosition": [
+{"personId": "PERSON-001", "X": 31920.0,
+"Y": 96320.0, "Z": -350.0}
+],
+"rescueRange": [
+{"rangeId": "RANGE-001", "X": 66510.0, "Y": 108110.0, "Z": -350.0},
+{"rangeId": "RANGE-002", "X": -12370.0, "Y": 110050.0, "Z": -350.0},
+{"rangeId": "RANGE-003", "X": -12370.0, "Y": 75020.0, "Z": -350.0},
+{"rangeId": "RANGE-004", "X": 66510.0, "Y": 75490.0, "Z": -350.0}
+],
+"goalFirePosition": []
+}
+}
+]
+}
+}
+25
+
+
+A PREPRINT - AUGUST 11, 2026
+Table R2: Engine adjudication conditions used to compute TSR. Distances compare model-reported or engine-reported
+planar positions as specified and include the stated boundary. Task IDs follow Table 2 in main text.
+ID
+Adjudicated object
+Engine check
+Successful episode condition
+VDN
+Target building
+dxy(Dog, Target) ≤30 m
+The robot dog enters the target region and the engine
+reports target arrival.
+BI
+Broken-bridge
+loca-
+tion
+A
+positive
+report
+must
+satisfy
+the box-matching rule.
+Its re-
+ported coordinate is accepted when
+dxy(bp, BrokenBridge) ≤25 m.
+The UAV reports the damage with a matched box
+and accepted coordinate, and the engine confirms
+successful inspection.
+LD
+Final delivery address
+The delivery vehicle completes its
+verified route, then the engine accepts
+the robot dog inside the instance-
+configured target-house region.
+Route inspection, vehicle handoff, and final robot-
+dog delivery all complete in order.
+IDF
+Factory fire
+dxy(Dog, Fire) ≤2 m, followed by
+an extinguishing event
+Every active fire produces an engine-confirmed ex-
+tinguishing event.
+UPR
+Pipeline leak
+A positive leak report must satisfy
+the box-matching rule, and its coor-
+dinate must lie within the instance-
+configured leak-localization region
+before UAV guidance. Dog proxim-
+ity with dxy(Dog, Leak) ≤5 m trig-
+gers sealing.
+Every active leak receives a matched report and ac-
+cepted coordinate, and the engine confirms sealing
+after the repair dog enters its acceptance region.
+UFR
+Fire location
+A positive report must satisfy the box-
+matching rule. A coordinate satis-
+fying dxy(bp, Fire) ≤25 m unlocks
+dispatch.
+Vehicle proximity with
+dxy(CAR, Fire) ≤30 m triggers
+extinguishing.
+Every active fire receives a matched report and ac-
+cepted coordinate, and the dispatched vehicle extin-
+guishes it.
+CR
+Congestion point and
+destination
+dxy(UAV, Congestion)
+≤
+25 m
+records
+congestion,
+then
+dxy(CAR, Destination) ≤30 m
+triggers arrival.
+The vehicle reaches its destination region after the
+required congestion inspection and any resulting
+replanning.
+SSR
+Water victim
+A positive report must satisfy the
+box-matching rule. A coordinate in-
+side the configured rescue region un-
+locks dispatch. Vessel proximity with
+dxy(Ship, Victim) ≤50 m triggers
+rescue.
+Every active victim receives a matched report
+and accepted coordinate and produces an engine-
+confirmed vessel rescue event.
+CD
+Delivery
+point
+and
+warehouse
+dxy(CARi, Deliveryj)
+≤
+30 m.
+Here i indexes vehicles and j indexes
+delivery points. If restocking is trig-
+gered, dxy(CARi, Warehouse) ≤
+50 m.
+Every active delivery point has zero remaining de-
+mand, and every triggered restocking event com-
+pletes.
+A.4
+Engine and Episode Protocol
+Table R3 summarizes the runtime configuration used by the benchmark. Simulation engines run at their native rates,
+while policies interact through synchronized decision ticks. Each retained boundary records engine frame identifiers and
+simulation time. Requested camera observations carry a capture timestamp. Engine versions and scenario configurations
+are recorded for each run.
+Failure accounting.
+A model or vision timeout yields the substitution specified in Algorithm 1, either a no-op with
+an empty message list or “no detection.” An invalid action or resource conflict yields a rejection receipt. Recoverable
+episodes remain in the model denominator. TSR is zero when the terminal conditions are incomplete at the tick or
+task limit. Valid partial progress remains in the subtask completion rate (SCR), and admitted messages remain in the
+communication metrics. Reset or synchronization failures are infrastructure failures. They are excluded from model
+metrics and rerun with the same instance and seed.
+26
+
+
+A PREPRINT - AUGUST 11, 2026
+Table R3: Engine, sensing, action, budget, and timeout settings. Step caps count synchronized decision ticks.
+Component
+Engine or run-
+time
+Frame and deci-
+sion rate
+Sensors and policy action
+space
+Default
+episode
+budget
+Timeout handling
+UAV
+Unreal Engine 5.x
+rendering
+with
+AirSim control
+Native
+physics
+and render rates.
+One
+synchro-
+nized
+snapshot
+per
+decision
+tick.
+Images
+are captured on
+request.
+1920×1080 nadir RGB in
+multi-agent tasks.
+Front
+RGB at the engine resolution.
+Depth and semantic views
+when declared.
+takeoff,
+setDestination, forward,
+backward, left, right, up,
+down, stop, takePhoto.
+Listed in the final
+row
+An image or analysis
+timeout yields “no de-
+tection.”
+Road vehicle
+CARLA
+Native
+simula-
+tion rate.
+One
+synchronized
+state per decision
+tick
+Front
+RGB,
+pose,
+speed,
+route, and execution teleme-
+try.
+setDestination,
+forward,
+left,
+right,
+stop.
+Listed in the final
+row
+A motion request re-
+mains pending until
+completion, rejection,
+or task timeout.
+Quadruped
+MuJoCo control
+with Unreal En-
+gine 5.x render-
+ing
+Native dynamics
+and render rates.
+One
+synchro-
+nized state per
+decision tick
+Front RGB and pose teleme-
+try. forward, left, right,
+stop, takePhoto.
+Listed in the final
+row
+An
+action
+timeout
+yields a no-op.
+An
+image timeout yields
+no observation.
+Surface vessel
+Time-driven ves-
+sel simulator
+Native
+integra-
+tion rate.
+One
+synchronized
+state per decision
+tick
+Position, heading, assignment,
+and rescue-event telemetry.
+moveTo(x, y).
+Listed in the final
+row
+A
+rescue
+request
+remains pending until
+completion
+or
+task
+timeout.
+Episode
+con-
+trol
+Shared runtime
+One policy call
+per active agent
+per synchronized
+tick
+Immutable observation and in-
+box pair (Ot, It).
+At most
+one physical command and a
+finite typed-message list per
+policy call.
+VDN: 140 total and
+40 per subtask. BI:
+60.
+LD: 50.
+IDF
+and UPR: 300. UFR,
+SSR, CD, and CR:
+60
+Model call: 90 s. Miss-
+ing or malformed out-
+put is replaced and
+logged. Reset failure,
+disconnect, or an inco-
+herent snapshot is an
+infrastructure abort.
+A.5
+Declarative Scenario Example
+Listing R1 reproduces the original sea-rescue scenario file. The object structure, identifiers, and numeric values follow
+the source file.
+A.6
+Synchronized Runtime Contract
+Algorithm 1 in the appendix extends the kernel step presented in Algorithm 1 in the main text, and detailed notations are
+explained here (Table R4). It uses the same world decomposition W = (B, S, G, E, R), where B is the message bus, S
+the reset specification, G the shared state registry, E the evaluators, and R the recorder. Let A be the active-agent set
+and let a ∈A index an agent with policy πa. Let t ≥0 be a committed boundary index. At boundary t, Ot = {oa
+t }a∈A
+and It = {Ia
+t }a∈A are the policy-visible observations and inboxes. The candidate actions Ut = {ua
+t }a∈A and messages
+Mt = {ma
+t }a∈A are produced from boundary t −1 when t > 0 and are applied before boundary t is committed. Let
+Tt denote the synchronized engine telemetry at boundary t, and let Ct denote the combined message, action, and engine
+receipts. Let Vt be the engine-adjudicated event set, rt the evaluator score, and dt the termination flag. The active-tick
+kernel interface is
+(Ot, It, Vt, rt, dt) = W. Step(Ut, Mt),
+(ua
+t+1, ma
+t+1) = πa. Act(oa
+t , Ia
+t ).
+(1)
+Equation 1 gives the tick order. The kernel first applies (Ut, Mt) and commits boundary t. Each policy then reads
+its observation and inbox at that boundary and produces the action and messages for boundary t + 1. Reset creates
+boundary 0 with empty action and message inputs before any policy call. Algorithm 1 in main text omits the boundary
+subscript for brevity and calls Ct “receipts.” Its per-agent symbols are the members of the corresponding aggregates. In
+Algorithm 1 in appendix here, a hat marks an action or message admitted after kernel validation, while an unhatted
+symbol is the candidate policy output.
+27
+
+
+A PREPRINT - AUGUST 11, 2026
+Table R4: Symbols used in Algorithm 1 main text and its operational expansion in Algorithm 1 in appendix.
+Symbol
+Definition
+A, a, πa
+Set of agents active under S, one agent identifier, and its policy. Policy πa reads (oa
+t , Ia
+t ) and returns
+(ua
+t+1, ma
+t+1).
+W = (B, S, G, E, R)
+World object used by W. Step. Its components are the message bus B, reset specification S, shared
+registry G, evaluator set E, and episode recorder R. Policy calls occur outside W. Step.
+Neng, q
+Set of engine nodes participating in S and one node in that set. A boundary commits after every
+q ∈Neng supplies a coherent state for tick t.
+t
+Committed boundary index. Boundary 0 is the synchronized post-reset state. Boundary t + 1 follows
+one successful engine advance from t.
+K
+Runtime limits K = (Ktick, Kmodel, Kengine): maximum committed decision ticks, wall-clock
+deadline for each policy barrier, and wall-clock deadline for each reset or engine barrier.
+Ot, oa
+t , Oraw
+t
+Policy-visible observation aggregate, agent a’s member, and the synchronized unmasked engine
+observations. Formally Ot = {oa
+t }a∈A = ProjectVisible(G, Oraw
+t
+, Tt, S).
+It, Ia
+t
+Aggregate inbox and agent a’s inbox, with It = {Ia
+t }a∈A. Ia
+t contains committed message edges
+addressed to a and receipts visible to a under S. This defines the aggregate I logged and returned in
+Algorithm 1.
+ua
+t , ma
+t
+Agent a’s candidate physical command, possibly a no-op, and possibly empty finite list of typed
+messages. For t > 0, they are generated from boundary t −1 and enter the kernel call that creates
+boundary t. At reset they are empty.
+Ut, Mt
+Pending candidate aggregates Ut = {ua
+t : a ∈A} and Mt = {ma
+t : a ∈A}. They correspond to
+U, M in Algorithm 1.
+bUt, c
+Mt
+Admitted results after kernel validation. bUt contains at most one winning command per controlled
+resource after schema, authority, and conflict checks. c
+Mt contains fixed sender-to-recipient edges
+after envelope validation and topology expansion.
+Ct, CM
+t , CU
+t , CE
+t
+Aggregate boundary receipt set and its message-validation, action-validation, and engine subsets.
+Thus Ct = CM
+t
+∪CU
+t ∪CE
+t is “receipts” in Algorithm 1. It contains typed admission, rejection,
+progress, completion, substitution, and timeout records.
+Tt
+Typed synchronized engine telemetry, denoted T in Algorithm 1. Its fields and visibility are specified
+below.
+Vt
+Engine-grounded event set returned by ADJUDICATE, denoted V in Algorithm 1.
+rt, dt
+Evaluator reward or score and Boolean done flag returned at boundary t. The enclosing loop also
+stops at the tick limit or on an infrastructure abort.
+In star mode, an agent sends to the coordinator, and a coordinator message uses its schema-declared recipients. In
+broadcast mode, a message is routed to all other active agents. Validation fixes these sender-to-recipient edges before
+the bus stages them.
+Operator correspondence.
+VALIDATEANDEXPAND implements the main algorithm’s “validate and route” operation.
+Its input Mt is the main algorithm’s candidate-message aggregate. Applying the message schema and communication
+mode in S produces the admitted edge set c
+Mt and routing receipts. VALIDATEANDRESOLVE implements “validate and
+dispatch.” From candidate aggregate Ut, action schema, authority, registry state, and the deterministic rule below, it
+produces bUt and corresponding validator receipts.
+The B STAGE operation buffers c
+Mt. B COMMIT atomically marks all those edges deliverable only after the engine
+barrier. DELIVEREDTO selects the committed edges for recipient a. ASSEMBLEBOUNDARY returns the pre-projection
+observation Oraw
+t
+, engine receipts CE
+t , and telemetry Tt. The three receipt subsets form the main algorithm’s “receipts.”
+The raw observation is used by UPDATE, and PROJECTVISIBLE produces the policy-visible Ot. Together these
+operations implement the main algorithm’s compact “collect O, receipts, and T” step. Clearing each Ia and routing
+candidate Mt in Algorithm 1 is implemented by constructing the aggregate It = {Ia
+t } from committed c
+Mt edges and
+receipts in Ct. VISIBLERECEIPTSFOR applies the visibility rules in S. RESET and READY commit boundary 0. On
+later calls, ADVANCETO implements “commit one synchronized boundary.” UPDATE, ADJUDICATE, EVALUATE, and
+LOG follow the order in Algorithm 1. TERMINATIONREASON reports success, task failure, or budget exhaustion. An
+infrastructure abort returns immediately with the partial trace.
+Telemetry and visibility.
+Tt is the typed engine-telemetry record corresponding to the main paper’s T. It contains the
+tick, engine and frame IDs, simulation and wall-clock timestamps, per-asset pose, velocity, resource, and status, sensor
+frame IDs and capture timestamps, collisions and contacts, task events, and engine status. The separately named receipt
+28
+
+
+A PREPRINT - AUGUST 11, 2026
+set Ct corresponds to “receipts” in Algorithm 1. Each record contains a request or message ID, source tick, sender,
+controlled resource or recipient, status (accepted, running, completed, rejected, or timed out), reason code, and engine
+or bus timestamp. Completion receipts for an earlier long-running command do not block the current barrier. A receipt
+arriving after boundary t is queued and first appears in Ct+1. Oraw
+t
+contains the engine sensor payloads assembled at
+that barrier. Hidden target state may occur in Tt for adjudication and replay, but PROJECTVISIBLE removes fields
+marked hidden by S before producing Ot. Hidden coordinates are omitted from policy observations and inboxes.
+Message timing.
+Validation fixes the recipient set immediately after the policy barrier. A successful edge in c
+Mt+1
+is inserted atomically into the recipient’s It+1. Rejected, expired, or disconnected-recipient edges produce a sender
+receipt. The message ma
+t+1, produced while processing snapshot t, is first readable by broadcast peers in It+1. In star
+mode the same output is readable by the coordinator in It+1. A coordinator response produced after reading it enters
+Mt+2 and is first readable by its final recipient in It+2. Inputs for It close when boundary t commits.
+Conflict resolution.
+Validation first rejects unknown agents, commands outside the declared action space, stale tick
+tags, and senders without control authority. Commands for the same physical resource retain their order in the collected
+policy outputs. The first valid request is admitted, and later requests receive a conflict-rejection receipt. A completed or
+rejected request releases the resource for a later tick.
+A.7
+Communication Metrics
+Table 4 in main text is computed directly from the synchronized message and task-event logs. Star and broadcast use
+the same rules. Failed and budget-truncated episodes remain in the matched evaluation set. Infrastructure failures are
+rerun with the same instance and seed.
+Table R5: Communication metrics used in Table 4 in main text.
+Metric
+Trace calculation
+Msg
+Mean number of logged sender-to-recipient application messages per episode. A broadcast routed to
+k agents counts as k messages, where k is the number of recipients. Runtime receipts are excluded.
+KB
+Mean sum of payload bytes for the same logged application messages per episode, divided by 1000.
+A broadcast payload is counted once for each recipient.
+Rnd
+Mean number of synchronized decision ticks containing at least one assignment or target-status
+message. An episode with no such message contributes zero.
+Gap
+Mean percentage of the initial requirement that remains incomplete at episode end. The requirement
+is delivery mass for CD and target count for UFR and SSR. A partial delivery reduces the remaining
+mass only by its engine-confirmed amount. A pending, rejected, or timed-out action receives no
+completion credit. The CD demand larger than one vehicle’s capacity is handled by the task’s allowed
+split deliveries. A scenario with zero initial requirement is reported as N/A.
+Rep
+Number of repeated target events divided by all valid target events in the matched episodes. A valid
+event is an assignment request or target-region entry for a target in the scenario. It is repeated when
+the target was already assigned or completed. Continuous presence in one target region counts as one
+entry. If no valid target event occurs, Rep is reported as N/A.
+B
+Additional Experimental Details
+B.1
+Evaluation Metrics
+Tables R6 and R7 define the metrics used in the main benchmark and diagnostic studies. Unless a subsection states
+otherwise, each diagnostic condition uses 100 matched episodes and pools the retained frames, actions, and messages
+from those traces. The denominator of each rate includes only the episodes or trace elements retained by the stated
+protocol. Higher values are better unless the definition identifies an error, cost, or delay. For the trajectory analysis in
+Table R11, each action sequence is partitioned into three equal intervals by normalized trajectory position before the
+behavioral rates are computed.
+B.2
+Sea-Rescue Communication Analysis
+Figure R1 supplements Table 4 in main text with a representative sea-rescue episode and outcomes over 100 matched
+instances under fixed qwen3.7-plus. Broadcast rescues all three victims in the shown episode, compared with two
+29
+
+
+A PREPRINT - AUGUST 11, 2026
+Table R6: Definitions of outcome, coordination, provenance, and perception metrics.
+Metric
+Definition
+Task outcome
+Task success rate (TSR)
+Percentage of benchmark episodes in which the simulator confirms every required task terminal condition within the episode
+budget. The conditions are listed in Table R2.
+Macro average (Avg)
+Task-balanced arithmetic mean of TSR across the nine tasks. For a task evaluated under two communication modes, TSR is
+first averaged across the two modes.
+Strict success (SR)
+Mean of the binary engine success indicator in a targeted diagnostic study. SR uses the same strict completion principle as
+TSR, but follows the sample size and infrastructure failure exclusions stated for that diagnostic protocol.
+Subtask completion rate (SCR)
+Number of required targets, deliveries, rescues, repairs, or other task components completed, divided by the number required
+in that episode.
+Coordination
+Message count
+Mean number of logged sender-to-recipient application messages per episode. One broadcast is counted once per recipient.
+Runtime receipts are excluded.
+Payload
+Mean payload bytes for the same application messages per episode, divided by 1000. A broadcast payload is counted once
+per recipient.
+Communication rounds
+Mean number of synchronized decision ticks containing an assignment or target-status message.
+Assignment gap
+Mean percentage of required task amount that remains unconfirmed at episode end. Partial delivery contributes only its
+remaining amount, and no credit is given without engine confirmation. Lower is better.
+Repeated target rate
+Number of repeated assignment requests or target-region entries divided by all valid target events. Continuous presence in one
+region counts once. Lower is better.
+Subtask provenance
+Cumulative stage success
+Percentage of episodes that complete every task stage up to and including the reported stage.
+Perception and localization
+Detection F1
+Harmonic mean of detection precision and recall over aligned frames under the box-matching rule in Sec. A.3, where TP, FP,
+and FN count true positives, false positives, and false negatives. Precision is TP/(TP+FP), and recall is TP/(TP+FN).
+Miss rate
+Number of aligned frames containing at least one unmatched visible ground-truth target, divided by the full set of aligned
+evaluation frames. Lower is better.
+Hallucination rate
+Number of aligned frames containing at least one unmatched positive report, divided by the same full set of aligned evaluation
+frames. Lower is better.
+Object confusion rate
+Number of evaluated perception calls assigned to an incorrect target class or distractor, divided by all evaluated perception
+calls. Lower is better.
+Localization error (LocErr)
+Median dxy(bp, p∗) over box-matched true-positive reports that contain a world-coordinate prediction.
+Expected
+calibration
+error
+(ECE)
+Mean absolute difference between box-match accuracy and mean confidence across ten bins of equal width, weighted by the
+number of samples in each bin. Lower is better.
+Attention IoU
+Intersection over union between the ground truth target box and the image attention region obtained by thresholding attention
+at its mean plus one standard deviation.
+F1 domain difference
+Let F1sim and F1real denote F1 on matched simulator and GPT-generated real-style images. Their difference is F1real −
+F1sim. A negative value indicates lower performance in the real-style images.
+Table R7: Definitions of failure, behavior, efficiency, and trace metrics.
+Metric
+Definition
+Failure and behavior
+Failure family share
+Percentage of retained failed episodes whose earliest breakdown supported by the trace belongs to a given failure family.
+Infrastructure failures are excluded and each episode receives one label.
+Constraint adherence
+Number of evaluated actions that satisfy all active task and motion constraints, divided by all evaluated actions.
+Repetition rate
+Number of actions whose normalized action signature matches the immediately preceding action from the same agent, divided
+by all actions after the first action in each sequence. Lower is better.
+Out of bounds rate
+Number of evaluated actions that leave the configured operating region or violate an active altitude or motion bound, divided
+by all evaluated actions. Lower is better.
+Forgotten subgoal rate
+Number of evaluated actions that omit an active requirement or act on an already completed subgoal, divided by all evaluated
+actions. Lower is better.
+Efficiency and output validity
+Inference token cost
+Total runtime prompt and completion tokens used by model calls. Relative cost divides this total by the designated full agent
+or prompt baseline.
+JSON compliance
+Number of model outputs that satisfy the required JSON schema, divided by the number of evaluated model calls.
+Search and execution traces
+Search coverage
+Number of distinct valid search cells visited, divided by the number of cells in the configured search region.
+First discovery step
+Decision step at which the first valid target detection is recorded. Lower is better.
+Redundant revisit rate
+Number of search visits to cells that were already covered, divided by all search visits. Lower is better.
+Idle fraction
+Number of agent steps with no assigned or executed task action, divided by all agent steps. Lower is better.
+Communication at discovery
+events
+Number of messages aligned with a validated target discovery event, divided by all evaluated messages.
+30
+
+
+A PREPRINT - AUGUST 11, 2026
+under star. Across matched instances, it raises TSR from 58% to 74% and lowers the unconfirmed-demand and
+duplicate-target indicators from 16% to 11% and from 23% to 9%, while increasing messages from 5 to 9, payload
+from 0.4 to 0.7 KB, and communication rounds from 5 to 8.
+(3/3 rescued)
+overlap
+msgs
+missed
+victim found
+rescue
+boat travel
+search leg
+broadcast
+report
+assign/dispatch
+P3
+P1
+P2
+{P2,P1,P3}
+{P2,P1}
+ound {P2}
+F
+3-UAV mesh
+P3
+P1
+P2
+makespan
+ 
+shared found-list → nearest-first service, minimal duplicate search (9% repeat),
+ all three rescued sooner
+Boat
+drone3
+drone2
+drone1
+≈ 9 messages / episode
+  shared found-list, nearest-first boat service
+—
+BROADCAST 
+msgs
+P2
+P3
+P1
+P2 waits…
+tar
+S
+ommander-
+C
+P3
+P1
+overlap
+overlap
+(2/3 rescued)
+makespan
+central scheduling from a partial view → boat backtracks, duplicate search (23% repeat), 
+one victim missed
+Boat
+drone3
+drone2
+drone1
+Commander
+5 messages / episode
+  central commander schedules the boat
+—
+STAR  
+ 
+≈
+(a)
+STAR
+2 / 3 rescued
+P2
+P3
+Area searched
+23% duplicate
+unique
+MESH
+3 / 3 rescued
+P2
+P3
+P1
+Area searched
+9% duplicate
+unique
+(a)  Rescue completion — were all 3 victims saved?
+P1
+58%
+74%
+Success
+(SR)
+(↑ better)
+16%
+11%
+Assign.
+gap
+(↓ better)
+23%
+9%
+Repeat
+target
+(↓ better)
+COST
+5
+9
+Messages
+(↓ better)
+0.4KB
+0.7KB
+Bytes
+(↓ better)
+5
+8
+Conv.
+rounds
+(↓ better)
+PREEMPTION
+100%
+68%
+Makespan
+(↓ better)
+41%
+18%
+Boat idle
+(↓ better)
+8
+5
+First rescue
+(↓ better)
+Star
+Mesh
+(b)  Efficiency — outcome, cost, and boat preemption
+OUTCOME
+Verdict — on a coverage-bound task, decentralization pays 
+Broadcast's +4 messages/episode buy +16 SR (58→74) and halve the duplicate
+search (23%→9%), and its shared queue gives the single boat a shorter
+makespan. 
+more rescues
+messages / episode  (cost →)
+success %
+Star
+Mesh
+(b)
+Figure R1: Sea-rescue comparison with fixed qwen3.7-plus over 100 matched instances. (a) Representative episode,
+where star rescues two of three victims and broadcast rescues all three. (b) Matched-instance outcomes, where broadcast
+increases TSR and lowers the unconfirmed-demand and duplicate-target indicators.
+B.3
+Trace-Based Behavioral Analysis
+Table R8 summarizes trajectory, perception, and communication indicators for GPT-5.5 and Gemma-3-4B over 100
+matched sea-rescue (broadcast) episodes.
+Table R8: Behavioral signatures over 100 matched sea-rescue (broadcast) episodes. All values are arithmetic means of
+per-episode statistics. First discovery is averaged over episodes with a valid target detection and is reported in decision
+steps. Coverage, redundant revisits, and event-aligned communication are percentages, and idle fraction is in [0, 1].
+Signature
+GPT-5.5 Gemma What it reveals
+Search coverage
+88
+48 completeness of the sweep
+First discovery step
+12
+34 steps to first target
+Redundant revisits
+9
+38 wasted re-scans from drift
+Idle-agent fraction
+0.12
+0.45 load balance and coordination
+Comm. at discovery
+82
+33 messages tied to events
+The traces expose different execution patterns (Table R8). GPT-5.5 searches more broadly, reaches targets earlier,
+and revisits fewer cells than Gemma-3-4B. It also has a lower idle fraction and more messages aligned with discovery
+events.
+B.4
+Failure Analysis
+Failure attribution uses 100 matched episodes per condition. Each failed episode is assigned to its earliest model-caused
+breakdown using aligned perception, localization, coordination, action, and task-state traces. Excluding infrastructure
+failures leaves 2,515 API-model and 5,381 open-weight-model failures. Shares are computed within each model and
+task condition. Star and broadcast are averaged within UFR, SSR, and CD before the unweighted average across tasks
+and models in each tier.
+Where failures occur (Table R9). Missed detection and object confusion account for 42% of the task- and model-
+balanced API distribution and 65% of the open-weight distribution. Coordination deadlock and handoff failure account
+for 24% and 8%, respectively.
+31
+
+
+A PREPRINT - AUGUST 11, 2026
+Table R9: Task- and model-balanced macro-average failure attribution over retained model-caused failed episodes,
+where n is the number of failed episodes, with API n = 2,515 and open n = 5,381. Each episode is assigned to the
+earliest supported failure family. Rows sum to 100% within a tier.
+Failure family
+API
+Open
+Typical task
+Perception miss (missed detection)
+30
+42
+sea, pipeline
+Object confusion (misrecognition)
+12
+23
+sea, fire
+Localization error (outside task radius)
+16
+14
+fire, pipeline
+Long-context drift
+18
+13
+logistics, factory fire
+Coordination deadlock
+14
+5
+logistics, fire
+Handoff or dependency break
+10
+3
+pipeline, fire
+Table R10: Perception indicators by backbone (%, except IoU): miss, false-positive (Halluc.), object-confusion, and
+attention-to-target IoU. Attention maps are available only for the evaluated open checkpoints. Unavailable API-model
+values are marked N/A.
+Backbone
+Miss
+Halluc.
+Confus.
+Attn-IoU
+Commercial models
+GPT-5.5
+28
+2
+8
+N/A
+GPT-5.4
+38
+2
+12
+N/A
+Gemini-3.1-Pro
+32
+1
+10
+N/A
+Kimi-K2.5
+46
+3
+18
+N/A
+Qwen3-VL-Flash
+52
+3
+22
+N/A
+Open-source models
+Qwen3-VL-2B
+40
+4
+24
+0.29
+Qwen3-VL-4B
+55
+4
+26
+0.24
+Qwen3-VL-8B
+44
+3
+20
+0.34
+InternVL3.5-8B
+47
+3
+21
+0.31
+MiniCPM-V-4.5
+62
+5
+30
+0.19
+Gemma-3-4B
+66
+6
+33
+0.17
+Pixtral-12B
+50
+4
+25
+0.27
+What accompanies perception failure (Table R10). Errors are dominated by omissions. The false-positive rate
+ranges from 1% to 6%, while the miss rate ranges from 28% for GPT-5.5 to 66% for Gemma-3-4B and is highest for
+small water victims and pipe leaks. Among open checkpoints, higher attention-to-target IoU is associated with lower
+confusion. Qwen3-VL-8B has the highest IoU (0.34) and a 20% confusion rate. Gemma-3-4B has the lowest IoU
+(0.17) and a 33% confusion rate. Trace examples place attention on wave glint, buoys, glare, and wet ground.
+Table R11: Behavioral indicators by trajectory tercile (%). Ctx. denotes trajectory interval, Adher. constraint adherence,
+Repeat action repetition, OOB out-of-bounds actions, and Forgot forgotten subgoals. Adherence is higher-is-better,
+while the other indicators are error rates.
+Ctx.
+Adher.
+Repeat
+OOB
+Forgot
+Commercial
+Early
+94
+8
+3
+4
+Mid
+88
+14
+6
+9
+Late
+79
+22
+11
+17
+Open
+Early
+88
+14
+7
+9
+Mid
+74
+27
+15
+21
+Late
+58
+41
+26
+34
+Later trajectory stages are associated with drift (Table R11). From the first to the final trajectory tercile, constraint
+adherence falls and repeated search, out-of-bounds actions, and forgotten subgoals rise. The adherence drop is 30 points
+for open-weight models (88%→58%) and 15 points for API models (94%→79%). Typical late-stage errors revisit
+searched cells, violate altitude limits, or target already-rescued entities.
+B.5
+Ablation Study
+We ablate one agent component at a time on sea rescue (broadcast) and fire response (broadcast), holding the
+qwen3.7-plus model, scenario, and seed schedule fixed and excluding infrastructure failures. Table R12 reports strict
+32
+
+
+A PREPRINT - AUGUST 11, 2026
+success (SR), subtask completion rate (SCR), median localization error, and inference-token cost relative to the full
+agent. Table R13 separately varies the decision layer across an API and an open-weight backbone. Sensing parameters
+are swept in Sec. 5.5.
+Table R12: Component ablation (qwen3.7-plus), excluding infrastructure failures. Each row removes or coarsens one
+component. SR and SCR are percentages. LocErr is in meters. Cost denotes relative inference tokens.
+Variant
+SR
+SCR
+LocErr
+Cost×
+Sea rescue (broadcast)
+Full agent
+74
+82
+52
+1.0
+Single-pass search
+62
+70
+52
+0.7
+Top view only
+58
+66
+88
+0.95
+Heuristic sweep
+20
+34
+130
+0.0
+Coarse grid 22 (vs 32)
+64
+73
+52
+0.25
+Fire response (broadcast)
+Full agent (re-search on)
+60
+88
+55
+1.0
+Single-pass search
+48
+67
+55
+0.30
+Which components matter (Table R12). In sea rescue, replacing the LLM decision layer with the heuristic sweep
+produces the largest observed reduction in SR (74%→20%) and raises localization error from 52 to 130 m. Removing
+the front view lowers SR by 16 points and raises localization error to 88 m, indicating that the second view provides
+useful confirmation for small targets. Bounded re-search raises sea-rescue SR from 62% to 74% and fire-response SCR
+from 67% to 88%. Relative to a single pass, it increases inference tokens by about 1.4× in sea rescue and 3.3× in fire
+response. Coarsening the sea-rescue grid reduces relative token cost to 0.25× and SR to 64%.
+Table R13: Net effect of the LLM decision layer across backbones on sea rescue (broadcast): full agent versus the
+heuristic (no-LLM) fallback. SR and SCR are percentages. ∆SR is the SR difference from the heuristic.
+Decision backbone
+SR
+SCR
+∆SR
+Heuristic (no LLM)
+20
+34
+N/A
+Qwen3-VL-8B (open)
+59
+69
++39
+GPT-5.5 (commercial)
+84
+88
++64
+Decision-layer gains depend on the backbone (Table R13). The model-free heuristic provides an SR of 20%. Under
+the same sea-rescue scaffold, Qwen3-VL-8B adds 39 points and GPT-5.5 adds 64 points.
+B.6
+Photographic Appearance Gap
+We measure sensitivity to photographic appearance with an offline detection probe. For each category, source frames are
+sampled from 100 matched seeded Lingjing episodes and edited with gpt-image-2. The resulting synthetic real-style
+domain uses the subscript “real.” The edit preserves camera view, scene geometry, target presence, count, and relative
+location while changing visual appearance. Both members of each pair use the same image preprocessing. Figure R2
+shows three examples.
+Within each category, the simulator frames contain a balanced mixture of target-present cases and hard negatives.
+Each real-style image inherits its source label. Edits that alter target presence or count are rejected. GPT-5.5 and
+Qwen3-VL-8B process both domains using the same category-specific detection prompt and fixed binary response
+schema. A target-present image predicted yes is a true positive (TP). A target-absent image predicted yes is a false
+positive (FP). A target-present image predicted no is a false negative (FN). Counts are pooled by model, category, and
+domain. We compute F1 = 2TP/(2TP + FP + FN) on the [0, 1] scale and ∆= F1real −F1sim.
+Table R14 shows lower F1 in the generated real-style domain for both models in every category. GPT-5.5 drops by 0.08
+to 0.10 on fire and vehicle or crowd targets, compared with 0.22 to 0.25 on pipe leaks and water victims. Qwen3-VL-8B
+follows the same pattern and reaches 0.20 to 0.24 F1 on the two small-target categories. Small, low-contrast targets
+show the largest decline under this appearance change.
+B.7
+Last-Mile Failure Diagnosis
+The cumulative chain has five stages. S1 records successful aerial route inspection, and S2 records localization of the
+route start and target endpoints. S3 requires intermediate waypoint generation on the road graph. S4 requires legal-edge
+33
+
+
+A PREPRINT - AUGUST 11, 2026
+Fire
+Simulator frame
+GPT-generated real-style image
+Pipe leak
+Simulator frame
+GPT-generated real-style image
+Water victim
+Simulator frame
+GPT-generated real-style image
+Figure R2: Paired examples from the photographic-appearance probe. Each column shows a Lingjing simulator frame
+above its GPT-generated real-style counterpart.
+Table R14: F1 on Lingjing simulator frames and GPT-generated real-style images. ∆= F1real −F1sim.
+Commercial (GPT-5.5)
+Open (Qwen3-VL-8B)
+Category
+sim
+real
+∆
+sim
+real
+∆
+Fire (large)
+0.90
+0.82
+−0.08
+0.78
+0.60
+−0.18
+Vehicle or crowd
+0.88
+0.78
+−0.10
+0.74
+0.55
+−0.19
+Bridge defect
+0.74
+0.58
+−0.16
+0.60
+0.38
+−0.22
+Pipe leak (small)
+0.62
+0.40
+−0.22
+0.46
+0.24
+−0.22
+Water victim (small)
+0.58
+0.33
+−0.25
+0.43
+0.20
+−0.23
+arrival at the vehicle stop node, and S5 requires recognition of the target house after robot-dog deployment. Figure R3
+traces this chain over 150 episodes. Cumulative success from S1 through S5 is 87%, 74%, 45.3%, 38.7%, and 34%.
+The largest loss is the 28.7-point drop from S2 to S3 when localized endpoints must be converted into intermediate
+waypoints. Waypoint ordering and road-compliant execution then reduce success by 6.6 points, followed by a 4.7-point
+loss in target recognition.
+Table R15: Last-mile cumulative S4 route-arrival success over 150 matched episodes under staged interventions. A0 to
+A2 use qwen3.7-plus, while A3 uses A⋆shortest-path search for deterministic next-node selection on the road graph.
+Condition
+Information supplied
+S4
+A0 Full policy
+Images, no GT geometry
+38.7%
+A1 +GT endpoints
+GT start and target positions
+72.7%
+A2 +Graph and route guidance Endpoints, graph, and route hint 87.3%
+A3 +Shortest path
+A⋆next-node selection
+94.7%
+Table R15 measures every intervention at the cumulative S4 endpoint. Success rises from 58/150 under A0 to 109/150
+with ground-truth endpoints, 131/150 with graph and route guidance, and 142/150 with deterministic A⋆selection.
+The respective gains are 51, 22, and 11 episodes. These S4 diagnostic rates are distinct from the full-task TSRs in main
+text Table 3.
+34
+
+
+A PREPRINT - AUGUST 11, 2026
+ 
+ 
+ 
+Visual Perception
+V
+ Visual-Language Grounding 
+G
+ Planning / Control 
+P
+Mission Context
+(Last-Mile Delivery)
+Road Network 
+(Verified Route) 
+ 
+ 
+Deliver
+UAV (Aerial Patrol)
+y Vehicle 
+ 
+ Do
+Robo
+(Reach Stop Node)
+t
+g
+ 
+ 
+ 
+Targe
+(Final Delivery)
+t House 
+ 
+ 
+(Delivery point)
+1
+ 
+ 
+p
+ 
+Tra
+R
+ff
+o
+ic
+ut
+In
+e-
+s
+po
+e
+i
+c
+n
+t
+t
+ion
+V
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+After the UAV takes an image at
+the route point, can VLM
+correctly classify the route as 
+clear or blocked?
+Input: UAV top-down image
+ 
+ 
+(at route point)
+Output:clear/blocked
+ 
+ 
+Cumulative Success Rate
+87%
+  
+ 
+2
+Dog &
+Target Localization
+V
+G
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+After the vehicle reaches the stop
+node, localize both the robot dog
+and the target house in the current
+UAV view.
+ 
+            
+ 
+ 
+ 
+ 
+Input:Reference house
+Image+current UAV top-down image
+Output: dog-pos, target-pos
+ 
+ 
+ 
+ 
+ 
+74%
+A1 + GT endpoints：
+Test endpoint grounding
+3
+ 
+ 
+Intermediate Point
+Localization
+V
+Given dog-pos and target-pos, 
+identify the intermediate points 
+needed for safe dog navigation.
+1 
+2 
+3 
+4 
+5 
+ 
+  
+ 
+ 
+ 
+Input: Dog-pos + Target-pos
+Output: waypoint (Unordered set)
+ 
+ 
+ 
+A2 + Road topology：
+Test waypoint selection
+ 
+ 
+Cumulative Success Rate
+45.3%
+ 
+  
+ 
+Midpoint Planning /
+4
+Waypoint Ordering
+P
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Order the intermediate points
+and generate executable waypoints
+from the dog to the target.
+1 
+2 
+3 
+4 
+5 
+ 
+ 
+A3 + Oracle route：
+Replace route selection
+ 
+  
+ 
+ 
+ 
+  
+Input: Dog-pos + Target-pos 
+Output
+38.7%
+: ordered waypoint list
+ 
+ 
+Cumulative Success Rate
+ 
+ 
+ 
+Dog-Egocentric Target 
+5
+Recognition
+V
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+When the dog reach the
+target house/handoff point?
+ 
+ 
+ 
+Input: Dog-front-view image
+Output
+34%
+: target-house-visible, arrived
+ 
+ 
+Cumulative Success Rate
+ 
+Major bottleneck
+Cumulative Success Rate
+Figure R3: Last-mile provenance with fixed qwen3.7-plus over 150 episodes. S1 through S5 denote aerial route
+inspection, endpoint grounding, waypoint generation, legal-edge arrival, and target-house recognition. Percentages
+report cumulative success through each stage.
+B.8
+Prompt Specification for Urban Embodied Agents
+We evaluate prompt specification on broadcast sea rescue with Qwen3-VL-8B, fixing the scenario, decoding, action
+schema, and 100 matched evaluation episodes. P0 is a one-line instruction. P1 adds a perception checklist, coordinate
+frame, decision and motion rules, and a JSON output contract. Starting from P0, P2 undergoes four trace-guided
+revisions. GPT-5.5 proposes each revision from failed Qwen3-VL-8B traces and retains the best candidate on a fixed,
+disjoint development set. Figure R4(b) reports this development trajectory. The final comparison of P0 and P2 uses the
+held-out matched evaluation episodes.
+TSR, SCR, and LocErr follow the preceding definitions. Here TSR requires engine-confirmed rescue of every victim,
+SCR averages the fraction rescued per episode, and LocErr is the median Euclidean error over matched true-positive
+locations. JSON compliance is the fraction of outputs that satisfy the required schema.
+Figure R4 shows that prompt specification affects both parseability and task outcomes. Relative to P0, P1 raises TSR
+from 8% to 44%, SCR from 18% to 56%, and JSON compliance from 41% to 96%, while reducing LocErr from 210 to
+78 m. After four revisions, P2 reaches 41% TSR, 54% SCR, 94% JSON compliance, and 82 m LocErr. Traces show
+fewer format failures and reversed-direction actions after introducing explicit schemas and coordinate conventions. P1’s
+96% JSON compliance and 44% TSR show that format validity alone does not determine task completion.
+35
+
+
+A PREPRINT - AUGUST 11, 2026
+P0
+Naive
+P1
+Manual
+P2
+Optimized
+0
+25
+50
+75
+100
+Rate (%)
+8
+44
+41
+18
+56
+54
+41
+96
+94
+(a) Prompt tiers
+TSR
+SCR
+JSON comp.
+LocErr
+0
+1
+2
+3
+4
+Optimizer round
+0
+25
+50
+75
+100
+Rate (%)
+8
+22
+33
+39
+41
+41
+70
+85
+92
+94
+P1 TSR
+P1 JSON
+(b) Development-set optimization
+TSR
+JSON comp.
+0
+120
+240
+LocErr (m)
+210
+78
+82
+Figure R4: Prompt ablation on broadcast sea rescue with Qwen3-VL-8B. (a) Held-out TSR, SCR, JSON compliance,
+and LocErr over 100 matched episodes. (b) Development-set TSR and JSON compliance across four P2 revisions.
+Higher rates and lower LocErr are better.
+36
