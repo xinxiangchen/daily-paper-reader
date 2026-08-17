@@ -6,97 +6,67 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-16
-- 运行时间：2026-08-16 20:38:52 UTC
+- 最新运行日期：2026-08-17
+- 运行时间：2026-08-17 19:35:19 UTC
 - 运行状态：成功
-- 本次总论文数：25
-- 精读区：14
-- 速读区：11
+- 本次总论文数：15
+- 精读区：5
+- 速读区：10
 
 ### 今日简报（AI）
-今日扫描25篇AI论文，精读14篇，聚焦视觉-语言-动作模型与机器人操作。  
-最值得看：StellaVLA（10.0）通过上下文结构化演示提升泛化；《Skills in Weights, Memory in Code》（9.0）用混合学习攻克记忆依赖操作。  
-下一步建议：优先精读这两篇高分工作，再速读物理推理（PhysX-CoT）与多模态交互控制，把握具身智能最新趋势。
-- 详情：[/202608/16/README](/202608/16/README)
+今日精读5篇、速读10篇，聚焦机器人策略记忆演化与强化学习编队控制。  
+最值得关注在线回放驱动记忆进化（8.0）及对抗性蜂群编队决策（8.0）两项高分工作。  
+普通读者可优先跟进技能迁移与自进化具身智能的速读方向，把握轻量高效前沿。
+- 详情：[/202608/17/README](/202608/17/README)
 
 ### 精读区论文标签
-1. [StellaVLA: In-Context Structured Demonstration for Generalizable Vision-Language-Action Models](/202608/16/2608.11671v1-stellavla-in-context-structured-demonstration-for-generalizable-vision-language-action-models)  
-   标签：评分：10.0/10、query:embodied-ai
-   evidence：通过上下文结构化演示实现泛化的视觉-语言-动作模型
-2. [Skills in Weights, Memory in Code: Hybrid Learning for Memory-Dependent Robot Manipulation](/202608/16/2608.09410v1-skills-in-weights-memory-in-code-hybrid-learning-for-memory-dependent-robot-manipulation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向记忆依赖机器人操作的VLA策略，结合混合模仿学习
-3. [RecoverFly: A Failure-Aware Reinforcement Learning Post-Training Framework for Aerial Vision-Language Navigation](/202608/16/2608.09467v1-recoverfly-a-failure-aware-reinforcement-learning-post-training-framework-for-aerial-vision-language-navigation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向无人机视觉语言动作模型的后训练强化学习
-4. [RoboSeg: Online Part-Level Semantic Reconstruction for Robotic Manipulation via a Single Eye-in-Hand Camera](/202608/16/2608.09778v1-roboseg-online-part-level-semantic-reconstruction-for-robotic-manipulation-via-a-single-eye-in-hand-camera)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：视觉语言模型用于机器人感知与操作
-5. [Energy-Structured Latent World Models with Neural Time Fields for Physically Constistent Open-World Motion Planning](/202608/16/2608.09876v1-energy-structured-latent-world-models-with-neural-time-fields-for-physically-constistent-open-world-motion-planning)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：具身智能中用于物理一致运动规划的世界模型
-6. [Toward the Cognitive--Physical Limits of Embodied Intelligence through a World-Model-Centric Autonomous Racing Agent](/202608/16/2608.10618v1-toward-the-cognitive--physical-limits-of-embodied-intelligence-through-a-world-model-centric-autonomous-racing-agent)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：具身智能、以世界模型为核心的自动驾驶赛车
-7. [HUGIN: Enhancing Vision-Language Planning for Autonomous Logistics Sorting](/202608/16/2608.11692v1-hugin-enhancing-vision-language-planning-for-autonomous-logistics-sorting)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向自主物流分拣联合多场景任务规划的视觉语言模型训练框架
-8. [Policy-Induced Hand Priors in Humanoid Dual-Arm Manipulation: Diagnosing and Mitigating Initial-Pose Dependence](/202608/16/2608.11769v1-policy-induced-hand-priors-in-humanoid-dual-arm-manipulation-diagnosing-and-mitigating-initial-pose-dependence)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：诊断VLA人形双臂操作中的初始姿态依赖与手部先验
-9. [Learning Loco-Manipulation From SMPC Demonstrations With Sparse Offline-to-Online RL](/202608/16/2608.12063v1-learning-loco-manipulation-from-smpc-demonstrations-with-sparse-offline-to-online-rl)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：基于稀疏奖励的强化学习实现运动-操作协同
-10. [RoboSynChallenge: Mastering Real-World Dexterity via Generalizing Synthesized Manipulation Skills](/202608/16/2608.12416v1-robosynchallenge-mastering-real-world-dexterity-via-generalizing-synthesized-manipulation-skills)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：具身操作合成到真实迁移基准
-11. [HumanoidVLN: A Physics-Grounded Simulator and Benchmark for Vision-Language Navigation Across Diverse Humanoid Embodiments](/202608/16/2608.12860v1-humanoidvln-a-physics-grounded-simulator-and-benchmark-for-vision-language-navigation-across-diverse-humanoid-embodiments)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向人形机器人的具身视觉语言导航物理仿真器与基准
-12. [Towards Socially Compliant Navigation in Deep Reinforcement Learning via Proxemics-Based Reward Modeling](/202608/16/2608.12917v1-towards-socially-compliant-navigation-in-deep-reinforcement-learning-via-proxemics-based-reward-modeling)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：基于近距离学奖励建模的深度强化学习社交导航
-13. [S2-HWM: Sparse Event-Structured Hierarchical World Model for Long-Horizon Surgical Robot Manipulation](/202608/16/2608.13103v1-s2-hwm-sparse-event-structured-hierarchical-world-model-for-long-horizon-surgical-robot-manipulation)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：面向长程手术机器人操作的分层世界模型，解决稀疏奖励问题
-14. [UniTexture: Cross-Task Universal Adversarial Textures for Vision-Language-Action Models](/202608/16/2608.13453v1-unitexture-cross-task-universal-adversarial-textures-for-vision-language-action-models)  
-   标签：评分：9.0/10、query:embodied-ai
-   evidence：针对视觉-语言-动作机器人模型的对抗攻击
+1. [OnEvoMemory: Evolving Memory through Online Robot Rollouts for Pretrained Robot Policies](/202608/17/2608.08749v1-onevomemory-evolving-memory-through-online-robot-rollouts-for-pretrained-robot-policies)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：为预训练操作策略演化记忆
+2. [Task-Oriented Formation Decision via Reinforcement Learning: Herding an Attacking Swarm](/202608/17/2608.09258v1-task-oriented-formation-decision-via-reinforcement-learning-herding-an-attacking-swarm)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：用强化学习做多机器人编队决策，应用于牧群任务
+3. [Boundary-Seeking Policy Gradient for Safe Reinforcement Learning](/202608/17/2608.10204v1-boundary-seeking-policy-gradient-for-safe-reinforcement-learning)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向安全强化学习的边界搜索策略梯度方法，适用于机器人控制
+4. [Real-World Cooperative Bimanual Dexterous Grasp of Large Objects from Single-View Observations](/202608/17/2608.10383v2-real-world-cooperative-bimanual-dexterous-grasp-of-large-objects-from-single-view-observations)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：基于DDPM的双臂抓取联合配置生成，服务于机器人操控
+5. [Hidden in Plain Sight: Diffusion-Based Unrestricted Robotic Attacks on Vision-Language-Action Models](/202608/17/2608.10393v1-hidden-in-plain-sight-diffusion-based-unrestricted-robotic-attacks-on-vision-language-action-models)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：研究VLA模型鲁棒性，基于扩散模型的对抗攻击
 
 ### 速读区论文标签
-1. [PhysX-CoT: Structured Physical Reasoning from a Single Image to Simulation-Ready 3D Assets](/202608/16/2608.08053v1-physx-cot-structured-physical-reasoning-from-a-single-image-to-simulation-ready-3d-assets)  
+1. [PBD-AG: Persistent Baseline-Delta Active Graphs with Uncertainty-Aware Inspection for Long-Horizon Service Robots](/202608/17/2608.10449v2-pbd-ag-persistent-baseline-delta-active-graphs-with-uncertainty-aware-inspection-for-long-horizon-service-robots)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：面向具身智能的可仿真3D资产生成
-2. [Multi-modal Interactive Control of Robotic Arm based on Offline Large Language Models](/202608/16/2608.08183v1-multi-modal-interactive-control-of-robotic-arm-based-on-offline-large-language-models)  
+   evidence：面向长时程服务机器人的持久世界模型与主动图
+2. [BooST: Bridging Semantics and Motions for Efficient Skill Transfer](/202608/17/2608.10600v1-boost-bridging-semantics-and-motions-for-efficient-skill-transfer)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：利用离线LLM实现具身AI交互控制
-3. [Action- and Language-Conditioned Video Assessment for Embodied Control](/202608/16/2608.08273v1-action--and-language-conditioned-video-assessment-for-embodied-control)  
+   evidence：机器人技能抽象与真实世界迁移
+3. [Self-Evolving Embodied Agents via Skill-Harness Evolution](/202608/17/2608.11350v1-self-evolving-embodied-agents-via-skill-harness-evolution)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：基于VLM的具身控制轨迹评估
-4. [Discovering Diverse Planning Policies for Multimodal Embodied Agents with Quality-Diversity Optimization](/202608/16/2608.08523v1-discovering-diverse-planning-policies-for-multimodal-embodied-agents-with-quality-diversity-optimization)  
+   evidence：面向具身基础模型的免训练技能-执行骨架进化
+4. [Adaptation of Generalist Robot Policies with Minimal Data](/202608/17/2608.11363v1-adaptation-of-generalist-robot-policies-with-minimal-data)  
    标签：评分：8.0/10、query:embodied-ai
-   evidence：利用质量多样性优化为多模态具身智能体发现多样化规划策略
-5. [Multi-Agent Reinforcement Learning via Agent-Specific Preference](/202608/16/2608.08604v1-multi-agent-reinforcement-learning-via-agent-specific-preference)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：多智能体强化学习与偏好建模，可应用于协作机器人控制
-6. [SAIN: Structure-Aware Interactive Navigation with Active Dialogue Grounding for Mobile Robot](/202608/16/2608.09196v1-sain-structure-aware-interactive-navigation-with-active-dialogue-grounding-for-mobile-robot)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：面向移动机器人的主动对话交互导航
-7. [WorldSimProbe: Diagnosing Simulator Faithfulness in Action-Conditioned World Models for Embodied Manipulation](/202608/16/2608.09298v1-worldsimprobe-diagnosing-simulator-faithfulness-in-action-conditioned-world-models-for-embodied-manipulation)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：面向具身操作的仿真器忠实度诊断，支撑世界模型用于仿真与迁移
-8. [Rethink Before You Execute: Adaptive Execution for World Action Models](/202608/16/2608.09492v1-rethink-before-you-execute-adaptive-execution-for-world-action-models)  
-   标签：评分：7.0/10、query:embodied-ai
-   evidence：面向世界动作模型的适应性执行方案用于机器人控制
-9. [SAFE-CHEM: Uncertainty-Aware Policy Switching for Robust Robotic Chemistry](/202608/16/2608.09303v1-safe-chem-uncertainty-aware-policy-switching-for-robust-robotic-chemistry)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：不确定性感知的学习型机器人控制策略
-10. [ComBodied Agents: a New Paradigm of Human-Centric Agentic AI](/202608/16/2608.10915v2-combodied-agents-a-new-paradigm-of-human-centric-agentic-ai)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：以人为中心的具身智能体范式
-11. [HUI360: A 360° Egocentric Dataset and Baselines for Human-Robot Interaction Anticipation](/202608/16/2608.11051v1-hui360-a-360-egocentric-dataset-and-baselines-for-human-robot-interaction-anticipation)  
-   标签：评分：6.0/10、query:embodied-ai
-   evidence：面向具身感知的野外第一视角人机交互预测数据集
+   evidence：通过自主交互实现通用机器人策略的最小数据适应
+5. [HandEdit: A Unified Benchmark for Egocentric Human-to-Robot Dexterous Hand Image Editing](/202608/17/2608.12122v1-handedit-a-unified-benchmark-for-egocentric-human-to-robot-dexterous-hand-image-editing)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向灵巧操作学习的人手到机器人手图像编辑数据集与基准
+6. [DreamFly: Causal Memory and Receding-Horizon Diffusion Planning for Aerial Vision-Language Navigation](/202608/17/2608.12308v1-dreamfly-causal-memory-and-receding-horizon-diffusion-planning-for-aerial-vision-language-navigation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向具身空中导航的基于扩散的规划与VLA模型
+7. [RGB-D Video Generation for Improving Human-to-Robot Object Handover Prediction](/202608/17/2608.13028v1-rgb-d-video-generation-for-improving-human-to-robot-object-handover-prediction)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：利用视频扩散生成交接序列并弥合仿真到真实的差距
+8. [Semantic Radiance Fields as Simulators for Spatial Reasoning in Real-World Scenes](/202608/17/2608.13095v1-semantic-radiance-fields-as-simulators-for-spatial-reasoning-in-real-world-scenes)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：将语义辐射场用作具身空间推理的仿真器，结合真实感与语义真值
+9. [NestDex: Nested Policy Learning with Copilot Assisted Teleoperation for Dexterous Manipulation](/202608/17/2608.13362v1-nestdex-nested-policy-learning-with-copilot-assisted-teleoperation-for-dexterous-manipulation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：使用嵌套策略学习与辅助遥操作改进灵巧操作的示范采集
+10. [DreamX-Phi 1.0: Action-Conditioned Video World Model for Robotic Manipulation](/202608/17/2608.13489v1-dreamx-phi-10-action-conditioned-video-world-model-for-robotic-manipulation)  
+   标签：评分：8.0/10、query:embodied-ai
+   evidence：面向机器人操作的动作条件视频世界模型，兼具几何一致性
 
 
 <div class="dpr-home-promo-card">
